@@ -1,0 +1,17 @@
+group 'org.platypus.api'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':api:core')
+    compile project(':api:annotations')
+    compile 'javax.validation:validation-api:1.1.0.Final'
+    compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
+}

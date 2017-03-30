@@ -1,0 +1,23 @@
+rootProject.name = 'erp'
+include 'api'
+include 'api:annotations'
+include 'api:core'
+include 'api:models'
+include 'api:module'
+
+include 'impl'
+include 'impl:models'
+include 'impl:module'
+include 'impl:module:base'
+include 'impl:module:hr'
+include 'impl:module:product'
+include 'impl:module:stock'
+
+include 'builder'
+include 'builder:core'
+include 'builder:plugin:jpa-generator'
+include 'builder:utils'
+include 'sample'
+include 'sample:sample_depends'
+include 'sample:sample_erp'
+
