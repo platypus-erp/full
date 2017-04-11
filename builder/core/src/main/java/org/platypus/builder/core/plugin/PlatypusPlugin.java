@@ -15,7 +15,7 @@ public interface PlatypusPlugin extends Namable {
 
     void execute(PlatypusBuilderImMutableConf conf);
 
-    void after(PlatypusBuilderImMutableConf conf);
+    default void after(PlatypusBuilderImMutableConf conf){}
 
-    void detroy(PlatypusBuilderImMutableConf conf);
+    default void detroy(PlatypusBuilderImMutableConf conf){}
 }

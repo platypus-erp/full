@@ -25,7 +25,6 @@ public class ModuleTreePlugin {
 
     public ModuleTreeImpl build() {
         tree.calculateTree();
-        tree.display();
         return tree;
     }
 

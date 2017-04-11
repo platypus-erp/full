@@ -12,7 +12,7 @@ import java.util.function.Function;
  * @version 0.1
  * @since 0.1
  */
-public abstract class AbstractFieldImpl<E, T> implements GenericField<T> {
+abstract class AbstractFieldImpl<E, T> implements GenericField<T> {
 
     protected final E instance;
     private final Function<E, T> getter;

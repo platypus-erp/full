@@ -5,9 +5,9 @@ package org.platypus.api.module;
  * @since 0.1
  * on 30/03/17.
  */
-public class MetaInfoRecord {
+public interface MetaInfoRecord {
 
-    String pkg;
-    String classNAme;
-    String modelName;
+    String getPkg();
+    String getClassName();
+    String getModelTarget();
 }

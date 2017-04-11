@@ -4,20 +4,28 @@ include 'api:annotations'
 include 'api:core'
 include 'api:models'
 include 'api:module'
+include 'api:views'
 
 include 'impl'
 include 'impl:models'
 include 'impl:module'
-include 'impl:module:base'
-include 'impl:module:hr'
-include 'impl:module:product'
-include 'impl:module:stock'
+
 
 include 'builder'
 include 'builder:core'
-include 'builder:plugin:jpa-generator'
 include 'builder:utils'
+include 'builder:plugin:jpa-generator'
+include 'builder:plugin:display-tree-module'
+
 include 'sample'
 include 'sample:sample_depends'
 include 'sample:sample_erp'
+
+include 'module:base'
+include 'module:hr'
+include 'module:product'
+include 'module:stock'
+
+include 'tools'
+include 'tools:gradle-plugin'
 

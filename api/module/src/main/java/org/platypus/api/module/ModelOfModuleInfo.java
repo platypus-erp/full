@@ -9,5 +9,5 @@ import java.util.Map;
  */
 public interface ModelOfModuleInfo {
 
-    Map<String, ModelOfModulInfo> getModel();
+    Map<String, MetaInfoModel> getModel();
 }

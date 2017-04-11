@@ -12,6 +12,7 @@ repositories {
 dependencies {
     compile project(':api')
     compile project(':api:models')
+    compile project(':api:views')
     compile project(':api:annotations')
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

@@ -1,6 +1,8 @@
 package org.platypus.api.module;
 
 
+import org.platypus.api.views.View;
+
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -20,17 +22,17 @@ public interface PlatypusCompleteModuleInfo extends ModuleInfo, ModelOfModuleInf
 
     Map<String, MetaInfoRecordCollection> getRecordCollection();
 
-    Map<String, ModelOfModulInfo> getRecord();
+    Map<String, MetaInfoRecord> getRecord();
 
-    Map<Locale, Map<String, String>> getI18n();
+    Set<Locale> getI18n();
 
     Set<String> getRefData();
 
     Set<String> getDemoData();
 
-    Map<String, String> getViews();
+    Map<String, View> getViews();
 
-    Map<String, String> getMenus();
+    Map<String, View> getMenus();
 
 
 }

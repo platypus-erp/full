@@ -34,13 +34,18 @@ import static org.platypus.builder.utils.Utils.TO_SQL;
 public class JpaModelGenerator {
 
     Map<String, TypeSpec.Builder> jpaImplBuiler = new HashMap<>();
+
+    public Map<String, TypeSpec.Builder> getJpaImplBuiler() {
+        return jpaImplBuiler;
+    }
+
     static String getImplHibernateName(String name) {
         return Arrays
                 .stream(name.split("\\."))
                 .map(StringUtils::capitalize)
                 .collect(Collectors.joining("", "Impl", "JPA"));
     }
-    public void generate(ModelMerged modelMerged, Map<String, ModelMerged> otherModel){
+    public void generate(ModelMerged modelMerged){
         TypeSpec.Builder jpaImplBuilder = ClassSpecUtils.publicClass(ClassName.get("org.platypus.generated.jpa", getImplHibernateName(modelMerged.getName())));
         String tableName = TO_SQL.apply(modelMerged.getName());
 
@@ -70,5 +75,6 @@ public class JpaModelGenerator {
 //            constructor.addCode(r.getConstructorRecordFieldStatement(jpaImplClassName));
 
         }
+        jpaImplBuiler.put(modelMerged.getName(), jpaImplBuilder);
     }
 }

@@ -27,6 +27,7 @@ public class ModuleTreeNodeImpl implements ModuleTreeNode{
 
 
     void addParent(ModuleTreeNodeImpl parent){
+        if (parent == null) return;
         parent.addChilden(this);
         this.parent.add(parent);
     }

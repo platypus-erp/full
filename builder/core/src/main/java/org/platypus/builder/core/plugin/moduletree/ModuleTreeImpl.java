@@ -43,14 +43,14 @@ public class ModuleTreeImpl implements ModuleTree{
     }
 
     void addModule(PlatypusCompleteModuleInfo moduleInfo) {
-        modulesNodeByName.put(moduleInfo.getName(), new ModuleTreeNodeImpl(moduleInfo));
+        modulesNodeByName.put(moduleInfo.techincalName(), new ModuleTreeNodeImpl(moduleInfo));
     }
 
 
     void calculateTree() {
         for (Map.Entry<String, ModuleTreeNodeImpl> module : modulesNodeByName.entrySet()) {
             PlatypusCompleteModuleInfo info = module.getValue().info();
-            if ("base".equals(info.getName())) {
+            if ("base".equals(info.techincalName())) {
                 base = module.getValue();
             }
             for (String depend : info.depends()) {
@@ -58,18 +58,5 @@ public class ModuleTreeImpl implements ModuleTree{
             }
         }
         moduleTreeNodes = Collections.unmodifiableSet(new HashSet<>(modulesNodeByName.values()));
-    }
-
-    void display() {
-        System.out.println(base.info().getName());
-        displayDepends(base, 0);
-    }
-
-    private void displayDepends(ModuleTreeNode moduleTreeNode, int level) {
-        level++;
-        for (ModuleTreeNode child : moduleTreeNode.getChildren()) {
-            System.out.println(StringUtils.repeat("-", level) + "> " + child.info().getName());
-            displayDepends(child, level);
-        }
     }
 }

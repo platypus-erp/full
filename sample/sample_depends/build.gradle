@@ -1,14 +1,21 @@
 group 'org.platypus.sample'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
-
+mainClassName = "org.platypus.sample.depends.Main"
 repositories {
     mavenCentral()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile project(':builder:core')
+    compile project(':builder:plugin:display-tree-module')
+    compile project(':module:base')
+}
+
+run {
+    args 'display-tree-module-txt'
 }

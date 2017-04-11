@@ -22,7 +22,7 @@ import java.util.Set;
  * @version 0.1
  * @since 0.1
  */
-public interface ModelOfModulInfo extends Namable{
+public interface MetaInfoModel extends Namable{
 
     TypeModel getType();
 

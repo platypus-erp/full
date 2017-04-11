@@ -21,7 +21,7 @@ public class ModelTreePlugin {
     }
 
     public void addModel(String moduleName, ModelOfModuleInfo moduleInfo) {
-        System.out.println("execute" + moduleName);
+        System.out.println("addModel " + moduleName);
         treeModel.addModule(moduleName, moduleInfo);
     }
 

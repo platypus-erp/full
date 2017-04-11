@@ -1,7 +1,7 @@
 package org.platypus.builder.core.plugin.model.tree.internal;
 
 
-import org.platypus.api.module.ModelOfModulInfo;
+import org.platypus.api.module.MetaInfoModel;
 import org.platypus.api.module.ModelOfModuleInfo;
 import org.platypus.builder.core.plugin.model.tree.ModelTree;
 import org.platypus.builder.core.plugin.moduletree.ModuleTreeImpl;
@@ -66,7 +66,7 @@ public class ModuleTreeModelImpl implements ModuleTreeModel {
     }
 
     private void recursiveCalculateTree(ModuleTreeNode node, Map<String, ModelTreeImpl> modelsTree){
-        for (ModelOfModulInfo model : modulesNodeByName.get(node.info().getName()).getModel().values()) {
+        for (MetaInfoModel model : modulesNodeByName.get(node.info().techincalName()).getModel().values()) {
             ModelTreeImpl modelTree = modelsTree.getOrDefault(model.getName(), new ModelTreeImpl(model.getName()));
             model.bigStringField().forEach(f -> modelTree.addBigStringField(f.getName(), new FieldNodeImpl<>(f)));
             model.binaryField().forEach(f -> modelTree.addBinaryField(f.getName(), new FieldNodeImpl<>(f)));

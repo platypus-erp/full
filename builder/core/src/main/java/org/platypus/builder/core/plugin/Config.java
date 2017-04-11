@@ -5,7 +5,11 @@ import org.platypus.builder.core.plugin.model.merger.ModelMerged;
 import org.platypus.builder.core.plugin.model.tree.ModuleTreeModel;
 import org.platypus.builder.core.plugin.moduletree.ModuleTree;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -18,6 +22,7 @@ public class Config implements PlatypusBuilderMutableConf {
 
 
     Map<String, PlatypusPlugin> mapPluginByCanonicalName = new HashMap<>();
+    List<ModelProcessor> modelProcessors = new ArrayList<>();
     PlatypusCompleteModuleInfo currentModule;
     ModuleTree moduleTree;
     ModuleTreeModel moduleTreeModel;
@@ -31,10 +36,31 @@ public class Config implements PlatypusBuilderMutableConf {
     }
 
     public void addPlugin(PlatypusPlugin platypusPlugin){
+        System.out.println("addPlugin "+ platypusPlugin.getName());
         mapPluginByCanonicalName.put(platypusPlugin.getClass().getCanonicalName(), platypusPlugin);
     }
-    public void initPlugins() {
-        mapPluginByCanonicalName.values().forEach(p -> p.init(this));
+
+    public void addModelProcessor(ModelProcessor modelProcessor){
+
+    }
+    public void initModelProcessors() {
+
+    }
+
+    public void initPlugins(String ... pluginsToRun) {
+        mapPluginByCanonicalName.values().stream().filter(p -> Arrays.binarySearch(pluginsToRun, p.getName()) >= 0)
+                .forEach(p -> p.init(this));
+    }
+
+    public void runPlugins(String ... pluginsToRun) {
+        mapPluginByCanonicalName.values().stream().filter(p -> Arrays.binarySearch(pluginsToRun, p.getName()) >= 0)
+                .forEach(p -> p.execute(this));
+        mapPluginByCanonicalName.values().forEach(p -> p.after(this));
+    }
+
+    public void destroyPlugins(String ... pluginsToRun) {
+        mapPluginByCanonicalName.values().stream().filter(p -> Arrays.binarySearch(pluginsToRun, p.getName()) >= 0)
+                .forEach(p -> p.detroy(this));
     }
 
     @Override
