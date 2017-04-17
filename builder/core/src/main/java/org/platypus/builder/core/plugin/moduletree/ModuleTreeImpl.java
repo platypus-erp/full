@@ -1,5 +1,5 @@
 package org.platypus.builder.core.plugin.moduletree;
-import org.apache.commons.lang3.StringUtils;
+
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
 
 import java.util.Collections;
@@ -16,18 +16,18 @@ import java.util.Set;
  * @version 0.1
  * @since 0.1
  */
-public class ModuleTreeImpl implements ModuleTree{
+public class ModuleTreeImpl implements ModuleTree {
     final Map<String, ModuleTreeNodeImpl> modulesNodeByName = new HashMap<>();
     private Set<ModuleTreeNode> moduleTreeNodes;
     private ModuleTreeNodeImpl base;
 
     @Override
-    public ModuleTreeNodeImpl getBase() {
+    public ModuleTreeNode getBase() {
         return base;
     }
 
     @Override
-    public ModuleTreeNodeImpl getModule(String moduleName) {
+    public ModuleTreeNode getModule(String moduleName) {
         return Optional.ofNullable(modulesNodeByName.get(moduleName))
                 .orElseThrow(() -> new IllegalArgumentException("Module not found " + moduleName));
     }
@@ -48,13 +48,13 @@ public class ModuleTreeImpl implements ModuleTree{
 
 
     void calculateTree() {
-        for (Map.Entry<String, ModuleTreeNodeImpl> module : modulesNodeByName.entrySet()) {
-            PlatypusCompleteModuleInfo info = module.getValue().info();
+        for (ModuleTreeNodeImpl module : modulesNodeByName.values()) {
+            PlatypusCompleteModuleInfo info = module.info();
             if ("base".equals(info.techincalName())) {
-                base = module.getValue();
+                base = module;
             }
             for (String depend : info.depends()) {
-                module.getValue().addParent(modulesNodeByName.get(depend));
+                modulesNodeByName.get(depend).addParent(module);
             }
         }
         moduleTreeNodes = Collections.unmodifiableSet(new HashSet<>(modulesNodeByName.values()));

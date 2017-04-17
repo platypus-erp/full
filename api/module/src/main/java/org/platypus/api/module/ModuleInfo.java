@@ -1,6 +1,7 @@
 package org.platypus.api.module;
 
 import org.platypus.api.Namable;
+import org.platypus.api.annotations.PlatypusVersion;
 
 import java.util.Set;
 

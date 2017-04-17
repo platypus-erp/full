@@ -48,6 +48,11 @@ public class ModuleTreeNodeImpl implements ModuleTreeNode{
     }
 
     @Override
+    public Set<ModuleTreeNode> getParent() {
+        return new HashSet<>(parent);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

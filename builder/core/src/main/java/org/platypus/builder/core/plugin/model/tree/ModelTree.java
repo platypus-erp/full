@@ -27,7 +27,7 @@ public interface ModelTree {
 
     Map<String, FieldNode<MetaInfoBigStringField>> getBigStringField();
     Map<String, FieldNode<MetaInfoBinaryField>> getBinaryField();
-    Map<String, FieldNode<MetaInfoBooleanField>> getBooelanField();
+    Map<String, FieldNode<MetaInfoBooleanField>> getBooleanField();
     Map<String, FieldNode<MetaInfoDateField>> getDateField();
     Map<String, FieldNode<MetaInfoDateTimeField>> getDateTimeField();
     Map<String, FieldNode<MetaInfoDecimalField>> getDecimalField();

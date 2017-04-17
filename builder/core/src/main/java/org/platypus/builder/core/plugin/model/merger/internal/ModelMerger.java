@@ -74,9 +74,10 @@ public class ModelMerger {
     }
 
     public ModelMerger merge(ModelTree modelTree) {
+        this.name = modelTree.getName();
         mergeField(this.bigStringField, modelTree.getBigStringField(), BigStringFieldLiteralMerger::new);
         mergeField(this.binaryField, modelTree.getBinaryField(), BinaryFieldLiteralMerger::new);
-        mergeField(this.booleanField, modelTree.getBooelanField(), BooleanFieldLiteralMerger::new);
+        mergeField(this.booleanField, modelTree.getBooleanField(), BooleanFieldLiteralMerger::new);
         mergeField(this.dateField, modelTree.getDateField(), DateFieldLiteralMerger::new);
         mergeField(this.dateTimeField, modelTree.getDateTimeField(), DateTimeFieldLiteralMerger::new);
         mergeField(this.decimalField, modelTree.getDecimalField(), DecimalFieldLiteralMerger::new);
@@ -106,8 +107,7 @@ public class ModelMerger {
     }
 
     public ModelMerged toMerged() {
-        ModelMergedImpl impl = new ModelMergedImpl();
-        impl.name = this.name;
+        ModelMergedImpl impl = new ModelMergedImpl(this.name);
         impl.bigStringField = this.bigStringField.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, v -> v.getValue().toValue()));
         impl.binaryField = this.binaryField.entrySet().stream()

@@ -14,4 +14,5 @@ public interface ModuleTreeNode {
     ModuleInfo info();
 
     Set<ModuleTreeNode> getChildren();
+    Set<ModuleTreeNode> getParent();
 }

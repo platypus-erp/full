@@ -25,9 +25,8 @@ import java.util.Set;
  * @since 0.1
  */
 class ModelMergedImpl implements ModelMerged {
-    String name;
+    final String name;
     Set<MultiColumnUniqueKey> multiColumnUniqueKeys;
-
     Map<String, MetaInfoBigStringField> bigStringField;
     Map<String, MetaInfoBinaryField> binaryField;
     Map<String, MetaInfoBooleanField> booleanField;
@@ -39,6 +38,10 @@ class ModelMergedImpl implements ModelMerged {
     Map<String, MetaInfoLongField> longField;
     Map<String, MetaInfoStringField> stringField;
     Map<String, MetaInfoTimeField> timeField;
+
+    public ModelMergedImpl(String name) {
+        this.name = name;
+    }
 
     @Override
     public String getName() {

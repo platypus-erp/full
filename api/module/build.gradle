@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile project(':api')
+    compile project(':api:core')
     compile project(':api:models')
     compile project(':api:views')
     compile project(':api:annotations')

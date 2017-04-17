@@ -3,6 +3,11 @@ package org.platypus.api.annotations.field;
 
 import org.platypus.api.Bool;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * TODO Add JavaDoc
  *
@@ -11,6 +16,8 @@ import org.platypus.api.Bool;
  * @version 0.1
  * @since 0.1
  */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
 public @interface BooleanFieldDefinition {
     String DEFAULT = "__DEFAULT__VALUE__";
 
@@ -34,6 +41,8 @@ public @interface BooleanFieldDefinition {
      * The default value is equivalent to an empty string <code>""</code>if unset when the model will be generated
      */
     String columnDoc() default DEFAULT;
+
+    Bool readonly() default Bool.DEFAULT;
 
     /**
      * (Optional) <br> If the this column will be unique,<br>

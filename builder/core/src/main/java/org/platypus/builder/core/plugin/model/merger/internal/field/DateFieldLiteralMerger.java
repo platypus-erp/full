@@ -3,7 +3,7 @@ package org.platypus.builder.core.plugin.model.merger.internal.field;
 
 import org.platypus.api.annotations.field.DateTimeRelative;
 import org.platypus.api.fields.metainfo.MetaInfoDateField;
-import org.platypus.builder.core.plugin.impl.literral.DateFieldLiteral;
+import org.platypus.builder.core.internal.literral.DateFieldLiteral;
 
 import static org.platypus.builder.utils.ValuesUtils.bool;
 
@@ -30,7 +30,7 @@ public class DateFieldLiteralMerger extends DateFieldLiteral implements FieldMer
             required = bool(def.required(), this.required);
             columnDoc = def.columnDoc();
             uniqueHint = def.uniqueHint();
-            defaultNow = bool(def.defaultToday(), this.defaultNow);
+            defaultToday = bool(def.defaultToday(), this.defaultToday);
             relative = def.relative() == DateTimeRelative.NONE ? this.relative : def.relative();
         } else {
             insertable = def.insertable();
@@ -39,7 +39,7 @@ public class DateFieldLiteralMerger extends DateFieldLiteral implements FieldMer
             required = def.required();
             columnDoc = def.columnDoc();
             uniqueHint = def.uniqueHint();
-            defaultNow = def.defaultToday();
+            defaultToday = def.defaultToday();
             relative = def.relative();
         }
         eraseWithYours = false;

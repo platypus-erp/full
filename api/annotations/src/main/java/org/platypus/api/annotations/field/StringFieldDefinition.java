@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  * @version 0.1
  * @since 0.1
  */
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface StringFieldDefinition {
     String DEFAULT = "__DEFAULT__VALUE__";
@@ -31,6 +31,7 @@ public @interface StringFieldDefinition {
      * end::insertable[]
      */
     Bool insertable() default Bool.DEFAULT;
+    Bool readonly() default Bool.DEFAULT;
 
     /**
      * (Optional) Whether the column is included in SQL UPDATE

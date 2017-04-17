@@ -1,7 +1,7 @@
 package org.platypus.builder.core.plugin;
 
 import org.platypus.api.Namable;
-import org.platypus.api.module.PlatypusVersion;
+import org.platypus.api.annotations.PlatypusVersion;
 import org.platypus.builder.core.plugin.model.merger.ModelMerged;
 
 /**
@@ -17,11 +17,7 @@ public interface ModelProcessor extends Namable{
 
     void init(PlatypusBuilderMutableConf conf);
 
-    boolean process(ModelMerged modelMerged);
+    boolean process(ModelMerged modelMerged,PlatypusBuilderImMutableConf conf);
 
-    ModelProcessorResult afterProcess();
-
-    default ModelProcessorResult newResult(){
-        return null;
-    }
+    ModelProcessorResult afterProcess(PlatypusBuilderImMutableConf conf);
 }

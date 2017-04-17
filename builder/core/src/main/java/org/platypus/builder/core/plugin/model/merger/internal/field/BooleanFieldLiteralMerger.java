@@ -2,7 +2,7 @@ package org.platypus.builder.core.plugin.model.merger.internal.field;
 
 
 import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
-import org.platypus.builder.core.plugin.impl.literral.BooleanFieldLiteral;
+import org.platypus.builder.core.internal.literral.BooleanFieldLiteral;
 
 import static org.platypus.builder.utils.ValuesUtils.bool;
 

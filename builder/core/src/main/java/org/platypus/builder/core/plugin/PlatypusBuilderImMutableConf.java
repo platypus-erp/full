@@ -2,7 +2,7 @@ package org.platypus.builder.core.plugin;
 
 
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
-import org.platypus.builder.core.plugin.PlatypusPlugin;
+import org.platypus.builder.core.PluginConf;
 import org.platypus.builder.core.plugin.model.merger.ModelMerged;
 import org.platypus.builder.core.plugin.model.tree.ModuleTreeModel;
 import org.platypus.builder.core.plugin.moduletree.ModuleTree;
@@ -20,10 +20,10 @@ import java.util.Optional;
  */
 public interface PlatypusBuilderImMutableConf {
 
-    Optional<PlatypusPlugin> getPlugin(Class<PlatypusPlugin> type);
+    Optional<PluginConf> getPluginConfig(String pluginName);
 
-    default PlatypusPlugin getPluginOrThrow(Class<PlatypusPlugin> type) {
-        return getPlugin(type).orElseThrow(() -> new NoSuchElementException("no plugin " + type.getCanonicalName() + " defined"));
+    default PluginConf getPluginConfOrThrow(String pluginName) {
+        return getPluginConfig(pluginName).orElseThrow(() -> new NoSuchElementException("no plugin " + pluginName + " defined"));
     }
 
     PlatypusCompleteModuleInfo getCurrentModule();
@@ -35,4 +35,5 @@ public interface PlatypusBuilderImMutableConf {
     Map<String, ModelMerged> getModelMerged();
 
 
+    String getDefaultPackage();
 }

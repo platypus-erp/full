@@ -1,9 +1,8 @@
 package org.platypus.builder.core.plugin.model.merger.internal.field;
 
 
-import org.platypus.api.fields.LongField;
 import org.platypus.api.fields.metainfo.MetaInfoLongField;
-import org.platypus.builder.core.plugin.impl.literral.LongFieldLitteral;
+import org.platypus.builder.core.internal.literral.LongFieldLitteral;
 
 import static org.platypus.builder.utils.ValuesUtils.bool;
 import static org.platypus.builder.utils.ValuesUtils.longMax;

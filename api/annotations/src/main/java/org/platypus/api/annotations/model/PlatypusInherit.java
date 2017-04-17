@@ -42,7 +42,7 @@ import java.lang.annotation.Target;
  * @see Record
  * @see BaseEntity
  */
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface PlatypusInherit {
 

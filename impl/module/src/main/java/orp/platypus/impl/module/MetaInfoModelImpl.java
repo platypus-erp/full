@@ -2,16 +2,17 @@ package orp.platypus.impl.module;
 
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
+import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
 import org.platypus.api.fields.metainfo.MetaInfoDateField;
 import org.platypus.api.fields.metainfo.MetaInfoDateTimeField;
 import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
 import org.platypus.api.fields.metainfo.MetaInfoFloatField;
 import org.platypus.api.fields.metainfo.MetaInfoIntField;
 import org.platypus.api.fields.metainfo.MetaInfoLongField;
+import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
-import org.platypus.api.module.MetaInfoModel;
-import org.platypus.api.module.TypeModel;
+import org.platypus.api.TypeModel;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,9 +27,11 @@ import java.util.Set;
 public final class MetaInfoModelImpl implements MetaInfoModel {
 
 
+
     private final String name;
     private final TypeModel typeModel;
     private final Set<MetaInfoStringField> stringField = new HashSet<>();
+    private final Set<MetaInfoBooleanField> booleanField = new HashSet<>();
     private final Set<MetaInfoLongField> longField = new HashSet<>();
     private final Set<MetaInfoIntField> intField = new HashSet<>();
     private final Set<MetaInfoFloatField> floatField = new HashSet<>();
@@ -51,6 +54,9 @@ public final class MetaInfoModelImpl implements MetaInfoModel {
 
     protected final void addField(MetaInfoStringField stringFieldDef){
         stringField.add(stringFieldDef);
+    }
+    protected final void addField(MetaInfoBooleanField booleanFieldDef){
+        booleanField.add(booleanFieldDef);
     }
 
     protected final void addField(MetaInfoLongField metaInfoLongField){
@@ -95,6 +101,11 @@ public final class MetaInfoModelImpl implements MetaInfoModel {
     @Override
     public Set<MetaInfoLongField> longField() {
         return longField;
+    }
+
+    @Override
+    public Set<MetaInfoBooleanField> booleanField() {
+        return booleanField;
     }
 
     @Override

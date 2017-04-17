@@ -1,10 +1,10 @@
 package org.platypus.module.base;
 
-import org.platypus.api.module.MetaInfoModel;
+import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
-import org.platypus.api.module.PlatypusVersion;
+import org.platypus.api.annotations.PlatypusVersion;
 import org.platypus.api.views.View;
 
 import java.util.Collections;

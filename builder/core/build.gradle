@@ -2,30 +2,7 @@ group 'org.platypus.builder'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: GreetingPlugin
 
-greeting.message = 'Hi from Gradle'
-
-greeting {
-    message = 'Hi'
-    greeter = 'Gradle2'
-}
-
-class GreetingPlugin implements Plugin<Project> {
-    void apply(Project project) {
-        project.extensions.create("greeting", GreetingPluginExtension)
-        project.task('hello') {
-            doLast {
-                println "${project.greeting.message} from ${project.greeting.greeter}"
-            }
-        }
-    }
-}
-
-class GreetingPluginExtension {
-    String message
-    String greeter
-}
 
 sourceCompatibility = 1.8
 

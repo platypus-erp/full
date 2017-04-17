@@ -1,5 +1,7 @@
 package org.platypus.api.module;
 
+import org.platypus.api.fields.metainfo.MetaInfoModel;
+
 import java.util.Map;
 
 /**

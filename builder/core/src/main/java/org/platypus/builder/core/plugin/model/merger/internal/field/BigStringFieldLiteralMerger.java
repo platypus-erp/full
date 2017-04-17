@@ -2,7 +2,7 @@ package org.platypus.builder.core.plugin.model.merger.internal.field;
 
 
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
-import org.platypus.builder.core.plugin.impl.literral.BigStringFieldLiteral;
+import org.platypus.builder.core.internal.literral.BigStringFieldLiteral;
 
 import static org.platypus.builder.utils.ValuesUtils.bool;
 

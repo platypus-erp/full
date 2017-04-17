@@ -1,10 +1,13 @@
 package org.platypus.builder.core.plugin;
 
+import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author chmuchme
@@ -13,15 +16,14 @@ import java.util.Map;
  */
 public interface ModelProcessorResult {
 
-    boolean addTypeSpecBuilder(String packageName, String className, TypeSpec.Builder builder);
+    boolean addJavaFileBuilder(JavaFile.Builder javaFileBuilder);
 
-    boolean addRessource(String packageName, String fileName, Map<String, String> keyValue);
+    void addTypeSpecBuilder(String packageName, Collection<TypeSpec.Builder> builders);
 
-    boolean addOutPutRessource(String packageName, String fileName, OutputStream content);
+    Set<JavaFile.Builder> getAllFile();
 
-    boolean addInputStreamRessource(String packageName, String fileName, InputStream content);
-
-    boolean addStringRessource(String packageName, String fileName, String content);
-
+    static ModelProcessorResult create(){
+        return new ModelProcessorResultImpl();
+    }
 
 }

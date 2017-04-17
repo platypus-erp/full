@@ -2,7 +2,7 @@ package org.platypus.builder.core.plugin.model.merger.internal.field;
 
 
 import org.platypus.api.fields.metainfo.MetaInfoIntField;
-import org.platypus.builder.core.plugin.impl.literral.IntFieldLiteral;
+import org.platypus.builder.core.internal.literral.IntFieldLiteral;
 
 import static org.platypus.builder.utils.ValuesUtils.bool;
 import static org.platypus.builder.utils.ValuesUtils.intMax;

@@ -11,6 +11,7 @@ import org.platypus.api.Bool;
  */
 public @interface OneToOneFieldDefinition {
     String DEFAULT = "__DEFAULT__VALUE__";
+
     /**
      * The target Platypus model for the relation
      */
@@ -18,6 +19,7 @@ public @interface OneToOneFieldDefinition {
 
     /**
      * The mapped relation in the target model
+     *
      * @see OneToOneFieldDefinition#target()
      */
     String mappedBy();

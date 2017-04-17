@@ -2,6 +2,11 @@ package org.platypus.api.annotations.field;
 
 import org.platypus.api.Bool;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * TODO Add JavaDoc
  *
@@ -10,6 +15,8 @@ import org.platypus.api.Bool;
  * @version 0.1
  * @since 0.1
  */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
 public @interface BinaryFieldDefinition {
     String DEFAULT = "__DEFAULT__VALUE__";
 

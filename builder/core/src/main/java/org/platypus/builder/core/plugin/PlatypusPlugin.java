@@ -1,6 +1,7 @@
 package org.platypus.builder.core.plugin;
 
 import org.platypus.api.Namable;
+import org.platypus.builder.core.PluginConf;
 
 /**
  * TODO Add JavaDoc
@@ -18,4 +19,8 @@ public interface PlatypusPlugin extends Namable {
     default void after(PlatypusBuilderImMutableConf conf){}
 
     default void detroy(PlatypusBuilderImMutableConf conf){}
+
+    PluginConf getDefaultConf();
+
+    void applyConf(PluginConf conf);
 }

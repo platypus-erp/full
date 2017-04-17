@@ -1,13 +1,12 @@
 package org.platypus.builder.core.plugin.model.tree.internal;
 
 
-import org.platypus.api.module.MetaInfoModel;
+import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.api.module.ModelOfModuleInfo;
 import org.platypus.builder.core.plugin.model.tree.ModelTree;
+import org.platypus.builder.core.plugin.model.tree.ModuleTreeModel;
 import org.platypus.builder.core.plugin.moduletree.ModuleTreeImpl;
 import org.platypus.builder.core.plugin.moduletree.ModuleTreeNode;
-import org.platypus.builder.core.plugin.moduletree.ModuleTreeNodeImpl;
-import org.platypus.builder.core.plugin.model.tree.ModuleTreeModel;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -59,17 +58,18 @@ public class ModuleTreeModelImpl implements ModuleTreeModel {
     }
 
     public void calculateTreeModel(ModuleTreeImpl moduleTree) {
-        ModuleTreeNodeImpl base = moduleTree.getBase();
+        ModuleTreeNode base = moduleTree.getBase();
         Map<String, ModelTreeImpl> modelsTree = new HashMap<>();
         recursiveCalculateTree(base, modelsTree);
         allModelTree = Collections.unmodifiableSet(new HashSet<>(modelsTree.values()));
     }
 
-    private void recursiveCalculateTree(ModuleTreeNode node, Map<String, ModelTreeImpl> modelsTree){
+    private void recursiveCalculateTree(ModuleTreeNode node, Map<String, ModelTreeImpl> modelsTree) {
         for (MetaInfoModel model : modulesNodeByName.get(node.info().techincalName()).getModel().values()) {
             ModelTreeImpl modelTree = modelsTree.getOrDefault(model.getName(), new ModelTreeImpl(model.getName()));
             model.bigStringField().forEach(f -> modelTree.addBigStringField(f.getName(), new FieldNodeImpl<>(f)));
             model.binaryField().forEach(f -> modelTree.addBinaryField(f.getName(), new FieldNodeImpl<>(f)));
+            model.booleanField().forEach(f -> modelTree.addBooleanField(f.getName(), new FieldNodeImpl<>(f)));
             model.dateField().forEach(f -> modelTree.addDateField(f.getName(), new FieldNodeImpl<>(f)));
             model.dateTimeField().forEach(f -> modelTree.addDateTimeField(f.getName(), new FieldNodeImpl<>(f)));
             model.decimalField().forEach(f -> modelTree.addDecimalField(f.getName(), new FieldNodeImpl<>(f)));
@@ -78,8 +78,9 @@ public class ModuleTreeModelImpl implements ModuleTreeModel {
             model.longField().forEach(f -> modelTree.addLongField(f.getName(), new FieldNodeImpl<>(f)));
             model.stringField().forEach(f -> modelTree.addStringField(f.getName(), new FieldNodeImpl<>(f)));
             model.timeField().forEach(f -> modelTree.addTimeField(f.getName(), new FieldNodeImpl<>(f)));
+            modelsTree.put(model.getName(), modelTree);
         }
-        for (ModuleTreeNode child : node.getChildren()){
+        for (ModuleTreeNode child : node.getParent()) {
             recursiveCalculateTree(child, modelsTree);
         }
     }

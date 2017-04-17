@@ -2,7 +2,7 @@ package org.platypus.builder.core.plugin.model.merger.internal.field;
 
 
 import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
-import org.platypus.builder.core.plugin.impl.literral.DecimalFieldLiteral;
+import org.platypus.builder.core.internal.literral.DecimalFieldLiteral;
 
 import static org.platypus.builder.utils.ValuesUtils.bool;
 import static org.platypus.builder.utils.ValuesUtils.fltMax;

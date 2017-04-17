@@ -1,22 +1,27 @@
 package orp.platypus.impl.module;
 
 import org.apache.commons.io.IOUtils;
+import org.platypus.api.BaseModel;
+import org.platypus.api.annotations.ModuleInfo;
+import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
-import org.platypus.api.module.MetaInfoModel;
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
-import org.platypus.api.module.PlatypusVersion;
+import org.platypus.api.annotations.PlatypusVersion;
 import org.platypus.api.views.View;
+import org.platypus.builder.core.ReflectiveModelParser;
 import org.platypus.sample.depends.desc.LongDescLoader;
 import org.platypus.sample.depends.desc.ShortDescLoader;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -27,6 +32,10 @@ import java.util.Set;
 public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
     private final String technicalName;
     private final String name;
+    private String subpathShortDesc;
+    private String shortDesc;
+    private String subpathLongDesc;
+    private String longdesc;
     private final String version;
     private final Set<String> depends;
     private final PlatypusVersion platypusVersion;
@@ -34,32 +43,68 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
     private final Map<String, MetaInfoRecord> metaInfoRecordMap;
     private final Map<String, MetaInfoRecordCollection> metaInfoRecordCollectionMap;
     private final Set<Locale> supportedLocal;
+    ReflectiveModelParser parser = new ReflectiveModelParser();
 
-    public AbstractModule(String technicalName, String name, String version, PlatypusVersion platypusVersion, Set<String> depends) {
-        this.technicalName = technicalName;
+    public AbstractModule(String name) {
+        ModuleInfo info = this.getClass().getAnnotation(ModuleInfo.class);
+        this.technicalName = info.name();
         this.name = name;
-        this.version = version;
-        this.platypusVersion = platypusVersion;
-        this.depends = depends;
+        this.version = info.moduleVersion();
+        this.platypusVersion = info.version();
+        depends = new HashSet<>();
+        Collections.addAll(depends, info.depends());
         this.metaInfoModelMap = new HashMap<>();
         this.metaInfoRecordMap = new HashMap<>();
         this.metaInfoRecordCollectionMap = new HashMap<>();
         this.supportedLocal = new HashSet<>();
     }
 
-    protected void addModel(MetaInfoModel model){
-        metaInfoModelMap.put(model.getName(), model);
+    protected void addModel(BaseModel model) {
+        MetaInfoModel m = parser.parse(Objects.requireNonNull(model));
+        metaInfoModelMap.put(m.getName(), m);
     }
 
-    protected void addLocal(Locale locale){
+    protected void setLongDesc(String filename) {
+        longdesc = Objects.requireNonNull(filename);
+        if (null == getLongDecription()){
+            throw new IllegalArgumentException(
+                    "Unable to find "+ this.getClass().getPackage().getName() +"::"+ filename);
+        }
+    }
+    protected void setLongDesc(String subpath, String filename) {
+        subpathLongDesc = Objects.requireNonNull(subpath);
+        longdesc = Objects.requireNonNull(filename);
+        if (null == getLongDecription()){
+            throw new IllegalArgumentException(
+                    "Unable to find "+ this.getClass().getPackage().getName() +"::"+ filename);
+        }
+    }
+
+    protected void setShortDesc(String filename) {
+        shortDesc = Objects.requireNonNull(filename);
+        if (null == getLongDecription()){
+            throw new IllegalArgumentException(
+                    "Unable to find "+ this.getClass().getPackage().getName() +"::"+ filename);
+        }
+    }
+    protected void setShortDesc(String subpath, String filename) {
+        subpathShortDesc = Objects.requireNonNull(subpath);
+        shortDesc = Objects.requireNonNull(filename);
+        if (null == getLongDecription()){
+            throw new IllegalArgumentException(
+                    "Unable to find "+ this.getClass().getPackage().getName() +"::"+ filename);
+        }
+    }
+
+    protected void addLocal(Locale locale) {
         supportedLocal.add(locale);
     }
 
-    protected void addRecord(MetaInfoRecord record){
+    protected void addRecord(MetaInfoRecord record) {
         metaInfoRecordMap.put(record.getModelTarget(), record);
     }
 
-    protected void addRecordCollection(MetaInfoRecordCollection recordCollection){
+    protected void addRecordCollection(MetaInfoRecordCollection recordCollection) {
         metaInfoRecordCollectionMap.put(recordCollection.getModelTarget(), recordCollection);
     }
 
@@ -90,7 +135,7 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
 
     @Override
     public String getLongDecription() {
-        return toStr(new LongDescLoader().getAsStream("",""));
+        return toStr(getAsStream(subpathLongDesc, shortDesc));
     }
 
     @Override
@@ -100,14 +145,18 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
 
     @Override
     public String getShortDecription() {
-        return toStr(new ShortDescLoader().getAsStream("",""));
+        return toStr(getAsStream(subpathShortDesc, shortDesc));
 
     }
 
-    private String toStr(InputStream s){
-        if(s == null){
+    private InputStream getAsStream(String pathTo, String fileNameParam) {
+        return this.getClass().getResourceAsStream(pathTo + "/" + fileNameParam);
+    }
+
+    private String toStr(InputStream s) {
+        if (s == null) {
             return "";
-        }else {
+        } else {
             try {
                 return IOUtils.toString(s, Charset.defaultCharset());
             } catch (IOException e) {

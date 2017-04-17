@@ -3,7 +3,7 @@ package org.platypus.builder.core.plugin.model.merger.internal.field;
 
 import org.platypus.api.annotations.field.DateTimeRelative;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
-import org.platypus.builder.core.plugin.impl.literral.TimeFieldLiteral;
+import org.platypus.builder.core.internal.literral.TimeFieldLiteral;
 
 import static org.platypus.builder.utils.ValuesUtils.bool;
 

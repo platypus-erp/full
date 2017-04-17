@@ -4,6 +4,7 @@ package org.platypus.builder.core.plugin.model.tree.internal;
 import org.platypus.builder.core.plugin.model.tree.FieldNode;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -15,9 +16,9 @@ import java.util.Set;
  */
 public class FieldNodeImpl<T> implements FieldNode<T> {
 
-    private Set<FieldNodeImpl<T>> parents;
+    private final Set<FieldNodeImpl<T>> parents = new HashSet<>();
     private final T current;
-    private Set<FieldNodeImpl<T>> childs;
+    private final Set<FieldNodeImpl<T>> childs= new HashSet<>();
 
 
     public FieldNodeImpl(T f) {

@@ -1,21 +1,102 @@
 group 'org.platypus.sample'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'application'
+apply plugin: GradlePlatypusPluginBuilder
 
-sourceCompatibility = 1.8
-mainClassName = "org.platypus.sample.depends.Main"
 repositories {
     mavenCentral()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile project(':impl:module')
+    compile project(':impl:models')
     compile project(':builder:core')
+    compile project(':builder:plugin:jpa-generator')
     compile project(':builder:plugin:display-tree-module')
     compile project(':module:base')
 }
 
-run {
-    args 'display-tree-module-txt'
+platypus {
+    moduleVersion "1"
+    conf {
+        display_tree_module {
+            enable = false
+            opt = [output: "TXT"]
+        }
+    }
 }
+
+class GradlePlatypusPluginBuilder implements Plugin<Project> {
+    void apply(Project project) {
+        project.extensions.create("platypus", PlatypusExtension, project)
+        project.platypus.extensions.conf = project.container(PlatypusPluginExtensionContainer)
+        project.getPluginManager().apply(ApplicationPlugin.class)
+        project.sourceCompatibility = 1.8
+        project.mainClassName = "org.platypus.builder.core.PlatypusBuilder"
+
+        project.sourceSets {
+            platypusgenerated {
+                java {
+                    srcDir 'platypus/generated'
+                }
+            }
+        }
+        project.run {
+            doFirst {
+                project.platypus.args_run "--directory=${project.platypus.projectDir}",
+                "--modulename=${project.platypus.modulename}",
+                "--plugins=${project.platypus.conf}",
+                "--defaultpkg=${project.platypus.baseGeneratedPackage}",
+                "--moduleVersion=${project.platypus.moduleVersion}",
+                "--depends=${project.platypus.depends}",
+                "--moduleQuickDesc=${project.platypus.moduleQuickDesc}",
+                "--shortDesc=${project.platypus.shortDesc}",
+                "--longDesc=${project.platypus.longDesc}"
+
+                println project.platypus.moduleVersion
+                args project.platypus.args_run
+            }
+        }
+    }
+}
+
+class PlatypusExtension {
+    String moduleVersion
+    String[] depends
+    String projectDir
+    String modulename
+    String moduleQuickDesc
+    String baseGeneratedPackage
+
+    File shortDesc
+    File longDesc
+
+    String[] args_run
+
+    PlatypusExtension(Project project) {
+        projectDir = project.projectDir
+        modulename = project.name
+        moduleVersion = project.version
+        baseGeneratedPackage = project.group.toString() + "." + project.name
+        shortDesc = project.file('src/main/ressources/' + baseGeneratedPackage + '/short-desc.adoc')
+        longDesc = project.file('src/main/ressources/' + baseGeneratedPackage + '/long-desc.adoc')
+    }
+}
+
+class PlatypusPluginExtensionContainer {
+    final String name
+    boolean enable = true
+    Map<String, String> opt = new HashMap<>()
+
+
+    PlatypusPluginExtensionContainer(String name) {
+        this.name = name
+    }
+
+    @Override
+    public String toString() {
+        return "$name(enable::$enable - opt::$opt)"
+    }
+}
+

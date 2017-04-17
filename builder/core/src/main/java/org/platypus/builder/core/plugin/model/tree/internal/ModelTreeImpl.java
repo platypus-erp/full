@@ -15,6 +15,7 @@ import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 import org.platypus.builder.core.plugin.model.tree.FieldNode;
 import org.platypus.builder.core.plugin.model.tree.ModelTree;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -32,28 +33,28 @@ public class ModelTreeImpl implements ModelTree {
         this.name = name;
     }
 
-    private Map<String, FieldNode<MetaInfoStringField>> stringField;
-    private Map<String, FieldNode<MetaInfoLongField>> longField;
-    private Map<String, FieldNode<MetaInfoIntField>> intField;
-    private Map<String, FieldNode<MetaInfoFloatField>> floatField;
-    private Map<String, FieldNode<MetaInfoDecimalField>> decimalField;
-    private Map<String, FieldNode<MetaInfoBigStringField>> bigStringField;
-    private Map<String, FieldNode<MetaInfoBinaryField>> binaryField;
-    private Map<String, FieldNode<MetaInfoDateField>> dateField;
-    private Map<String, FieldNode<MetaInfoDateTimeField>> dateTimeField;
-    private Map<String, FieldNode<MetaInfoTimeField>> timeField;
-    private Map<String, FieldNode<MetaInfoBooleanField>> booleanField;
-
-    private Map<String, FieldNodeImpl<MetaInfoStringField>> stringFieldLast;
-    private Map<String, FieldNodeImpl<MetaInfoLongField>> longFieldLast;
-    private Map<String, FieldNodeImpl<MetaInfoIntField>> intFieldLast;
-    private Map<String, FieldNodeImpl<MetaInfoFloatField>> floatFieldLast;
-    private Map<String, FieldNodeImpl<MetaInfoDecimalField>> decimalFieldLast;
-    private Map<String, FieldNodeImpl<MetaInfoBigStringField>> bigStringFieldLast;
-    private Map<String, FieldNodeImpl<MetaInfoBinaryField>> binaryFieldLast;
-    private Map<String, FieldNodeImpl<MetaInfoDateField>> dateFieldLast;
-    private Map<String, FieldNodeImpl<MetaInfoDateTimeField>> dateTimeFieldLast;
-    private Map<String, FieldNodeImpl<MetaInfoTimeField>> timeFieldLast;
+    private Map<String, FieldNode<MetaInfoStringField>> stringField = new HashMap<>();
+    private Map<String, FieldNode<MetaInfoLongField>> longField = new HashMap<>();
+    private Map<String, FieldNode<MetaInfoIntField>> intField = new HashMap<>();
+    private Map<String, FieldNode<MetaInfoFloatField>> floatField = new HashMap<>();
+    private Map<String, FieldNode<MetaInfoDecimalField>> decimalField = new HashMap<>();
+    private Map<String, FieldNode<MetaInfoBigStringField>> bigStringField = new HashMap<>();
+    private Map<String, FieldNode<MetaInfoBinaryField>> binaryField = new HashMap<>();
+    private Map<String, FieldNode<MetaInfoDateField>> dateField = new HashMap<>();
+    private Map<String, FieldNode<MetaInfoDateTimeField>> dateTimeField = new HashMap<>();
+    private Map<String, FieldNode<MetaInfoTimeField>> timeField = new HashMap<>();
+    private Map<String, FieldNode<MetaInfoBooleanField>> booleanField = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoStringField>> stringFieldLast = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoLongField>> longFieldLast = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoBooleanField>> booleanFieldLast = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoIntField>> intFieldLast = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoFloatField>> floatFieldLast = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoDecimalField>> decimalFieldLast = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoBigStringField>> bigStringFieldLast = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoBinaryField>> binaryFieldLast = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoDateField>> dateFieldLast = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoDateTimeField>> dateTimeFieldLast = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoTimeField>> timeFieldLast = new HashMap<>();
 
     @Override
     public Map<String, FieldNode<MetaInfoStringField>> getStringField() {
@@ -106,8 +107,8 @@ public class ModelTreeImpl implements ModelTree {
     }
 
     @Override
-    public Map<String, FieldNode<MetaInfoBooleanField>> getBooelanField() {
-        return null;
+    public Map<String, FieldNode<MetaInfoBooleanField>> getBooleanField() {
+        return booleanField;
     }
 
     public void addStringField(String fieldName, FieldNodeImpl<MetaInfoStringField> node) {
@@ -120,6 +121,10 @@ public class ModelTreeImpl implements ModelTree {
 
     public void addIntField(String fieldName, FieldNodeImpl<MetaInfoIntField> node) {
         add(fieldName, node, intField, intFieldLast);
+    }
+
+    public void addBooleanField(String fieldName, FieldNodeImpl<MetaInfoBooleanField> node) {
+        add(fieldName, node, booleanField, booleanFieldLast);
     }
 
     public void addFloatField(String fieldName, FieldNodeImpl<MetaInfoFloatField> node) {

@@ -4,7 +4,7 @@ package org.platypus.builder.core.plugin.model.merger.internal.field;
 import org.platypus.api.annotations.field.RemoveSpaceType;
 import org.platypus.api.annotations.field.RequiredType;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
-import org.platypus.builder.core.plugin.impl.literral.StringFieldLiteral;
+import org.platypus.builder.core.internal.literral.StringFieldLiteral;
 
 import static org.platypus.builder.utils.ValuesUtils.bool;
 import static org.platypus.builder.utils.ValuesUtils.intMax;

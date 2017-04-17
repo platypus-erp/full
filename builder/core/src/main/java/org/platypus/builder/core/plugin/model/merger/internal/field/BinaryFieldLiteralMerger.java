@@ -2,7 +2,7 @@ package org.platypus.builder.core.plugin.model.merger.internal.field;
 
 
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
-import org.platypus.builder.core.plugin.impl.literral.BinaryFieldLiteral;
+import org.platypus.builder.core.internal.literral.BinaryFieldLiteral;
 
 import static org.platypus.builder.utils.ValuesUtils.bool;
 
