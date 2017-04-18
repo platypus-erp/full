@@ -19,6 +19,7 @@ dependencies {
 
 platypus {
     moduleVersion "1"
+    depends = ['base', 'stock']
     conf {
         display_tree_module {
             enable = false
@@ -44,18 +45,7 @@ class GradlePlatypusPluginBuilder implements Plugin<Project> {
         }
         project.run {
             doFirst {
-                project.platypus.args_run "--directory=${project.platypus.projectDir}",
-                "--modulename=${project.platypus.modulename}",
-                "--plugins=${project.platypus.conf}",
-                "--defaultpkg=${project.platypus.baseGeneratedPackage}",
-                "--moduleVersion=${project.platypus.moduleVersion}",
-                "--depends=${project.platypus.depends}",
-                "--moduleQuickDesc=${project.platypus.moduleQuickDesc}",
-                "--shortDesc=${project.platypus.shortDesc}",
-                "--longDesc=${project.platypus.longDesc}"
-
-                println project.platypus.moduleVersion
-                args project.platypus.args_run
+                args project.platypus.getArgs()
             }
         }
     }
@@ -81,6 +71,18 @@ class PlatypusExtension {
         baseGeneratedPackage = project.group.toString() + "." + project.name
         shortDesc = project.file('src/main/ressources/' + baseGeneratedPackage + '/short-desc.adoc')
         longDesc = project.file('src/main/ressources/' + baseGeneratedPackage + '/long-desc.adoc')
+    }
+
+    String[] getArgs(){
+        return ["--directory=${projectDir}",
+                "--modulename=${modulename}",
+                "--plugins=${conf}",
+                "--defaultpkg=${baseGeneratedPackage}",
+                "--moduleVersion=${moduleVersion}",
+                "--depends=${depends}",
+                "--moduleQuickDesc=${moduleQuickDesc}",
+                "--shortDesc=${shortDesc}",
+                "--longDesc=${longDesc}"]
     }
 }
 

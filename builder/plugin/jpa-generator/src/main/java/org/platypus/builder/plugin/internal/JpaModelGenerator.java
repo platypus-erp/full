@@ -2,18 +2,15 @@ package org.platypus.builder.plugin.internal;
 
 
 import com.squareup.javapoet.AnnotationSpec;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeSpec;
 import org.apache.commons.lang3.StringUtils;
-import org.platypus.api.fields.BigStringField;
-import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.builder.core.plugin.model.merger.ModelMerged;
 import org.platypus.builder.plugin.internal.field.BasicFieldJavaGetterGenerator;
 import org.platypus.builder.plugin.internal.field.BasicFieldJavaSetterGenerator;
 import org.platypus.builder.plugin.internal.field.BasicFieldJpaGenerator;
-import org.platypus.builder.utils.javapoet.ClassSpecUtils;
-import org.platypus.builder.utils.javapoet.Constant;
+import org.platypus.builder.utils.javapoet.utils.ClassSpecUtils;
+import org.platypus.builder.utils.javapoet.utils.Constant;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

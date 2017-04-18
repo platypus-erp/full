@@ -2,7 +2,7 @@ package org.platypus.sample.depends;
 
 
 import org.platypus.api.annotations.ModuleInfo;
-import orp.platypus.impl.module.AbstractModule;
+import org.platypus.builder.core.AbstractModule;
 
 /**
  * @author chmuchme

@@ -14,6 +14,8 @@ dependencies {
     compile project(':api:core')
     compile project(':api:module')
     compile project(':api:models')
+    compile project(':impl:models')
+    compile project(':impl:module')
     compile project(':api:annotations')
     compile project(':builder:utils')
     testCompile group: 'junit', name: 'junit', version: '4.12'

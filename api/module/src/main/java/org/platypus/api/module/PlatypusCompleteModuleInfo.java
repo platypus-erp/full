@@ -14,15 +14,11 @@ import java.util.Set;
  * @version 0.1
  * @since 0.1
  */
-public interface PlatypusCompleteModuleInfo extends ModuleInfo, ModelOfModuleInfo {
+public interface PlatypusCompleteModuleInfo extends ModuleInfo, ModelOfModuleInfo, RecordOfModuleInfo {
 
     String getLongDecription();
 
     String getShortDecription();
-
-    Map<String, MetaInfoRecordCollection> getRecordCollection();
-
-    Map<String, MetaInfoRecord> getRecord();
 
     Set<Locale> getI18n();
 

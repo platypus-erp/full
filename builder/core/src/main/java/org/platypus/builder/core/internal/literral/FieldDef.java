@@ -1,5 +1,6 @@
 package org.platypus.builder.core.internal.literral;
 
+import org.platypus.api.Namable;
 import org.platypus.api.annotations.field.ComputedFieldDefinition;
 import org.platypus.api.annotations.field.RelatedFieldDefinition;
 
@@ -13,5 +14,6 @@ import org.platypus.api.annotations.field.RelatedFieldDefinition;
  */
 public interface FieldDef extends
         RelatedFieldDefinition,
-        ComputedFieldDefinition {
+        ComputedFieldDefinition,
+        Namable {
 }

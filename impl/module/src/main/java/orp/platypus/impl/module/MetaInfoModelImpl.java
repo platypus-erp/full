@@ -87,6 +87,15 @@ public final class MetaInfoModelImpl implements MetaInfoModel {
         timeField.add(metaInfoTimeField);
     }
 
+    @Override
+    public String getClassName() {
+        return null;
+    }
+
+    @Override
+    public String[] getInheritNames() {
+        return new String[0];
+    }
 
     @Override
     public String getName() {

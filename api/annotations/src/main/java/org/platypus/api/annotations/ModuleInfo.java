@@ -1,5 +1,7 @@
 package org.platypus.api.annotations;
 
+import org.platypus.api.BaseModel;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

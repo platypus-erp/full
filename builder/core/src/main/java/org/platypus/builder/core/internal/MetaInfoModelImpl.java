@@ -23,7 +23,9 @@ import java.util.Set;
  * on 13/04/17.
  */
 public class MetaInfoModelImpl implements MetaInfoModel {
+    private final String className;
     private final String name;
+    private final String[] inheritNames;
     private final TypeModel typeModel;
     Set<MetaInfoStringField> stringField = new HashSet<>();
     Set<MetaInfoLongField> longField = new HashSet<>();
@@ -37,14 +39,40 @@ public class MetaInfoModelImpl implements MetaInfoModel {
     Set<MetaInfoDateTimeField> dateTimeField = new HashSet<>();
     Set<MetaInfoTimeField> timeField = new HashSet<>();
 
-    public MetaInfoModelImpl(String name, TypeModel typeModel) {
+    public MetaInfoModelImpl(String className, String name) {
+        this.className = className;
         this.name = name;
-        this.typeModel = typeModel;
+        this.inheritNames = new String[0];
+        this.typeModel = TypeModel.ROOT;
+    }
+
+    public MetaInfoModelImpl(String className, String[] inheritNames) {
+        this.className = className;
+        this.name = null;
+        this.inheritNames = inheritNames;
+        this.typeModel = TypeModel.INHERIT;
+    }
+
+    public MetaInfoModelImpl(String className, String rootName, String[] inheritNames) {
+        this.className = className;
+        this.name = rootName;
+        this.inheritNames = inheritNames;
+        this.typeModel = TypeModel.ROOT_BASED;
+    }
+
+    @Override
+    public String getClassName() {
+        return className;
     }
 
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String[] getInheritNames() {
+        return inheritNames;
     }
 
     @Override

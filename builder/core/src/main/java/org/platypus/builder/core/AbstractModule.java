@@ -1,17 +1,14 @@
-package orp.platypus.impl.module;
+package org.platypus.builder.core;
 
 import org.apache.commons.io.IOUtils;
 import org.platypus.api.BaseModel;
 import org.platypus.api.annotations.ModuleInfo;
+import org.platypus.api.annotations.PlatypusVersion;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
-import org.platypus.api.annotations.PlatypusVersion;
 import org.platypus.api.views.View;
-import org.platypus.builder.core.ReflectiveModelParser;
-import org.platypus.sample.depends.desc.LongDescLoader;
-import org.platypus.sample.depends.desc.ShortDescLoader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -167,22 +164,22 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
 
     @Override
     public Map<String, MetaInfoRecordCollection> getRecordCollection() {
-        return null;
+        return Collections.emptyMap();
     }
 
     @Override
     public Set<String> getRefData() {
-        return null;
+        return Collections.emptySet();
     }
 
     @Override
     public Set<String> getDemoData() {
-        return null;
+        return Collections.emptySet();
     }
 
     @Override
     public Map<String, MetaInfoRecord> getRecord() {
-        return null;
+        return Collections.emptyMap();
     }
 
     @Override
@@ -192,11 +189,11 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
 
     @Override
     public Map<String, View> getViews() {
-        return null;
+        return Collections.emptyMap();
     }
 
     @Override
     public Map<String, View> getMenus() {
-        return null;
+        return Collections.emptyMap();
     }
 }

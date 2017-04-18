@@ -1,4 +1,4 @@
-package org.platypus.builder.utils.javapoet;
+package org.platypus.builder.utils.javapoet.utils;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeSpec;
@@ -12,7 +12,8 @@ import javax.lang.model.element.Modifier;
  * @version 0.1
  * @since 0.1
  */
-public class ClassSpecUtils {
+public class
+                                ClassSpecUtils {
 
     public static TypeSpec.Builder publicClass(String classname) {
         return TypeSpec.classBuilder(classname).addModifiers(Modifier.PUBLIC);

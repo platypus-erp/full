@@ -2,33 +2,31 @@ package org.platypus.builder.core;
 
 
 import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.TypeSpec;
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
 import org.platypus.builder.core.plugin.Config;
 import org.platypus.builder.core.plugin.ModelProcessor;
 import org.platypus.builder.core.plugin.PlatypusPlugin;
+import org.platypus.builder.core.plugin.ProcessState;
 import org.platypus.builder.core.plugin.model.merger.ModelMerged;
 import org.platypus.builder.core.plugin.model.merger.ModelMergerPlugin;
 import org.platypus.builder.core.plugin.model.tree.ModelTreePlugin;
 import org.platypus.builder.core.plugin.model.tree.ModuleTreeModel;
 import org.platypus.builder.core.plugin.moduletree.ModuleTreeImpl;
 import org.platypus.builder.core.plugin.moduletree.ModuleTreePlugin;
+import org.platypus.builder.core.plugin.record.RecordRegistry;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * TODO Add JavaDoc
@@ -43,44 +41,32 @@ public final class PlatypusBuilder {
     private final Map<String, PlatypusPlugin> pluginsDiscovered = new HashMap<>();
     private final Config config;
     private final List<ModelProcessor> modelProcessors = new ArrayList<>();
-    private final Map<String, String> argsMap;
-    private final Path projectDir;
-    private final Path projectDirGenerated;
+    private final MainArgs mainArgs;
 
     public static void main(String... args) {
-        new PlatypusBuilder(args).run();
+        System.out.println(Arrays.toString(args));
+        new PlatypusBuilder(new MainArgs(args)).run();
     }
 
-    private PlatypusBuilder(String... args) {
-        System.out.println(Arrays.toString(args));
-        argsMap = Arrays.stream(args)
-                .map(s -> s.split("="))
-                .collect(Collectors.toMap(t -> t[0], t -> t[1]));
+    public static PlatypusBuilder of(MainArgs mainArgs) {
+        return new PlatypusBuilder(mainArgs);
+    }
 
-        projectDir = Paths.get(argsMap.get("--directory"));
-        projectDirGenerated = Paths.get(argsMap.get("--directory"), "src", "platypusgenerated", "java");
-        String currentModuleName = argsMap.get("--modulename");
-        String defaultpkg = argsMap.get("--defaultpkg");
+    private PlatypusBuilder(MainArgs mainArgs) {
+        this.mainArgs = mainArgs;
 
-
-        Map<String, PluginConf> conf = Stream.of(argsMap.getOrDefault("--plugins", ""))
-                .map(s -> s.substring(1, s.length()-1))
-                .flatMap(s -> Arrays.stream(s.split(",")))
-                .map(String::trim)
-                .map(PluginConf::new)
-                .collect(Collectors.toMap(PluginConf::getName, c -> c));
 
         ServiceLoader<PlatypusCompleteModuleInfo> platypusCompleteModuleInfos = ServiceLoader.load(PlatypusCompleteModuleInfo.class);
 
         PlatypusCompleteModuleInfo currentModule = null;
         for (PlatypusCompleteModuleInfo m : platypusCompleteModuleInfos) {
-            if (currentModuleName.equals(m.techincalName())) {
-                System.out.println("current module is : " + currentModuleName);
+            if (mainArgs.getModulename().equals(m.techincalName())) {
+                System.out.println("current module is : " + mainArgs.getModulename());
                 currentModule = m;
             }
         }
         if (currentModule == null) {
-            throw new IllegalArgumentException("Module[" + currentModuleName + "] not found");
+            throw new IllegalArgumentException("Module[" + mainArgs.getModulename() + "] not found");
         }
 
         ModuleTreePlugin moduleTreePlugin = new ModuleTreePlugin();
@@ -94,7 +80,33 @@ public final class PlatypusBuilder {
         ModelMergerPlugin modelMergerPlugin = new ModelMergerPlugin(treeModel);
         modelMerged = modelMergerPlugin.build();
 
-        config = new Config(currentModule, moduleTree, treeModel, modelMerged, conf, defaultpkg);
+
+        RecordRegistry recordRegistry = new RecordRegistry();
+        platypusCompleteModuleInfos.forEach(m -> recordRegistry.addModule(m.techincalName(), m));
+        currentModule.getModel().forEach((k, v) ->
+                recordRegistry.addCurrentModuleModel(
+                        modelMergerPlugin.getModel().get(k),
+                        v.getClassName()
+                )
+        );
+        Set<JavaFile.Builder> recordToCreate = recordRegistry.generateCurrentModuleRecord(mainArgs.getDefaultPkg());
+        for (JavaFile.Builder files : recordToCreate) {
+            System.out.println(files.build().packageName);
+            try {
+                files.build().writeTo(mainArgs.getProjectDirGenerated().resolve("records").toFile());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        config = new Config(
+                currentModule,
+                moduleTree,
+                treeModel,
+                modelMerged,
+                mainArgs.getConf(),
+                mainArgs.getDefaultPkg()
+        );
 
         System.out.println("Load of platypus model processor");
         ServiceLoader<ModelProcessor> modelProcessorsService = ServiceLoader.load(ModelProcessor.class);
@@ -102,7 +114,7 @@ public final class PlatypusBuilder {
 
         System.out.println("Load of platypus plugins");
         ServiceLoader<PlatypusPlugin> plugins = ServiceLoader.load(PlatypusPlugin.class);
-        plugins.forEach(p -> p.applyConf(conf.getOrDefault(p.getName(), p.getDefaultConf())));
+        plugins.forEach(p -> p.applyConf(mainArgs.getConf().getOrDefault(p.getName(), p.getDefaultConf())));
         plugins.forEach(p -> pluginsDiscovered.put(p.getName(), p));
     }
 
@@ -118,16 +130,18 @@ public final class PlatypusBuilder {
 
         for (ModelMerged model : modelMerged.values()) {
             for (ModelProcessor processor : modelProcessors) {
-                if (processor.process(model, config)) {
+                if (processor.process(model, config, ProcessState.IN_PROGRESS)) {
                     continue;
                 }
             }
         }
+        modelProcessors.forEach(p -> p.process(null, config, ProcessState.FINISH));
+
         for (ModelProcessor processor : modelProcessors) {
-            for (JavaFile.Builder files : processor.afterProcess(config).getAllFile()) {
+            for (JavaFile.Builder files : processor.getResultProcessing(config).getAllFile()) {
                 System.out.println(files.build().packageName);
                 try {
-                    files.build().writeTo(projectDirGenerated.toFile());
+                    files.build().writeTo(mainArgs.getProjectDirGenerated().toFile());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

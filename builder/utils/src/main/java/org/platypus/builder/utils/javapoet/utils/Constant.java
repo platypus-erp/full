@@ -1,4 +1,4 @@
-package org.platypus.builder.utils.javapoet;
+package org.platypus.builder.utils.javapoet.utils;
 
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.TypeName;

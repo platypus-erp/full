@@ -7,6 +7,7 @@ import org.platypus.builder.core.plugin.ModelProcessor;
 import org.platypus.builder.core.plugin.ModelProcessorResult;
 import org.platypus.builder.core.plugin.PlatypusBuilderImMutableConf;
 import org.platypus.builder.core.plugin.PlatypusBuilderMutableConf;
+import org.platypus.builder.core.plugin.ProcessState;
 import org.platypus.builder.core.plugin.model.merger.ModelMerged;
 import org.platypus.builder.plugin.internal.JpaModelGenerator;
 
@@ -25,7 +26,7 @@ public class JpaImplGeneratorPlugin implements ModelProcessor {
     }
 
     JpaModelGenerator jpaModelGenerator;
-
+    ModelProcessorResult result;
     @Override
     public int priority() {
         return 0;
@@ -43,17 +44,20 @@ public class JpaImplGeneratorPlugin implements ModelProcessor {
     }
 
     @Override
-    public boolean process(ModelMerged modelMerged, PlatypusBuilderImMutableConf conf) {
-        System.out.println("process "+modelMerged.getName());
-        jpaModelGenerator.generate(modelMerged);
+    public boolean process(ModelMerged modelMerged, PlatypusBuilderImMutableConf conf, ProcessState state) {
+        if (ProcessState.FINISH == state){
+            result = ModelProcessorResult.create();
+            result.addTypeSpecBuilder(conf.getDefaultPackage()+".model.jpa",
+                    jpaModelGenerator.getJpaImplBuiler().values());
+        }else {
+            System.out.println("process "+modelMerged.getName());
+            jpaModelGenerator.generate(modelMerged);
+        }
         return false;
     }
 
     @Override
-    public ModelProcessorResult afterProcess(PlatypusBuilderImMutableConf conf) {
-        ModelProcessorResult result = ModelProcessorResult.create();
-        result.addTypeSpecBuilder(conf.getDefaultPackage()+"model.jpa",
-                jpaModelGenerator.getJpaImplBuiler().values());
+    public ModelProcessorResult getResultProcessing(PlatypusBuilderImMutableConf conf) {
         return result;
     }
 }

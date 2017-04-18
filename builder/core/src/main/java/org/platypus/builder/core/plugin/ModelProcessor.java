@@ -17,7 +17,7 @@ public interface ModelProcessor extends Namable{
 
     void init(PlatypusBuilderMutableConf conf);
 
-    boolean process(ModelMerged modelMerged,PlatypusBuilderImMutableConf conf);
+    boolean process(ModelMerged modelMerged,PlatypusBuilderImMutableConf conf, ProcessState state);
 
-    ModelProcessorResult afterProcess(PlatypusBuilderImMutableConf conf);
+    ModelProcessorResult getResultProcessing(PlatypusBuilderImMutableConf conf);
 }

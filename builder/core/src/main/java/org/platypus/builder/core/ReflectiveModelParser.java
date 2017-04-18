@@ -2,7 +2,6 @@ package org.platypus.builder.core;
 
 
 import org.platypus.api.BaseModel;
-import org.platypus.api.TypeModel;
 import org.platypus.api.annotations.field.BigStringFieldDefinition;
 import org.platypus.api.annotations.field.BinaryFieldDefinition;
 import org.platypus.api.annotations.field.BooleanFieldDefinition;
@@ -15,7 +14,6 @@ import org.platypus.api.annotations.field.LongFieldDefinition;
 import org.platypus.api.annotations.field.RelatedFieldDefinition;
 import org.platypus.api.annotations.field.StringFieldDefinition;
 import org.platypus.api.annotations.field.TimeFieldDefinition;
-import org.platypus.api.annotations.model.PlatypusInherit;
 import org.platypus.api.annotations.model.PlatypusModel;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.builder.core.internal.MetaInfoModelImpl;
@@ -33,6 +31,7 @@ import org.platypus.builder.core.internal.literral.TimeFieldLiteral;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
@@ -41,43 +40,51 @@ import java.util.function.BiFunction;
  * @since 0.1
  * on 13/04/17.
  */
-@PlatypusModel("abstract")
 public class ReflectiveModelParser implements BaseModel {
-    MetaInfoModel metaInfoModel;
-
 
     public MetaInfoModel parse(BaseModel model) {
-        if (model.getClass().isAnnotationPresent(PlatypusModel.class)
-                && model.getClass().isAnnotationPresent(PlatypusInherit.class)) {
-            throw new IllegalArgumentException(String.format("The class[%s] should be annotated with %s or %s",
-                    this.getClass().getCanonicalName(),
-                    PlatypusModel.class.getCanonicalName(),
-                    PlatypusInherit.class.getCanonicalName()));
+        if (!model.getClass().isAnnotationPresent(PlatypusModel.class)) {
+            throw new IllegalArgumentException(String.format("The class[%s] should be annotated with %s",
+                    model.getClass().getCanonicalName(),
+                    PlatypusModel.class.getCanonicalName()));
         }
-        return reflectiveConstructMetaInfo(model.getClass());
+        Class<?> baseModelClass = model.getClass();
+        MetaInfoModelImpl impl;
+        PlatypusModel annoModel = baseModelClass.getAnnotation(PlatypusModel.class);
+        if (annoModel.inherit().length == 0) {
+            impl = new MetaInfoModelImpl(baseModelClass.getSimpleName(), annoModel.value());
+        } else if (annoModel.value().isEmpty()) {
+            impl = new MetaInfoModelImpl(baseModelClass.getSimpleName(), Arrays.stream(annoModel.inherit())
+                    .map(i -> i.getAnnotation(PlatypusModel.class).value())
+                    .toArray(String[]::new));
+        } else if (!annoModel.value().isEmpty()){
+            impl = new MetaInfoModelImpl(baseModelClass.getSimpleName(), annoModel.value(),
+                    Arrays.stream(annoModel.inherit())
+                            .map(i -> i.getAnnotation(PlatypusModel.class).value())
+                            .toArray(String[]::new));
+        } else {
+            throw new IllegalArgumentException(String.format("The class[%s] should be annotated with %s " +
+                            "and PlatypusModel.value or PlatypusModel.inherits should be filled",
+                    this.getClass().getCanonicalName(),
+                    PlatypusModel.class.getCanonicalName()));
+        }
+        return reflectiveConstructMetaInfo(impl, baseModelClass.getDeclaredFields());
     }
 
-    private MetaInfoModel reflectiveConstructMetaInfo(Class<?> baseModelClass) {
-        MetaInfoModelImpl imp;
-        if (baseModelClass.isAnnotationPresent(PlatypusModel.class)) {
-            PlatypusModel annoModel = baseModelClass.getAnnotation(PlatypusModel.class);
-            imp = new MetaInfoModelImpl(annoModel.value(), TypeModel.ROOT);
-        } else {
-            throw new UnsupportedOperationException("Not yet implemented");
+    private MetaInfoModel reflectiveConstructMetaInfo(MetaInfoModelImpl impl, Field[] fields) {
+        for (Field f : fields) {
+            create(f, BigStringFieldDefinition.class, BigStringFieldLiteral::new).ifPresent(impl::add);
+            create(f, BinaryFieldDefinition.class, BinaryFieldLiteral::new).ifPresent(impl::add);
+            create(f, BooleanFieldDefinition.class, BooleanFieldLiteral::new).ifPresent(impl::add);
+            create(f, DateFieldDefinition.class, DateFieldLiteral::new).ifPresent(impl::add);
+            create(f, DateTimeFieldDefinition.class, DateTimeFieldLiteral::new).ifPresent(impl::add);
+            create(f, DecimalFieldDefinition.class, DecimalFieldLiteral::new).ifPresent(impl::add);
+            create(f, FloatFieldDefinition.class, FloatFieldLiteral::new).ifPresent(impl::add);
+            create(f, LongFieldDefinition.class, LongFieldLitteral::new).ifPresent(impl::add);
+            create(f, StringFieldDefinition.class, StringFieldLiteral::new).ifPresent(impl::add);
+            create(f, TimeFieldDefinition.class, TimeFieldLiteral::new).ifPresent(impl::add);
         }
-        for (Field f : baseModelClass.getDeclaredFields()) {
-            create(f, BigStringFieldDefinition.class, BigStringFieldLiteral::new).ifPresent(imp::add);
-            create(f, BinaryFieldDefinition.class, BinaryFieldLiteral::new).ifPresent(imp::add);
-            create(f, BooleanFieldDefinition.class, BooleanFieldLiteral::new).ifPresent(imp::add);
-            create(f, DateFieldDefinition.class, DateFieldLiteral::new).ifPresent(imp::add);
-            create(f, DateTimeFieldDefinition.class, DateTimeFieldLiteral::new).ifPresent(imp::add);
-            create(f, DecimalFieldDefinition.class, DecimalFieldLiteral::new).ifPresent(imp::add);
-            create(f, FloatFieldDefinition.class, FloatFieldLiteral::new).ifPresent(imp::add);
-            create(f, LongFieldDefinition.class, LongFieldLitteral::new).ifPresent(imp::add);
-            create(f, StringFieldDefinition.class, StringFieldLiteral::new).ifPresent(imp::add);
-            create(f, TimeFieldDefinition.class, TimeFieldLiteral::new).ifPresent(imp::add);
-        }
-        return imp;
+        return impl;
     }
 
     private <T extends BasicFieldDef, A extends Annotation> Optional<T> create(

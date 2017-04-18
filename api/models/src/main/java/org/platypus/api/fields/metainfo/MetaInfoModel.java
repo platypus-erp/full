@@ -23,23 +23,13 @@ import java.util.Set;
  * @version 0.1
  * @since 0.1
  */
-public interface MetaInfoModel extends Namable{
+public interface MetaInfoModel extends
+        MetaInfoInheritModel,
+        MetaInfoRootBasedModelModel,
+        MetaInfoRootModel,
+        MetaInfoTypableModel{
 
-    TypeModel getType();
-
-    Set<MetaInfoStringField> stringField();
-    Set<MetaInfoLongField> longField();
-    Set<MetaInfoBooleanField> booleanField();
-    Set<MetaInfoIntField> intField();
-    Set<MetaInfoFloatField> floatField();
-    Set<MetaInfoDecimalField> decimalField();
-    Set<MetaInfoBigStringField> bigStringField();
-    Set<MetaInfoBinaryField> binaryField();
-    Set<MetaInfoDateField> dateField();
-    Set<MetaInfoDateTimeField> dateTimeField();
-    Set<MetaInfoTimeField> timeField();
-
-
+    String getClassName();
 //    Set<OneToManyFieldDefinition> oneToMany();
 //    Set<OneToOneFieldDefinition> oneToOne();
 //    Set<ManyToOneFieldDefinition> manyToOne();
