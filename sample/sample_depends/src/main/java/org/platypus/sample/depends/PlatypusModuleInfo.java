@@ -15,7 +15,7 @@ public class PlatypusModuleInfo extends AbstractModule{
     public PlatypusModuleInfo() {
         super("Sample Module with all platypus and community depends");
         setLongDesc("long-desc.adoc");
-        setLongDesc("short-desc.adoc");
+        setShortDesc("short-desc.adoc");
         addModel(new TestModel());
     }
 }

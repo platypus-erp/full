@@ -9,6 +9,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final'
     compile project(':impl:module')
     compile project(':impl:models')
     compile project(':builder:core')
@@ -30,6 +31,9 @@ platypus {
 
 class GradlePlatypusPluginBuilder implements Plugin<Project> {
     void apply(Project project) {
+        project.configurations {
+            platypus
+        }
         project.extensions.create("platypus", PlatypusExtension, project)
         project.platypus.extensions.conf = project.container(PlatypusPluginExtensionContainer)
         project.getPluginManager().apply(ApplicationPlugin.class)
@@ -39,7 +43,7 @@ class GradlePlatypusPluginBuilder implements Plugin<Project> {
         project.sourceSets {
             platypusgenerated {
                 java {
-                    srcDir 'platypus/generated'
+                    srcDir 'src/main/platypus/generated'
                 }
             }
         }
@@ -101,4 +105,40 @@ class PlatypusPluginExtensionContainer {
         return "$name(enable::$enable - opt::$opt)"
     }
 }
+
+task generateQueryDSL(type: JavaExec, group: 'build', description: 'Generates the QueryDSL query types') {
+    println "BLABLA"
+//    source = sourceSets.main.java
+//    classpath = configurations.compile + configurations.platypus
+//    options.compilerArgs = [
+//            "-proc:only",
+//            "-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
+//    ]
+//    destinationDir = sourceSets.platypusgenerated.java.srcDirs.iterator().next()
+}
+
+//compileJava {
+//    dependsOn generateQueryDSL
+//    dependsOn run
+//    source platypusgenerated.destinationDir
+//}
+//
+//compileGeneratedJava {
+//    dependsOn generateQueryDSL
+//    dependsOn run
+//    options.warnings = false
+//    classpath += sourceSets.main.runtimeClasspath
+//}
+//
+//clean {
+//    delete sourceSets.platypusgenerated.java.srcDirs
+//}
+//
+//idea {
+//    module {
+//        sourceDirs += file('src/main/generated')
+//    }
+//}
+
+
 
