@@ -9,5 +9,5 @@ import org.platypus.sample.depends.ResourcesLoaderDescriptor;
  * on 31/03/17.
  */
 @ResourcesLoaderDescriptor(name = "short_desc", ext = "adoc")
-public final class functionSetterShortDescLoader implements ResourceLoader {
+public final class ShortDescLoader implements ResourceLoader {
 }

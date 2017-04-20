@@ -121,7 +121,7 @@ class Utils {
     }
 
     static TypeName getRecordFieldImpl(Annotation fieldType){
-        return RECORD_FIELD_TYPE.get(fieldType.annotationType().getCanonicalName());
+        return RECORD_FIELD_TYPE_IMPL.get(fieldType.annotationType().getCanonicalName());
     }
 
     public static ClassName toRecordCollection(MetaInfoRecordCollection representation) {

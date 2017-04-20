@@ -6,6 +6,7 @@ import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.api.module.RecordOfModuleInfo;
 import org.platypus.builder.core.plugin.model.merger.ModelMerged;
+import orp.platypus.impl.module.MetaInfoRecordCollectionImpl;
 import orp.platypus.impl.module.MetaInfoRecordImpl;
 
 import java.util.HashMap;
@@ -44,6 +45,12 @@ public class RecordRegistry {
                 new MetaInfoRecordImpl(
                         defaultPkgGenerate + ".records",
                         Utils.toRecordName(key),
+                        value.getName()
+                )));
+        currentModuleModelMerged.forEach((key, value) -> recordCollections.put(value.getName(),
+                new MetaInfoRecordCollectionImpl(
+                        defaultPkgGenerate + ".records",
+                        Utils.toRecordCollectionName(key),
                         value.getName()
                 )));
         RecordGenerator recordGenerator = new RecordGenerator();

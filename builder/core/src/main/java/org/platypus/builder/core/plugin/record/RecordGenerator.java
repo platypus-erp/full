@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static org.platypus.builder.core.plugin.record.Utils.toClassName;
 import static org.platypus.builder.core.plugin.record.Utils.toRecord;
 
 /**
@@ -43,11 +44,11 @@ public class RecordGenerator {
             }
         }
         InterfaceBuilder recordCollectionBuilder = InterfaceBuilder.publicInterface(
-                recordRegistry.getRecords().get(merged.getName()).getClassName());
+                recordRegistry.getRecordCollections().get(merged.getName()).getClassName());
         recordCollectionBuilder.addSuperInterfaces(
                 ParameterizedTypeName.get(
                         ClassName.get(RecordCollection.class),
-                        toRecord(recordRegistry.getRecords().get(merged.getName())))
+                        toClassName(recordRegistry.getRecords().get(merged.getName())))
         );
 //        for (RelationFieldLiteral b : roots.getValue().getFieldsRepresentation().getAllRelationFieldDef()) {
 //            if (b.getRealType() == PlatypusType.OTM || b.getRealType() == PlatypusType.MTM) {

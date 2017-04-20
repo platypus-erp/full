@@ -28,7 +28,10 @@ platypus {
         }
     }
 }
-
+clean.doFirst {
+    delete "${project.projectDir}/src/main/java/${project.group.toString().replace(".", "/")}/${project.name}/generated"
+    println "${project.projectDir}/src/main/java/${project.group.toString().replace(".", "/")}/${project.name}/generated"
+}
 
 class GradlePlatypusPluginBuilder implements Plugin<Project> {
     void apply(Project project) {
@@ -41,6 +44,7 @@ class GradlePlatypusPluginBuilder implements Plugin<Project> {
         project.mainClassName = "org.platypus.builder.core.PlatypusBuilder"
         project.run {
             doFirst {
+//                delete "${project.projectDir}/src/main/java/${project.group.toString().replace(".", "/")}/${project.name}/generated"
                 args project.platypus.getArgs()
             }
         }
@@ -99,6 +103,10 @@ idea {
     module {
         sourceDirs += file('src/main/generated')
     }
+}
+
+clean {
+
 }
 
 

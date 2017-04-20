@@ -27,10 +27,10 @@ public class RecordImpl<T extends Record, R extends Record, RI extends R> extend
 //        return get().id();
 //    }
 //
-////    @Override
-////    public void id(long id) {
-////        get().id(id);
-////    }
+//    @Override
+//    public void id(long id) {
+//        get().id(id);
+//    }
 //
 //    @Override
 //    public void id(LongField id) {

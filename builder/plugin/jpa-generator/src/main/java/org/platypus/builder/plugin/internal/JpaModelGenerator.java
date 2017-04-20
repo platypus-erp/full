@@ -1,22 +1,14 @@
 package org.platypus.builder.plugin.internal;
 
 
-import com.squareup.javapoet.AnnotationSpec;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.TypeSpec;
-import com.squareup.javapoet.TypeVariableName;
+import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
 import org.platypus.api.Record;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.plugin.model.merger.ModelMerged;
-import org.platypus.builder.plugin.internal.field.BasicFieldJavaGetterGenerator;
-import org.platypus.builder.plugin.internal.field.BasicFieldJavaSetterGenerator;
-import org.platypus.builder.plugin.internal.field.BasicFieldJpaGenerator;
-import org.platypus.builder.plugin.internal.field.BasicFieldRecordGenerator;
-import org.platypus.builder.plugin.internal.field.BasicFieldRecordGetterGenerator;
-import org.platypus.builder.plugin.internal.field.BasicFieldRecordSetterGenerator;
+import org.platypus.builder.plugin.internal.field.*;
 import org.platypus.builder.utils.javapoet.utils.ClassSpecUtils;
 import org.platypus.builder.utils.javapoet.utils.Constant;
 
@@ -67,6 +59,8 @@ public class JpaModelGenerator {
                 .build());
 
         jpaImplBuilder.addAnnotation(Entity.class);
+        MetaInfoRecord rec = getRecord.apply(modelMerged.getName());
+        jpaImplBuilder.addSuperinterface(ClassName.get(rec.getPkg(), rec.getClassName()));
 
         BasicFieldJpaGenerator basicFieldJpaGenerator = new BasicFieldJpaGenerator();
         BasicFieldJavaGetterGenerator basicFieldJavaGetterGenerator = new BasicFieldJavaGetterGenerator();
@@ -74,8 +68,12 @@ public class JpaModelGenerator {
         BasicFieldRecordSetterGenerator basicFieldRecordSetterGenerator = new BasicFieldRecordSetterGenerator();
         BasicFieldRecordGetterGenerator basicFieldRecordGetterGenerator = new BasicFieldRecordGetterGenerator();
         BasicFieldRecordGenerator basicFieldRecordGenerator = new BasicFieldRecordGenerator();
+        BasicFieldRecordConstructorGenerator basicFieldRecordConstructorGenerator =
+                new BasicFieldRecordConstructorGenerator(getImplHibernateName(modelMerged.getName()));
 
-        TypeVariableName Tvar = TypeVariableName.get("T", ClassName.get(Record.class));
+        MethodSpec.Builder constructor = MethodSpec.constructorBuilder();
+        TypeVariableName TvarRecord = TypeVariableName.get("T", ClassName.get(Record.class));
+//        RecordImpl<T extends Record, R extends Record, RI extends R>
 
         for (Map.Entry<String, MetaInfoStringField> r : modelMerged.getStringField().entrySet()) {
             basicFieldJpaGenerator.generatedFieldImpl(r.getValue()).ifPresent(jpaImplBuilder::addField);
@@ -84,11 +82,10 @@ public class JpaModelGenerator {
             basicFieldRecordSetterGenerator.generateSetter(r.getValue()).ifPresent(jpaImplBuilder::addMethod);
             basicFieldRecordGetterGenerator.generateGetter(r.getValue()).ifPresent(jpaImplBuilder::addMethod);
             jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(r.getValue()));
-//
-//
-//            constructor.addCode(r.getConstructorRecordFieldStatement(jpaImplClassName));
+            constructor.addCode(basicFieldRecordConstructorGenerator.generateField(r.getValue()));
 
         }
+        jpaImplBuilder.addMethod(constructor.build());
         jpaImplBuiler.put(modelMerged.getName(), jpaImplBuilder);
     }
 }

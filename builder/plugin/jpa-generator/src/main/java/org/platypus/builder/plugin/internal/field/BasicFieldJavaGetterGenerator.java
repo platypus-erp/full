@@ -2,6 +2,7 @@ package org.platypus.builder.plugin.internal.field;
 
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
+import org.apache.commons.lang3.StringUtils;
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
 import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
@@ -60,7 +61,7 @@ public class BasicFieldJavaGetterGenerator {
         return getGetter(field.getName(), Utils.getJavaType(field));
     }
     private Optional<MethodSpec> getGetter(String name, TypeName field){
-        return Optional.of(MethodSpec.methodBuilder("get" + name)
+        return Optional.of(MethodSpec.methodBuilder("get" + StringUtils.capitalize(name))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(field)
                 .addCode("return this.$N;", name)

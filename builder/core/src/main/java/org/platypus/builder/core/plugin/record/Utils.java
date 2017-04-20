@@ -103,6 +103,12 @@ class Utils {
     public static ClassName toRecord(MetaInfoRecord representation) {
         return ClassName.get(representation.getPkg(), representation.getClassName() + "Record");
     }
+    public static ClassName toClassName(MetaInfoRecord representation) {
+        return ClassName.get(representation.getPkg(), representation.getClassName());
+    }
+    public static ClassName toClassName(MetaInfoRecordCollection representation) {
+        return ClassName.get(representation.getPkg(), representation.getClassName());
+    }
 
     public static String toRecordName(String value) {
         return value + "Record";
