@@ -29,24 +29,16 @@ platypus {
     }
 }
 
+
 class GradlePlatypusPluginBuilder implements Plugin<Project> {
     void apply(Project project) {
-        project.configurations {
-            platypus
-        }
         project.extensions.create("platypus", PlatypusExtension, project)
         project.platypus.extensions.conf = project.container(PlatypusPluginExtensionContainer)
         project.getPluginManager().apply(ApplicationPlugin.class)
+        project.getPluginManager().apply(JavaPlugin.class)
+        project.getPluginManager().apply(IdeaPlugin.class)
         project.sourceCompatibility = 1.8
         project.mainClassName = "org.platypus.builder.core.PlatypusBuilder"
-
-        project.sourceSets {
-            platypusgenerated {
-                java {
-                    srcDir 'src/main/platypus/generated'
-                }
-            }
-        }
         project.run {
             doFirst {
                 args project.platypus.getArgs()
@@ -66,13 +58,11 @@ class PlatypusExtension {
     File shortDesc
     File longDesc
 
-    String[] args_run
-
     PlatypusExtension(Project project) {
         projectDir = project.projectDir
         modulename = project.name
         moduleVersion = project.version
-        baseGeneratedPackage = project.group.toString() + "." + project.name
+        baseGeneratedPackage = project.group.toString() + "." + project.name +".generated"
         shortDesc = project.file('src/main/ressources/' + baseGeneratedPackage + '/short-desc.adoc')
         longDesc = project.file('src/main/ressources/' + baseGeneratedPackage + '/long-desc.adoc')
     }
@@ -101,44 +91,15 @@ class PlatypusPluginExtensionContainer {
     }
 
     @Override
-    public String toString() {
+    String toString() {
         return "$name(enable::$enable - opt::$opt)"
     }
 }
-
-task generateQueryDSL(type: JavaExec, group: 'build', description: 'Generates the QueryDSL query types') {
-    println "BLABLA"
-//    source = sourceSets.main.java
-//    classpath = configurations.compile + configurations.platypus
-//    options.compilerArgs = [
-//            "-proc:only",
-//            "-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
-//    ]
-//    destinationDir = sourceSets.platypusgenerated.java.srcDirs.iterator().next()
+idea {
+    module {
+        sourceDirs += file('src/main/generated')
+    }
 }
-
-//compileJava {
-//    dependsOn generateQueryDSL
-//    dependsOn run
-//    source platypusgenerated.destinationDir
-//}
-//
-//compileGeneratedJava {
-//    dependsOn generateQueryDSL
-//    dependsOn run
-//    options.warnings = false
-//    classpath += sourceSets.main.runtimeClasspath
-//}
-//
-//clean {
-//    delete sourceSets.platypusgenerated.java.srcDirs
-//}
-//
-//idea {
-//    module {
-//        sourceDirs += file('src/main/generated')
-//    }
-//}
 
 
 

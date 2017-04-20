@@ -1,5 +1,8 @@
 package org.platypus.builder.core.plugin;
 
+import org.platypus.api.module.MetaInfoRecord;
+import org.platypus.api.module.MetaInfoRecordCollection;
+
 /**
  * TODO Add JavaDoc
  *
@@ -8,4 +11,5 @@ package org.platypus.builder.core.plugin;
  * @since 0.1
  */
 public interface PlatypusBuilderMutableConf extends PlatypusBuilderImMutableConf{
+
 }

@@ -1,4 +1,4 @@
-package org.platypus.sample.sample_depends.records;
+package org.platypus.sample.sample_depends.generated.records;
 
 import org.platypus.api.Record;
 import org.platypus.api.fields.StringField;

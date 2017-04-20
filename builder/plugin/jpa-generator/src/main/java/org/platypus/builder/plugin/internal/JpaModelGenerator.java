@@ -2,13 +2,21 @@ package org.platypus.builder.plugin.internal;
 
 
 import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.TypeVariableName;
 import org.apache.commons.lang3.StringUtils;
+import org.platypus.api.Record;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
+import org.platypus.api.module.MetaInfoRecord;
+import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.plugin.model.merger.ModelMerged;
 import org.platypus.builder.plugin.internal.field.BasicFieldJavaGetterGenerator;
 import org.platypus.builder.plugin.internal.field.BasicFieldJavaSetterGenerator;
 import org.platypus.builder.plugin.internal.field.BasicFieldJpaGenerator;
+import org.platypus.builder.plugin.internal.field.BasicFieldRecordGenerator;
+import org.platypus.builder.plugin.internal.field.BasicFieldRecordGetterGenerator;
+import org.platypus.builder.plugin.internal.field.BasicFieldRecordSetterGenerator;
 import org.platypus.builder.utils.javapoet.utils.ClassSpecUtils;
 import org.platypus.builder.utils.javapoet.utils.Constant;
 
@@ -18,6 +26,7 @@ import javax.persistence.Table;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.platypus.builder.utils.Utils.TO_SQL;
@@ -43,7 +52,10 @@ public class JpaModelGenerator {
                 .map(StringUtils::capitalize)
                 .collect(Collectors.joining("", "Impl", "JPA"));
     }
-    public void generate(ModelMerged modelMerged){
+    public void generate(ModelMerged modelMerged,
+                         Function<String, MetaInfoRecord> getRecord,
+                         Function<String, MetaInfoRecordCollection> getRecordCollection){
+
         TypeSpec.Builder jpaImplBuilder = ClassSpecUtils.publicClass(getImplHibernateName(modelMerged.getName()));
         String tableName = TO_SQL.apply(modelMerged.getName());
 
@@ -55,19 +67,23 @@ public class JpaModelGenerator {
                 .build());
 
         jpaImplBuilder.addAnnotation(Entity.class);
+
         BasicFieldJpaGenerator basicFieldJpaGenerator = new BasicFieldJpaGenerator();
         BasicFieldJavaGetterGenerator basicFieldJavaGetterGenerator = new BasicFieldJavaGetterGenerator();
         BasicFieldJavaSetterGenerator basicFieldJavaSetterGenerator = new BasicFieldJavaSetterGenerator();
+        BasicFieldRecordSetterGenerator basicFieldRecordSetterGenerator = new BasicFieldRecordSetterGenerator();
+        BasicFieldRecordGetterGenerator basicFieldRecordGetterGenerator = new BasicFieldRecordGetterGenerator();
+        BasicFieldRecordGenerator basicFieldRecordGenerator = new BasicFieldRecordGenerator();
+
+        TypeVariableName Tvar = TypeVariableName.get("T", ClassName.get(Record.class));
+
         for (Map.Entry<String, MetaInfoStringField> r : modelMerged.getStringField().entrySet()) {
             basicFieldJpaGenerator.generatedFieldImpl(r.getValue()).ifPresent(jpaImplBuilder::addField);
             basicFieldJavaGetterGenerator.generateGetter(r.getValue()).ifPresent(jpaImplBuilder::addMethod);
             basicFieldJavaSetterGenerator.generateSetter(r.getValue()).ifPresent(jpaImplBuilder::addMethod);
-//            r.getPlatypusRecordGetter(r.getRecordFieldInterface())
-//                    .ifPresent(jpaImplBuilder::addMethod);
-//            r.getPlatypusRecordSetter(r.getRecordFieldInterface())
-//                    .ifPresent(jpaImplBuilder::addMethod);
-//
-//            jpaImplBuilder.addField(privateFinalField(r.getRecordFieldInterface(), r.getRecordFieldName()));
+            basicFieldRecordSetterGenerator.generateSetter(r.getValue()).ifPresent(jpaImplBuilder::addMethod);
+            basicFieldRecordGetterGenerator.generateGetter(r.getValue()).ifPresent(jpaImplBuilder::addMethod);
+            jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(r.getValue()));
 //
 //
 //            constructor.addCode(r.getConstructorRecordFieldStatement(jpaImplClassName));

@@ -1,6 +1,8 @@
 package org.platypus.builder.core.plugin;
 
 
+import org.platypus.api.module.MetaInfoRecord;
+import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
 import org.platypus.builder.core.PluginConf;
 import org.platypus.builder.core.plugin.model.merger.ModelMerged;
@@ -36,4 +38,8 @@ public interface PlatypusBuilderImMutableConf {
 
 
     String getDefaultPackage();
+
+    MetaInfoRecord getRecord(String name);
+
+    MetaInfoRecordCollection getRecordCollection(String name);
 }

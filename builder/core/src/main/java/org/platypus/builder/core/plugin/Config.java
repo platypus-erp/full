@@ -1,10 +1,13 @@
 package org.platypus.builder.core.plugin;
 
+import org.platypus.api.module.MetaInfoRecord;
+import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
 import org.platypus.builder.core.PluginConf;
 import org.platypus.builder.core.plugin.model.merger.ModelMerged;
 import org.platypus.builder.core.plugin.model.tree.ModuleTreeModel;
 import org.platypus.builder.core.plugin.moduletree.ModuleTree;
+import org.platypus.builder.core.plugin.record.RecordRegistry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,11 +33,13 @@ public class Config implements PlatypusBuilderMutableConf {
     ModuleTreeModel moduleTreeModel;
     Map<String, ModelMerged> modelMerged;
     Map<String, PluginConf> conf;
+    RecordRegistry recordRegistry;
     String defaultPkg;
 
     public Config(PlatypusCompleteModuleInfo currentModule,
                   ModuleTree moduleTree,
                   ModuleTreeModel moduleTreeModel,
+                  RecordRegistry recordRegistry,
                   Map<String, ModelMerged> modelMerged,
                   Map<String, PluginConf> conf,
                   String defaultPkg) {
@@ -43,6 +48,7 @@ public class Config implements PlatypusBuilderMutableConf {
         this.moduleTreeModel = moduleTreeModel;
         this.modelMerged = modelMerged;
         this.conf = conf;
+        this.recordRegistry = recordRegistry;
         this.defaultPkg = defaultPkg;
     }
 
@@ -64,6 +70,17 @@ public class Config implements PlatypusBuilderMutableConf {
     @Override
     public ModuleTreeModel getModelTree() {
         return moduleTreeModel;
+    }
+
+
+    @Override
+    public MetaInfoRecord getRecord(String name) {
+        return recordRegistry.getRecords().get(name);
+    }
+
+    @Override
+    public MetaInfoRecordCollection getRecordCollection(String name) {
+        return recordRegistry.getRecordCollections().get(name);
     }
 
     @Override

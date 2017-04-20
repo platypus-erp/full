@@ -51,7 +51,7 @@ public class JpaImplGeneratorPlugin implements ModelProcessor {
                     jpaModelGenerator.getJpaImplBuiler().values());
         }else {
             System.out.println("process "+modelMerged.getName());
-            jpaModelGenerator.generate(modelMerged);
+            jpaModelGenerator.generate(modelMerged, conf::getRecord, conf::getRecordCollection);
         }
         return false;
     }

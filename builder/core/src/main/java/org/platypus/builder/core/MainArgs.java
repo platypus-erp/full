@@ -30,7 +30,7 @@ public class MainArgs {
                 .collect(Collectors.toMap(t -> t[0], t -> t[1]));
 
         projectDir = Paths.get(argsMap.get("--directory"));
-        projectDirGenerated = Paths.get(argsMap.get("--directory"), "src", "platypusgenerated", "java");
+        projectDirGenerated = Paths.get(argsMap.get("--directory"), "src", "main", "java");
         modulename = argsMap.get("--modulename");
         defaultPkg = argsMap.get("--defaultpkg");
         moduleVersion = argsMap.get("--moduleVersion");

@@ -93,7 +93,7 @@ public final class PlatypusBuilder {
         for (JavaFile.Builder files : recordToCreate) {
             System.out.println(files.build().packageName);
             try {
-                files.build().writeTo(mainArgs.getProjectDirGenerated().resolve("records").toFile());
+                files.build().writeTo(mainArgs.getProjectDirGenerated().toFile());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -103,6 +103,7 @@ public final class PlatypusBuilder {
                 currentModule,
                 moduleTree,
                 treeModel,
+                recordRegistry,
                 modelMerged,
                 mainArgs.getConf(),
                 mainArgs.getDefaultPkg()
