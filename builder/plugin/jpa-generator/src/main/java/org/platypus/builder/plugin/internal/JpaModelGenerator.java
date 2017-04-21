@@ -9,15 +9,18 @@ import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.plugin.model.merger.ModelMerged;
 import org.platypus.builder.plugin.internal.field.*;
+import org.platypus.builder.utils.ValuesUtils;
 import org.platypus.builder.utils.javapoet.utils.ClassSpecUtils;
 import org.platypus.builder.utils.javapoet.utils.Constant;
 
+import javax.lang.model.element.Modifier;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -62,30 +65,29 @@ public class JpaModelGenerator {
         MetaInfoRecord rec = getRecord.apply(modelMerged.getName());
         jpaImplBuilder.addSuperinterface(ClassName.get(rec.getPkg(), rec.getClassName()));
 
-        BasicFieldJpaGenerator basicFieldJpaGenerator = new BasicFieldJpaGenerator();
-        BasicFieldJavaGetterGenerator basicFieldJavaGetterGenerator = new BasicFieldJavaGetterGenerator();
-        BasicFieldJavaSetterGenerator basicFieldJavaSetterGenerator = new BasicFieldJavaSetterGenerator();
-        BasicFieldRecordSetterGenerator basicFieldRecordSetterGenerator = new BasicFieldRecordSetterGenerator();
-        BasicFieldRecordGetterGenerator basicFieldRecordGetterGenerator = new BasicFieldRecordGetterGenerator();
-        BasicFieldRecordGenerator basicFieldRecordGenerator = new BasicFieldRecordGenerator();
-        BasicFieldRecordConstructorGenerator basicFieldRecordConstructorGenerator =
-                new BasicFieldRecordConstructorGenerator(getImplHibernateName(modelMerged.getName()));
-
-        MethodSpec.Builder constructor = MethodSpec.constructorBuilder();
+        MethodSpec.Builder constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
         TypeVariableName TvarRecord = TypeVariableName.get("T", ClassName.get(Record.class));
 //        RecordImpl<T extends Record, R extends Record, RI extends R>
 
-        for (Map.Entry<String, MetaInfoStringField> r : modelMerged.getStringField().entrySet()) {
-            basicFieldJpaGenerator.generatedFieldImpl(r.getValue()).ifPresent(jpaImplBuilder::addField);
-            basicFieldJavaGetterGenerator.generateGetter(r.getValue()).ifPresent(jpaImplBuilder::addMethod);
-            basicFieldJavaSetterGenerator.generateSetter(r.getValue()).ifPresent(jpaImplBuilder::addMethod);
-            basicFieldRecordSetterGenerator.generateSetter(r.getValue()).ifPresent(jpaImplBuilder::addMethod);
-            basicFieldRecordGetterGenerator.generateGetter(r.getValue()).ifPresent(jpaImplBuilder::addMethod);
-            jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(r.getValue()));
-            constructor.addCode(basicFieldRecordConstructorGenerator.generateField(r.getValue()));
+        FieldGenerator fieldGenerator = new FieldGenerator(jpaImplBuilder, modelMerged.getName(), constructor);
+        foreachValues(modelMerged.getBigStringField(), fieldGenerator::generateField);
+        foreachValues(modelMerged.getBinaryField(), fieldGenerator::generateField);
+        foreachValues(modelMerged.getBooleanField(), fieldGenerator::generateField);
+        foreachValues(modelMerged.getDateField(), fieldGenerator::generateField);
+        foreachValues(modelMerged.getDateTimeField(), fieldGenerator::generateField);
+        foreachValues(modelMerged.getDecimalField(), fieldGenerator::generateField);
+        foreachValues(modelMerged.getFloatField(), fieldGenerator::generateField);
+        foreachValues(modelMerged.getIntField(), fieldGenerator::generateField);
+        foreachValues(modelMerged.getLongField(), fieldGenerator::generateField);
+        foreachValues(modelMerged.getStringField(), fieldGenerator::generateField);
+        foreachValues(modelMerged.getTimeField(), fieldGenerator::generateField);
 
-        }
         jpaImplBuilder.addMethod(constructor.build());
         jpaImplBuiler.put(modelMerged.getName(), jpaImplBuilder);
+    }
+
+
+    private <K,V> void foreachValues(Map<K,V> map, Consumer<V> consumer){
+        map.values().forEach(consumer);
     }
 }

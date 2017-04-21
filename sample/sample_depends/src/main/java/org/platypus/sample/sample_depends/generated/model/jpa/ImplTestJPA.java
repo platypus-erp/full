@@ -25,7 +25,7 @@ public class ImplTestJPA implements TestModelRecord {
 
   private final StringField nameField;
 
-  ImplTestJPA() {
+  public ImplTestJPA() {
     nameField = new StringFieldImpl<>(this, ImplTestJPA::getName, ImplTestJPA::setName);}
 
   public String getName() {
