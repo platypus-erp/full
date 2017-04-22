@@ -13,30 +13,30 @@ import java.util.stream.Stream;
  * on 18/04/17.
  */
 public class MainArgs {
-    private final Path projectDir;
-    private final Path projectDirGenerated;
-    private final String moduleVersion;
-//    private final String[] depends;
-    private final String modulename;
-//    private final String moduleQuickDesc;
-    private final String defaultPkg;
-//    private final String shortDesc;
-//    private final String longDesc;
-    private final Map<String, PluginConf> conf;
+    private Path projectDir;
+    private Path projectDirGenerated;
+    private String moduleVersion;
+    //    private  String[] depends;
+    private String modulename;
+    //    private  String moduleQuickDesc;
+    private String defaultPkg;
+    //    private  String shortDesc;
+//    private  String longDesc;
+    private Map<String, PluginConf> conf;
 
-    public MainArgs(String ... args) {
+    public MainArgs(String... args) {
         Map<String, String> argsMap = Arrays.stream(args)
                 .map(s -> s.split("="))
                 .collect(Collectors.toMap(t -> t[0], t -> t[1]));
 
         projectDir = Paths.get(argsMap.get("--directory"));
-        projectDirGenerated = Paths.get(argsMap.get("--directory"), "src", "main", "java");
+        projectDirGenerated = Paths.get(argsMap.get("--directory"), "src", "generated", "java");
         modulename = argsMap.get("--modulename");
         defaultPkg = argsMap.get("--defaultpkg");
         moduleVersion = argsMap.get("--moduleVersion");
 
         conf = Stream.of(argsMap.getOrDefault("--plugins", ""))
-                .map(s -> s.substring(1, s.length()-1))
+                .map(s -> s.substring(1, s.length() - 1))
                 .flatMap(s -> Arrays.stream(s.split(",")))
                 .map(String::trim)
                 .map(PluginConf::new)
@@ -65,5 +65,29 @@ public class MainArgs {
 
     public Map<String, PluginConf> getConf() {
         return conf;
+    }
+
+    public void setProjectDir(Path projectDir) {
+        this.projectDir = projectDir;
+    }
+
+    public void setProjectDirGenerated(Path projectDirGenerated) {
+        this.projectDirGenerated = projectDirGenerated;
+    }
+
+    public void setModuleVersion(String moduleVersion) {
+        this.moduleVersion = moduleVersion;
+    }
+
+    public void setModulename(String modulename) {
+        this.modulename = modulename;
+    }
+
+    public void setDefaultPkg(String defaultPkg) {
+        this.defaultPkg = defaultPkg;
+    }
+
+    public void setConf(Map<String, PluginConf> conf) {
+        this.conf = conf;
     }
 }

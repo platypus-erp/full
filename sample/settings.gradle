@@ -1,3 +1,1 @@
 rootProject.name = 'sample'
-include 'sample_depends'
-include 'sample_erp'

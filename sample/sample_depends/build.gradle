@@ -1,10 +1,53 @@
 group 'org.platypus.sample'
 version '1.0-SNAPSHOT'
 
-apply plugin: GradlePlatypusPluginBuilder
-
+//apply plugin: GradlePlatypusPluginBuilder
+apply plugin: 'java'
 repositories {
     mavenCentral()
+    jcenter()
+}
+
+sourceSets {
+    models {
+        java {
+            srcDir 'src/models/java'
+        }
+    }
+    apt_resources {
+        compileClasspath += sourceSets.models.runtimeClasspath
+        resources {
+            srcDir 'src/generated/resources'
+        }
+    }
+    main {
+        compileClasspath += sourceSets.models.output
+        runtimeClasspath += sourceSets.models.output
+        java {
+            exclude "${project.group.toString().replace(".", "/")}/${project.name}/generated/**"
+        }
+    }
+    generated {
+        compileClasspath += sourceSets.main.runtimeClasspath
+        java {
+            srcDir 'src/generated/java'
+        }
+        resources {
+            srcDir 'src/generated/resources'
+        }
+    }
+
+}
+buildscript {
+    repositories {
+        maven {
+            url uri('../../repo')
+        }
+    }
+    dependencies {
+        classpath 'org.platypus:MyPlugin:1.0-SNAPSHOT'
+        compile 'com.squareup:javapoet:1.8.0'
+    }
 }
 
 dependencies {
@@ -16,7 +59,22 @@ dependencies {
     compile project(':builder:plugin:jpa-generator')
     compile project(':builder:plugin:display-tree-module')
     compile project(':module:base')
+    modelsCompile project(':api:annotations')
+    modelsCompile project(':api:models')
+//
+
 }
+apply plugin: 'org.platypus.greeting'
+task greeting(type: org.platypus.GreetingTask) {
+    greeting = 'howdy!'
+    doLast {
+        println project.configurations.compile.dependencies.find()
+    }
+}
+
+
+
+
 
 platypus {
     moduleVersion "1"
@@ -28,85 +86,10 @@ platypus {
         }
     }
 }
+
 clean.doFirst {
     delete "${project.projectDir}/src/main/java/${project.group.toString().replace(".", "/")}/${project.name}/generated"
     println "${project.projectDir}/src/main/java/${project.group.toString().replace(".", "/")}/${project.name}/generated"
-}
-
-class GradlePlatypusPluginBuilder implements Plugin<Project> {
-    void apply(Project project) {
-        project.extensions.create("platypus", PlatypusExtension, project)
-        project.platypus.extensions.conf = project.container(PlatypusPluginExtensionContainer)
-        project.getPluginManager().apply(ApplicationPlugin.class)
-        project.getPluginManager().apply(JavaPlugin.class)
-        project.getPluginManager().apply(IdeaPlugin.class)
-        project.sourceCompatibility = 1.8
-        project.mainClassName = "org.platypus.builder.core.PlatypusBuilder"
-        project.run {
-            doFirst {
-//                delete "${project.projectDir}/src/main/java/${project.group.toString().replace(".", "/")}/${project.name}/generated"
-                args project.platypus.getArgs()
-            }
-        }
-    }
-}
-
-class PlatypusExtension {
-    String moduleVersion
-    String[] depends
-    String projectDir
-    String modulename
-    String moduleQuickDesc
-    String baseGeneratedPackage
-
-    File shortDesc
-    File longDesc
-
-    PlatypusExtension(Project project) {
-        projectDir = project.projectDir
-        modulename = project.name
-        moduleVersion = project.version
-        baseGeneratedPackage = project.group.toString() + "." + project.name +".generated"
-        shortDesc = project.file('src/main/ressources/' + baseGeneratedPackage + '/short-desc.adoc')
-        longDesc = project.file('src/main/ressources/' + baseGeneratedPackage + '/long-desc.adoc')
-    }
-
-    String[] getArgs(){
-        return ["--directory=${projectDir}",
-                "--modulename=${modulename}",
-                "--plugins=${conf}",
-                "--defaultpkg=${baseGeneratedPackage}",
-                "--moduleVersion=${moduleVersion}",
-                "--depends=${depends}",
-                "--moduleQuickDesc=${moduleQuickDesc}",
-                "--shortDesc=${shortDesc}",
-                "--longDesc=${longDesc}"]
-    }
-}
-
-class PlatypusPluginExtensionContainer {
-    final String name
-    boolean enable = true
-    Map<String, String> opt = new HashMap<>()
-
-
-    PlatypusPluginExtensionContainer(String name) {
-        this.name = name
-    }
-
-    @Override
-    String toString() {
-        return "$name(enable::$enable - opt::$opt)"
-    }
-}
-idea {
-    module {
-        sourceDirs += file('src/main/generated')
-    }
-}
-
-clean {
-
 }
 
 

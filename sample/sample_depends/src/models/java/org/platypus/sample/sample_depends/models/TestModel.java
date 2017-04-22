@@ -1,4 +1,4 @@
-package org.platypus.sample.sample_depends;
+package org.platypus.sample.sample_depends.models;
 
 import org.platypus.api.BaseModel;
 import org.platypus.api.annotations.field.StringFieldDefinition;

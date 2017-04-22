@@ -30,4 +30,5 @@ include 'tools'
 include 'tools:gradle-plugin'
 
 include 'library:buildin'
+include 'sample:MyPlugin'
 
