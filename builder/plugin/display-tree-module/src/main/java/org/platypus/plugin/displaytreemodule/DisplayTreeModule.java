@@ -2,10 +2,10 @@ package org.platypus.plugin.displaytreemodule;
 
 import org.apache.commons.lang3.StringUtils;
 import org.platypus.builder.core.PluginConf;
-import org.platypus.builder.core.plugin.PlatypusBuilderImMutableConf;
-import org.platypus.builder.core.plugin.PlatypusBuilderMutableConf;
-import org.platypus.builder.core.plugin.PlatypusPlugin;
-import org.platypus.builder.core.plugin.moduletree.ModuleTreeNode;
+import org.platypus.builder.core.api.PlatypusBuilderImMutableConf;
+import org.platypus.builder.core.api.PlatypusBuilderMutableConf;
+import org.platypus.builder.core.api.PlatypusPlugin;
+import org.platypus.builder.core.moduletree.ModuleTreeNode;
 
 import java.util.HashMap;
 import java.util.Map;

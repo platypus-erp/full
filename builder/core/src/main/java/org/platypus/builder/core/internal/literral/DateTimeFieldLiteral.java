@@ -30,7 +30,17 @@ public class DateTimeFieldLiteral implements MetaInfoDateTimeField, BasicFieldDe
     protected boolean related;
     protected String[] pathRelated;
     protected Bool store = Bool.DEFAULT;
+    protected boolean newField;
 
+    @Override
+    public boolean isNewField() {
+        return newField;
+    }
+
+    @Override
+    public void setNewField(boolean newField) {
+        this.newField = newField;
+    }
     protected DateTimeFieldLiteral(String name) {
         this.name = name;
     }

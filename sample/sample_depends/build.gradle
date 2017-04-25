@@ -1,7 +1,7 @@
 group 'org.platypus.sample'
 version '1.0-SNAPSHOT'
 
-//apply plugin: GradlePlatypusPluginBuilder
+//apply api: GradlePlatypusPluginBuilder
 apply plugin: 'java'
 repositories {
     mavenCentral()
@@ -14,10 +14,9 @@ sourceSets {
             srcDir 'src/models/java'
         }
     }
-    apt_resources {
-        compileClasspath += sourceSets.models.runtimeClasspath
-        resources {
-            srcDir 'src/generated/resources'
+    records {
+        java {
+            srcDir 'src/record/java'
         }
     }
     main {
@@ -46,7 +45,6 @@ buildscript {
     }
     dependencies {
         classpath 'org.platypus:MyPlugin:1.0-SNAPSHOT'
-        compile 'com.squareup:javapoet:1.8.0'
     }
 }
 
@@ -61,18 +59,21 @@ dependencies {
     compile project(':module:base')
     modelsCompile project(':api:annotations')
     modelsCompile project(':api:models')
+    recordsCompile project(':builder:core')
 //
 
 }
 apply plugin: 'org.platypus.greeting'
 task greeting(type: org.platypus.GreetingTask) {
     greeting = 'howdy!'
-    doLast {
-        println project.configurations.compile.dependencies.find()
-    }
 }
 
+task records {
+    println "${project.projectDir}"
+    println "${project.group}"
+    println "${project.name}"
 
+}
 
 
 

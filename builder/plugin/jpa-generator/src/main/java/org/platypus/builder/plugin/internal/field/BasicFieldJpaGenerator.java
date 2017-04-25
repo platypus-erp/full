@@ -27,7 +27,7 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-import static org.platypus.builder.plugin.internal.field.Utils.getJavaType;
+import static org.platypus.builder.plugin.internal.Utils.getJavaType;
 import static org.platypus.builder.utils.Utils.TO_SQL;
 import static org.platypus.builder.utils.ValuesUtils.isFalseOrDefault;
 import static org.platypus.builder.utils.ValuesUtils.isTrueOrDefault;

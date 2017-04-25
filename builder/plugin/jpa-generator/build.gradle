@@ -1,4 +1,4 @@
-group 'org.platypus.builder.plugin'
+group 'org.platypus.builder.api'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'

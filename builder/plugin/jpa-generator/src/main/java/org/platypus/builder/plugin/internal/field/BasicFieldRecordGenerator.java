@@ -1,9 +1,7 @@
 package org.platypus.builder.plugin.internal.field;
 
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
-import org.apache.commons.lang3.reflect.FieldUtils;
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
 import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
@@ -15,11 +13,8 @@ import org.platypus.api.fields.metainfo.MetaInfoIntField;
 import org.platypus.api.fields.metainfo.MetaInfoLongField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
+import org.platypus.builder.plugin.internal.Utils;
 import org.platypus.builder.utils.javapoet.utils.FieldSpecUtils;
-
-import javax.lang.model.element.Modifier;
-
-import java.util.Optional;
 
 /**
  * @author chmuchme
@@ -61,6 +56,6 @@ public class BasicFieldRecordGenerator {
         return getField(field.getName(), Utils.getRecordFieldInterface(field));
     }
     private FieldSpec getField(String name, TypeName field){
-        return FieldSpecUtils.privateFinalField(field, name+"Field");
+        return FieldSpecUtils.privateFinalField(field, name+"InheritField");
     }
 }

@@ -1,6 +1,6 @@
 package org.platypus.sample.sample_depends;
 
-import org.platypus.builder.core.PlatypusBuilder;
+import org.platypus.builder.PlatypusBuilder;
 
 /**
  * @author chmuchme

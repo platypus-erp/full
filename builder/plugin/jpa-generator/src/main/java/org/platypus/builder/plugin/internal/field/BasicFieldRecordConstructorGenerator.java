@@ -1,11 +1,10 @@
 package org.platypus.builder.plugin.internal.field;
 
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.TypeName;
 import org.apache.commons.lang3.StringUtils;
 import org.platypus.api.fields.metainfo.*;
-import org.platypus.builder.utils.javapoet.utils.FieldSpecUtils;
+import org.platypus.builder.plugin.internal.Utils;
 
 /**
  * @author chmuchme
@@ -54,7 +53,7 @@ public class BasicFieldRecordConstructorGenerator {
     }
     private CodeBlock getField(String name, TypeName field){
         return CodeBlock.of("$N = new $T<>(this, $N::get$N, $N::set$N);",
-                name+"Field",
+                name+"InheritField",
                 field,
                 currentClassName,
                 StringUtils.capitalize(name),

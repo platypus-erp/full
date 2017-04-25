@@ -27,7 +27,7 @@ include 'module:product'
 include 'module:stock'
 
 include 'tools'
-include 'tools:gradle-plugin'
+include 'tools:gradle-api'
 
 include 'library:buildin'
 include 'sample:MyPlugin'

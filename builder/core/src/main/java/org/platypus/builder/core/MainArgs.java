@@ -28,7 +28,6 @@ public class MainArgs {
         Map<String, String> argsMap = Arrays.stream(args)
                 .map(s -> s.split("="))
                 .collect(Collectors.toMap(t -> t[0], t -> t[1]));
-
         projectDir = Paths.get(argsMap.get("--directory"));
         projectDirGenerated = Paths.get(argsMap.get("--directory"), "src", "generated", "java");
         modulename = argsMap.get("--modulename");

@@ -15,4 +15,8 @@ public interface BasicFieldDef extends FieldDef {
 
     void fillComputed(ComputedFieldDefinition computed);
     void fillRelated(RelatedFieldDefinition related);
+
+    void setNewField(boolean b);
+
+    boolean isNewField();
 }

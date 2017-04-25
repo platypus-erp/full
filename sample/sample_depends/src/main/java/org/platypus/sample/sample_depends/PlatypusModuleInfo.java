@@ -10,7 +10,7 @@ import org.platypus.sample.sample_depends.models.TestModel;
  * @since 0.1
  * on 11/04/17.
  */
-@ModuleInfo(name = "org/platypus/sample/sample_depends/models", moduleVersion = "1", depends = "base")
+@ModuleInfo(name = "sample_depends", moduleVersion = "1", depends = "base")
 public class PlatypusModuleInfo extends AbstractModule{
 
     public PlatypusModuleInfo() {

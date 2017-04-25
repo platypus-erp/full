@@ -15,6 +15,7 @@ import org.platypus.api.fields.metainfo.MetaInfoIntField;
 import org.platypus.api.fields.metainfo.MetaInfoLongField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
+import org.platypus.builder.plugin.internal.Utils;
 
 import javax.lang.model.element.Modifier;
 
@@ -61,8 +62,8 @@ public class BasicFieldRecordSetterGenerator {
     }
     private Optional<MethodSpec> getSetter(String name, TypeName field){
         return Optional.of(MethodSpec.methodBuilder(name)
-                .addParameter(ParameterSpec.builder(field, name+"Field", Modifier.FINAL).build())
-                .addCode("this.set$N($N.get());", StringUtils.capitalize(name), name+"Field")
+                .addParameter(ParameterSpec.builder(field, name+"InheritField", Modifier.FINAL).build())
+                .addCode("this.set$N($N.get());", StringUtils.capitalize(name), name+"InheritField")
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .build());

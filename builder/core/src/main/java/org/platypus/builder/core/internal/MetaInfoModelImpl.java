@@ -1,6 +1,9 @@
 package org.platypus.builder.core.internal;
 
 import org.platypus.api.TypeModel;
+import org.platypus.api.annotations.model.PlatypusInherit;
+import org.platypus.api.annotations.model.PlatypusInheritMulti;
+import org.platypus.api.annotations.model.PlatypusModel;
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
 import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
@@ -14,6 +17,7 @@ import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,25 +43,24 @@ public class MetaInfoModelImpl implements MetaInfoModel {
     Set<MetaInfoDateTimeField> dateTimeField = new HashSet<>();
     Set<MetaInfoTimeField> timeField = new HashSet<>();
 
-    public MetaInfoModelImpl(String className, String name) {
+    public MetaInfoModelImpl(String className, PlatypusModel platypusModel) {
         this.className = className;
-        this.name = name;
+        this.name = platypusModel.value();
         this.inheritNames = new String[0];
         this.typeModel = TypeModel.ROOT;
     }
-
-    public MetaInfoModelImpl(String className, String[] inheritNames) {
+    public MetaInfoModelImpl(String className, PlatypusInherit platypusInherit) {
         this.className = className;
-        this.name = null;
-        this.inheritNames = inheritNames;
+        this.name = platypusInherit.values().getAnnotation(PlatypusModel.class).value();
+        this.inheritNames = new String[]{name};
         this.typeModel = TypeModel.INHERIT;
     }
-
-    public MetaInfoModelImpl(String className, String rootName, String[] inheritNames) {
+    public MetaInfoModelImpl(String className, PlatypusInheritMulti platypusInheritMulti) {
         this.className = className;
-        this.name = rootName;
-        this.inheritNames = inheritNames;
-        this.typeModel = TypeModel.ROOT_BASED;
+        this.name = platypusInheritMulti.name();
+        this.inheritNames = Arrays.stream(platypusInheritMulti.inherits()).
+                map(c -> c.getAnnotation(PlatypusModel.class).value()).toArray(String[]::new);
+        this.typeModel = TypeModel.INHERIT_MULTI;
     }
 
     @Override

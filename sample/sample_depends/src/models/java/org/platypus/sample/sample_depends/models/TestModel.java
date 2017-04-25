@@ -3,7 +3,7 @@ package org.platypus.sample.sample_depends.models;
 import org.platypus.api.BaseModel;
 import org.platypus.api.annotations.field.StringFieldDefinition;
 import org.platypus.api.annotations.model.PlatypusModel;
-import org.platypus.api.fields.Field;
+import org.platypus.api.fields.InheritField;
 
 /**
  * @author chmuchme
@@ -14,5 +14,5 @@ import org.platypus.api.fields.Field;
 public class TestModel implements BaseModel{
 
     @StringFieldDefinition
-    Field name;
+    InheritField name;
 }

@@ -22,13 +22,13 @@ class Greeting implements Plugin<Project> {
         project.getPluginManager().apply(JavaPlugin.class)
         project.getPluginManager().apply(IdeaPlugin.class)
         project.sourceCompatibility = 1.8
-        project.mainClassName = "org.platypus.builder.core.PlatypusBuilder"
+        project.mainClassName = "org.platypus.builder.PlatypusBuilder"
         project.task('hello', type: GreetingTask)
 
-//        project.run {
-//            doFirst {
-//                args project.platypus.getArgs()
-//            }
-//        }
+        project.run {
+            doFirst {
+                args project.platypus.getArgs()
+            }
+        }
     }
 }

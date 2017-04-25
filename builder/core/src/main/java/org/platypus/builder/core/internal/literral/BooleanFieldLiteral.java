@@ -28,7 +28,17 @@ public class BooleanFieldLiteral implements MetaInfoBooleanField, BasicFieldDef 
     protected boolean related;
     protected String[] pathRelated;
     protected Bool store = Bool.DEFAULT;
+    protected boolean newField;
 
+    @Override
+    public boolean isNewField() {
+        return newField;
+    }
+
+    @Override
+    public void setNewField(boolean newField) {
+        this.newField = newField;
+    }
     protected BooleanFieldLiteral(String name) {
         this.name = name;
     }

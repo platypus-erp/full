@@ -13,6 +13,7 @@ import org.platypus.api.fields.metainfo.MetaInfoIntField;
 import org.platypus.api.fields.metainfo.MetaInfoLongField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
+import org.platypus.builder.plugin.internal.Utils;
 
 import javax.lang.model.element.Modifier;
 

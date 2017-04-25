@@ -14,7 +14,10 @@ import org.platypus.api.annotations.field.LongFieldDefinition;
 import org.platypus.api.annotations.field.RelatedFieldDefinition;
 import org.platypus.api.annotations.field.StringFieldDefinition;
 import org.platypus.api.annotations.field.TimeFieldDefinition;
+import org.platypus.api.annotations.model.PlatypusInherit;
+import org.platypus.api.annotations.model.PlatypusInheritMulti;
 import org.platypus.api.annotations.model.PlatypusModel;
+import org.platypus.api.fields.NewField;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.builder.core.internal.MetaInfoModelImpl;
 import org.platypus.builder.core.internal.literral.BasicFieldDef;
@@ -31,7 +34,6 @@ import org.platypus.builder.core.internal.literral.TimeFieldLiteral;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
@@ -49,26 +51,26 @@ public class ReflectiveModelParser implements BaseModel {
                     PlatypusModel.class.getCanonicalName()));
         }
         Class<?> baseModelClass = model.getClass();
-        MetaInfoModelImpl impl;
-        PlatypusModel annoModel = baseModelClass.getAnnotation(PlatypusModel.class);
-        if (annoModel.inherit().length == 0) {
-            impl = new MetaInfoModelImpl(baseModelClass.getSimpleName(), annoModel.value());
-        } else if (annoModel.value().isEmpty()) {
-            impl = new MetaInfoModelImpl(baseModelClass.getSimpleName(), Arrays.stream(annoModel.inherit())
-                    .map(i -> i.getAnnotation(PlatypusModel.class).value())
-                    .toArray(String[]::new));
-        } else if (!annoModel.value().isEmpty()){
-            impl = new MetaInfoModelImpl(baseModelClass.getSimpleName(), annoModel.value(),
-                    Arrays.stream(annoModel.inherit())
-                            .map(i -> i.getAnnotation(PlatypusModel.class).value())
-                            .toArray(String[]::new));
-        } else {
-            throw new IllegalArgumentException(String.format("The class[%s] should be annotated with %s " +
-                            "and PlatypusModel.value or PlatypusModel.inherits should be filled",
-                    this.getClass().getCanonicalName(),
-                    PlatypusModel.class.getCanonicalName()));
-        }
-        return reflectiveConstructMetaInfo(impl, baseModelClass.getDeclaredFields());
+        //TODO replace with Java9 Optionnal#or
+        Optional<MetaInfoModelImpl> impl = getAnnotation(baseModelClass, PlatypusModel.class)
+                .map(a -> new MetaInfoModelImpl(baseModelClass.getSimpleName(), a));
+        impl = or(impl, getAnnotation(baseModelClass, PlatypusInherit.class)
+                .map(ai -> new MetaInfoModelImpl(baseModelClass.getSimpleName(), ai))
+        );
+        impl = or(impl, getAnnotation(baseModelClass, PlatypusInheritMulti.class)
+                .map(aim -> new MetaInfoModelImpl(baseModelClass.getSimpleName(), aim))
+        );
+        return reflectiveConstructMetaInfo(
+                impl.orElseThrow(IllegalAccessError::new),
+                baseModelClass.getDeclaredFields());
+    }
+
+    private <T> Optional<T> or(Optional<T> v1, Optional<T> v2) {
+        return v1.isPresent() ? v1 : v2;
+    }
+
+    private <T extends Annotation> Optional<T> getAnnotation(Class<?> aClass, Class<T> aAnnotation) {
+        return Optional.ofNullable(aClass.getAnnotation(aAnnotation));
     }
 
     private MetaInfoModel reflectiveConstructMetaInfo(MetaInfoModelImpl impl, Field[] fields) {
@@ -103,8 +105,10 @@ public class ReflectiveModelParser implements BaseModel {
             if (field.isAnnotationPresent(RelatedFieldDefinition.class)) {
                 t.fillRelated(field.getAnnotation(RelatedFieldDefinition.class));
             }
+            t.setNewField(field.getType() == NewField.class);
             return Optional.of(t);
         }
+
         return Optional.empty();
     }
 }

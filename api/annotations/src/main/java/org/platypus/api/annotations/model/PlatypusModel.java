@@ -47,7 +47,7 @@ public @interface PlatypusModel {
      *  my.table ==> MY_TABLE
      * </pre>
      */
-    String value() default "";
+    String value();
 
-    Class<? extends BaseModel>[] inherit() default {};
+
 }
