@@ -35,7 +35,6 @@ sourceSets {
             srcDir 'src/generated/resources'
         }
     }
-
 }
 buildscript {
     repositories {

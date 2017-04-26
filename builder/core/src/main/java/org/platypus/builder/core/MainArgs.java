@@ -35,6 +35,7 @@ public class MainArgs {
         moduleVersion = argsMap.get("--moduleVersion");
 
         conf = Stream.of(argsMap.getOrDefault("--plugins", ""))
+                .filter(String::isEmpty)
                 .map(s -> s.substring(1, s.length() - 1))
                 .flatMap(s -> Arrays.stream(s.split(",")))
                 .map(String::trim)

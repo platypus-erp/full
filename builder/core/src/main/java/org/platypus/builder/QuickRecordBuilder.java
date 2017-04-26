@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 /**
  * @author chmuchme
@@ -17,20 +19,30 @@ import java.nio.file.Paths;
  * on 24/04/17.
  */
 public class QuickRecordBuilder {
-
-    public static void main(String[] args) throws Exception {
-        String projectDir = "/home/chmuchme/WorkSpace/PLATYPUS/full/sample/sample_depends";
-        String group = "org.platypus.sample";
-        String name = "sample_depends";
+    public static void run(String projectDir, String group, String name) throws Exception {
         PathMatcher javaMatcher =
                 FileSystems.getDefault().getPathMatcher("glob:**.java");
         Visitor v = new Visitor();
-        Files.walk(Paths.get(projectDir, "src", "models"))
+        Stream.of(projectDir.replace("[", "").replace("]", "").split(","))
+                .map(Paths::get)
+                .flatMap(QuickRecordBuilder::walkPath)
                 .filter(p -> !Files.isDirectory(p))
                 .filter(javaMatcher::matches)
                 .map(QuickRecordBuilder::parseJava)
                 .map(Visitor::getInfo)
                 .forEach(Visitor::toString);
+    }
+
+    private static Stream<Path> walkPath(Path p){
+        try {
+            return Files.walk(p);
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+    public static void main(String[] args) throws Exception {
+        System.out.println(Arrays.toString(args));
+        run(args[0], args[1], args[2]);
     }
 
     private static CompilationUnit parseJava(Path path) {
