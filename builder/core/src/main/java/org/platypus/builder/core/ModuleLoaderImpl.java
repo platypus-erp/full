@@ -2,17 +2,13 @@ package org.platypus.builder.core;
 
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
 import org.platypus.builder.core.model.merger.ModelsMerged;
-import org.platypus.builder.core.model.merger.internal.ModelMerged;
 import org.platypus.builder.core.model.merger.ModelMergerPlugin;
-import org.platypus.builder.core.model.merger.internal.ModelMerger;
 import org.platypus.builder.core.model.tree.ModelTreePlugin;
 import org.platypus.builder.core.model.tree.ModuleTreeModel;
 import org.platypus.builder.core.moduletree.ModuleTree;
-import org.platypus.builder.core.moduletree.ModuleTreeImpl;
 import org.platypus.builder.core.moduletree.ModuleTreePlugin;
 import org.platypus.builder.core.records.complete.RecordRegistry;
 
-import java.util.Map;
 import java.util.ServiceLoader;
 
 /**
@@ -40,6 +36,7 @@ public class ModuleLoaderImpl implements ModuleLoader{
         if (currentModule == null) {
             throw new IllegalArgumentException("Module[" + currentModuleName + "] not found");
         }
+        currentModule.getModel().values().forEach(m -> System.out.println(m.mtoField()));
         ModuleTreePlugin moduleTreePlugin = new ModuleTreePlugin();
         platypusCompleteModuleInfos.forEach(moduleTreePlugin::addModule);
         moduleTree = moduleTreePlugin.build();

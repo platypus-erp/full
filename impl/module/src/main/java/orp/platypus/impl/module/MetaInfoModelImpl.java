@@ -9,7 +9,11 @@ import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
 import org.platypus.api.fields.metainfo.MetaInfoFloatField;
 import org.platypus.api.fields.metainfo.MetaInfoIntField;
 import org.platypus.api.fields.metainfo.MetaInfoLongField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
+import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 import org.platypus.api.TypeModel;
@@ -155,5 +159,25 @@ public final class MetaInfoModelImpl implements MetaInfoModel {
     @Override
     public Set<MetaInfoTimeField> timeField() {
         return timeField;
+    }
+
+    @Override
+    public Set<MetaInfoOneToManyField> otmField() {
+        return null;
+    }
+
+    @Override
+    public Set<MetaInfoOneToOneField> otoField() {
+        return null;
+    }
+
+    @Override
+    public Set<MetaInfoManyToManyField> mtmField() {
+        return null;
+    }
+
+    @Override
+    public Set<MetaInfoManyToOneField> mtoField() {
+        return null;
     }
 }

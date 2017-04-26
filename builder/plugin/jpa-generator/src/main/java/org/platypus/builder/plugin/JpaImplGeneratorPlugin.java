@@ -7,10 +7,8 @@ import org.platypus.builder.core.api.ModelProcessorResult;
 import org.platypus.builder.core.api.PlatypusBuilderImMutableConf;
 import org.platypus.builder.core.api.PlatypusBuilderMutableConf;
 import org.platypus.builder.core.api.ProcessState;
-import org.platypus.builder.core.model.merger.internal.ModelMerged;
+import org.platypus.builder.core.model.merger.ModelMerged;
 import org.platypus.builder.plugin.internal.JpaModelGenerator;
-
-import java.util.Collection;
 
 /**
  * TODO Add JavaDoc
@@ -49,7 +47,7 @@ public class JpaImplGeneratorPlugin implements ModelProcessor {
         if (ProcessState.FINISH == state){
             result = ModelProcessorResult.create();
             jpaModelGenerator.getJpaImplBuiler().values()
-                    .forEach(s -> result.addTypeSpecBuilder(conf.getDefaultPackage()+".model.jpa", s));
+                    .forEach(s -> result.addTypeSpecBuilder(conf.getDefaultPackage()+".models.generated.jpa", s));
 
         }else {
             System.out.println("process "+modelMerged.getName());

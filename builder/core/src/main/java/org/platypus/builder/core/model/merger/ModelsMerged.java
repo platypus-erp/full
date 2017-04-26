@@ -1,7 +1,5 @@
 package org.platypus.builder.core.model.merger;
 
-import org.platypus.builder.core.model.merger.internal.ModelMerged;
-
 import java.util.stream.Stream;
 
 /**

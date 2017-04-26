@@ -2,7 +2,6 @@ package org.platypus.builder;
 
 
 import com.squareup.javapoet.JavaFile;
-import org.platypus.api.module.PlatypusCompleteModuleInfo;
 import org.platypus.builder.core.MainArgs;
 import org.platypus.builder.core.ModuleLoader;
 import org.platypus.builder.core.ModuleLoaderImpl;
@@ -10,13 +9,7 @@ import org.platypus.builder.core.api.impl.Config;
 import org.platypus.builder.core.api.ModelProcessor;
 import org.platypus.builder.core.api.PlatypusPlugin;
 import org.platypus.builder.core.api.ProcessState;
-import org.platypus.builder.core.model.merger.internal.ModelMerged;
-import org.platypus.builder.core.model.merger.ModelMergerPlugin;
-import org.platypus.builder.core.model.tree.ModelTreePlugin;
-import org.platypus.builder.core.model.tree.ModuleTreeModel;
-import org.platypus.builder.core.moduletree.ModuleTreeImpl;
-import org.platypus.builder.core.moduletree.ModuleTreePlugin;
-import org.platypus.builder.core.records.complete.RecordRegistry;
+import org.platypus.builder.core.model.merger.ModelMerged;
 
 import java.io.IOException;
 import java.util.ArrayList;

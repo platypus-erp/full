@@ -65,7 +65,7 @@ public class BasicFieldJavaGetterGenerator {
         return Optional.of(MethodSpec.methodBuilder("get" + StringUtils.capitalize(name))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(field)
-                .addCode("return this.$N;", name)
+                .addCode("return this.$N;\n", name)
                 .build());
     }
 

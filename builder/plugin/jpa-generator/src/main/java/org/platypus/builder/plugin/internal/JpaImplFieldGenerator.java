@@ -3,8 +3,11 @@ package org.platypus.builder.plugin.internal;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import org.platypus.api.fields.metainfo.*;
+import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.builder.plugin.internal.field.*;
 
+
+import java.util.function.Function;
 
 import static org.platypus.builder.plugin.internal.JpaModelGenerator.getImplHibernateName;
 
@@ -128,5 +131,15 @@ public class JpaImplFieldGenerator {
         basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
         jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta));
         constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta));
+    }
+
+    public void generateField(MetaInfoManyToOneField meta, Function<String, MetaInfoRecord> getRecord){
+//        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
+//        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
+//        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
+//        basicFieldRecordSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
+//        basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
+//        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta, getRecord));
+        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta, getRecord));
     }
 }

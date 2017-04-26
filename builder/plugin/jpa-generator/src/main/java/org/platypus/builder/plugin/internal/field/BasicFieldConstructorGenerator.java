@@ -64,7 +64,7 @@ public class BasicFieldConstructorGenerator {
         return Optional.of(MethodSpec.methodBuilder("get" + name)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(field)
-                .addCode("return this.$N;", name)
+                .addCode("return this.$N;\n", name)
                 .build());
     }
 

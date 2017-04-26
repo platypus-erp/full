@@ -53,7 +53,10 @@ public class ModuleTreeImpl implements ModuleTree {
             if ("base".equals(info.techincalName())) {
                 base = module;
             }
+            System.out.println(info.depends());
+            System.out.println(info.depends().size());
             for (String depend : info.depends()) {
+                System.out.println(depend);
                 modulesNodeByName.get(depend).addParent(module);
             }
         }

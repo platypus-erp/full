@@ -1,4 +1,4 @@
-package org.platypus.module.base.models;
+package org.platypus.erp.module.base.models;
 
 import org.platypus.api.BaseModel;
 import org.platypus.api.Bool;
@@ -18,7 +18,7 @@ public class User implements BaseModel{
     @IntFieldDefinition
     NewField id;
 
-    @ManyToOneFieldDefinition(value = Partner.class, required = Bool.TRUE)
+    @ManyToOneFieldDefinition(target = Partner.class, required = Bool.TRUE)
     NewField partner;
 
     @StringFieldDefinition(maxSize = 64, required = RequiredType.NOT_BLANK, uniqueHint = "login")
@@ -36,10 +36,10 @@ public class User implements BaseModel{
 //    @ManyToManyFieldDefinition()
 //    NewField action;
 
-    @ManyToManyFieldDefinition(Group.class)
+    @ManyToManyFieldDefinition(target = Group.class)
     NewField groups;
 
-    @ManyToOneFieldDefinition(Company.class)
+    @ManyToOneFieldDefinition(target = Company.class)
     NewField company_id;
 
     @BooleanFieldDefinition

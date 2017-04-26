@@ -2,7 +2,7 @@ package org.platypus.builder.core.api;
 
 import org.platypus.api.Namable;
 import org.platypus.api.annotations.PlatypusVersion;
-import org.platypus.builder.core.model.merger.internal.ModelMerged;
+import org.platypus.builder.core.model.merger.ModelMerged;
 
 /**
  * @author chmuchme

@@ -61,7 +61,7 @@ public class BasicFieldRecordImplGetterGenerator {
     private Optional<MethodSpec> getGetter(String name, TypeName field){
         return Optional.of(MethodSpec.methodBuilder(name)
                 .returns(field)
-                .addCode("return get().$N();", name)
+                .addCode("return get().$N();\n", name)
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .build());

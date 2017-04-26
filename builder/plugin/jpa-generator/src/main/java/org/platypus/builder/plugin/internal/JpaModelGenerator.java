@@ -3,7 +3,6 @@ package org.platypus.builder.plugin.internal;
 
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -15,10 +14,7 @@ import org.platypus.api.fields.impl.RecordCollectionImpl;
 import org.platypus.api.fields.impl.RecordImpl;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
-import org.platypus.builder.core.model.merger.internal.ModelMerged;
-import org.platypus.builder.plugin.internal.field.BasicFieldRecordGenerator;
-import org.platypus.builder.plugin.internal.recordImpl.BasicFieldRecordImplGetterGenerator;
-import org.platypus.builder.plugin.internal.recordImpl.BasicFieldRecordImplSetterGenerator;
+import org.platypus.builder.core.model.merger.ModelMerged;
 import org.platypus.builder.plugin.internal.recordImpl.RecordImplFieldGenerator;
 import org.platypus.builder.utils.javapoet.utils.ClassSpecUtils;
 import org.platypus.builder.utils.javapoet.utils.Constant;
@@ -55,7 +51,7 @@ public class JpaModelGenerator {
         return jpaImplBuiler;
     }
 
-    static String getImplHibernateName(String name) {
+    public static String getImplHibernateName(String name) {
         return Arrays
                 .stream(name.split("\\."))
                 .map(StringUtils::capitalize)
@@ -96,6 +92,8 @@ public class JpaModelGenerator {
         foreachValues(modelMerged.getLongField(), fieldGenerator::generateField);
         foreachValues(modelMerged.getStringField(), fieldGenerator::generateField);
         foreachValues(modelMerged.getTimeField(), fieldGenerator::generateField);
+
+        foreachValues(modelMerged.getMtoField(), m -> fieldGenerator.generateField(m, getRecord));
 
         jpaImplBuilder.addMethod(constructor.build());
         jpaImplBuiler.put(modelMerged.getName(), new HashSet<>());
@@ -194,6 +192,8 @@ public class JpaModelGenerator {
         foreachValues(modelMerged.getLongField(), fieldGenerator::generateField);
         foreachValues(modelMerged.getStringField(), fieldGenerator::generateField);
         foreachValues(modelMerged.getTimeField(), fieldGenerator::generateField);
+
+
 //
 //            for (RelationFieldLiteral f : fr.getAllRelationFieldDef()) {
 //                if (f.getRealType() == PlatypusType.OTM || f.getRealType() == PlatypusType.MTM) {

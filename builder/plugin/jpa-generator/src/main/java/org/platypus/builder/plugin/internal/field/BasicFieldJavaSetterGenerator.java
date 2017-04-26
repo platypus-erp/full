@@ -66,7 +66,7 @@ public class BasicFieldJavaSetterGenerator {
         return Optional.of(MethodSpec.methodBuilder("set" + StringUtils.capitalize(name))
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterSpec.builder(field, name, Modifier.FINAL).build())
-                .addCode("this.$N = $N;", name, name)
+                .addCode("this.$N = $N;\n", name, name)
                 .build());
     }
 

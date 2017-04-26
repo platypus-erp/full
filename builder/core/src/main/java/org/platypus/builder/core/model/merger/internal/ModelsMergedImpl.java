@@ -1,5 +1,6 @@
 package org.platypus.builder.core.model.merger.internal;
 
+import org.platypus.builder.core.model.merger.ModelMerged;
 import org.platypus.builder.core.model.merger.ModelsMerged;
 
 import java.util.Map;

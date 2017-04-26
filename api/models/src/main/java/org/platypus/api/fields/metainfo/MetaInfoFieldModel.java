@@ -20,4 +20,9 @@ public interface MetaInfoFieldModel {
     Set<MetaInfoDateField> dateField();
     Set<MetaInfoDateTimeField> dateTimeField();
     Set<MetaInfoTimeField> timeField();
+
+    Set<MetaInfoOneToManyField> otmField();
+    Set<MetaInfoOneToOneField> otoField();
+    Set<MetaInfoManyToManyField> mtmField();
+    Set<MetaInfoManyToOneField> mtoField();
 }

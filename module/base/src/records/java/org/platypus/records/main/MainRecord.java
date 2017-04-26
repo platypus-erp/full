@@ -8,7 +8,7 @@ import org.platypus.builder.QuickRecordBuilder;
  * @since 0.1
  * on 22/04/17.
  */
-public class Main {
+public class MainRecord {
     public static void main(String[] args) throws Exception {
         String projectDir = "/home/apasquier/WorkSpace/Java/full/module/base";
         String group = "org.platypus.erp";

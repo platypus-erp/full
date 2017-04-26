@@ -4,16 +4,23 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import org.platypus.api.Bool;
+import org.platypus.api.Namable;
 import org.platypus.api.Record;
 import org.platypus.api.RecordCollection;
-import org.platypus.api.fields.metainfo.MetaInfoStringField;
-import org.platypus.builder.core.model.merger.internal.ModelMerged;
+import org.platypus.api.annotations.model.PlatypusModel;
+import org.platypus.api.fields.metainfo.MetaInfoManyToOneField;
+import org.platypus.builder.core.model.merger.ModelMerged;
 import org.platypus.builder.utils.javapoet.builder.InterfaceBuilder;
 
+import javax.lang.model.element.Modifier;
+
+import java.lang.annotation.Annotation;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
-import static org.platypus.builder.core.records.complete.Utils.toClassName;
+import static com.squareup.javapoet.MethodSpec.methodBuilder;
 
 /**
  * @author chmuchme
@@ -25,17 +32,26 @@ public class RecordGenerator {
     Set<TypeSpec.Builder> fileToGenerate = new HashSet<>();
 
 
-
     public void generate(ModelMerged merged, RecordRegistry recordRegistry) {
         InterfaceBuilder recordBuilder = InterfaceBuilder.publicInterface(
                 recordRegistry.getRecords().get(merged.getName()).getClassName());
         recordBuilder.addSuperInterfaces(Record.class);
-        for (MetaInfoStringField b : merged.getStringField().values()) {
-            recordBuilder.addOnlyReturnMethod(b.getName(), Utils.getRecordFieldImpl(b));
+        generateBasicFieldRecord(merged, recordBuilder);
+        merged.getMtoField().values().forEach(s -> System.out.println("MTO " + s.getName()));
+        System.out.println(recordRegistry.getRecords().keySet());
+        for (MetaInfoManyToOneField b : merged.getMtoField().values()) {
+            System.out.println(b.targetName());
+            recordBuilder.addOnlyReturnMethod(b.getName(),
+                    ClassName.get(b.targetPkg() +".generated.records",
+                    recordRegistry.getRecords().get(b.targetName()).getClassName()));
             if (b.readonly() != Bool.TRUE) {
-                recordBuilder.add1ParamMethod(b.getName(), Utils.getRecordFieldImpl(b), b.getName());
+                recordBuilder.add1ParamMethod(b.getName(),
+                        ClassName.get(b.targetPkg() +".generated.records",
+                        recordRegistry.getRecords().get(b.targetName()).getClassName()), b.getName());
             }
+
         }
+
         InterfaceBuilder recordCollectionBuilder = InterfaceBuilder.publicInterface(
                 recordRegistry.getRecordCollections().get(merged.getName()).getClassName());
         recordCollectionBuilder.addSuperInterfaces(
@@ -76,5 +92,26 @@ public class RecordGenerator {
 //        }
         fileToGenerate.add(recordBuilder.toBuilder());
         fileToGenerate.add(recordCollectionBuilder.toBuilder());
+    }
+
+    private void generateBasicFieldRecord(ModelMerged merged, InterfaceBuilder recordBuilder) {
+        addRecordMethod(merged.getBigStringField().values(), recordBuilder, b -> b.readonly() != Bool.TRUE);
+        addRecordMethod(merged.getBinaryField().values(), recordBuilder, b -> b.readonly() != Bool.TRUE);
+        addRecordMethod(merged.getBooleanField().values(), recordBuilder, b -> b.readonly() != Bool.TRUE);
+        addRecordMethod(merged.getDateField().values(), recordBuilder, b -> b.readonly() != Bool.TRUE);
+        addRecordMethod(merged.getDateTimeField().values(), recordBuilder, b -> b.readonly() != Bool.TRUE);
+        addRecordMethod(merged.getDecimalField().values(), recordBuilder, b -> b.readonly() != Bool.TRUE);
+        addRecordMethod(merged.getFloatField().values(), recordBuilder, b -> b.readonly() != Bool.TRUE);
+        addRecordMethod(merged.getIntField().values(), recordBuilder, b -> b.readonly() != Bool.TRUE);
+        addRecordMethod(merged.getLongField().values(), recordBuilder, b -> b.readonly() != Bool.TRUE);
+        addRecordMethod(merged.getStringField().values(), recordBuilder, b -> b.readonly() != Bool.TRUE);
+        addRecordMethod(merged.getTimeField().values(), recordBuilder, b -> b.readonly() != Bool.TRUE);
+    }
+
+    private <T extends Namable & Annotation> void addRecordMethod(Collection<T> fields, InterfaceBuilder recordBuilder, Predicate<T> addSetter) {
+        fields.forEach(b -> recordBuilder.addOnlyReturnMethod(
+                b.getName(), Utils.getRecordFieldImpl(b)));
+        fields.stream().filter(addSetter).
+                forEach(b -> recordBuilder.add1ParamMethod(b.getName(), Utils.getRecordFieldImpl(b), b.getName()));
     }
 }

@@ -10,6 +10,10 @@ import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
 import org.platypus.api.fields.metainfo.MetaInfoFloatField;
 import org.platypus.api.fields.metainfo.MetaInfoIntField;
 import org.platypus.api.fields.metainfo.MetaInfoLongField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToOneField;
+import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 import org.platypus.builder.core.model.tree.FieldNode;
@@ -44,6 +48,12 @@ public class ModelTreeImpl implements ModelTree {
     private Map<String, FieldNode<MetaInfoDateTimeField>> dateTimeField = new HashMap<>();
     private Map<String, FieldNode<MetaInfoTimeField>> timeField = new HashMap<>();
     private Map<String, FieldNode<MetaInfoBooleanField>> booleanField = new HashMap<>();
+
+    private Map<String, FieldNode<MetaInfoOneToOneField>> otoField = new HashMap<>();
+    private Map<String, FieldNode<MetaInfoOneToManyField>> otmField = new HashMap<>();
+    private Map<String, FieldNode<MetaInfoManyToManyField>> mtmField = new HashMap<>();
+    private Map<String, FieldNode<MetaInfoManyToOneField>> mtoField = new HashMap<>();
+
     private Map<String, FieldNodeImpl<MetaInfoStringField>> stringFieldLast = new HashMap<>();
     private Map<String, FieldNodeImpl<MetaInfoLongField>> longFieldLast = new HashMap<>();
     private Map<String, FieldNodeImpl<MetaInfoBooleanField>> booleanFieldLast = new HashMap<>();
@@ -55,6 +65,11 @@ public class ModelTreeImpl implements ModelTree {
     private Map<String, FieldNodeImpl<MetaInfoDateField>> dateFieldLast = new HashMap<>();
     private Map<String, FieldNodeImpl<MetaInfoDateTimeField>> dateTimeFieldLast = new HashMap<>();
     private Map<String, FieldNodeImpl<MetaInfoTimeField>> timeFieldLast = new HashMap<>();
+
+    private Map<String, FieldNodeImpl<MetaInfoOneToOneField>> otoFieldLast = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoOneToManyField>> otmFieldLast = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoManyToManyField>> mtmFieldLast = new HashMap<>();
+    private Map<String, FieldNodeImpl<MetaInfoManyToOneField>> mtoFieldLast = new HashMap<>();
 
     @Override
     public Map<String, FieldNode<MetaInfoStringField>> getStringField() {
@@ -111,6 +126,26 @@ public class ModelTreeImpl implements ModelTree {
         return booleanField;
     }
 
+    @Override
+    public Map<String, FieldNode<MetaInfoOneToOneField>> getOtoField() {
+        return otoField;
+    }
+
+    @Override
+    public Map<String, FieldNode<MetaInfoOneToManyField>> getOtmField() {
+        return otmField;
+    }
+
+    @Override
+    public Map<String, FieldNode<MetaInfoManyToManyField>> getMtmField() {
+        return mtmField;
+    }
+
+    @Override
+    public Map<String, FieldNode<MetaInfoManyToOneField>> getMtoField() {
+        return mtoField;
+    }
+
     public void addStringField(String fieldName, FieldNodeImpl<MetaInfoStringField> node) {
         add(fieldName, node, stringField, stringFieldLast);
     }
@@ -153,6 +188,22 @@ public class ModelTreeImpl implements ModelTree {
 
     public void addTimeField(String fieldName, FieldNodeImpl<MetaInfoTimeField> node) {
         add(fieldName, node, timeField, timeFieldLast);
+    }
+
+    public void addOtoField(String fieldName, FieldNodeImpl<MetaInfoOneToOneField> node) {
+        add(fieldName, node, otoField, otoFieldLast);
+    }
+
+    public void addOtmField(String fieldName, FieldNodeImpl<MetaInfoOneToManyField> node) {
+        add(fieldName, node, otmField, otmFieldLast);
+    }
+
+    public void addMtoField(String fieldName, FieldNodeImpl<MetaInfoManyToOneField> node) {
+        add(fieldName, node, mtoField, mtoFieldLast);
+    }
+
+    public void addMtmField(String fieldName, FieldNodeImpl<MetaInfoManyToManyField> node) {
+        add(fieldName, node, mtmField, mtmFieldLast);
     }
 
 

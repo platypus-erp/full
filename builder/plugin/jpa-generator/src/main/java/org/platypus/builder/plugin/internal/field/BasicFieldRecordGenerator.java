@@ -56,6 +56,6 @@ public class BasicFieldRecordGenerator {
         return getField(field.getName(), Utils.getRecordFieldInterface(field));
     }
     private FieldSpec getField(String name, TypeName field){
-        return FieldSpecUtils.privateFinalField(field, name+"InheritField");
+        return FieldSpecUtils.privateFinalField(field, name+"Field");
     }
 }

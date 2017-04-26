@@ -9,8 +9,13 @@ import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
 import org.platypus.api.fields.metainfo.MetaInfoFloatField;
 import org.platypus.api.fields.metainfo.MetaInfoIntField;
 import org.platypus.api.fields.metainfo.MetaInfoLongField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToOneField;
+import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
+import org.platypus.builder.core.model.merger.ModelMerged;
 
 import java.util.Collections;
 import java.util.Map;
@@ -37,6 +42,11 @@ class ModelMergedImpl implements ModelMerged {
     Map<String, MetaInfoLongField> longField;
     Map<String, MetaInfoStringField> stringField;
     Map<String, MetaInfoTimeField> timeField;
+
+    Map<String, MetaInfoOneToOneField> otoField;
+    Map<String, MetaInfoOneToManyField> otmField;
+    Map<String, MetaInfoManyToManyField> mtmField;
+    Map<String, MetaInfoManyToOneField> mtoField;
 
     public ModelMergedImpl(String name) {
         this.name = name;
@@ -105,5 +115,25 @@ class ModelMergedImpl implements ModelMerged {
     @Override
     public Map<String, MetaInfoTimeField> getTimeField() {
         return Collections.unmodifiableMap(timeField);
+    }
+
+    @Override
+    public Map<String, MetaInfoOneToOneField> getOtoField() {
+        return otoField;
+    }
+
+    @Override
+    public Map<String, MetaInfoOneToManyField> getOtmField() {
+        return otmField;
+    }
+
+    @Override
+    public Map<String, MetaInfoManyToManyField> getMtmField() {
+        return mtmField;
+    }
+
+    @Override
+    public Map<String, MetaInfoManyToOneField> getMtoField() {
+        return mtoField;
     }
 }

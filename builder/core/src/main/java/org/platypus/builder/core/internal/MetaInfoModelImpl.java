@@ -13,7 +13,11 @@ import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
 import org.platypus.api.fields.metainfo.MetaInfoFloatField;
 import org.platypus.api.fields.metainfo.MetaInfoIntField;
 import org.platypus.api.fields.metainfo.MetaInfoLongField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
+import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 
@@ -43,18 +47,25 @@ public class MetaInfoModelImpl implements MetaInfoModel {
     Set<MetaInfoDateTimeField> dateTimeField = new HashSet<>();
     Set<MetaInfoTimeField> timeField = new HashSet<>();
 
+    Set<MetaInfoOneToManyField> otmField = new HashSet<>();
+    Set<MetaInfoOneToOneField> otoField = new HashSet<>();
+    Set<MetaInfoManyToManyField> mtmField = new HashSet<>();
+    Set<MetaInfoManyToOneField> mtoField = new HashSet<>();
+
     public MetaInfoModelImpl(String className, PlatypusModel platypusModel) {
         this.className = className;
         this.name = platypusModel.value();
         this.inheritNames = new String[0];
         this.typeModel = TypeModel.ROOT;
     }
+
     public MetaInfoModelImpl(String className, PlatypusInherit platypusInherit) {
         this.className = className;
         this.name = platypusInherit.values().getAnnotation(PlatypusModel.class).value();
         this.inheritNames = new String[]{name};
         this.typeModel = TypeModel.INHERIT;
     }
+
     public MetaInfoModelImpl(String className, PlatypusInheritMulti platypusInheritMulti) {
         this.className = className;
         this.name = platypusInheritMulti.name();
@@ -138,45 +149,83 @@ public class MetaInfoModelImpl implements MetaInfoModel {
         return timeField;
     }
 
-    public void add(MetaInfoStringField field){
+    @Override
+    public Set<MetaInfoOneToManyField> otmField() {
+        return otmField;
+    }
+
+    @Override
+    public Set<MetaInfoOneToOneField> otoField() {
+        return otoField;
+    }
+
+    @Override
+    public Set<MetaInfoManyToManyField> mtmField() {
+        return mtmField;
+    }
+
+    @Override
+    public Set<MetaInfoManyToOneField> mtoField() {
+        return mtoField;
+    }
+
+    public void add(MetaInfoManyToOneField field) {
+        mtoField.add(field);
+    }
+
+    public void add(MetaInfoStringField field) {
         stringField.add(field);
     }
 
-    public void add(MetaInfoLongField field){
+    public void add(MetaInfoManyToManyField field) {
+        mtmField.add(field);
+    }
+
+    public void add(MetaInfoOneToOneField field) {
+        otoField.add(field);
+    }
+
+    public void add(MetaInfoLongField field) {
         longField.add(field);
     }
 
-    public void add(MetaInfoIntField field){
+    public void add(MetaInfoOneToManyField field) {
+        otmField.add(field);
+    }
+
+    public void add(MetaInfoIntField field) {
         intField.add(field);
     }
-    public void add(MetaInfoBooleanField field){
+
+    public void add(MetaInfoBooleanField field) {
         booleanField.add(field);
     }
 
-    public void add(MetaInfoFloatField field){
+    public void add(MetaInfoFloatField field) {
         floatField.add(field);
     }
 
-    public void add(MetaInfoDecimalField field){
+    public void add(MetaInfoDecimalField field) {
         decimalField.add(field);
     }
 
-    public void add(MetaInfoBigStringField field){
+    public void add(MetaInfoBigStringField field) {
         bigStringField.add(field);
     }
 
-    public void add(MetaInfoBinaryField field){
+    public void add(MetaInfoBinaryField field) {
         binaryField.add(field);
     }
 
-    public void add(MetaInfoDateField field){
+    public void add(MetaInfoDateField field) {
         dateField.add(field);
     }
-    public void add(MetaInfoDateTimeField field){
+
+    public void add(MetaInfoDateTimeField field) {
         dateTimeField.add(field);
     }
 
-    public void add(MetaInfoTimeField field){
+    public void add(MetaInfoTimeField field) {
         timeField.add(field);
     }
 }

@@ -79,6 +79,12 @@ public class ModuleTreeModelImpl implements ModuleTreeModel {
             model.longField().forEach(f -> modelTree.addLongField(f.getName(), new FieldNodeImpl<>(f)));
             model.stringField().forEach(f -> modelTree.addStringField(f.getName(), new FieldNodeImpl<>(f)));
             model.timeField().forEach(f -> modelTree.addTimeField(f.getName(), new FieldNodeImpl<>(f)));
+
+            model.mtmField().forEach(f -> modelTree.addMtmField(f.getName(), new FieldNodeImpl<>(f)));
+            model.mtoField().forEach(f -> modelTree.addMtoField(f.getName(), new FieldNodeImpl<>(f)));
+            model.otmField().forEach(f -> modelTree.addOtmField(f.getName(), new FieldNodeImpl<>(f)));
+            model.otoField().forEach(f -> modelTree.addOtoField(f.getName(), new FieldNodeImpl<>(f)));
+
             modelsTree.put(model.getName(), modelTree);
         }
         for (ModuleTreeNode child : node.getParent()) {

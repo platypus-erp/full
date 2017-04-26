@@ -1,4 +1,4 @@
-package org.platypus.builder.core.model.merger.internal;
+package org.platypus.builder.core.model.merger;
 
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
@@ -9,9 +9,14 @@ import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
 import org.platypus.api.fields.metainfo.MetaInfoFloatField;
 import org.platypus.api.fields.metainfo.MetaInfoIntField;
 import org.platypus.api.fields.metainfo.MetaInfoLongField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToOneField;
+import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 import org.platypus.builder.core.model.merger.internal.MultiColumnUniqueKey;
+import org.platypus.builder.core.model.tree.FieldNode;
 
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +43,12 @@ public interface ModelMerged {
     Map<String, MetaInfoLongField> getLongField();
     Map<String, MetaInfoStringField> getStringField();
     Map<String, MetaInfoTimeField> getTimeField();
+
+    Map<String, MetaInfoOneToOneField> getOtoField();
+    Map<String, MetaInfoOneToManyField> getOtmField();
+    Map<String, MetaInfoManyToManyField> getMtmField();
+    Map<String, MetaInfoManyToOneField> getMtoField();
+
 
     Set<MultiColumnUniqueKey> getMultiColumnUniqueKeys();
 }

@@ -10,6 +10,10 @@ import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
 import org.platypus.api.fields.metainfo.MetaInfoFloatField;
 import org.platypus.api.fields.metainfo.MetaInfoIntField;
 import org.platypus.api.fields.metainfo.MetaInfoLongField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToOneField;
+import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 
@@ -36,4 +40,9 @@ public interface ModelTree {
     Map<String, FieldNode<MetaInfoLongField>> getLongField();
     Map<String, FieldNode<MetaInfoStringField>> getStringField();
     Map<String, FieldNode<MetaInfoTimeField>> getTimeField();
+
+    Map<String, FieldNode<MetaInfoOneToOneField>> getOtoField();
+    Map<String, FieldNode<MetaInfoOneToManyField>> getOtmField();
+    Map<String, FieldNode<MetaInfoManyToManyField>> getMtmField();
+    Map<String, FieldNode<MetaInfoManyToOneField>> getMtoField();
 }

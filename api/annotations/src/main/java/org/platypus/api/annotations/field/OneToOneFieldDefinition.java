@@ -4,11 +4,18 @@ package org.platypus.api.annotations.field;
 import org.platypus.api.BaseModel;
 import org.platypus.api.Bool;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * @author Alexis PASQUIER
  * @version 0.1
  * @since 0.1
  */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
 public @interface OneToOneFieldDefinition {
     String DEFAULT = "__DEFAULT__VALUE__";
 
@@ -64,5 +71,10 @@ public @interface OneToOneFieldDefinition {
      * (Optional) Define if the field can be <code>null</code>
      */
     Bool required() default Bool.DEFAULT;
+
+    /**
+     * (Optional) <br> Define if the value of this field can be change
+     */
+    Bool readonly() default Bool.DEFAULT;
 
 }

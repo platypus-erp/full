@@ -1,4 +1,4 @@
-group 'org.platypus.erp'
+group 'org.platypus.erp.module'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'org.platypus.greeting'
@@ -21,9 +21,6 @@ sourceSets {
     main {
         compileClasspath += sourceSets.models.output
         runtimeClasspath += sourceSets.models.output
-        java {
-            exclude "${project.group.toString().replace(".", "/")}/${project.name}/generated/**"
-        }
     }
     generated {
         compileClasspath += sourceSets.main.runtimeClasspath
@@ -35,12 +32,6 @@ sourceSets {
         }
     }
 }
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile project(':builder:core')
-    modelsCompile project(':api:models')
-}
-
 buildscript {
     repositories {
         maven {
@@ -51,6 +42,32 @@ buildscript {
         classpath 'org.platypus:MyPlugin:1.0-SNAPSHOT'
     }
 }
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final'
+    compile project(':impl:module')
+    compile project(':impl:models')
+    compile project(':builder:core')
+    compile project(':builder:plugin:jpa-generator')
+    compile project(':builder:plugin:display-tree-module')
+    modelsCompile project(':api:annotations')
+    modelsCompile project(':api:models')
+    recordsCompile project(':builder:core')
+}
+jar {
+    from sourceSets.models.output
+    from sourceSets.main.output
+    from sourceSets.records.output
+    dependsOn modelsClasses
+    dependsOn recordsClasses
+    dependsOn generatedClasses
+}
+
+compileJava{
+    source    += sourceSets.generated.java
+    source    += sourceSets.main.java
+    source    += sourceSets.records.java
+}
 
 platypus {
     moduleVersion "1"
@@ -60,11 +77,9 @@ task generate_records(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'org.platypus.builder.QuickRecordBuilder'
     // arguments to pass to the application
-    args = ["${sourceSets.models.java.srcDirs}", "${project.group}", "${project.name}", "${project.projectDir}"]
+    args = ["${sourceSets.main.java.srcDirs}", "${project.group}", "${project.name}", "${project.projectDir}"]
 }
-
-clean.doFirst {
-    delete "${project.projectDir}/src/main/java/${project.group.toString().replace(".", "/")}/${project.name}/generated"
-    println "${project.projectDir}/src/main/java/${project.group.toString().replace(".", "/")}/${project.name}/generated"
+clean {
+    delete sourceSets.generated.java.srcDirs
 }
 

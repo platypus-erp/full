@@ -50,6 +50,7 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
         this.platypusVersion = info.version();
         depends = new HashSet<>();
         Collections.addAll(depends, info.depends());
+        System.out.println(depends);
         this.metaInfoModelMap = new HashMap<>();
         this.metaInfoRecordMap = new HashMap<>();
         this.metaInfoRecordCollectionMap = new HashMap<>();

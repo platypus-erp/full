@@ -22,9 +22,6 @@ sourceSets {
     main {
         compileClasspath += sourceSets.models.output
         runtimeClasspath += sourceSets.models.output
-        java {
-            exclude "${project.group.toString().replace(".", "/")}/${project.name}/generated/**"
-        }
     }
     generated {
         compileClasspath += sourceSets.main.runtimeClasspath
@@ -63,16 +60,6 @@ dependencies {
 
 }
 apply plugin: 'org.platypus.greeting'
-task greeting(type: org.platypus.GreetingTask) {
-    greeting = 'howdy!'
-}
-
-task records {
-    println "${project.projectDir}"
-    println "${project.group}"
-    println "${project.name}"
-
-}
 
 
 

@@ -63,7 +63,7 @@ public class BasicFieldRecordImplSetterGenerator {
     private Optional<MethodSpec> getSetter(String name, TypeName field){
         return Optional.of(MethodSpec.methodBuilder(name)
                 .addParameter(ParameterSpec.builder(field, name, Modifier.FINAL).build())
-                .addCode("get().$N($N);", name, name)
+                .addCode("get().$N($N);\n", name, name)
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .build());

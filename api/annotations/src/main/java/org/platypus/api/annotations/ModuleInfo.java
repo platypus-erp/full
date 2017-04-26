@@ -18,5 +18,5 @@ public @interface ModuleInfo {
     String name();
     String moduleVersion();
     PlatypusVersion version() default PlatypusVersion.V1;
-    String[] depends();
+    String[] depends() default {};
 }

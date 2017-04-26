@@ -22,7 +22,7 @@ class PlatypusExtension {
         projectDir = project.projectDir
         modulename = project.name
         moduleVersion = project.version
-        baseGeneratedPackage = project.group.toString() + "." + project.name +".generated"
+        baseGeneratedPackage = project.group.toString() + "." + project.name
         shortDesc = project.file('src/main/ressources/' + baseGeneratedPackage + '/short-desc.adoc')
         longDesc = project.file('src/main/ressources/' + baseGeneratedPackage + '/long-desc.adoc')
     }
