@@ -4,6 +4,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import org.apache.commons.lang3.StringUtils;
+import org.platypus.api.BaseModel;
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
 import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
@@ -94,16 +95,16 @@ public class BasicFieldRecordConstructorGenerator {
     }
     public CodeBlock generateField(MetaInfoManyToOneField field,
                                    Function<String, MetaInfoRecord> getRecord) {
-        return generateRecordField(field.getName(), field.targetName(), getRecord);
+        return generateRecordField(field.getName(), field.targetName(),field.target(), getRecord);
     }
     public CodeBlock generateField(MetaInfoOneToOneField field,
                                    Function<String, MetaInfoRecord> getRecord) {
-        return generateRecordField(field.getName(), field.targetName(), getRecord);
+        return generateRecordField(field.getName(), field.targetName(), field.target(), getRecord);
     }
-    private CodeBlock generateRecordField(String name, String fieldTargetName,Function<String, MetaInfoRecord> getRecord) {
+    private CodeBlock generateRecordField(String name, String fieldTargetName, Class<? extends BaseModel> target, Function<String, MetaInfoRecord> getRecord) {
         ClassName rImplT = ClassName.get("",getRecord.apply(fieldTargetName).getClassName() + "Impl");
-        ClassName JpaImplT = ClassName.get("",getImplHibernateName(getRecord.apply(fieldTargetName).getClassName()));
-        return CodeBlock.of("$N = new $T<>(this,$T.class, $N::get$N, $N::set$N)",
+        ClassName JpaImplT = ClassName.get("",getImplHibernateName(target.getSimpleName()));
+        return CodeBlock.of("$N = new $T<>(this,$T.class, $N::get$N, $N::set$N);\n",
                 name + "Field",
                 rImplT,
                 JpaImplT,

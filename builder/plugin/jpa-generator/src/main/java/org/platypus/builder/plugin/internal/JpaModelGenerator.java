@@ -94,6 +94,7 @@ public class JpaModelGenerator {
         foreachValues(modelMerged.getTimeField(), fieldGenerator::generateField);
 
         foreachValues(modelMerged.getMtoField(), m -> fieldGenerator.generateField(m, getRecord));
+        foreachValues(modelMerged.getOtoField(), m -> fieldGenerator.generateField(m, getRecord));
 
         jpaImplBuilder.addMethod(constructor.build());
         jpaImplBuiler.put(modelMerged.getName(), new HashSet<>());
@@ -192,6 +193,9 @@ public class JpaModelGenerator {
         foreachValues(modelMerged.getLongField(), fieldGenerator::generateField);
         foreachValues(modelMerged.getStringField(), fieldGenerator::generateField);
         foreachValues(modelMerged.getTimeField(), fieldGenerator::generateField);
+
+        foreachValues(modelMerged.getMtoField(), f -> fieldGenerator.generateField(f, getRecord));
+        foreachValues(modelMerged.getOtoField(), f -> fieldGenerator.generateField(f, getRecord));
 
 
 //

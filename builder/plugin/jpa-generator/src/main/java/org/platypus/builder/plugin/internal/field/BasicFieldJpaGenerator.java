@@ -3,30 +3,20 @@ package org.platypus.builder.plugin.internal.field;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
-import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
-import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
-import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
-import org.platypus.api.fields.metainfo.MetaInfoDateField;
-import org.platypus.api.fields.metainfo.MetaInfoDateTimeField;
-import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
-import org.platypus.api.fields.metainfo.MetaInfoFloatField;
-import org.platypus.api.fields.metainfo.MetaInfoIntField;
-import org.platypus.api.fields.metainfo.MetaInfoLongField;
-import org.platypus.api.fields.metainfo.MetaInfoStringField;
-import org.platypus.api.fields.metainfo.MetaInfoTimeField;
+import org.platypus.api.fields.metainfo.*;
+import org.platypus.api.module.MetaInfoRecord;
 
 import javax.lang.model.element.Modifier;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.Lob;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.function.Function;
 
+import static org.platypus.builder.plugin.internal.JpaModelGenerator.getImplHibernateName;
 import static org.platypus.builder.plugin.internal.Utils.getJavaType;
 import static org.platypus.builder.utils.Utils.TO_SQL;
 import static org.platypus.builder.utils.ValuesUtils.isFalseOrDefault;
@@ -238,6 +228,28 @@ public class BasicFieldJpaGenerator {
                 .addMember(UPDATABLE, LITTERAL, isTrueOrDefault(field.updatable()))
                 .build());
 
+        return Optional.of(f.build());
+    }
+
+    public Optional<FieldSpec> generatedFieldImpl(MetaInfoManyToOneField field, Function<String, MetaInfoRecord> getRecord) {
+        MetaInfoRecord record = getRecord.apply(field.targetName());
+        ClassName JpaImplT = ClassName.get("",getImplHibernateName(field.target().getSimpleName()));
+        FieldSpec.Builder f = FieldSpec.builder(JpaImplT, field.getName(), Modifier.PRIVATE);
+        f.addAnnotation(AnnotationSpec.builder(Column.class)
+                .addMember(NAME, $_S, "\"" + TO_SQL.apply(field.getName()) + "\"")
+                .build());
+        f.addAnnotation(AnnotationSpec.builder(ManyToOne.class).build());
+
+        return Optional.of(f.build());
+    }
+    public Optional<FieldSpec> generatedFieldImpl(MetaInfoOneToOneField field, Function<String, MetaInfoRecord> getRecord) {
+        MetaInfoRecord record = getRecord.apply(field.targetName());
+        ClassName JpaImplT = ClassName.get("",getImplHibernateName(field.target().getSimpleName()));
+        FieldSpec.Builder f = FieldSpec.builder(JpaImplT, field.getName(), Modifier.PRIVATE);
+        f.addAnnotation(AnnotationSpec.builder(Column.class)
+                .addMember(NAME, $_S, "\"" + TO_SQL.apply(field.getName()) + "\"")
+                .build());
+        f.addAnnotation(AnnotationSpec.builder(OneToOne.class).build());
         return Optional.of(f.build());
     }
 

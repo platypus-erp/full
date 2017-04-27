@@ -1,25 +1,18 @@
 package org.platypus.builder.plugin.internal.field;
 
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterSpec;
-import com.squareup.javapoet.TypeName;
+import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
-import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
-import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
-import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
-import org.platypus.api.fields.metainfo.MetaInfoDateField;
-import org.platypus.api.fields.metainfo.MetaInfoDateTimeField;
-import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
-import org.platypus.api.fields.metainfo.MetaInfoFloatField;
-import org.platypus.api.fields.metainfo.MetaInfoIntField;
-import org.platypus.api.fields.metainfo.MetaInfoLongField;
-import org.platypus.api.fields.metainfo.MetaInfoStringField;
-import org.platypus.api.fields.metainfo.MetaInfoTimeField;
+import org.platypus.api.fields.metainfo.*;
+import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.builder.plugin.internal.Utils;
+import org.platypus.builder.utils.javapoet.utils.FieldSpecUtils;
 
 import javax.lang.model.element.Modifier;
 
 import java.util.Optional;
+import java.util.function.Function;
+
+import static org.platypus.builder.plugin.internal.JpaModelGenerator.getImplHibernateName;
 
 /**
  * TODO Add JavaDoc
@@ -61,6 +54,14 @@ public class BasicFieldJavaSetterGenerator {
     }
     public Optional<MethodSpec> generateSetter(MetaInfoTimeField field){
         return getSetter(field.getName(), Utils.getJavaType(field));
+    }
+    public Optional<MethodSpec> generateSetter(MetaInfoManyToOneField field, Function<String, MetaInfoRecord> getRecord) {
+        ClassName JpaImplT = ClassName.get("",getImplHibernateName(field.target().getSimpleName()));
+        return getSetter(field.getName(), JpaImplT);
+    }
+    public Optional<MethodSpec> generateSetter(MetaInfoOneToOneField field, Function<String, MetaInfoRecord> getRecord) {
+        ClassName JpaImplT = ClassName.get("",getImplHibernateName(field.target().getSimpleName()));
+        return getSetter(field.getName(), JpaImplT);
     }
     private Optional<MethodSpec> getSetter(String name, TypeName field){
         return Optional.of(MethodSpec.methodBuilder("set" + StringUtils.capitalize(name))

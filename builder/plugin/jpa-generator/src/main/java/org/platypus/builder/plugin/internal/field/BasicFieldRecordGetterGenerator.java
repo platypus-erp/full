@@ -1,23 +1,16 @@
 package org.platypus.builder.plugin.internal.field;
 
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
-import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
-import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
-import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
-import org.platypus.api.fields.metainfo.MetaInfoDateField;
-import org.platypus.api.fields.metainfo.MetaInfoDateTimeField;
-import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
-import org.platypus.api.fields.metainfo.MetaInfoFloatField;
-import org.platypus.api.fields.metainfo.MetaInfoIntField;
-import org.platypus.api.fields.metainfo.MetaInfoLongField;
-import org.platypus.api.fields.metainfo.MetaInfoStringField;
-import org.platypus.api.fields.metainfo.MetaInfoTimeField;
+import org.platypus.api.fields.metainfo.*;
+import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.builder.plugin.internal.Utils;
 
 import javax.lang.model.element.Modifier;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * @author chmuchme
@@ -57,6 +50,16 @@ public class BasicFieldRecordGetterGenerator {
     }
     public Optional<MethodSpec> generateGetter(MetaInfoTimeField field){
         return getGetter(field.getName(), Utils.getRecordFieldInterface(field));
+    }
+    public Optional<MethodSpec> generateGetter(MetaInfoManyToOneField field,
+                                              Function<String, MetaInfoRecord> getRecord) {
+        MetaInfoRecord record = getRecord.apply(field.targetName());
+        return getGetter(field.getName(), ClassName.get(record.getPkg(), record.getClassName()));
+    }
+    public Optional<MethodSpec> generateGetter(MetaInfoOneToOneField field,
+                                              Function<String, MetaInfoRecord> getRecord) {
+        MetaInfoRecord record = getRecord.apply(field.targetName());
+        return getGetter(field.getName(), ClassName.get(record.getPkg(), record.getClassName()));
     }
     private Optional<MethodSpec> getGetter(String name, TypeName field){
         return Optional.of(MethodSpec.methodBuilder(name)

@@ -134,12 +134,22 @@ public class JpaImplFieldGenerator {
     }
 
     public void generateField(MetaInfoManyToOneField meta, Function<String, MetaInfoRecord> getRecord){
-//        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-//        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-//        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-//        basicFieldRecordSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-//        basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-//        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta, getRecord));
+        basicFieldJpaGenerator.generatedFieldImpl(meta, getRecord).ifPresent(jpaImplBuilder::addField);
+        basicFieldJavaGetterGenerator.generateGetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordSetterGenerator.generateSetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
+        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta, getRecord));
         constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta, getRecord));
     }
+    public void generateField(MetaInfoOneToOneField meta, Function<String, MetaInfoRecord> getRecord){
+        basicFieldJpaGenerator.generatedFieldImpl(meta, getRecord).ifPresent(jpaImplBuilder::addField);
+        basicFieldJavaGetterGenerator.generateGetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordSetterGenerator.generateSetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
+        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta, getRecord));
+        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta, getRecord));
+    }
+
 }

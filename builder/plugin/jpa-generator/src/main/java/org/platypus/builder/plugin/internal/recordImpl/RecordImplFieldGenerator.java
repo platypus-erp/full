@@ -1,17 +1,10 @@
 package org.platypus.builder.plugin.internal.recordImpl;
 
 import com.squareup.javapoet.TypeSpec;
-import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
-import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
-import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
-import org.platypus.api.fields.metainfo.MetaInfoDateField;
-import org.platypus.api.fields.metainfo.MetaInfoDateTimeField;
-import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
-import org.platypus.api.fields.metainfo.MetaInfoFloatField;
-import org.platypus.api.fields.metainfo.MetaInfoIntField;
-import org.platypus.api.fields.metainfo.MetaInfoLongField;
-import org.platypus.api.fields.metainfo.MetaInfoStringField;
-import org.platypus.api.fields.metainfo.MetaInfoTimeField;
+import org.platypus.api.fields.metainfo.*;
+import org.platypus.api.module.MetaInfoRecord;
+
+import java.util.function.Function;
 
 /**
  * @author chmuchme
@@ -71,5 +64,15 @@ public class RecordImplFieldGenerator {
     public void generateField(MetaInfoTimeField meta){
         basicFieldRecordImplGetterGenerator.generateGetter(meta).ifPresent(recordImplBuilder::addMethod);
         basicFieldRecordImplSetterGenerator.generateSetter(meta).ifPresent(recordImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoManyToOneField meta, Function<String, MetaInfoRecord> getRecord){
+        basicFieldRecordImplGetterGenerator.generateGetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generateSetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoOneToOneField meta, Function<String, MetaInfoRecord> getRecord){
+        basicFieldRecordImplGetterGenerator.generateGetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generateSetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
     }
 }

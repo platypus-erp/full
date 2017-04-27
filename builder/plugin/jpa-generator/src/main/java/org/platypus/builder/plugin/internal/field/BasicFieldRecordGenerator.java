@@ -1,20 +1,17 @@
 package org.platypus.builder.plugin.internal.field;
 
-import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.TypeName;
-import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
-import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
-import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
-import org.platypus.api.fields.metainfo.MetaInfoDateField;
-import org.platypus.api.fields.metainfo.MetaInfoDateTimeField;
-import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
-import org.platypus.api.fields.metainfo.MetaInfoFloatField;
-import org.platypus.api.fields.metainfo.MetaInfoIntField;
-import org.platypus.api.fields.metainfo.MetaInfoLongField;
-import org.platypus.api.fields.metainfo.MetaInfoStringField;
-import org.platypus.api.fields.metainfo.MetaInfoTimeField;
+import com.squareup.javapoet.*;
+import org.apache.commons.lang3.StringUtils;
+import org.platypus.api.BaseModel;
+import org.platypus.api.fields.metainfo.*;
+import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.builder.plugin.internal.Utils;
 import org.platypus.builder.utils.javapoet.utils.FieldSpecUtils;
+
+import java.beans.Transient;
+import java.util.function.Function;
+
+import static org.platypus.builder.plugin.internal.JpaModelGenerator.getImplHibernateName;
 
 /**
  * @author chmuchme
@@ -55,7 +52,19 @@ public class BasicFieldRecordGenerator {
     public FieldSpec generateField(MetaInfoTimeField field){
         return getField(field.getName(), Utils.getRecordFieldInterface(field));
     }
+    public FieldSpec generateField(MetaInfoManyToOneField field,
+                                   Function<String, MetaInfoRecord> getRecord) {
+        return generateRecordField(field.getName(), getRecord.apply(field.targetName()));
+    }
+    public FieldSpec generateField(MetaInfoOneToOneField field,
+                                   Function<String, MetaInfoRecord> getRecord) {
+        return generateRecordField(field.getName(), getRecord.apply(field.targetName()));
+    }
+    private FieldSpec generateRecordField(String name, MetaInfoRecord record) {
+        return getField( name, ClassName.get(record.getPkg(), record.getClassName()));
+    }
     private FieldSpec getField(String name, TypeName field){
-        return FieldSpecUtils.privateFinalField(field, name+"Field");
+        return FieldSpecUtils.privateFinalFieldBuilder(field, name+"Field")
+                .addAnnotation(AnnotationSpec.builder(javax.persistence.Transient.class).build()).build();
     }
 }

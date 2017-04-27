@@ -6,6 +6,9 @@ import org.platypus.api.annotations.field.ManyToOneFieldDefinition;
 import org.platypus.api.annotations.field.OneToOneFieldDefinition;
 import org.platypus.api.annotations.model.PlatypusModel;
 
+import javax.persistence.ManyToOne;
+import java.lang.annotation.Annotation;
+
 /**
  * TODO Add JavaDoc
  *
@@ -15,11 +18,11 @@ import org.platypus.api.annotations.model.PlatypusModel;
  */
 public interface MetaInfoManyToOneField extends ManyToOneFieldDefinition, Namable {
 
-    default String targetName(){
+    default String targetName() {
         return target().getAnnotation(PlatypusModel.class).value();
     }
 
-    default String targetPkg(){
+    default String targetPkg() {
         return target().getPackage().getName();
     }
 

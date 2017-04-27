@@ -33,6 +33,10 @@ public class FieldSpecUtils {
         return FieldSpec.builder(fieldType, fieldName, Modifier.PRIVATE, Modifier.FINAL).build();
     }
 
+    public static FieldSpec.Builder privateFinalFieldBuilder(TypeName fieldType, String fieldName) {
+        return FieldSpec.builder(fieldType, fieldName, Modifier.PRIVATE, Modifier.FINAL);
+    }
+
     public static FieldSpec privateFinalField(Class<?> fieldType, String fieldName) {
         return FieldSpec.builder(fieldType, fieldName, Modifier.PRIVATE, Modifier.FINAL).build();
     }

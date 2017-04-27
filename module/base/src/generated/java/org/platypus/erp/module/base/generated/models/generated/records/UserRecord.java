@@ -1,9 +1,11 @@
-package org.platypus.erp.module.base.models.generated.records;
+package org.platypus.erp.module.base.generated.models.generated.records;
 
 import org.platypus.api.Record;
 import org.platypus.api.fields.BinaryField;
 import org.platypus.api.fields.BooleanField;
 import org.platypus.api.fields.StringField;
+import org.platypus.erp.module.base.models.generated.records.CompanyRecord;
+import org.platypus.erp.module.base.models.generated.records.PartnerRecord;
 
 public interface UserRecord extends Record {
   BinaryField signature();

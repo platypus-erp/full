@@ -1,4 +1,4 @@
-package org.platypus.erp.module.base.models.generated.jpa;
+package org.platypus.erp.module.base.generated.models.generated.jpa;
 
 import java.lang.Class;
 import java.lang.Override;
@@ -9,7 +9,9 @@ import org.platypus.api.fields.BinaryField;
 import org.platypus.api.fields.BooleanField;
 import org.platypus.api.fields.StringField;
 import org.platypus.api.fields.impl.RecordImpl;
-import org.platypus.erp.module.base.models.generated.records.UserRecord;
+import org.platypus.erp.module.base.generated.models.generated.records.CompanyRecord;
+import org.platypus.erp.module.base.generated.models.generated.records.PartnerRecord;
+import org.platypus.erp.module.base.generated.models.generated.records.UserRecord;
 
 public class UserRecordImpl<T extends Record> extends RecordImpl<T, UserRecord, ImplUserJPA> implements UserRecord {
   public UserRecordImpl(T instance, Class<ImplUserJPA> targetRecordImpl,
@@ -64,5 +66,25 @@ public class UserRecordImpl<T extends Record> extends RecordImpl<T, UserRecord, 
   @Override
   public void login(final StringField login) {
     get().login(login);
+  }
+
+  @Override
+  public PartnerRecord partner() {
+    return get().partner();
+  }
+
+  @Override
+  public void partner(final PartnerRecord partner) {
+    get().partner(partner);
+  }
+
+  @Override
+  public CompanyRecord company_id() {
+    return get().company_id();
+  }
+
+  @Override
+  public void company_id(final CompanyRecord company_id) {
+    get().company_id(company_id);
   }
 }

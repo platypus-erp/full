@@ -1,4 +1,4 @@
-package org.platypus.erp.module.base.models.generated.jpa;
+package org.platypus.erp.module.base.generated.models.generated.jpa;
 
 import java.lang.Override;
 import java.lang.String;
@@ -7,7 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import org.platypus.api.fields.BinaryField;
 import org.platypus.api.fields.BooleanField;
@@ -15,7 +17,9 @@ import org.platypus.api.fields.StringField;
 import org.platypus.api.fields.impl.BinaryFieldImpl;
 import org.platypus.api.fields.impl.BooleanFieldImpl;
 import org.platypus.api.fields.impl.StringFieldImpl;
-import org.platypus.erp.module.base.models.generated.records.UserRecord;
+import org.platypus.erp.module.base.generated.models.generated.records.CompanyRecord;
+import org.platypus.erp.module.base.generated.models.generated.records.PartnerRecord;
+import org.platypus.erp.module.base.generated.models.generated.records.UserRecord;
 
 @Table(
     name = ImplUserJPA.MODEL_NAME
@@ -36,6 +40,7 @@ public class ImplUserJPA implements UserRecord {
   )
   private byte[] signature;
 
+  @Transient
   private final BinaryField signatureField;
 
   @Column(
@@ -46,6 +51,7 @@ public class ImplUserJPA implements UserRecord {
   )
   private boolean share;
 
+  @Transient
   private final BooleanField shareField;
 
   @Column(
@@ -55,6 +61,7 @@ public class ImplUserJPA implements UserRecord {
   )
   private String password;
 
+  @Transient
   private final StringField passwordField;
 
   @Column(
@@ -64,6 +71,7 @@ public class ImplUserJPA implements UserRecord {
   )
   private String new_password;
 
+  @Transient
   private final StringField new_passwordField;
 
   @Size(
@@ -76,7 +84,26 @@ public class ImplUserJPA implements UserRecord {
   )
   private String login;
 
+  @Transient
   private final StringField loginField;
+
+  @Column(
+      name = "\"partner\""
+  )
+  @ManyToOne
+  private ImplPartnerJPA partner;
+
+  @Transient
+  private final PartnerRecord partnerField;
+
+  @Column(
+      name = "\"company_id\""
+  )
+  @ManyToOne
+  private ImplCompanyJPA company_id;
+
+  @Transient
+  private final CompanyRecord company_idField;
 
   public ImplUserJPA() {
     signatureField = new BinaryFieldImpl<>(this, ImplUserJPA::getSignature, ImplUserJPA::setSignature);
@@ -84,7 +111,9 @@ public class ImplUserJPA implements UserRecord {
     passwordField = new StringFieldImpl<>(this, ImplUserJPA::getPassword, ImplUserJPA::setPassword);
     new_passwordField = new StringFieldImpl<>(this, ImplUserJPA::getNew_password, ImplUserJPA::setNew_password);
     loginField = new StringFieldImpl<>(this, ImplUserJPA::getLogin, ImplUserJPA::setLogin);
-    partnerField = new PartnerRecordImpl<>(this,ImplPartnerRecordJPA.class, ImplUserJPA::getPartner, ImplUserJPA::setPartner)company_idField = new CompanyRecordImpl<>(this,ImplCompanyRecordJPA.class, ImplUserJPA::getCompany_id, ImplUserJPA::setCompany_id)}
+    partnerField = new PartnerRecordImpl<>(this,ImplPartnerJPA.class, ImplUserJPA::getPartner, ImplUserJPA::setPartner);
+    company_idField = new CompanyRecordImpl<>(this,ImplCompanyJPA.class, ImplUserJPA::getCompany_id, ImplUserJPA::setCompany_id);
+  }
 
   public byte[] getSignature() {
     return this.signature;
@@ -174,5 +203,41 @@ public class ImplUserJPA implements UserRecord {
   @Override
   public StringField login() {
     return loginField;
+  }
+
+  public ImplPartnerJPA getPartner() {
+    return this.partner;
+  }
+
+  public void setPartner(final ImplPartnerJPA partner) {
+    this.partner = partner;
+  }
+
+  @Override
+  public void partner(final PartnerRecord partnerField) {
+    this.setPartner(partnerField.unWrap(ImplPartnerJPA.class));
+  }
+
+  @Override
+  public PartnerRecord partner() {
+    return partnerField;
+  }
+
+  public ImplCompanyJPA getCompany_id() {
+    return this.company_id;
+  }
+
+  public void setCompany_id(final ImplCompanyJPA company_id) {
+    this.company_id = company_id;
+  }
+
+  @Override
+  public void company_id(final CompanyRecord company_idField) {
+    this.setCompany_id(company_idField.unWrap(ImplCompanyJPA.class));
+  }
+
+  @Override
+  public CompanyRecord company_id() {
+    return company_idField;
   }
 }
