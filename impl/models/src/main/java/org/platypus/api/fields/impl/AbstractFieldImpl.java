@@ -3,7 +3,9 @@ package org.platypus.api.fields.impl;
 import org.platypus.api.GenericField;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * TODO Add JavaDoc
@@ -12,25 +14,23 @@ import java.util.function.Function;
  * @version 0.1
  * @since 0.1
  */
-abstract class AbstractFieldImpl<E, T> implements GenericField<T> {
+abstract class AbstractFieldImpl<T> implements GenericField<T> {
 
-    protected final E instance;
-    private final Function<E, T> getter;
-    private final BiConsumer<E, T> setter;
+    private final Supplier<T> getter;
+    private final Consumer<T> setter;
 
-    public AbstractFieldImpl(E instance, Function<E, T> getter, BiConsumer<E, T> setter) {
-        this.instance = instance;
+    public AbstractFieldImpl(Supplier<T> getter, Consumer<T> setter) {
         this.getter = getter;
         this.setter = setter;
     }
 
     @Override
     public T get() {
-        return getter.apply(instance);
+        return getter.get();
     }
 
     @Override
     public void set(T value) {
-        setter.accept(instance, value);
+        setter.accept(value);
     }
 }

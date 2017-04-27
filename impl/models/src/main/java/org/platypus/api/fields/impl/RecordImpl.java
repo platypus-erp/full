@@ -7,7 +7,9 @@ import org.platypus.api.fields.UnmutableDateTimeField;
 import org.platypus.api.fields.UnmutableStringField;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * TODO Add JavaDoc
@@ -16,10 +18,10 @@ import java.util.function.Function;
  * @version 0.1
  * @since 0.1
  */
-public class RecordImpl<T extends Record, R extends Record, RI extends R> extends AbstractFieldImpl<T,RI> implements GenericField<RI>, Record{
+public class RecordImpl<R extends Record, RI extends R> extends AbstractFieldImpl<RI> implements GenericField<RI>, Record{
 
-    public RecordImpl(T instance, Class<RI> targetRecordImpl, Function<T, RI> getter, BiConsumer<T, RI> setter) {
-        super(instance, getter, setter);
+    public RecordImpl(Supplier<RI> getter, Consumer<RI> setter) {
+        super(getter, setter);
     }
 
 //    @Override

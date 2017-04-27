@@ -3,7 +3,9 @@ package org.platypus.api.fields.impl;
 import org.platypus.api.fields.LongField;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * TODO Add JavaDoc
@@ -12,9 +14,9 @@ import java.util.function.Function;
  * @version 0.1
  * @since 0.1
  */
-public class LongFieldImpl<T> extends AbstractFieldImpl<T,Long> implements LongField {
+public class LongFieldImpl extends AbstractFieldImpl<Long> implements LongField {
 
-    public LongFieldImpl(T instance, Function<T, Long> getter, BiConsumer<T, Long> setter) {
-        super(instance, getter, setter);
+    public LongFieldImpl(Supplier<Long> getter, Consumer<Long> setter) {
+        super(getter, setter);
     }
 }

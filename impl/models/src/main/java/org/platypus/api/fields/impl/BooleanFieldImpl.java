@@ -3,7 +3,9 @@ package org.platypus.api.fields.impl;
 import org.platypus.api.fields.BooleanField;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * TODO Add JavaDoc
@@ -12,9 +14,9 @@ import java.util.function.Function;
  * @version 0.1
  * @since 0.1
  */
-public class BooleanFieldImpl<T> extends AbstractFieldImpl<T,Boolean> implements BooleanField {
+public class BooleanFieldImpl extends AbstractFieldImpl<Boolean> implements BooleanField {
 
-    public BooleanFieldImpl(T instance, Function<T, Boolean> getter, BiConsumer<T, Boolean> setter) {
-        super(instance, getter, setter);
+    public BooleanFieldImpl(Supplier<Boolean> getter, Consumer<Boolean> setter) {
+        super(getter, setter);
     }
 }

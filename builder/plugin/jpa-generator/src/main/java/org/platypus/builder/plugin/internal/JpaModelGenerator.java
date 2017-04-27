@@ -32,6 +32,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static org.platypus.builder.utils.Utils.TO_SQL;
@@ -158,27 +159,21 @@ public class JpaModelGenerator {
         TypeSpec.Builder recordImpl = TypeSpec.classBuilder(currentClassName)
                 .addModifiers(Modifier.PUBLIC);
 
-        TypeVariableName Tvar = TypeVariableName.get("T", ClassName.get(Record.class));
-
-        recordImpl.addTypeVariable(Tvar);
-        ParameterizedTypeName superClass = ParameterizedTypeName.get(ClassName.get(RecordImpl.class), Tvar, recordTarget, recordTargetImpl);
+        ParameterizedTypeName superClass = ParameterizedTypeName.get(recordTarget, recordTargetImpl);
 
         recordImpl.superclass(superClass);
         recordImpl.addSuperinterface(recordTarget);
 
-        ParameterizedTypeName classRecord = ParameterizedTypeName.get(ClassName.get(Class.class), recordTargetImpl);
-        ParameterizedTypeName functionGetter = ParameterizedTypeName.get(ClassName.get(Function.class), Tvar, recordTargetImpl);
-        ParameterizedTypeName functionSetter = ParameterizedTypeName.get(ClassName.get(BiConsumer.class), Tvar, recordTargetImpl);
+        ParameterizedTypeName functionGetter = ParameterizedTypeName.get(ClassName.get(Supplier.class), recordTargetImpl);
+        ParameterizedTypeName functionSetter = ParameterizedTypeName.get(ClassName.get(Consumer.class), recordTargetImpl);
 
 
         MethodSpec.Builder constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
         constructor.addModifiers(Modifier.PUBLIC);
-        constructor.addParameter(ParameterSpec.builder(Tvar, "instance").build());
-        constructor.addParameter(ParameterSpec.builder(classRecord, "targetRecordImpl").build());
         constructor.addParameter(ParameterSpec.builder(functionGetter, "getter").build());
         constructor.addParameter(ParameterSpec.builder(functionSetter, "setter").build());
 
-        constructor.addCode("super($N, $N, $N, $N);", "instance", "targetRecordImpl", "getter", "setter");
+        constructor.addCode("super($N, $N);", "getter", "setter");
 
         recordImpl.addMethod(constructor.build());
         RecordImplFieldGenerator fieldGenerator = new RecordImplFieldGenerator(recordImpl);

@@ -1,22 +1,18 @@
 package org.platypus.erp.module.base.generated.models.generated.jpa;
 
-import java.lang.Class;
 import java.lang.Override;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import org.platypus.api.Record;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import org.platypus.api.fields.BinaryField;
 import org.platypus.api.fields.BooleanField;
 import org.platypus.api.fields.StringField;
-import org.platypus.api.fields.impl.RecordImpl;
 import org.platypus.erp.module.base.generated.models.generated.records.CompanyRecord;
 import org.platypus.erp.module.base.generated.models.generated.records.PartnerRecord;
 import org.platypus.erp.module.base.generated.models.generated.records.UserRecord;
 
-public class UserRecordImpl<T extends Record> extends RecordImpl<T, UserRecord, ImplUserJPA> implements UserRecord {
-  public UserRecordImpl(T instance, Class<ImplUserJPA> targetRecordImpl,
-      Function<T, ImplUserJPA> getter, BiConsumer<T, ImplUserJPA> setter) {
-    super(instance, targetRecordImpl, getter, setter);}
+public class UserRecordImpl extends UserRecord<ImplUserJPA> implements UserRecord {
+  public UserRecordImpl(Supplier<ImplUserJPA> getter, Consumer<ImplUserJPA> setter) {
+    super(getter, setter);}
 
   @Override
   public BinaryField signature() {

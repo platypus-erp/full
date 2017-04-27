@@ -9,10 +9,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.function.Predicate;
+import java.util.function.*;
 
 /**
  * TODO Add JavaDoc
@@ -21,11 +18,11 @@ import java.util.function.Predicate;
  * @version 0.1
  * @since 0.1
  */
-public class RecordCollectionImpl<T extends Record,R extends Record,RI extends R, RC extends RecordCollection<R>> extends AbstractFieldImpl<T,List<RI>> implements GenericField<List<RI>>, RecordCollection<R> {
+public class RecordCollectionImpl<R extends Record,RI extends R, RC extends RecordCollection<R>> extends AbstractFieldImpl<List<RI>> implements GenericField<List<RI>>, RecordCollection<R> {
 
 
-    public RecordCollectionImpl(T instance, Class<RI> recordTarget,  Function<T, List<RI>> getter, BiConsumer<T, List<RI>> setter) {
-        super(instance, getter, setter);
+    public RecordCollectionImpl(Supplier<List<RI>> getter, Consumer<List<RI>> setter) {
+        super(getter, setter);
     }
 
 

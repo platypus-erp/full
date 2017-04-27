@@ -3,7 +3,9 @@ package org.platypus.api.fields.impl;
 import org.platypus.api.fields.BinaryField;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * TODO Add JavaDoc
@@ -12,9 +14,9 @@ import java.util.function.Function;
  * @version 0.1
  * @since 0.1
  */
-public class BinaryFieldImpl<T> extends AbstractFieldImpl<T,byte[]> implements BinaryField {
+public class BinaryFieldImpl extends AbstractFieldImpl<byte[]> implements BinaryField {
 
-    public BinaryFieldImpl(T instance, Function<T, byte[]> getter, BiConsumer<T, byte[]> setter) {
-        super(instance, getter, setter);
+    public BinaryFieldImpl(Supplier<byte[]> getter, Consumer<byte[]> setter) {
+        super(getter, setter);
     }
 }

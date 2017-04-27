@@ -4,7 +4,9 @@ import org.platypus.api.fields.TimeField;
 
 import java.time.LocalTime;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * TODO Add JavaDoc
@@ -13,9 +15,9 @@ import java.util.function.Function;
  * @version 0.1
  * @since 0.1
  */
-public class TimeFieldImpl<T> extends AbstractFieldImpl<T,LocalTime> implements TimeField {
+public class TimeFieldImpl extends AbstractFieldImpl<LocalTime> implements TimeField {
 
-    public TimeFieldImpl(T instance, Function<T, LocalTime> getter, BiConsumer<T, LocalTime> setter) {
-        super(instance, getter, setter);
+    public TimeFieldImpl(Supplier<LocalTime> getter, Consumer<LocalTime> setter) {
+        super(getter, setter);
     }
 }

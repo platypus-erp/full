@@ -4,7 +4,9 @@ import org.platypus.api.fields.DateTimeField;
 
 import java.time.LocalDateTime;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * TODO Add JavaDoc
@@ -13,9 +15,9 @@ import java.util.function.Function;
  * @version 0.1
  * @since 0.1
  */
-public class DateTimeFieldImpl<T> extends AbstractFieldImpl<T,LocalDateTime> implements DateTimeField {
+public class DateTimeFieldImpl extends AbstractFieldImpl<LocalDateTime> implements DateTimeField {
 
-    public DateTimeFieldImpl(T instance, Function<T, LocalDateTime> getter, BiConsumer<T, LocalDateTime> setter) {
-        super(instance, getter, setter);
+    public DateTimeFieldImpl(Supplier<LocalDateTime> getter, Consumer<LocalDateTime> setter) {
+        super(getter, setter);
     }
 }

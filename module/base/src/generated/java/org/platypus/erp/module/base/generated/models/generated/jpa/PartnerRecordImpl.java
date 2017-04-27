@@ -1,14 +1,10 @@
 package org.platypus.erp.module.base.generated.models.generated.jpa;
 
-import java.lang.Class;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
-import org.platypus.api.Record;
-import org.platypus.api.fields.impl.RecordImpl;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import org.platypus.erp.module.base.generated.models.generated.records.PartnerRecord;
 
-public class PartnerRecordImpl<T extends Record> extends RecordImpl<T, PartnerRecord, ImplPartnerJPA> implements PartnerRecord {
-  public PartnerRecordImpl(T instance, Class<ImplPartnerJPA> targetRecordImpl,
-      Function<T, ImplPartnerJPA> getter, BiConsumer<T, ImplPartnerJPA> setter) {
-    super(instance, targetRecordImpl, getter, setter);}
+public class PartnerRecordImpl extends PartnerRecord<ImplPartnerJPA> implements PartnerRecord {
+  public PartnerRecordImpl(Supplier<ImplPartnerJPA> getter, Consumer<ImplPartnerJPA> setter) {
+    super(getter, setter);}
 }
