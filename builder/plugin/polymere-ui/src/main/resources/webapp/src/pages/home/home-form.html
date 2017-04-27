@@ -1,0 +1,142 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../../../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
+
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../../bower_components/paper-menu/paper-submenu.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+
+<link rel="import" href="../../components/toto-search/toto-search.html">
+<link rel="import" href="../toto-footer.html">
+<link rel="import" href="../../components/toto-left-menu/toto-left-menu.html"/>
+<link rel="import" href="../../components/toto-menu-user/toto-menu-user.html"/>
+<link rel="import" href="../../components/toto-menu-root/toto-menu-root.html"/>
+<link rel="import" href="../../components/toto-provider/toto-context.html"/>
+<link rel="import" href="../../components/toto-notification-center/toto-notification-menu.html" />
+<link rel="import" href="../../components/toto-page-flow/toto-page-flow.html" />
+
+
+<dom-module id="home-form">
+    <template>
+        <style is="custom-style">
+            .headerclass {
+                --paper-toolbar-height: 40px;
+            }
+
+            .toto-drawer {
+                top: 40px;
+                height: calc(100% - 40px);
+            }
+
+            .toolbarheaderclass {
+                --paper-toolbar-background: black;
+                --paper-toolbar-height: 40px;
+            }
+
+            .appname {
+                font-family: MaterialDesignIcons;
+            }
+
+            .flex {
+                flex: 1 1 0;
+            }
+            paper-menu-button {
+                padding:0px;
+            }
+            .root_btn {
+                float:left;
+            }
+            .user_btn {
+                float:right;
+            }
+        </style>
+
+        <toto-search id="search" narrow="[[narrow]]"
+                     previous-searches="{{previousSearches}}"
+                     on-search-change="_onSearch" class="fit"></toto-search>
+        
+        <toto-notification-menu id="notif"></toto-notification-menu>
+
+        <paper-toolbar class="toolbarheaderclass" role="toolbar" middle-justify="center">
+            <toto-menu-root class="root_btn"></toto-menu-root>
+            <span class="title appname">Toto ERP</span>
+            <paper-icon-button class="middle" icon="alarm-on" title="notification" on-tap="openBy"></paper-icon-button>
+            <toto-menu-user class="user_btn"></toto-menu-user>
+        </paper-toolbar>
+
+        <paper-drawer-panel class="toto-drawer" id="drawerPanel">
+            <paper-header-panel drawer id="drawerleft" mode="waterfall">
+                <toto-left-menu></toto-left-menu>
+            </paper-header-panel>
+            <paper-header-panel main>
+                <paper-toolbar class="headerclass" role="toolbar">
+                    <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                    <span class="title appname"> </span>
+                    <paper-icon-button icon="search" class="fade-on-drawer-open" title="search"
+                                       on-tap="toggleSearch"></paper-icon-button>
+                </paper-toolbar>
+                <toto-page-flow></toto-page-flow>
+            </paper-header-panel>
+        </paper-drawer-panel>
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'home-form',
+
+            ready: function () {
+                this.addEventListener('pinDrawer', this.pinDrawer);
+            },
+
+            _onSearch: function (e) {
+                this.toggleSearch();
+                this.unshift('previousSearches', e.detail.value);
+            },
+
+            toggleSearch: function () {
+                this.$.search.toggle();
+            },
+
+            openDlg: function (e) {
+                this.$.notificationDlg.open(e.target);
+            },
+            
+            openBy:function () {
+                if(this.$.notif.isOpened()){
+                    this.$.notif.close();
+                } else {
+                    this.$.notif.open();
+                }  
+            },
+
+            pinDrawer: function () {
+                this.$.drawerPanel.forceNarrow = !this.$.drawerPanel.forceNarrow;
+            }
+        });
+
+    </script>
+
+</dom-module>

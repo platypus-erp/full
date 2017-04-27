@@ -1,0 +1,1 @@
+java -jar /home/chmuchme/WorkSpace/trang-20091111/trang.jar /home/chmuchme/WorkSpace/TOTO/toto-maven-plugin/src/main/resources/org/platypus/erp/maven/shema/platypus-list-views.rng /home/chmuchme/WorkSpace/TOTO/toto-maven-plugin/src/main/resources/org/platypus/erp/maven/shema/platypus-list-views.xsd

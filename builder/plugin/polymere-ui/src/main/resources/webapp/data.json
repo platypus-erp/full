@@ -1,0 +1,402 @@
+[
+  {
+    "boolean": false,
+    "avatar": "icons:cloud",
+    "datetime": "Sun Mar 27 1988 21:00:54 GMT+0200 (CEST)",
+    "string": "West Mccray",
+    "float": 35.31,
+    "integer": 361,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Sat Jul 19 2014 13:48:45 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:cloud-circle",
+    "datetime": "Wed Jan 16 1980 05:58:48 GMT+0100 (CET)",
+    "string": "Ladonna Neal",
+    "float": 11.67,
+    "integer": 112,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Tue Jan 19 2016 09:33:29 GMT+0100 (CET)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:cloud",
+    "datetime": "Sun Nov 24 1985 01:37:03 GMT+0100 (CET)",
+    "string": "Nieves Garcia",
+    "float": 20.21,
+    "integer": 116,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Fri Nov 20 2015 23:53:10 GMT+0100 (CET)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:cloud-circle",
+    "datetime": "Sat Mar 19 1988 19:25:02 GMT+0100 (CET)",
+    "string": "Marlene Burris",
+    "float": 25.23,
+    "integer": 508,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Thu Aug 20 2015 08:46:38 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:card-travel",
+    "datetime": "Wed Dec 12 1990 19:28:35 GMT+0100 (CET)",
+    "string": "Elinor Clemons",
+    "float": 32.68,
+    "integer": 617,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Sat Jan 18 2014 21:30:19 GMT+0100 (CET)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:card-travel",
+    "datetime": "Thu Mar 22 1984 02:50:30 GMT+0100 (CET)",
+    "string": "Tracy Jordan",
+    "float": 10.79,
+    "integer": 346,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Wed Mar 18 2015 03:32:08 GMT+0100 (CET)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:cloud",
+    "datetime": "Fri Aug 21 1981 03:12:11 GMT+0200 (CEST)",
+    "string": "Patrica Macdonald",
+    "float": 27.46,
+    "integer": 221,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Fri Nov 21 2014 16:07:13 GMT+0100 (CET)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:card-travel",
+    "datetime": "Thu Feb 16 1989 10:11:02 GMT+0100 (CET)",
+    "string": "Mckenzie Poole",
+    "float": 10.95,
+    "integer": 993,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Thu May 15 2014 16:29:18 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:cloud",
+    "datetime": "Sun Aug 08 1982 08:28:18 GMT+0200 (CEST)",
+    "string": "Esther Bond",
+    "float": 16,
+    "integer": 727,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Mon Oct 27 2014 21:53:59 GMT+0100 (CET)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:cloud-circle",
+    "datetime": "Fri Nov 18 1983 05:12:51 GMT+0100 (CET)",
+    "string": "Flores Barker",
+    "float": 17.02,
+    "integer": 812,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Sun Apr 10 2016 01:46:52 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:accessibility",
+    "datetime": "Sat Apr 07 1984 04:50:42 GMT+0200 (CEST)",
+    "string": "Vonda Chan",
+    "float": 22.69,
+    "integer": 476,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Tue Oct 27 2015 20:22:55 GMT+0100 (CET)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:accessibility",
+    "datetime": "Mon Feb 02 1987 05:44:04 GMT+0100 (CET)",
+    "string": "Mcdaniel Guzman",
+    "float": 20.28,
+    "integer": 167,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Sun Aug 31 2014 09:26:25 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:cloud",
+    "datetime": "Mon Oct 02 1989 15:13:32 GMT+0100 (CET)",
+    "string": "Margie Morales",
+    "float": 31.39,
+    "integer": 901,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Tue Apr 14 2015 21:08:52 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:cloud-circle",
+    "datetime": "Sat Sep 18 1982 02:09:44 GMT+0200 (CEST)",
+    "string": "Payne Branch",
+    "float": 34.44,
+    "integer": 665,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Sat Mar 08 2014 06:17:07 GMT+0100 (CET)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:accessibility",
+    "datetime": "Thu Nov 19 1992 20:33:27 GMT+0100 (CET)",
+    "string": "Donovan Tyler",
+    "float": 20.57,
+    "integer": 910,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Fri Aug 26 2016 11:21:27 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:card-travel",
+    "datetime": "Wed Nov 11 1987 02:44:02 GMT+0100 (CET)",
+    "string": "Jenifer Potter",
+    "float": 15.39,
+    "integer": 897,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Tue Oct 21 2014 19:02:14 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:card-travel",
+    "datetime": "Sun May 04 1980 04:11:04 GMT+0200 (CEST)",
+    "string": "Dolores Fisher",
+    "float": 38.01,
+    "integer": 942,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Sat Jul 09 2016 19:08:35 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:accessibility",
+    "datetime": "Thu Jun 12 1980 14:13:28 GMT+0200 (CEST)",
+    "string": "Reynolds Hanson",
+    "float": 24.81,
+    "integer": 465,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Thu May 15 2014 04:49:43 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:cloud",
+    "datetime": "Sun Dec 20 1981 02:43:05 GMT+0100 (CET)",
+    "string": "Hollie Hess",
+    "float": 10.34,
+    "integer": 940,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Fri May 15 2015 05:27:00 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:accessibility",
+    "datetime": "Wed Oct 15 1980 00:42:27 GMT+0100 (CET)",
+    "string": "Alvarez Patterson",
+    "float": 35.82,
+    "integer": 600,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Sun Oct 09 2016 22:30:18 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:cloud-circle",
+    "datetime": "Thu Jul 02 1992 11:26:41 GMT+0200 (CEST)",
+    "string": "Merritt Travis",
+    "float": 10.24,
+    "integer": 115,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Sat Oct 17 2015 13:40:38 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:card-travel",
+    "datetime": "Wed Aug 11 1982 12:28:26 GMT+0200 (CEST)",
+    "string": "Betsy Valentine",
+    "float": 35.71,
+    "integer": 877,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Mon Jan 18 2016 16:33:28 GMT+0100 (CET)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:accessibility",
+    "datetime": "Mon May 28 1984 01:38:03 GMT+0200 (CEST)",
+    "string": "Shelia West",
+    "float": 12,
+    "integer": 699,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Thu Jun 23 2016 23:37:34 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:accessibility",
+    "datetime": "Thu Nov 19 1987 04:12:48 GMT+0100 (CET)",
+    "string": "Jacqueline Bean",
+    "float": 32.83,
+    "integer": 671,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Sun Jan 05 2014 12:28:22 GMT+0100 (CET)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:accessibility",
+    "datetime": "Tue Feb 16 1988 19:30:46 GMT+0100 (CET)",
+    "string": "Faulkner Freeman",
+    "float": 33.99,
+    "integer": 960,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Tue Aug 09 2016 20:55:25 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:card-travel",
+    "datetime": "Sun Aug 10 1980 19:56:18 GMT+0200 (CEST)",
+    "string": "Tia Deleon",
+    "float": 13.44,
+    "integer": 725,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Sat Sep 26 2015 00:24:15 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:cloud-circle",
+    "datetime": "Wed Sep 19 1984 09:42:44 GMT+0200 (CEST)",
+    "string": "Rita Matthews",
+    "float": 11.64,
+    "integer": 622,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Mon May 26 2014 12:58:09 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:card-travel",
+    "datetime": "Sun Apr 13 1980 22:37:42 GMT+0200 (CEST)",
+    "string": "Wagner Ewing",
+    "float": 11.17,
+    "integer": 976,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Mon Jan 11 2016 06:25:40 GMT+0100 (CET)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:cloud",
+    "datetime": "Sun Oct 05 1980 10:34:22 GMT+0100 (CET)",
+    "string": "Ellison Payne",
+    "float": 35.24,
+    "integer": 265,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Wed Jul 16 2014 18:53:37 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:cloud-circle",
+    "datetime": "Thu Jan 24 1980 17:40:17 GMT+0100 (CET)",
+    "string": "Gallagher Franklin",
+    "float": 39.05,
+    "integer": 359,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Sat Feb 06 2016 08:27:01 GMT+0100 (CET)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:cloud-circle",
+    "datetime": "Sun Dec 27 1987 10:50:49 GMT+0100 (CET)",
+    "string": "Katie Ashley",
+    "float": 17.45,
+    "integer": 180,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Sun Aug 21 2016 16:15:52 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:accessibility",
+    "datetime": "Sat Dec 23 1989 07:06:58 GMT+0100 (CET)",
+    "string": "Murphy Moses",
+    "float": 13.91,
+    "integer": 190,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Tue Jan 06 2015 14:52:02 GMT+0100 (CET)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:card-travel",
+    "datetime": "Thu Mar 15 1990 15:11:41 GMT+0100 (CET)",
+    "string": "House Miles",
+    "float": 11.18,
+    "integer": 244,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Fri Aug 29 2014 08:20:28 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:card-travel",
+    "datetime": "Sun Aug 24 1980 22:22:42 GMT+0200 (CEST)",
+    "string": "Naomi Raymond",
+    "float": 24.68,
+    "integer": 705,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Wed Dec 17 2014 07:30:32 GMT+0100 (CET)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:accessibility",
+    "datetime": "Mon Dec 24 1984 15:02:02 GMT+0100 (CET)",
+    "string": "Compton Livingston",
+    "float": 39.9,
+    "integer": 753,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Thu Jun 11 2015 02:56:16 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:accessibility",
+    "datetime": "Wed Jan 30 1985 18:33:56 GMT+0100 (CET)",
+    "string": "Tracey Richards",
+    "float": 21.05,
+    "integer": 229,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Fri Aug 14 2015 06:44:54 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": true,
+    "avatar": "icons:card-travel",
+    "datetime": "Wed Jul 01 1992 19:13:39 GMT+0200 (CEST)",
+    "string": "Lenora Kaufman",
+    "float": 26.64,
+    "integer": 111,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Mon Jan 12 2015 00:46:48 GMT+0100 (CET)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:cloud-circle",
+    "datetime": "Fri Sep 06 1985 20:42:14 GMT+0200 (CEST)",
+    "string": "Brenda Black",
+    "float": 35.95,
+    "integer": 962,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Fri Sep 09 2016 23:07:24 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:card-travel",
+    "datetime": "Sat Aug 01 1987 20:02:07 GMT+0200 (CEST)",
+    "string": "Aurelia Ray",
+    "float": 33.7,
+    "integer": 726,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Sun May 15 2016 07:45:09 GMT+0200 (CEST)"
+  },
+  {
+    "boolean": false,
+    "avatar": "icons:accessibility",
+    "datetime": "Thu Jun 24 1982 18:57:06 GMT+0200 (CEST)",
+    "string": "Hicks Henson",
+    "float": 31.84,
+    "integer": 805,
+    "img": "http://lorempixel.com/60/60/",
+    "time": "Fri Jan 31 2014 16:42:10 GMT+0100 (CET)"
+  }
+]

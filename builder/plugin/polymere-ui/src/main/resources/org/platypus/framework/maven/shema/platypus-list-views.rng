@@ -1,0 +1,427 @@
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <start>
+        <choice>
+            <element name="platypus-views">
+                <ref name="pattern"/>
+            </element>
+        </choice>
+
+    </start>
+
+    <define name="pattern">
+        <choice>
+            <ref name="platypus-list-view-element"/>
+        </choice>
+    </define>
+
+    <define name="platypus-list-view-element">
+        <element name="platypus-list-view">
+            <attribute name="target">
+                <data type="string"/>
+            </attribute>
+            <optional>
+                <attribute name="default-filter-id">
+                    <data type="string"/>
+                </attribute>
+            </optional>
+            <ref name="attribute-id"/>
+            <!--<choice>-->
+            <optional>
+                <ref name="header-filters-element"/>
+            </optional>
+            <optional>
+                <ref name="list-element"/>
+            </optional>
+            <!--</choice>-->
+        </element>
+    </define>
+
+    <define name="list-element">
+        <element name="list">
+            <optional>
+                <ref name="attribute-id"/>
+            </optional>
+            <attribute name="title">
+                <data type="string"/>
+            </attribute>
+            <optional>
+                <attribute name="page-size">
+                    <choice>
+                        <value>20</value>
+                        <value>40</value>
+                        <value>80</value>
+                        <value>ALL</value>
+                    </choice>
+                </attribute>
+            </optional>
+            <optional>
+                <attribute name="type">
+                    <choice>
+                        <value>PAGINATE</value>
+                        <!--<value>SCROLL</value>-->
+                    </choice>
+                </attribute>
+            </optional>
+            <optional>
+                <ref name="header-filters-element"/>
+            </optional>
+            <ref name="columns"/>
+        </element>
+    </define>
+
+    <define name="attribute-id">
+        <attribute name="id">
+            <data type="string"/>
+        </attribute>
+    </define>
+
+    <define name="attribute-required">
+        <ref name="attribute-id"/>
+        <attribute name="property">
+            <data type="string"/>
+        </attribute>
+    </define>
+
+    <define name="column-attr">
+        <ref name="attribute-required"/>
+        <optional>
+            <attribute name="actif">
+                <data type="boolean"/>
+            </attribute>
+        </optional>
+        <ref name="style-attr"/>
+        <optional>
+            <attribute name="header-label">
+                <data type="string"/>
+            </attribute>
+        </optional>
+    </define>
+
+    <define name="header-filters-element">
+        <element name="header-filters">
+            <zeroOrMore>
+                <!--<ref name="filter-element"/>-->
+                <ref name="group-filter-element"/>
+            </zeroOrMore>
+        </element>
+    </define>
+
+    <define name="group-filter-element">
+        <element name="group-filter">
+            <ref name="style-attr"/>
+            <attribute name="label">
+                <data type="string"/>
+            </attribute>
+            <attribute name="label-position">
+                <choice>
+                    <value>right</value>
+                    <value>left</value>
+                    <value>top</value>
+                </choice>
+            </attribute>
+            <oneOrMore>
+                <ref name="filter-element"/>
+            </oneOrMore>
+        </element>
+    </define>
+
+    <define name="filter-element">
+        <element name="filter">
+            <attribute name="filterId">
+                <data type="string"/>
+            </attribute>
+            <attribute name="label">
+                <data type="string"/>
+            </attribute>
+
+        </element>
+    </define>
+
+    <define name="columns">
+        <element name="columns">
+            <interleave>
+                <zeroOrMore>
+                    <ref name="string-column"/>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <ref name="relation-column-element"/>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <ref name="date-column"/>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <ref name="date-time-column"/>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <ref name="time-column"/>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <ref name="img-column"/>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <ref name="boolean-column"/>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <ref name="integer-column"/>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <ref name="float-column"/>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <ref name="currency-column"/>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <ref name="link-column"/>
+                </zeroOrMore>
+            </interleave>
+        </element>
+    </define>
+
+    <define name="string-column">
+        <element name="string-column">
+            <ref name="column-attr"/>
+            <optional>
+                <ref name="filter-attr"/>
+            </optional>
+            <optional>
+                <ref name="sortable-attr"/>
+            </optional>
+            <ref name="position"/>
+        </element>
+    </define>
+
+    <define name="relation-column-element">
+        <element name="relation-column">
+            <ref name="column-attr"/>
+            <optional>
+                <attribute name="sub-property">
+                    <data type="string"/>
+                </attribute>
+            </optional>
+            <optional>
+                <ref name="filter-attr"/>
+            </optional>
+            <optional>
+                <ref name="sortable-attr"/>
+            </optional>
+            <ref name="position"/>
+        </element>
+    </define>
+
+    <define name="date-column">
+        <element name="date-column">
+            <ref name="column-attr"/>
+            <attribute name="format">
+                <choice>
+                    <value>short</value>
+                    <value>long</value>
+                    <value>normal</value>
+                </choice>
+            </attribute>
+            <optional>
+                <ref name="filter-attr"/>
+            </optional>
+            <optional>
+                <ref name="sortable-attr"/>
+            </optional>
+            <ref name="position"/>
+        </element>
+    </define>
+
+    <define name="date-time-column">
+        <element name="date-time-column">
+            <ref name="column-attr"/>
+            <optional>
+                <attribute name="format">
+                    <choice>
+                        <value>short</value>
+                        <value>month-short</value>
+                        <value>month-long</value>
+                        <value>month-day-short</value>
+                        <value>month-day-long</value>
+                    </choice>
+                </attribute>
+            </optional>
+            <optional>
+                <ref name="filter-attr"/>
+            </optional>
+            <optional>
+                <ref name="sortable-attr"/>
+            </optional>
+            <ref name="position"/>
+        </element>
+    </define>
+
+    <define name="time-column">
+        <element name="time-column">
+            <ref name="column-attr"/>
+            <optional>
+                <attribute name="second">
+                    <data type="boolean"/>
+                </attribute>
+            </optional>
+            <optional>
+                <attribute name="custom-format">
+                    <data type="string"/>
+                </attribute>
+            </optional>
+            <optional>
+                <ref name="filter-attr"/>
+            </optional>
+            <optional>
+                <ref name="sortable-attr"/>
+            </optional>
+        </element>
+    </define>
+
+    <define name="img-column">
+        <element name="img-column">
+            <ref name="column-attr"/>
+            <attribute name="type">
+                <choice>
+                    <value>base_64</value>
+                    <value>link</value>
+                    <value>icon</value>
+                </choice>
+            </attribute>
+            <optional>
+                <attribute name="mask">
+                    <choice>
+                        <value>circle</value>
+                        <value>square</value>
+                        <value>star</value>
+                    </choice>
+                </attribute>
+            </optional>
+            <optional>
+                <ref name="filter-attr"/>
+            </optional>
+            <optional>
+                <ref name="sortable-attr"/>
+            </optional>
+            <ref name="position"/>
+        </element>
+    </define>
+
+    <define name="boolean-column">
+        <element name="boolean-column">
+            <ref name="column-attr"/>
+            <optional>
+                <attribute name="display">
+                    <choice>
+                        <value>toggle</value>
+                        <value>checkbox</value>
+                    </choice>
+                </attribute>
+            </optional>
+            <optional>
+                <ref name="filter-attr"/>
+            </optional>
+            <optional>
+                <ref name="sortable-attr"/>
+            </optional>
+            <ref name="position"/>
+        </element>
+    </define>
+
+    <define name="integer-column">
+        <element name="integer-column">
+            <ref name="column-attr"/>
+            <optional>
+                <ref name="filter-attr"/>
+            </optional>
+            <optional>
+                <ref name="sortable-attr"/>
+            </optional>
+            <ref name="position"/>
+        </element>
+    </define>
+
+    <define name="float-column">
+        <element name="float-column">
+            <ref name="column-attr"/>
+            <optional>
+                <ref name="filter-attr"/>
+            </optional>
+            <optional>
+                <ref name="sortable-attr"/>
+            </optional>
+            <ref name="position"/>
+        </element>
+    </define>
+
+    <define name="currency-column">
+        <element name="currency-column">
+            <ref name="column-attr"/>
+            <optional>
+                <attribute name="symbol-position">
+                    <choice>
+                        <value>before</value>
+                        <value>after</value>
+                    </choice>
+                </attribute>
+            </optional>
+            <optional>
+                <ref name="filter-attr"/>
+            </optional>
+            <optional>
+                <ref name="sortable-attr"/>
+            </optional>
+            <ref name="position"/>
+        </element>
+    </define>
+
+    <define name="link-column">
+        <element name="link-column">
+            <ref name="column-attr"/>
+            <optional>
+                <ref name="filter-attr"/>
+            </optional>
+            <optional>
+                <ref name="sortable-attr"/>
+            </optional>
+            <ref name="position"/>
+        </element>
+    </define>
+
+    <define name="filter-attr">
+        <optional>
+            <attribute name="filter">
+                <data type="boolean"/>
+            </attribute>
+        </optional>
+    </define>
+
+    <define name="sortable-attr">
+        <optional>
+            <attribute name="value">
+                <data type="boolean"/>
+            </attribute>
+        </optional>
+    </define>
+
+    <define name="position">
+        <optional>
+            <choice>
+                <element name="before">
+                    <attribute name="target-id">
+                        <data type="string"/>
+                    </attribute>
+                </element>
+                <element name="after">
+                    <attribute name="target-id">
+                        <data type="string"/>
+                    </attribute>
+                </element>
+            </choice>
+        </optional>
+    </define>
+
+    <define name="style-attr">
+        <optional>
+            <attribute name="class">
+                <data type="string"/>
+            </attribute>
+        </optional>
+    </define>
+</grammar>

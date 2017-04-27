@@ -1,0 +1,53 @@
+﻿<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<dom-module id="toto-data">
+    <template></template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "toto-data",
+        properties: {
+            service: {
+                type: String,
+                value: "http://localhost:8080/final-war/",
+                reflectToAttribute: true,
+                notify:true
+            },
+            model: {
+                type: Object,
+                value: {
+                    user: {},
+                    token: null,
+                    profile: null,
+                    pages: [],
+                    menus: [],
+                    route: "",
+                    routeParams: {},
+                    progress: 0
+                }
+            },
+            version: {
+                type: Number,
+                readonly: true,
+                value: 1
+            }
+        },
+        observers: [
+            'modelChanged(model.*)'
+        ],
+        modelChanged: function (changeRecord) {
+            var val = changeRecord.value;
+            var path = changeRecord.path;
+            this.fire("toto-data-updated-" + path, {value: val});
+        },
+        get restVersion () {
+            return "rest/";
+        },
+        get url () {
+            return this.service + this.restVersion;
+        },
+        update: function (property, value) {
+            this.set('model.' + property, value);
+        }
+    });
+</script>

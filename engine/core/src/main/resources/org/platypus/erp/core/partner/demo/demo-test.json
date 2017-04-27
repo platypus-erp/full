@@ -1,0 +1,20 @@
+{
+  "name": "June Burke",
+  "active": false,
+  "birthdate": "Mon Apr 04 1983 23:47:37 GMT+0200 (CEST)",
+  "comment": "Occaecat ullamco proident exercitation sit sit. Commodo aute reprehenderit cillum amet. Excepteur voluptate eiusmod dolore duis tempor ad enim esse pariatur reprehenderit exercitation laborum aliquip. Esse esse deserunt esse nisi pariatur cupidatat ea.\r\n",
+  "email": "juneburke@orbaxter.com",
+  "function": "EMPLOYEE",
+  "lang": "en-EN",
+  "mobile": "+1 (854) 562-2851",
+  "phone": "+1 (975) 407-3506",
+  "gender": "FEMALE",
+  "mainAdresse": {
+    "number": 968,
+    "street": "Eagle Street",
+    "streetType": "STREET",
+    "city": "Eggertsville",
+    "country": "Ukraine",
+    "zipCode": 312
+  }
+}

@@ -1,0 +1,45 @@
+<link rel="import" href="./toto-context.html"/>
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html"/>
+<link rel="import" href="../../components/toto-data/toto-data.html"/>
+<dom-module id="toto-provider-list-data">
+    <template>
+        <toto-data id="globalData"></toto-data>
+        <iron-ajax id="ajax" url="{{service}}" method="GET" headers='{"Content-Type": "application/json"}'
+                   handle-as="json" on-response="responseCallback" with-credentials="true"
+                   on-error="errorCallback"></iron-ajax>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "toto-provider-list-data",
+        properties: {
+            target: {
+                type: String,
+            },
+            dataTable: {},
+            callback: {},
+            opts: {},
+        },
+        getData: function (callback, opts) {
+            this.$.ajax.url = this.$.globalData.url + this.target;
+            this.$.ajax.verbose = true;
+            this.$.ajax.params = this._computeOption(opts);
+            this.callback = callback;
+            this.$.ajax.generateRequest();
+        },
+        _computeOption: function (opts) {
+            var option = {};
+            option.page = opts.page;
+            option.pageSize = opts.pageSize;
+            option.filterId = "DEFAULT";
+            return option;
+        },
+        responseCallback: function (response) {
+            this.callback(response.detail.response, this.dataTable);
+        },
+        errorCallback: function (response) {
+            this.callback(response.detail);
+        }
+    });
+</script>

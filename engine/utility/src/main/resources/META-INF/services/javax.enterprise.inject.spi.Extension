@@ -1,0 +1,4 @@
+org.platypus.erp.cdi.spi.JPAExtension
+org.platypus.erp.cdi.spi.erpmodule.TotoModuleDiscoverer
+org.platypus.erp.cdi.spi.front.menu.MenuDeclarationObserver
+org.platypus.erp.cdi.spi.front.column.ColumnDeclarationObserver

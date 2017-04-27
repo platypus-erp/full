@@ -1,0 +1,68 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../../../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
+
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../../bower_components/paper-menu/paper-submenu.html">
+<link rel="import" href="../../../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../components/toto-provider/toto-provider-login.html" />
+<link rel="import" href="../../components/toto-provider/toto-context.html" />
+
+<dom-module id="toto-menu-user">
+    <style is="custom-style">
+        paper-menu-button {
+              padding: 0px;
+          }
+    </style>
+    <template>
+    <toto-context service="http://localhost:8080/final-war/"></toto-context>
+    <toto-provider-login id="provider"></toto-provider-login>
+    <paper-menu-button id="sortbt" horizontal-align="right" horizontal-offset="56" vertical-align="top" vertical-offset="40">
+      <paper-icon-button icon="account-circle" class="dropdown-trigger"></paper-icon-button>
+      <paper-menu class="dropdown-content">
+          <paper-item>
+              <paper-icon-button icon="settings" on-tap="settings"></paper-icon-button>
+              <paper-icon-button icon="lock-outline" on-tap="logout"></paper-icon-button>
+          </paper-item>
+      </paper-menu>
+    </paper-menu-button>
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'toto-menu-user',
+            
+            logout: function() {
+                this.fire('showSpinner', {});
+                this.$.provider.logout(this.logoutCallback, this);
+            },
+            logoutCallback:function(response, self){
+                console.log(response);
+                if(response == "SUCCESS"){
+                    this.fire('hideSpinner', {});
+                    this.fire('onlogout', {});
+                }else{
+                    this.fire('hideSpinner', {});
+                    this.fire('onlogout', {});
+                }
+            },
+            settings: function() {
+                
+            }
+        });
+
+    </script>
+
+</dom-module>

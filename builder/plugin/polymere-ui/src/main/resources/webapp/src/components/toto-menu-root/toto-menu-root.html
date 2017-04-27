@@ -1,0 +1,137 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../../../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
+
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../../bower_components/paper-menu/paper-submenu.html">
+<link rel="import" href="../../../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../components/toto-provider/toto-provider-login.html" />
+<link rel="import" href="../../components/toto-provider/toto-context.html" />
+
+<dom-module id="toto-menu-root">
+    <style is="custom-style">
+          
+          
+          .custom {
+            @apply(--layout-horizontal);
+            @apply(--layout-wrap);
+            width: 100%;
+          }
+          
+          .custom > paper-card {
+            box-sizing: border-box;
+            min-width: 100px;
+            max-width: 410px;
+            margin: 4px;
+            flex: 0 0 auto;
+            
+          }
+          paper-menu-button {
+              padding: 0px;
+              --paper-menu-button-dropdown: {
+                left: 0;
+                width: 100%;
+                height: 100%;
+             };
+          }
+                
+  .rate-image {
+    width: 100px;
+    height: 170px;
+  }
+  .rate-content {
+    @apply(--layout-flex);
+    float: left;
+    color:black;
+  }
+  .rate-header { @apply(--paper-font-headline); }
+  .rate-name { color: var(--paper-grey-600); margin: 10px 0; }
+  
+  paper-icon-button .rate-icon {
+    --iron-icon-stroke-color: var(--paper-grey-600);
+  }
+      .amber {
+      background: var(--paper-amber-900);
+    }
+    .lime {
+      background: var(--paper-lime-500);
+    }
+    .cyan {
+      background: var(--paper-cyan-500);
+    }
+    .dark {
+      background: var(--paper-blue-grey-500);
+    }
+
+        
+    </style>
+    <template>
+    <toto-context service="http://localhost:8080/final-war/"></toto-context>
+    <toto-provider-menu id="appProvider"></toto-provider-menu>
+    <paper-menu-button id="sortbt" vertical-align="top" vertical-offset="40">
+      <paper-icon-button icon="apps" class="dropdown-trigger"></paper-icon-button>
+      <div class="dropdown-content custom">
+        <template is="dom-repeat" items="[[menu]]">
+            <paper-card id="[[item.menuId]]" class="rate amber">
+                <div class="rate-content">
+                  <div class="card-content">
+                    <div class="rate-header">[[item.label]]</div>
+                    <div class="rate-name">Alexandre SALAUN et Alexis PASQUIER</div>
+                    <div>[[item.miniDesc]]</div>
+                  </div>
+                  <div class="card-actions">
+                    <paper-icon-button class="rate-icon" icon="settings"></paper-icon-button>
+                  </div>
+                </div>
+                <paper-icon-button class="rate-image" on-tap="menuSelected" icon="[[item.pathIcon]]"></paper-icon-button>
+              </paper-card>
+        </template>
+      </div>
+    </paper-menu-button>
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'toto-menu-root',
+
+            properties: {
+            menu: {
+                type: Array,
+            }
+        },
+
+        ready: function () {
+            this.$.appProvider.getMenu(this.populateRootMenu, this);
+        },
+        populateRootMenu: function (rootMenu, item, self) {
+            self.menu = rootMenu;
+        },
+        
+        menuSelected: function (e) {
+            this.findSubMenu(e.model.item);
+        },
+
+        findSubMenu : function (item) {
+            this.$.appProvider.getSubMenu(item, this.populateSubMenu, this);
+        },
+        populateSubMenu : function (response, item, self) {
+            this.fire("populateLeftMenu",response);
+        }
+        });
+
+    </script>
+
+</dom-module>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>Platypus</title>
+    <link rel="shortcut icon" sizes="32x32" href="./images/app-icon-32.png">
+    <script src="./bower_components/webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="./src/pages/index/layout-index.html"/>
+    <link rel="import" href="./bower_components/iron-data-table/iron-data-table.html"/>
+    <link rel="import" href="./bower_components/polymer/polymer.html"/>
+    <link rel="import" href="./bower_components/iron-ajax/iron-ajax.html"/>
+    <link rel="import" href="./src/components/platypus-data-table/platypus-data-table.html"/>
+    <link rel="import" href="./src/components/platypus-data-table/platypus-header-filter.html"/>
+    <link rel="import" href="./src/components/platypus-filter-group-button/platypus-filter-button.html"/>
+    <link rel="import" href="./src/themes/technology/technology.html"/>
+</head>
+<body class="fullbleed">
+<template is="dom-bind">
+    <style is="custom-style">
+        paper-button.filter-button {
+            background-color: var(--paper-blue-500);
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        paper-button.filter-button[active] {
+            background-color: var(--paper-green-500);
+        }
+    </style>
+    <infinite-data></infinite-data>
+    <platypus-filter-button label="TEST"></platypus-filter-button>
+    <platypus-header-filter>
+        <div is="filter">
+            <!--<platypus-group-button>-->
+            <div class="group">
+                <toto-label label="Groupe Filtre 1"></toto-label>
+                <paper-button toggles raised class="filter-button" id="FILTER1" on-tap="_onTapButton">Filtre 1</paper-button>
+                <paper-button toggles raised class="filter-button" id="FILTER2" on-tap="_onTapButton">Filtre 2</paper-button>
+                <platypus-filter-button label="TEST"></platypus-filter-button>
+                <paper-button toggles raised class="filter-button" id="FILTER5" on-tap="_onTapButton">Filtre 5</paper-button>
+            </div>
+            <!--</platypus-group-button>-->
+            <div class="group">
+                <toto-label label="Groupe Filtre 2"></toto-label>
+                <paper-button toggles raised class="filter-button" id="FILTER3" on-tap="_onTapButton">Filtre 3</paper-button>
+                <paper-button toggles raised class="filter-button" id="FILTER4" on-tap="_onTapButton">Filtre 4</paper-button>
+            </div>
+        </div>
+        <div is="groupby">
+            <!--<platypus-group-button>-->
+            <div class="group">
+                <toto-label label="Groupe Filtre 1"></toto-label>
+                <paper-button toggles raised class="filter-button">Group 2</paper-button>
+                <paper-button toggles raised class="filter-button">Group 1</paper-button>
+            </div>
+            <!--</platypus-group-button>-->
+            <div class="group">
+                <toto-label label="Groupe Filtre 2"></toto-label>
+                <paper-button toggles raised class="filter-button">Group 3</paper-button>
+                <paper-button toggles raised class="filter-button">Group 4</paper-button>
+            </div>
+        </div>
+    </platypus-header-filter>
+
+    <platypus-data-table target="partner" id="partner-list-demo">
+        <data-table-column name="First Name" filter-by="name.first">
+            <template>[[item.name.first]]</template>
+        </data-table-column>
+        <data-table-column name="Last Name">
+            <template>[[item.name.last]]</template>
+        </data-table-column>
+    </platypus-data-table>
+    <script>
+        document.addEventListener('WebComponentsReady', function () {
+            Polymer({
+                is: 'infinite-data',
+                property: {
+                    opened: {
+                        type: Boolean,
+                        value: false
+                    }
+                },
+                _onTapButton:function (e) {
+                    console.log(e.currentTarget.id);
+                },
+            });
+        });
+    </script>
+</template>
+</body>
+</html>

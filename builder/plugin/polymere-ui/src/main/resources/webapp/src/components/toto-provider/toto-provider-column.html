@@ -1,0 +1,33 @@
+<link rel="import" href="./toto-context.html" />
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html" />
+<dom-module id="toto-provider-column">
+    <template>
+        <toto-context id="context"></toto-context>
+        <iron-ajax id="ajax" url="{{service}}" method="GET" headers='{"Content-Type": "application/json"}' handle-as="json" on-response="responseCallback" with-credentials="true" on-error = "errorCallback"></iron-ajax>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "toto-provider-column",
+        properties: {
+            target:{
+                type: String,
+            },
+            callback:{},
+        },
+        getColumn: function (callback) {
+            var self = this;
+            self.$.ajax.url = self.$.context.service + "rest/columns/"+self.target;
+            self.$.ajax.verbose = true;
+            self.callback = callback;
+            self.$.ajax.generateRequest();
+        },
+        responseCallback: function(response){
+            this.callback(response.detail.response);
+        },
+        errorCallback: function(response){
+            this.callback(response.detail);
+        }
+    });
+</script>

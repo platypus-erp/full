@@ -1,0 +1,90 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../../../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
+
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../../bower_components/paper-menu/paper-submenu.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item-body.html">
+
+<link rel="import" href="../toto-provider/toto-context.html">
+<link rel="import" href="../toto-provider/toto-provider-menu.html">
+<link rel="import" href="./toto-menu-item.html">
+
+<dom-module id="toto-left-menu">
+    <template>
+        <style is="custom-style">
+            .flex {
+                flex: 1 1 0;
+            }
+
+            .pin-btn {
+                transform: rotate(0deg);
+                transition: transform 1s linear;
+            }
+
+            .pin-btn.open {
+                transform: rotate(180deg);
+                transition: transform 1s linear;
+            }
+            .headerclass{
+                --paper-toolbar-height: 40px;
+            }
+        </style>
+        <toto-context service="http://localhost:8080/final-war/"></toto-context>
+        <toto-provider-menu id="menuProvider"></toto-provider-menu>
+            <paper-toolbar class="headerclass" role="toolbar">
+                <div class="flex"></div>
+                <paper-icon-button id="pinbtn" icon="turned-in-not" title="Pin Menu" class="pin-btn"
+                                   on-tap="pinDrawer"></paper-icon-button>
+            </paper-toolbar>
+            <toto-menu-item id="totoLeftMenu" menu="{{menu}}"></toto-menu-item>
+        
+    </template>
+    <script>
+
+    Polymer({
+
+        is: 'toto-left-menu',
+
+        properties: {
+            menu: {
+                type: Array,
+            }
+        },
+
+        ready: function () {
+            document.addEventListener('populateLeftMenu', this.populateLeftMenu);
+        },
+        
+        populateLeftMenu: function (e) {
+            console.log(e.detail);
+            var self=document.querySelector('toto-left-menu');
+            if(e.detail.constructor === Array){
+                self.$.totoLeftMenu.menu = e.detail;
+            }
+        },
+
+        pinDrawer: function () {
+            this.fire('pinDrawer', {});
+            this.$.pinbtn.classList.toggle('open');
+        }
+    });
+
+</script>
+</dom-module>

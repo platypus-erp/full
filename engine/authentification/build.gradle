@@ -1,0 +1,29 @@
+group 'org.platypus.erp'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile project(':engine:utility')
+
+    compile 'javax.inject:javax.inject:1'
+    compile 'org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec:1.0.0.Final'
+    compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+    compile 'javax.enterprise:cdi-api:2.0-PFD2'
+    compile 'javax.validation:validation-api:1.1.0.Final'
+    compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
+    compile group: 'org.picketlink', name: 'picketlink-api', version: '2.7.1.Final'
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.6.2'
+    compile 'org.hibernate:hibernate-validator:5.1.2.Final'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.0.pr2'
+
+}

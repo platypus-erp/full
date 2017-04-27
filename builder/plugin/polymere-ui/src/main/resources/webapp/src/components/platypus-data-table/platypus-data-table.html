@@ -1,0 +1,127 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
+
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="../../../bower_components/iron-data-table/data-table-column.html">
+<link rel="import" href="../../../bower_components/iron-data-table/iron-data-table.html">
+
+<link rel="import" href="../../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/iron-image/iron-image.html">
+
+<link rel="import" href="../toto-label/toto-label.html">
+<link rel="import" href="../toto-date-time/toto-date-time.html">
+<link rel="import" href="../toto-date-time/toto-date.html">
+<link rel="import" href="../toto-date-time/toto-time.html">
+<link rel="import" href="../toto-provider/toto-context.html">
+<link rel="import" href="../toto-provider/toto-provider-column.html">
+<link rel="import" href="../toto-provider/toto-provider-list-data.html">
+<link rel="import" href="../platypus-paginate/platypus-paginate.html"/>
+
+<dom-module id="platypus-data-table">
+    <template>
+        <style is="custom-style">
+        </style>
+        <style include="paper-datatable-api-shared-styles"></style>
+        <style include="iron-flex iron-flex-alignment"></style>
+
+        <toto-context service="http://localhost:8080/final-war/"></toto-context>
+        <toto-provider-column id="columnProvider" target="{{target}}"></toto-provider-column>
+        <toto-provider-list-data id="dataProvider" target="{{target}}"></toto-provider-list-data>
+
+
+        <iron-data-table selection-enabled multi-selection id="mainDataTable" items="[[data]]">
+            <data-table-column name="#" id="index-col">
+                <template>
+                    [[index]]
+                </template>
+            </data-table-column>
+            <content></content>
+        </iron-data-table>
+
+        <platypus-paginate id="paginator" page-size="[[pageSize]]" count="[[count]]"/>
+
+    </template>
+    <script>
+
+        Polymer({
+
+            is: 'platypus-data-table',
+
+            properties: {
+                target: String,
+                pageSize: {
+                    type: Number,
+                    readonly: true,
+                    value: 10
+                },
+                size: {
+                    type: Number,
+                    readonly: true
+                },
+                count: {
+                    type: Number,
+                    readonly: true
+                },
+                columns: {
+                    type: Object,
+                    value: {
+                        hide: Boolean,
+                        id: String,
+                        order: Number
+                    }
+                },
+                data: {
+                    type: Array
+                },
+            },
+
+            ready: function () {
+//                this.$.columnProvider.getColumn(this._hideColumn.bind(this));
+                var option = {'page': 0, 'pageSize': this.pageSize};
+                this.$.dataProvider.getData(this._populateData.bind(this), option);
+
+                document.addEventListener('pageSizeChanged', this._calculTotalPage);
+                document.addEventListener('nextPageChange', this._pageChange);
+                document.addEventListener('prevPageChange', this._pageChange);
+            },
+            _pageChange: function (e) {
+                console.log(this);
+                this._loadData(e.detail);
+            },
+            _onPageSizeChange(e){
+                console.log(this);
+                this._loadData(e.detail);
+            },
+            _loadData: function (opts) {
+                this.$.dataProvider.getData(this._populateData.bind(this), opts);
+            },
+            _hideColumn: function (column) {
+                column.forEach(function (col) {
+                    var colTarget = this.$$("#" + col.id);
+                    if (colTarget != null) {
+                        colTarget.hidden = col.hide;
+                    }
+                }.bind(this))
+            },
+            _populateData: function (data) {
+                this.$.mainDataTable.items = data.datas;
+                this.count = data.count;
+            },
+        });
+
+    </script>
+</dom-module>

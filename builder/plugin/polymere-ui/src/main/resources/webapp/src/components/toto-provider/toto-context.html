@@ -1,0 +1,43 @@
+﻿<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html" />
+<dom-module id="toto-context">
+    <template></template>
+</dom-module>
+
+<script>
+  Polymer({
+      is: "toto-context",
+        properties: {
+            data: {
+                type: Object,
+                value: {}
+            },
+            service: {
+                type: String,
+                value: "http://localhost:8080/final-war/",
+                reflectToAttribute: true,
+                notify:true
+            }
+        },
+        attached  : function () {
+            this.setupContext();
+        },
+        ready:function(){
+            this.setupContext();
+        },
+        getData: function () {
+            this.setupContext();
+            return window.document.querySelector("toto-data#toto-data");
+        },
+        setupContext: function () {
+            var self = this;
+            if (!window.document.querySelector("toto-data#toto-data")) {
+                var div = document.createElement("div");
+                div.innerHTML = "<toto-data id='toto-data' service='" + self.service + "'></toto-data>";
+                window.document.body.appendChild(div.childNodes[0]);
+                self.data.service = self.service;
+            }
+            self.data = window.document.querySelector("toto-data#toto-data");
+            self.service = self.data.getAttribute('service');
+        }
+  });
+</script>

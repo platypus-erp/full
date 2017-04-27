@@ -1,0 +1,72 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
+<link rel="import" href="./toto-date.html">
+<link rel="import" href="./toto-time.html">
+<link rel="import" href="../../../bower_components/moment-element/moment-with-locales-import.html">
+
+<dom-module id="toto-date-time">
+    <template>
+        <style is="custom-style">
+        </style>
+        <toto-date date="[[value]]"></toto-date>
+        <toto-time date="[[value]]"></toto-time>
+        <!--<template is="dom-if" if="[[_isShortDisplay(this)]]" restamp>-->
+            <!--<span>-->
+                <!--<toto-date date="[[value]]"></toto-date>-->
+                <!--<toto-time date="[[value]]"></toto-time>-->
+            <!--</span>-->
+        <!--</template>-->
+        <!--<template is="dom-if" if="[[!_isShortDisplay(this)]]" restamp>-->
+            <!--<span>[[value]]</span>-->
+        <!--</template>-->
+    </template>
+    <script>
+        Polymer({
+            is: 'toto-date-time',
+
+            properties: {
+                date: String,
+                //Can take 3 values
+                // -> short Default value sample '10/21/2016 8:30 PM',
+                // -> mounth-short sample 'Oct. 21, 2016'
+                // -> mounth-long sample 'Oct. 21, 2016'
+                // -> mounth-day-short sample 'Oct. 21, 2016'
+                // -> mounth-day-long sample 'Oct. 21, 2016']
+                display: {
+                    type: String,
+                    value: 'short'
+                },
+                local: {
+                    type: String
+                },
+            },
+
+            ready: function () {
+                moment.locale('fr');
+                if (this.display == 'mount-short') {
+                    this.value = moment(this.date).format('lll');
+                } else if (this.display == 'mount-long') {
+                    this.value = moment(this.date).format('LLL');
+                } else if (this.display == 'mount-day-short') {
+                    this.value = moment(this.date).format('llll');
+                } else if (this.display == 'mount-day-long') {
+                    this.value = moment(this.date).format('LLLL');
+                }
+            },
+            _isShortDisplay: function (self) {
+                console.log("_isShortDisplay : ", self.display == 'short');
+                return self.display == 'short';
+            }
+        });
+
+    </script>
+</dom-module>

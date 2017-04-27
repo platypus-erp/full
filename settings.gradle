@@ -1,4 +1,4 @@
-rootProject.name = 'erp'
+rootProject.name = 'platypus'
 include 'api'
 include 'api:annotations'
 include 'api:core'
@@ -31,4 +31,15 @@ include 'tools:gradle-api'
 
 include 'library:buildin'
 include 'sample:MyPlugin'
+
+include 'engine'
+include 'engine:configuration'
+include 'engine:core'
+findProject(':engine:core')?.name = 'core'
+include 'engine:utility'
+findProject(':engine:utility')?.name = 'utility'
+include 'builder:plugin:polymere-ui'
+findProject(':builder:plugin:polymere-ui')?.name = 'polymere'
+include 'engine:authentification'
+findProject(':engine:authentification')?.name = 'authentification'
 

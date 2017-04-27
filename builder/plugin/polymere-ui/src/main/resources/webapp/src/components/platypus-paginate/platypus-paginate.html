@@ -1,0 +1,134 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
+
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="./platypus-datatable-api-shared-styles.html"/>
+
+<dom-module id="platypus-paginate">
+    <template>
+        <style is="custom-style">
+        </style>
+        <style include="paper-datatable-api-shared-styles"></style>
+        <style include="iron-flex iron-flex-alignment"></style>
+        <div>
+            <div class="layout horizontal end-justified center">
+                <div class="layout horizontal center">
+                    <div>
+                        Ligne par page
+                    </div>
+                    <div class="size">
+                        <paper-dropdown-menu no-label-float vertical-align="bottom">
+                            <paper-listbox attr-for-selected="size" on-iron-select="_newSizeIsSelected" selected="[[pageSize]]" class="dropdown-content">
+                                <template is="dom-repeat" items="[[availableSize]]" as="size">
+                                    <paper-item size="[[size]]">[[size]]</paper-item>
+                                </template>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </div>
+                </div>
+                <div class="status">
+                    [[_computeCurrentSize(currentPage, pageSize)]]-[[_computeCurrentMaxSize(currentPage, pageSize)]] sur [[count]]
+                </div>
+                <paper-icon-button icon="chevron-left" disabled="[[!_prevButtonEnabled(currentPage)]]"
+                                   on-tap="_prevPage"></paper-icon-button>
+                <paper-icon-button icon="chevron-right" disabled="[[!_nextButtonEnabled(currentPage, totalPages)]]"
+                                   on-tap="_nextPage"></paper-icon-button>
+            </div>
+        </div>
+    </template>
+    <script>
+
+        Polymer({
+
+            is: 'platypus-paginate',
+
+            properties: {
+                currentPage: {
+                    type: Number,
+                    readonly: true,
+                    value: 0
+                },
+                oldPage: {
+                    type: Number,
+                    readonly: true,
+                    value: 0
+                },
+                pageSize: {
+                    type: Number,
+                    notify: true,
+                    value: 10
+                },
+                availableSize: {
+                    type: Array,
+                    notify: true,
+                    value: [2, 5, 10, 20, 40]
+
+                },
+                totalPages: {
+                    type: Number,
+                    readonly: true,
+                },
+                count: {
+                    type: Number,
+                    notify: true,
+                    observer: '_countChange',
+                    value: 0
+                },
+            },
+
+            ready: function () {
+                document.addEventListener('pageSizeChanged', this._calculTotalPage);
+                this._calculTotalPage();
+            },
+            _countChange:function () {
+                this._calculTotalPage();
+            },
+            _calculTotalPage: function () {
+                this.totalPages = Math.trunc(this.count / this.pageSize);
+                if (this.count % this.pageSize != 0) {
+                    this.totalPages += 1;
+                }
+            },
+            _newSizeIsSelected: function() {
+                var newSize = this.$$('paper-listbox').selected;
+                if (newSize) {
+                    if (this.oldPage !== null && this.oldPage !== undefined) {
+                        this.currentPage = 0;
+                    }
+                    this.pageSize = newSize;
+                }
+                this.fire('pageSizeChanged', {'pageSize':this.pageSize, 'page':this.currentPage});
+            },
+            _computeCurrentSize: function (currentPage, pageSize) {
+                return (currentPage * pageSize) + 1;
+            },
+            _computeCurrentMaxSize: function (currentPage, pageSize) {
+                return (currentPage * pageSize) + pageSize;
+            },
+            _nextPage: function () {
+                if ((this.currentPage + 1) < this.totalPages) {
+                    this.currentPage = this.currentPage + 1;
+                }
+                this.fire('nextPageChange', {'pageSize':this.pageSize, 'page':this.currentPage});
+            },
+            _prevPage: function () {
+                if (this.currentPage > 0) {
+                    this.currentPage = this.currentPage - 1;
+                }
+                this.fire('prevPageChange', {'pageSize':this.pageSize, 'page':this.currentPage});
+            },
+            _nextButtonEnabled: function (currentPage, totalPages) {
+                return (currentPage + 1) < totalPages;
+            },
+            _prevButtonEnabled(currentPage) {
+                return currentPage > 0;
+            },
+        });
+
+    </script>
+</dom-module>

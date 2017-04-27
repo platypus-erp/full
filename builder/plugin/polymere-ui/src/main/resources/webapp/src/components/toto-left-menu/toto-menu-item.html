@@ -1,0 +1,95 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../../../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
+
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../../bower_components/paper-menu/paper-submenu.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item-body.html">
+
+<link rel="import" href="../toto-search/toto-search.html" />
+<link rel="import" href="../toto-provider/toto-context.html" />
+<link rel="import" href="../toto-provider/toto-provider-menu.html" />
+
+
+<dom-module id="toto-menu-item">
+    <template>
+        <style is="custom-style">
+            .headerclass {
+                height: 64px;
+            }
+
+            .flex {
+                flex: 1 1 0;
+            }
+            #totomainmenu{
+                height: calc(100% - 56px);
+            }
+        </style>
+        <toto-context ></toto-context>
+        <toto-provider-menu id="menuProvider"></toto-provider-menu>
+        <paper-menu id="totomainmenu">
+            <template is="dom-repeat" items="[[menu]]">
+                <paper-submenu id="[[item.menuId]]">
+                    <paper-item on-tap="menuSelected" class="menu-trigger">
+                        <paper-icon-item class="fit">
+                            <iron-icon icon="[[item.pathIcon]]" item-icon></iron-icon>
+                            <paper-item-body two-line>
+                                <div>[[item.label]]</div>
+                                <div secondary>[[item.miniDesc]]</div>
+                            </paper-item-body>
+                        </paper-icon-item>
+                    </paper-item>
+                </paper-submenu>
+            </template>
+        </paper-menu>
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'toto-menu-item',
+
+            properties: {
+                menu: {
+                    type: Array,
+                }
+            },
+            menuSelected: function (e) {
+                this.fire('routePageEvent',{'target':'partner','views':['list','form'],'current_view':'list'});
+                if (e.model.item.children==undefined || e.model.item.children==null || e.model.item.children.length <= 0) {
+                    this.findSubMenu(e.model.item);
+                }
+            },
+
+            findSubMenu : function (item) {
+                this.$.menuProvider.getSubMenu(item, this.populateSubMenu, this);
+            },
+            populateSubMenu : function (response, item, self) {
+                var subTotoMenu = document.createElement('toto-menu-item');
+                item.children = response;
+                subTotoMenu.menu = item.children;
+                subTotoMenu.classList.add("menu-content")
+                Polymer.dom(self.$$("#"+item.menuId)).appendChild(subTotoMenu);
+            }
+        });
+
+    </script>
+
+</dom-module>

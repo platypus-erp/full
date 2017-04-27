@@ -1,0 +1,56 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
+<link rel="import" href="../../../bower_components/moment-element/moment-with-locales-import.html">
+
+<dom-module id="toto-time">
+    <template>
+        <style is="custom-style">
+        </style>
+        <span>[[value]]</span>
+    </template>
+    <script>
+
+        Polymer({
+
+            is: 'toto-time',
+
+            properties: {
+                time: String,
+                format: {
+                    type: String,
+                    readOnly:true,
+                    value: 'LT'
+                },
+                second: {
+                    type: Boolean,
+                    value: false
+                },
+                local: {
+                    type: String,
+                    readOnly:true,
+                    value: "fr"
+                },
+            },
+
+            ready: function () {
+                moment.locale(this.local);
+                if (this.format == 'LT'){
+                    if (this.second){
+                        this.format = this.format + 'S';
+                    }
+                }
+                this.value = moment(this.time).format(this.format);
+            },
+        });
+
+    </script>
+</dom-module>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>Toto</title>
+    <link rel="shortcut icon" sizes="32x32" href="./images/app-icon-32.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <script src="./bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="./src/pages/index/layout-index.html" />
+    <link rel="import" href="./src/components/toto-notification-center/toto-notification-menu.html" />
+    <link rel="import" href="src/components/platypus-data-table/platypus-data-table.html" />
+    <link rel="import" href="./src/themes/technology/technology.html" />
+</head>
+<body class="fullbleed">
+<paper-button onclick="openBy(this)">open dlg</paper-button>
+<toto-notification-menu id="notif"></toto-notification-menu>
+<toto-data-table target="res_users">
+    <!--<data-table-column name="BOOLEAN" id="test_boolean" order="10">-->
+        <!--<template>-->
+            <!--<paper-checkbox disabled="true" checked="[[item.boolean]]"></paper-checkbox>-->
+        <!--</template>-->
+    <!--</data-table-column>-->
+    <!--<data-table-column name="BOOLEAN" id="test_boolean_toggle" order="11">-->
+        <!--<template>-->
+            <!--<paper-toggle-button disabled="true" checked="[[item.boolean]]"></paper-toggle-button>-->
+        <!--</template>-->
+    <!--</data-table-column>-->
+    <!--<data-table-column name="ICON" id="test_avatar" order="20">-->
+        <!--<template>-->
+            <!--<iron-icon icon="[[item.avatar]]"></iron-icon>-->
+        <!--</template>-->
+    <!--</data-table-column>-->
+    <data-table-column name="DATE_TIME" id="test_datetime" order="30">
+        <template>
+            <toto-date-time label="[[item.datetime]]"></toto-date-time>
+        </template>
+    </data-table-column>
+    <data-table-column name="TIME" id="test_time" order="80">
+        <template>
+            <toto-time label="[[item.datetime]]"></toto-time>
+        </template>
+    </data-table-column>
+    <data-table-column name="DATE" id="test_date" order="30">
+        <template>
+            <toto-date label="[[item.datetime]]"></toto-date>
+        </template>
+    </data-table-column>
+    <!--<data-table-column name="NAME" id="test_string" order="40">-->
+    <!--<template>-->
+    <!--<toto-label label="[[item.string]]"></toto-label>-->
+    <!--</template>-->
+    <!--</data-table-column>-->
+    <!--<data-table-column name="FLOAT" id="test_float" order="50">-->
+    <!--<template>-->
+    <!--<toto-label label="[[item.float]]"></toto-label>-->
+    <!--</template>-->
+    <!--</data-table-column>-->
+    <!--<data-table-column name="ID" id="test_integer" order="60">-->
+    <!--<template>-->
+    <!--<toto-label label="[[item.integer]]"></toto-label>-->
+    <!--</template>-->
+    <!--</data-table-column>-->
+    <!--<data-table-column name="IMG" id="test_img" order="70">-->
+    <!--<template>-->
+    <!--<iron-image src="[[item.img]]"></iron-image>-->
+    <!--</template>-->
+    <!--</data-table-column>-->
+</toto-data-table>
+</body>
+<script>
+    function openBy(element) {
+        notif.open(element);
+    }
+</script>
+</html>

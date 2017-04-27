@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="platypus-views" type="pattern"/>
+  <xs:element name="pattern" abstract="true">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="header-filters"/>
+        <xs:element minOccurs="0" ref="list"/>
+      </xs:sequence>
+      <xs:attribute name="target" use="required" type="xs:string"/>
+      <xs:attribute name="default-filter-id" type="xs:string"/>
+      <xs:attributeGroup ref="attribute-id"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="pattern">
+    <xs:sequence>
+      <xs:element ref="pattern"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="platypus-list-view-element">
+    <xs:sequence>
+      <xs:element ref="platypus-list-view"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="platypus-list-view" substitutionGroup="pattern"/>
+  <xs:element name="list">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="header-filters"/>
+        <xs:element ref="columns"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="title" use="required" type="xs:string"/>
+      <xs:attribute name="page-size">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="20"/>
+            <xs:enumeration value="40"/>
+            <xs:enumeration value="80"/>
+            <xs:enumeration value="ALL"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="type">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="PAGINATE"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="attribute-id">
+    <xs:attribute name="id" use="required" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="attribute-required">
+    <xs:attributeGroup ref="attribute-id"/>
+    <xs:attribute name="property" use="required" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="column-attr">
+    <xs:attributeGroup ref="attribute-required"/>
+    <xs:attribute name="actif" type="xs:boolean"/>
+    <xs:attributeGroup ref="style-attr"/>
+    <xs:attribute name="header-label" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:element name="header-filters">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="group-filter"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="group-filter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="filter"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="style-attr"/>
+      <xs:attribute name="label" use="required" type="xs:string"/>
+      <xs:attribute name="label-position" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="right"/>
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="top"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="filter">
+    <xs:complexType>
+      <xs:attribute name="filterId" use="required" type="xs:string"/>
+      <xs:attribute name="label" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="columns">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="string-column"/>
+        <xs:element ref="relation-column"/>
+        <xs:element ref="date-column"/>
+        <xs:element ref="date-time-column"/>
+        <xs:element ref="time-column"/>
+        <xs:element ref="img-column"/>
+        <xs:element ref="boolean-column"/>
+        <xs:element ref="integer-column"/>
+        <xs:element ref="float-column"/>
+        <xs:element ref="currency-column"/>
+        <xs:element ref="link-column"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="string-column">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="position">
+          <xs:attributeGroup ref="column-attr"/>
+          <xs:attributeGroup ref="filter-attr"/>
+          <xs:attributeGroup ref="sortable-attr"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="relation-column">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="position">
+          <xs:attributeGroup ref="column-attr"/>
+          <xs:attribute name="sub-property" type="xs:string"/>
+          <xs:attributeGroup ref="filter-attr"/>
+          <xs:attributeGroup ref="sortable-attr"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="date-column">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="position">
+          <xs:attributeGroup ref="column-attr"/>
+          <xs:attribute name="format" use="required">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="short"/>
+                <xs:enumeration value="long"/>
+                <xs:enumeration value="normal"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attributeGroup ref="filter-attr"/>
+          <xs:attributeGroup ref="sortable-attr"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="date-time-column">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="position">
+          <xs:attributeGroup ref="column-attr"/>
+          <xs:attribute name="format">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="short"/>
+                <xs:enumeration value="month-short"/>
+                <xs:enumeration value="month-long"/>
+                <xs:enumeration value="month-day-short"/>
+                <xs:enumeration value="month-day-long"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attributeGroup ref="filter-attr"/>
+          <xs:attributeGroup ref="sortable-attr"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="time-column">
+    <xs:complexType>
+      <xs:attributeGroup ref="column-attr"/>
+      <xs:attribute name="second" type="xs:boolean"/>
+      <xs:attribute name="custom-format" type="xs:string"/>
+      <xs:attributeGroup ref="filter-attr"/>
+      <xs:attributeGroup ref="sortable-attr"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="img-column">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="position">
+          <xs:attributeGroup ref="column-attr"/>
+          <xs:attribute name="type" use="required">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="base_64"/>
+                <xs:enumeration value="link"/>
+                <xs:enumeration value="icon"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="mask">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="circle"/>
+                <xs:enumeration value="square"/>
+                <xs:enumeration value="star"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attributeGroup ref="filter-attr"/>
+          <xs:attributeGroup ref="sortable-attr"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="boolean-column">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="position">
+          <xs:attributeGroup ref="column-attr"/>
+          <xs:attribute name="display">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="toggle"/>
+                <xs:enumeration value="checkbox"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attributeGroup ref="filter-attr"/>
+          <xs:attributeGroup ref="sortable-attr"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="integer-column">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="position">
+          <xs:attributeGroup ref="column-attr"/>
+          <xs:attributeGroup ref="filter-attr"/>
+          <xs:attributeGroup ref="sortable-attr"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="float-column">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="position">
+          <xs:attributeGroup ref="column-attr"/>
+          <xs:attributeGroup ref="filter-attr"/>
+          <xs:attributeGroup ref="sortable-attr"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="currency-column">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="position">
+          <xs:attributeGroup ref="column-attr"/>
+          <xs:attribute name="symbol-position">
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="before"/>
+                <xs:enumeration value="after"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attributeGroup ref="filter-attr"/>
+          <xs:attributeGroup ref="sortable-attr"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="link-column">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="position">
+          <xs:attributeGroup ref="column-attr"/>
+          <xs:attributeGroup ref="filter-attr"/>
+          <xs:attributeGroup ref="sortable-attr"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="filter-attr">
+    <xs:attribute name="filter" type="xs:boolean"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="sortable-attr">
+    <xs:attribute name="value" type="xs:boolean"/>
+  </xs:attributeGroup>
+  <xs:complexType name="position">
+    <xs:choice minOccurs="0">
+      <xs:element ref="before"/>
+      <xs:element ref="after"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="before">
+    <xs:complexType>
+      <xs:attribute name="target-id" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="after">
+    <xs:complexType>
+      <xs:attribute name="target-id" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="style-attr">
+    <xs:attribute name="class" type="xs:string"/>
+  </xs:attributeGroup>
+</xs:schema>

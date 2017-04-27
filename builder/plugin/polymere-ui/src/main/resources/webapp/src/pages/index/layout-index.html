@@ -1,0 +1,120 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+    <link rel="import" href="../../../bower_components/polymer/polymer.html">
+    <link rel="import" href="../../../bower_components/paper-spinner/paper-spinner.html">
+    <link rel="import" href="../../components/toto-data/toto-data.html" />
+    <link rel="import" href="../login/login-form.html" />
+    <link rel="import" href="../home/home-form.html" />
+
+<dom-module id="layout-index">
+    <style>
+        #refresh {
+            z-index: 1;
+            pointer-events: none;
+            position: absolute;
+            top: calc(50% - 14px);
+            left: calc(50% - 14px);
+          }
+
+          #refresh-spinner-container {
+            background: #fff;
+            border-radius: 50%;
+            padding: 5px;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                        0 1px 5px 0 rgba(0, 0, 0, 0.12),
+                        0 3px 1px -2px rgba(0, 0, 0, 0.2);
+            transition: transform 300ms cubic-bezier(0,0,0.2,1);
+            will-change: transform;
+            width:28px;
+            height:28px;
+          }
+
+          #refresh-spinner-container.shrink {
+            transform: scale(0);
+          }
+    </style>
+    <template>
+        <template is="dom-if" if="{{_computeLogin(totorooter)}}">
+              <login-form></login-form>
+         </template>
+
+        <template is="dom-if" if="{{_computeHome(totorooter)}}">
+              <home-form></home-form>
+        </template>
+        
+        <template is="dom-if" if="{{syncing}}">
+            <div id="refresh" class="fit layout vertical center-center">
+              <div id="refresh-spinner-container" class="layout vertical center-center shrink">
+                <paper-spinner active></paper-spinner>
+              </div>
+            </div>
+        </template>
+    </template>
+    <script>
+
+        Polymer({
+
+            is: 'layout-index',
+
+            properties: {
+            syncing:{
+                type: Boolean,
+                value:true,
+                reflectToAttribute:true,
+                notify:true
+            },
+            totorooter:{
+                type: String,
+                value:"LOGIN",
+                reflectToAttribute:true,
+                notify:true
+            }
+        },
+        ready:function(){
+            this.addEventListener('onlogin', this.onLogin);
+            this.addEventListener('onlogout', this.onLogout);
+            this.addEventListener('showSpinner', this.showLoadingSpinner);
+            this.addEventListener('hideSpinner', this.hideLoadingSpinner);
+        },
+        onLogin:function(){
+            this.totorooter="HOME";
+        },
+        onLogout:function(){
+            this.totorooter="LOGIN";
+        },
+        _computeLogin :function(route){
+            return (this.totorooter=="LOGIN")?true:false;
+        },
+         _computeHome :function(route){
+            return (this.totorooter=="HOME")?true:false;
+        },
+        hideLoadingSpinner : function() {
+            var el = document.querySelector('#refresh-spinner-container');
+            if (el) {
+              el.classList.add('shrink');
+              this.syncing = false;
+              this.async(function() {
+                this.syncing = false;
+              }, 300);
+            }
+        },
+        showLoadingSpinner : function() {
+            this.syncing = true; 
+            this.async(function() {
+              var el = document.querySelector('#refresh-spinner-container');
+              el.classList.remove('shrink');
+            }, 50);
+        }
+
+        });
+
+    </script>
+
+</dom-module>

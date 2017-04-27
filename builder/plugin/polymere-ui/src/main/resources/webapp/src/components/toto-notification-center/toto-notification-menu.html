@@ -1,0 +1,119 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../../../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../../../bower_components/paper-styles/default-theme.html">
+
+<link rel="import" href="../../../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-date-picker/paper-calendar.html">
+
+<link rel="import" href="../../components/toto-provider/toto-context.html"/>
+
+<dom-module id="toto-notification-menu">
+    <style is="custom-style">
+        #cal_container {
+            float: left;
+            margin: 0 0;
+            height: 300px;
+            width: 50%;
+        }
+        .container {
+            /*display: flex;*/
+            /*justify-content: space-between*/
+        }
+
+        .headerclass {
+            --paper-toolbar-height: 40px;
+        }
+        paper-dialog.size-position {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            width: 300px;
+            height: 300px;
+            overflow: auto;
+        }
+        #notificationList{
+            float: left;
+            width:50%;
+        }
+
+        .toolbarheaderclass {
+            --paper-toolbar-background: black;
+            --paper-toolbar-height: 40px;
+        }
+        paper-dialog {
+            width:600px;
+            z-index:1000;
+        }
+        
+        paper-dialog > *:first-child {
+            margin-top :0px;
+        }
+        
+    </style>
+    <template>
+        <toto-context service="http://localhost:8080/final-war/"></toto-context>
+        <paper-dialog id="notification" no-overlap horizontal-align="center" vertical-align="top" vertical-offset="40">
+            <paper-toolbar class="headerclass" role="toolbar">
+                <h3>{{dateFormat(date, 'LLL')}}</h3>
+            </paper-toolbar>
+            <div class="container">
+                <paper-listbox id="notificationList">
+                    <paper-item>Item 1</paper-item>
+                    <paper-item>Item 2</paper-item>
+                    <paper-item>Todo 1</paper-item>
+                    <paper-item>Todo 2</paper-item>
+                    <paper-item>Todo 3</paper-item>
+                    <paper-item>
+                        <paper-item-body two-line>
+                            <div>Show your status</div>
+                            <div secondary>Your status is visible to everyone</div>
+                        </paper-item-body>
+                        <iron-icon icon="warning"></iron-icon>
+                    </paper-item>
+                </paper-listbox>
+                <div id="cal_container">
+                    <paper-calendar id="calendar" date="{{date}}"></paper-calendar>
+                </div>
+            </div>
+        </paper-dialog>
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'toto-notification-menu',
+
+            dateFormat: function (date, format) {
+                if (!date) {
+                    return 'No date selected';
+                }
+                return moment(date).format(format);
+            },
+            open: function (element) {
+                this.$.notification.positionTarget = element;
+                this.$.notification.open();
+                this.$.notification.notifyResize();
+            },
+            
+            close: function (element) {
+                this.$.notification.close();
+            },
+            
+            isOpened : function(){
+                return this.$.notification.opened;
+            }
+            
+        });
+
+    </script>
+
+</dom-module>

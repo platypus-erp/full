@@ -1,0 +1,53 @@
+<link rel="import" href="../../components/toto-provider/toto-context.html" />
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html" />
+<dom-module id="toto-provider-login">
+    <template>
+        <toto-context id="context"></toto-context>
+        <iron-ajax id="ajax" url="{{service}}" method="POST" headers='{"Content-Type": "application/json"}' handle-as="json" on-response="responseCallback" with-credentials="true" on-error = "errorCallback"></iron-ajax>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "toto-provider-login",
+        properties: {
+            selfCallback:{},
+            callback:{},
+            user:{}
+        },
+        ready: function () {
+        },
+        login: function (user, callback, selfCallback) {
+            var self = this;
+            self.$.ajax.url = self.$.context.service + "rest/login";
+            self.$.ajax.body = JSON.stringify(user);
+            self.$.ajax.verbose = true;
+            self.selfCallback = selfCallback;
+            self.callback = callback;
+            self.user = user;
+            self.$.ajax.generateRequest();
+        },
+        logout: function (callback, selfCallback) {
+            var self = this;
+            self.$.ajax.url = self.$.context.service + "rest/logout";
+            self.$.ajax.verbose = true;
+            self.selfCallback = selfCallback;
+            self.callback = callback;
+            self.$.ajax.generateRequest();
+        },
+        sessioninfo: function (callback, selfCallback) {
+            var self = this;
+            self.$.ajax.url = self.$.context.service + "rest/sessioninfo";
+            self.$.ajax.verbose = true;
+            self.selfCallback = selfCallback;
+            self.callback = callback;
+            self.$.ajax.generateRequest();
+        },
+        responseCallback: function(response){
+            this.callback(response.detail.response, this.selfCallback);
+        },
+        errorCallback: function(response){
+            this.callback(response.detail, this.selfCallback);
+        }
+    });
+</script>

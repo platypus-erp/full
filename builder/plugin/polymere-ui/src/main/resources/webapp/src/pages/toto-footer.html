@@ -1,0 +1,31 @@
+<dom-module id="toto-footer">
+    <template>
+        <style is="custom-style">
+            .mdl-mini-footer {
+                color: rgb(158, 158, 158);
+                display: flex;
+                flex-flow: row wrap;
+                justify-content: space-between;
+                padding: 32px 16px;
+            }
+            .login-footer {
+                background-color: white;
+                bottom: 0;
+                box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.1);
+                left: 0;
+                padding: 10px 30px;
+                position: absolute;
+                right: 0;
+            }
+        </style>
+        <footer class="mdl-mini-footer login-footer">
+            <div class="mdl-mini-footer__left-section">
+                <div class="mdl-logo">
+                    ©BATMAN & ROBIN</div>
+            </div>
+            <div class="mdl-mini-footer__right-section">
+                <div class="mdl-logo">LGPL3</div>
+            </div>
+        </footer>
+    </template>
+</dom-module>

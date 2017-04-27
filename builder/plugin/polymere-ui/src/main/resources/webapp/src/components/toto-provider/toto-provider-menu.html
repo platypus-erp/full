@@ -1,0 +1,44 @@
+<link rel="import" href="./toto-context.html" />
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html" />
+<dom-module id="toto-provider-menu">
+    <template>
+        <toto-context id="context"></toto-context>
+        <iron-ajax id="ajax" url="{{service}}" method="GET" headers='{"Content-Type": "application/json"}' handle-as="json" on-response="responseCallback" with-credentials="true" on-error = "errorCallback"></iron-ajax>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: "toto-provider-menu",
+        properties: {
+            selfCallback:{},
+            callback:{},
+            item:{}
+        },
+        ready: function () {
+        },
+        getMenu: function (callback, selfCallback) {
+            var self = this;
+            self.$.ajax.url = self.$.context.service + "rest/menu";
+            self.$.ajax.verbose = true;
+            self.selfCallback = selfCallback;
+            self.callback = callback;
+            self.$.ajax.generateRequest();
+        },
+        getSubMenu: function (item, callback, selfCallback) {
+            var self = this;
+            self.item=item;
+            self.$.ajax.url = self.$.context.service + "rest/menu/" + item.menuId;
+            self.$.ajax.verbose = true;
+            self.selfCallback = selfCallback;
+            self.callback = callback;
+            self.$.ajax.generateRequest();
+        },
+        responseCallback: function(response){
+            this.callback(response.detail.response, this.item, this.selfCallback);
+        },
+        errorCallback: function(response){
+            this.callback(response.detail, this.selfCallback);
+        }
+    });
+</script>

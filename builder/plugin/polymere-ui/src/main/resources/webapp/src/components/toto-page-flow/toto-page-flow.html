@@ -1,0 +1,70 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
+
+<dom-module id="toto-page-flow">
+    <template>
+        <style is="custom-style">
+        </style>
+        <iron-pages id="pageFlowSelector" role="main" selected="[[page]]" attr-for-selected="name">
+        </iron-pages>
+    </template>
+    <script>
+
+        Polymer({
+
+            is: 'toto-page-flow',
+
+            properties: {
+
+                page: {
+                    type: String,
+                    reflectToAttribute: true,
+                    observer: '_pageChanged'
+                },
+
+            },
+
+            ready: function () {
+                document.addEventListener('routePageEvent', this.routePageEvent);
+            },
+
+            routePageEvent: function (e) {
+                console.log(e);
+                var self = document.querySelector('toto-page-flow');
+                console.log(self);
+                self.fire('ShowSpinner', {});
+                var pageflow = e.detail;
+                console.log(pageflow);
+                var totoPageView = document.createElement('platypus-view-' + pageflow.target + '-' + pageflow.current_view);
+                totoPageView.setAttribute("name", pageflow.target + '/list-view');
+                Polymer.dom(self.$.pageFlowSelector).appendChild(totoPageView);
+                if (self.page != undefined || self.page != null) {
+                    console.log("page not foound")
+                }
+                self._routePageChanged(pageflow, self);
+            },
+
+            _routePageChanged: function (pageflow, self) {
+                console.log("_routePageChanged : "+ pageflow)
+                self.page = pageflow.target + '/list-view';
+            },
+
+            _pageChanged: function (page) {
+                console.log("_pageChange : "+ page)
+                this.importHref(this.resolveUrl('../../views/' + page + '.html'), null, null, true);
+                this.fire('hideSpinner', {});
+            }
+
+        });
+
+    </script>
+</dom-module>

@@ -1,0 +1,10 @@
+[
+  '{{repeat(20)}}',
+  {
+    hide: '{{bool()}}',
+    priority: '{{integer(0, 9999)}}',
+    status: '{{random("UNREAD", "READ")}}',
+    message: '{{lorem(1, "sentence")}}',
+    name: '{{lorem(1, "word")}}'
+  }
+]

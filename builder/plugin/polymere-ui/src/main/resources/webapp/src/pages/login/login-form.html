@@ -1,0 +1,259 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../components/toto-provider/toto-provider-login.html"/>
+<link rel="import" href="../../../bower_components/paper-toast/paper-toast.html"/>
+<link rel="import" href="../../components/toto-provider/toto-context.html"/>
+<link rel="import" href="../toto-footer.html">
+
+
+<dom-module id="login-form">
+    <style>
+
+        paper-button {
+            --paper-button: {
+                background-color: #1976bc;
+                font-weight: bold;
+                color: white;
+            };
+        }
+
+        .login-overlay::after {
+            background-image: url("../../../images/wallhaven-260102.png");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            box-shadow: 0 2px 4px 1px rgba(0, 0, 0, 0.14);
+            content: "";
+            height: 300px;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100%;
+        }
+
+        .login-overlay {
+            background: #f5f5f5 none repeat scroll 0 0;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            right: 0;
+            text-align: center;
+            top: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.335, 1.05) 0s;
+            line-height: 20px;
+        }
+
+        .login-overlay .logo {
+            color: white;
+            display: block;
+            font-size: 27px;
+            letter-spacing: 1px;
+            margin: 0 auto;
+            position: relative;
+            text-transform: uppercase;
+            top: 70px;
+            z-index: 1;
+        }
+
+        .login-overlay .logo .smaller {
+            font-size: 16px;
+            font-weight: 100;
+            letter-spacing: 5px;
+            margin-left: -8px;
+        }
+
+        .login-overlay .form-container {
+            background: #ffffff none repeat scroll 0 0;
+            margin: 0 auto;
+            position: relative;
+            top: 100px;
+            width: 50%;
+            z-index: 1;
+        }
+
+        .shadow {
+            box-shadow: 1px 1px 7px 0 rgba(145, 145, 145, 0.5);
+        }
+
+        .login-footer {
+            background-color: white;
+            bottom: 0;
+            box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.1);
+            left: 0;
+            padding: 10px 30px;
+            position: absolute;
+            right: 0;
+        }
+
+        .mdl-mini-footer {
+            color: rgb(158, 158, 158);
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            padding: 32px 16px;
+        }
+
+        .mdl-mini-footer--left-section, .mdl-mini-footer__left-section {
+            display: inline-block;
+            order: 0;
+        }
+
+        .login-footer .mdl-logo {
+            color: #88878b;
+        }
+
+        .mdl-mini-footer .mdl-logo {
+            line-height: 36px;
+        }
+
+        .mdl-logo {
+            float: left;
+            margin-bottom: 0;
+            margin-right: 16px;
+        }
+
+        .mdl-logo {
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .mdl-mini-footer--right-section, .mdl-mini-footer__right-section {
+            display: inline-block;
+            order: 1;
+        }
+
+        .login-overlay .form-container .icon {
+            padding-top: 30px;
+        }
+
+        .mdi-account-circle::before {
+            content: "";
+        }
+
+        .login-overlay .form-container .icon .mdi {
+            color: #2979ff;
+            font-size: 110px;
+        }
+
+        .mdi {
+            display: inline-block;
+            font-family: MaterialDesignIcons;
+            font-feature-settings: normal;
+            font-kerning: auto;
+            font-language-override: normal;
+            font-size: inherit;
+            font-size-adjust: none;
+            font-stretch: normal;
+            font-style: normal;
+            font-synthesis: weight style;
+            font-variant: normal;
+            font-weight: normal;
+            line-height: 1;
+            text-rendering: auto;
+            transform: translate(0px, 0px);
+        }
+
+        .login-overlay .form-container .icon .header {
+            font-size: 20px;
+            font-weight: 100;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        #toast {
+            --paper-toast-background-color: red;
+            --paper-toast-color: white;
+        }
+
+    </style>
+    <template>
+        <toto-context service="http://localhost:8080/final-war/"></toto-context>
+        <iron-a11y-keys target="{{login-card}}" keys="enter" on-keys-pressed="login"></iron-a11y-keys>
+        <toto-provider-login id="provider"></toto-provider-login>
+        <div class="login-overlay">
+            <div class="logo">
+                Toto
+                <br>
+                <span class="smaller">ERP</span>
+            </div>
+            <paper-card id="login-card" class="form-container">
+                <div>
+                    <div class="card-content">
+                        <div class="icon">
+                            <iron-icon icon="icons:account-circle"></iron-icon>
+                            <div class="header"> Login</div>
+                        </div>
+                        <paper-input id="userid" name="userid" label="Identifiant utilisateur" value="{{user.userid}}"
+                                     autofocus></paper-input>
+                        <paper-input id="password" name="password" label="Password" type="password"
+                                     value="{{user.password}}"></paper-input>
+                    </div>
+                    <div class="card-actions">
+                        <paper-button on-click="login" raised>Login</paper-button>
+                    </div>
+                </div>
+            </paper-card>
+            <paper-toast class="fit-bottom" id="toast" text=""></paper-toast>
+        </div>
+        <!--Touver un moyen de le mettre sous forme de web compo-->
+        <toto-footer></toto-footer>
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'login-form',
+
+            properties: {
+                user: {
+                    type: Object,
+                    value: {
+                        userid: "admin",
+                        password: "admin123"
+                    },
+                    notify: true
+                }
+            },
+            ready: function () {
+                this.$.userid.$.input.focus();
+                this.fire('hideSpinner', {});
+            },
+            login: function () {
+                this.fire('showSpinner', {});
+                this.$.provider.login(this.user, this.loginCallback, this);
+            },
+            loginCallback: function (response, self) {
+                console.log(response);
+                if (response == "SUCCESS") {
+                    this.fire('hideSpinner', {});
+                    this.fire('onlogin', {});
+                } else {
+                    this.fire('hideSpinner', {});
+                    self.$.toast.text = response;
+                    self.$.toast.hide();
+                    self.async(function () {
+                        self.$.toast.show();
+                    }, 100);
+                }
+            }
+
+        });
+
+    </script>
+
+</dom-module>

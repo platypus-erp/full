@@ -1,0 +1,28 @@
+//http://www.json-generator.com/
+[
+  '{{repeat(1)}}',
+  {
+    id: '{{index()}}',
+    version: '{{integer(100)}}',
+    name: '{{firstName()}} {{surname()}}',
+    active: '{{bool()}}',
+    birthdate: '{{date(new Date(1980, 0, 1), new Date(1993, 0, 1))}}',
+    comment: '{{lorem(1, "paragraphs")}}',
+    email: '{{email()}}',
+    _function: '{{random("EMPLOYEE", "MANAGER", "BOSS")}}',
+    lang: '{{random("fr-FR", "en-EN", "en-US")}}',
+    mobile: '+1 {{phone()}}',
+    phone: '+1 {{phone()}}',
+    gender: '{{gender().toUpperCase()}}',
+    eyeColor: '{{random("blue", "brown", "green")}}',
+    mainAdresse: {
+      number: '{{integer(100, 999)}}',
+      street: '{{street()}}',
+      streetType: 'STREET',
+      city: '{{city()}}',
+      country: '{{country()}}',
+      state: '{{state()}}',
+      zipCode: '{{integer(100, 10000)}}'
+    }
+  }
+]

@@ -1,0 +1,75 @@
+[
+  {
+    "sortable": true,
+    "filterable": true,
+    "title": "BOOLEAN",
+    "index": 4,
+    "property": "boolean",
+    "type": "BOOLEAN"
+  },
+  {
+    "sortable": true,
+    "filterable": true,
+    "title": "ICON",
+    "index": 2,
+    "property": "avatar",
+    "type": "ICON"
+  },
+  {
+    "sortable": true,
+    "filterable": true,
+    "title": "DATE_TIME",
+    "index": 3,
+    "property": "datetime",
+    "type": "DATE_TIME"
+  },
+  {
+    "sortable": true,
+    "filterable": true,
+    "title": "NAME",
+    "index": 5,
+    "property": "string",
+    "type": "STRING"
+  },
+  {
+    "sortable": true,
+    "filterable": true,
+    "title": "FLOAT",
+    "index": 6,
+    "property": "float",
+    "type": "FLOAT"
+  },
+  {
+    "hide": true,
+    "sortable": true,
+    "filterable": false,
+    "title": "ID",
+    "index": 7,
+    "property": "integer",
+    "type": "INTEGER"
+  },
+  {
+    "sortable": true,
+    "filterable": false,
+    "title": "IMG",
+    "index": 8,
+    "property": "img",
+    "type": "IMG"
+  },
+  {
+    "sortable": true,
+    "filterable": false,
+    "title": "IMG_B64",
+    "index": 9,
+    "property": "imgb64",
+    "type": "IMG_B64"
+  },
+  {
+    "sortable": true,
+    "filterable": false,
+    "title": "TIME",
+    "index": 10,
+    "property": "time",
+    "type": "TIME"
+  }
+]
