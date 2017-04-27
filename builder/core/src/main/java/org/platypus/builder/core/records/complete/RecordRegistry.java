@@ -44,13 +44,13 @@ public class RecordRegistry {
         currentModuleModelMerged.forEach((key, value) -> records.put(value.getName(),
                 new MetaInfoRecordImpl(
                         defaultPkgGenerate +".models.generated.records",
-                        Utils.toRecordName(key),
+                        key,
                         value.getName()
                 )));
         currentModuleModelMerged.forEach((key, value) -> recordCollections.put(value.getName(),
                 new MetaInfoRecordCollectionImpl(
                         defaultPkgGenerate + ".models.generated.records",
-                        Utils.toRecordCollectionName(key),
+                        key,
                         value.getName()
                 )));
         RecordGenerator recordGenerator = new RecordGenerator();

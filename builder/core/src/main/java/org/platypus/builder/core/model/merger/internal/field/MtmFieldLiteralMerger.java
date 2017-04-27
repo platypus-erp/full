@@ -22,6 +22,7 @@ public class MtmFieldLiteralMerger extends ManyToManyFieldLiteral
 
     public MtmFieldLiteralMerger(MetaInfoManyToManyField field) {
         super(field.getName());
+        targettFqn = field.target();
         merge(field);
     }
 

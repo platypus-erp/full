@@ -1,12 +1,16 @@
-package org.platypus.erp.module.base.generated.models.generated.jpa;
+package org.platypus.erp.module.base.models.generated.jpa;
 
 import java.lang.Override;
 import java.lang.String;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -17,9 +21,10 @@ import org.platypus.api.fields.StringField;
 import org.platypus.api.fields.impl.BinaryFieldImpl;
 import org.platypus.api.fields.impl.BooleanFieldImpl;
 import org.platypus.api.fields.impl.StringFieldImpl;
-import org.platypus.erp.module.base.generated.models.generated.records.CompanyRecord;
-import org.platypus.erp.module.base.generated.models.generated.records.PartnerRecord;
-import org.platypus.erp.module.base.generated.models.generated.records.UserRecord;
+import org.platypus.erp.module.base.models.generated.records.CompanyRecord;
+import org.platypus.erp.module.base.models.generated.records.GroupRecordCollection;
+import org.platypus.erp.module.base.models.generated.records.PartnerRecord;
+import org.platypus.erp.module.base.models.generated.records.UserRecord;
 
 @Table(
     name = ImplUserJPA.MODEL_NAME
@@ -87,32 +92,60 @@ public class ImplUserJPA implements UserRecord {
   @Transient
   private final StringField loginField;
 
-  @Column(
-      name = "\"partner\""
-  )
   @ManyToOne
-  private ImplPartnerJPA partner;
-
-  @Transient
-  private final PartnerRecord partnerField;
-
-  @Column(
-      name = "\"company_id\""
+  @JoinColumn(
+      name = "\"company_id\"",
+      updatable = true
   )
-  @ManyToOne
   private ImplCompanyJPA company_id;
 
   @Transient
   private final CompanyRecord company_idField;
 
+  @ManyToOne(
+      optional = false
+  )
+  @JoinColumn(
+      name = "\"partner\"",
+      updatable = true
+  )
+  private ImplPartnerJPA partner;
+
+  @Transient
+  private final PartnerRecord partnerField;
+
+  @ManyToMany
+  @JoinTable
+  @JoinColumn(
+      name = "\"groups\"",
+      updatable = true
+  )
+  private List<ImplGroupJPA> groups;
+
+  @Transient
+  private final GroupRecordCollection groupsField;
+
+  @ManyToMany
+  @JoinTable
+  @JoinColumn(
+      name = "\"action\"",
+      updatable = true
+  )
+  private List<ImplGroupJPA> action;
+
+  @Transient
+  private final GroupRecordCollection actionField;
+
   public ImplUserJPA() {
-    signatureField = new BinaryFieldImpl<>(this, ImplUserJPA::getSignature, ImplUserJPA::setSignature);
-    shareField = new BooleanFieldImpl<>(this, ImplUserJPA::getShare, ImplUserJPA::setShare);
-    passwordField = new StringFieldImpl<>(this, ImplUserJPA::getPassword, ImplUserJPA::setPassword);
-    new_passwordField = new StringFieldImpl<>(this, ImplUserJPA::getNew_password, ImplUserJPA::setNew_password);
-    loginField = new StringFieldImpl<>(this, ImplUserJPA::getLogin, ImplUserJPA::setLogin);
-    partnerField = new PartnerRecordImpl<>(this,ImplPartnerJPA.class, ImplUserJPA::getPartner, ImplUserJPA::setPartner);
-    company_idField = new CompanyRecordImpl<>(this,ImplCompanyJPA.class, ImplUserJPA::getCompany_id, ImplUserJPA::setCompany_id);
+    signatureField = new BinaryFieldImpl(this::getSignature, this::setSignature);
+    shareField = new BooleanFieldImpl(this::getShare, this::setShare);
+    passwordField = new StringFieldImpl(this::getPassword, this::setPassword);
+    new_passwordField = new StringFieldImpl(this::getNew_password, this::setNew_password);
+    loginField = new StringFieldImpl(this::getLogin, this::setLogin);
+    company_idField = new CompanyRecordImpl(this::getCompany_id, this::setCompany_id);
+    partnerField = new PartnerRecordImpl(this::getPartner, this::setPartner);
+    groupsField = new GroupRecordCollectionImpl(this::getGroups, this::setGroups);
+    actionField = new GroupRecordCollectionImpl(this::getAction, this::setAction);
   }
 
   public byte[] getSignature() {
@@ -205,6 +238,24 @@ public class ImplUserJPA implements UserRecord {
     return loginField;
   }
 
+  public ImplCompanyJPA getCompany_id() {
+    return this.company_id;
+  }
+
+  public void setCompany_id(final ImplCompanyJPA company_id) {
+    this.company_id = company_id;
+  }
+
+  @Override
+  public void company_id(final CompanyRecord company_idField) {
+    this.setCompany_id(company_idField.unWrap(ImplCompanyJPA.class));
+  }
+
+  @Override
+  public CompanyRecord company_id() {
+    return company_idField;
+  }
+
   public ImplPartnerJPA getPartner() {
     return this.partner;
   }
@@ -223,21 +274,39 @@ public class ImplUserJPA implements UserRecord {
     return partnerField;
   }
 
-  public ImplCompanyJPA getCompany_id() {
-    return this.company_id;
+  public List<ImplGroupJPA> getGroups() {
+    return this.groups;
   }
 
-  public void setCompany_id(final ImplCompanyJPA company_id) {
-    this.company_id = company_id;
-  }
-
-  @Override
-  public void company_id(final CompanyRecord company_idField) {
-    this.setCompany_id(company_idField.unWrap(ImplCompanyJPA.class));
+  public void setGroups(final List<ImplGroupJPA> groups) {
+    this.groups = groups;
   }
 
   @Override
-  public CompanyRecord company_id() {
-    return company_idField;
+  public void groups(final GroupRecordCollection groupsField) {
+    this.setGroups(groupsField.unWrapAsList(ImplGroupJPA.class));
+  }
+
+  @Override
+  public GroupRecordCollection groups() {
+    return groupsField;
+  }
+
+  public List<ImplGroupJPA> getAction() {
+    return this.action;
+  }
+
+  public void setAction(final List<ImplGroupJPA> action) {
+    this.action = action;
+  }
+
+  @Override
+  public void action(final GroupRecordCollection actionField) {
+    this.setAction(actionField.unWrapAsList(ImplGroupJPA.class));
+  }
+
+  @Override
+  public GroupRecordCollection action() {
+    return actionField;
   }
 }

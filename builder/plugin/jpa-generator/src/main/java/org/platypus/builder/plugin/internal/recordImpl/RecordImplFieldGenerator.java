@@ -75,4 +75,14 @@ public class RecordImplFieldGenerator {
         basicFieldRecordImplGetterGenerator.generateGetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
         basicFieldRecordImplSetterGenerator.generateSetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
     }
+
+    public void generateField(MetaInfoOneToManyField meta, Function<String, MetaInfoRecord> getRecord){
+        basicFieldRecordImplGetterGenerator.generateGetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generateSetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoManyToManyField meta, Function<String, MetaInfoRecord> getRecord){
+        basicFieldRecordImplGetterGenerator.generateGetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generateSetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+    }
 }

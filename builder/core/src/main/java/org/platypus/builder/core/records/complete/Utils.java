@@ -12,6 +12,7 @@ import org.platypus.api.annotations.field.DecimalFieldDefinition;
 import org.platypus.api.annotations.field.FloatFieldDefinition;
 import org.platypus.api.annotations.field.IntFieldDefinition;
 import org.platypus.api.annotations.field.LongFieldDefinition;
+import org.platypus.api.annotations.field.PlatypusCascadeType;
 import org.platypus.api.annotations.field.StringFieldDefinition;
 import org.platypus.api.annotations.field.TimeFieldDefinition;
 import org.platypus.api.fields.BigStringField;
@@ -39,9 +40,14 @@ import org.platypus.api.fields.impl.TimeFieldImpl;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 
+import javax.persistence.CascadeType;
+
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.regex.Pattern;
 
 /**
  * TODO Add JavaDoc
@@ -50,7 +56,10 @@ import java.util.Map;
  * @version 0.1
  * @since 0.1
  */
-class Utils {
+public class Utils {
+    private static Pattern SQL_PATTERN = Pattern.compile("([a-z])([A-Z]+)");
+    private static String SQL_REPLACEMENT = "$1_$2";
+    public static Function<String,String> TO_SQL = str -> SQL_PATTERN.matcher(str).replaceAll(SQL_REPLACEMENT).toLowerCase();
 
     private static final Map<String, TypeName> RECORD_FIELD_TYPE = new HashMap<>(11);
     static {
@@ -90,18 +99,18 @@ class Utils {
         return RECORD_FIELD_TYPE.get(fieldType.annotationType().getCanonicalName());
     }
 
-    public static ClassName toRecordCollection(MetaInfoRecordCollection representation) {
+    public static ClassName toRecordCollection(MetaInfoRecord representation) {
         return ClassName.get(representation.getPkg(), representation.getClassName() + "RecordCollection");
+    }
+    public static ClassName toRecordCollectionImpl(MetaInfoRecord representation) {
+        return ClassName.get("", representation.getClassName() + "RecordCollectionImpl");
     }
 
     public static ClassName toRecord(MetaInfoRecord representation) {
         return ClassName.get(representation.getPkg(), representation.getClassName() + "Record");
     }
-    public static ClassName toClassName(MetaInfoRecord representation) {
-        return ClassName.get(representation.getPkg(), representation.getClassName());
-    }
-    public static ClassName toClassName(MetaInfoRecordCollection representation) {
-        return ClassName.get(representation.getPkg(), representation.getClassName());
+    public static ClassName toRecordImpl(MetaInfoRecord representation) {
+        return ClassName.get("", representation.getClassName() + "RecordImpl");
     }
 
     public static String toRecordName(String value) {
@@ -109,5 +118,22 @@ class Utils {
     }
     public static String toRecordCollectionName(String value) {
         return value + "RecordCollection";
+    }
+
+    public static CascadeType[] toJpaCascadeType(PlatypusCascadeType[] platypusCascadeTypes, CascadeType... defaults) {
+        if (platypusCascadeTypes.length < 0) {
+            return defaults;
+        } else {
+            Arrays.sort(platypusCascadeTypes);
+            if (Arrays.binarySearch(platypusCascadeTypes, PlatypusCascadeType.NONE) >= 0) {
+                return new CascadeType[0];
+            }
+            if (Arrays.binarySearch(platypusCascadeTypes, PlatypusCascadeType.DEFAULT) >= 0) {
+                return defaults;
+            }
+            return Arrays.stream(platypusCascadeTypes)
+                    .map(p -> CascadeType.valueOf(p.toString()))
+                    .toArray(CascadeType[]::new);
+        }
     }
 }

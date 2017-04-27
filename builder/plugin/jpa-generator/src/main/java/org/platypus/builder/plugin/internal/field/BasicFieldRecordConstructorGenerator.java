@@ -14,18 +14,17 @@ import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
 import org.platypus.api.fields.metainfo.MetaInfoFloatField;
 import org.platypus.api.fields.metainfo.MetaInfoIntField;
 import org.platypus.api.fields.metainfo.MetaInfoLongField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToManyField;
 import org.platypus.api.fields.metainfo.MetaInfoManyToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
 import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 import org.platypus.api.module.MetaInfoRecord;
-import org.platypus.api.module.MetaInfoRecordCollection;
-import org.platypus.builder.plugin.internal.Utils;
+import org.platypus.builder.core.records.complete.Utils;
+import org.platypus.builder.plugin.internal.JpaUtils;
 
 import java.util.function.Function;
-
-import static org.platypus.builder.plugin.internal.JpaModelGenerator.getImplHibernateName;
 
 /**
  * @author chmuchme
@@ -40,56 +39,54 @@ public class BasicFieldRecordConstructorGenerator {
     }
 
     public CodeBlock generateField(MetaInfoBigStringField field) {
-        return getField(field.getName(), Utils.getRecordFieldImpl(field));
+        return getField(field.getName(), JpaUtils.getRecordFieldImpl(field));
     }
 
     public CodeBlock generateField(MetaInfoBinaryField field) {
-        return getField(field.getName(), Utils.getRecordFieldImpl(field));
+        return getField(field.getName(), JpaUtils.getRecordFieldImpl(field));
     }
 
     public CodeBlock generateField(MetaInfoBooleanField field) {
-        return getField(field.getName(), Utils.getRecordFieldImpl(field));
+        return getField(field.getName(), JpaUtils.getRecordFieldImpl(field));
     }
 
     public CodeBlock generateField(MetaInfoDateField field) {
-        return getField(field.getName(), Utils.getRecordFieldInterface(field));
+        return getField(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
 
     public CodeBlock generateField(MetaInfoDateTimeField field) {
-        return getField(field.getName(), Utils.getRecordFieldImpl(field));
+        return getField(field.getName(), JpaUtils.getRecordFieldImpl(field));
     }
 
     public CodeBlock generateField(MetaInfoDecimalField field) {
-        return getField(field.getName(), Utils.getRecordFieldImpl(field));
+        return getField(field.getName(), JpaUtils.getRecordFieldImpl(field));
     }
 
     public CodeBlock generateField(MetaInfoFloatField field) {
-        return getField(field.getName(), Utils.getRecordFieldImpl(field));
+        return getField(field.getName(), JpaUtils.getRecordFieldImpl(field));
     }
 
     public CodeBlock generateField(MetaInfoIntField field) {
-        return getField(field.getName(), Utils.getRecordFieldImpl(field));
+        return getField(field.getName(), JpaUtils.getRecordFieldImpl(field));
     }
 
     public CodeBlock generateField(MetaInfoLongField field) {
-        return getField(field.getName(), Utils.getRecordFieldImpl(field));
+        return getField(field.getName(), JpaUtils.getRecordFieldImpl(field));
     }
 
     public CodeBlock generateField(MetaInfoStringField field) {
-        return getField(field.getName(), Utils.getRecordFieldImpl(field));
+        return getField(field.getName(), JpaUtils.getRecordFieldImpl(field));
     }
 
     public CodeBlock generateField(MetaInfoTimeField field) {
-        return getField(field.getName(), Utils.getRecordFieldImpl(field));
+        return getField(field.getName(), JpaUtils.getRecordFieldImpl(field));
     }
 
     private CodeBlock getField(String name, TypeName field) {
-        return CodeBlock.of("$N = new $T<>(this, $N::get$N, $N::set$N);\n",
+        return CodeBlock.of("$N = new $T(this::get$N, this::set$N);\n",
                 name + "Field",
                 field,
-                currentClassName,
                 StringUtils.capitalize(name),
-                currentClassName,
                 StringUtils.capitalize(name)
         );
     }
@@ -102,15 +99,25 @@ public class BasicFieldRecordConstructorGenerator {
         return generateRecordField(field.getName(), field.targetName(), field.target(), getRecord);
     }
     private CodeBlock generateRecordField(String name, String fieldTargetName, Class<? extends BaseModel> target, Function<String, MetaInfoRecord> getRecord) {
-        ClassName rImplT = ClassName.get("",getRecord.apply(fieldTargetName).getClassName() + "Impl");
-        ClassName JpaImplT = ClassName.get("",getImplHibernateName(target.getSimpleName()));
-        return CodeBlock.of("$N = new $T<>(this,$T.class, $N::get$N, $N::set$N);\n",
+        return CodeBlock.of("$N = new $T(this::get$N, this::set$N);\n",
                 name + "Field",
-                rImplT,
-                JpaImplT,
-                currentClassName,
+                Utils.toRecordImpl(getRecord.apply(fieldTargetName)),
                 StringUtils.capitalize(name),
-                currentClassName,
+                StringUtils.capitalize(name));
+    }
+    public CodeBlock generateField(MetaInfoOneToManyField field,
+                                   Function<String, MetaInfoRecord> getRecord) {
+        return generateRecordCollectionField(field.getName(), field.targetName(),field.target(), getRecord);
+    }
+    public CodeBlock generateField(MetaInfoManyToManyField field,
+                                   Function<String, MetaInfoRecord> getRecord) {
+        return generateRecordCollectionField(field.getName(), field.targetName(), field.target(), getRecord);
+    }
+    private CodeBlock generateRecordCollectionField(String name, String fieldTargetName, Class<? extends BaseModel> target, Function<String, MetaInfoRecord> getRecord) {
+        return CodeBlock.of("$N = new $T(this::get$N, this::set$N);\n",
+                name + "Field",
+                Utils.toRecordCollectionImpl(getRecord.apply(fieldTargetName)),
+                StringUtils.capitalize(name),
                 StringUtils.capitalize(name));
     }
 }

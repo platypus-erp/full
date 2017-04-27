@@ -15,6 +15,7 @@ import org.platypus.api.fields.impl.RecordImpl;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.model.merger.ModelMerged;
+import org.platypus.builder.core.records.complete.Utils;
 import org.platypus.builder.plugin.internal.recordImpl.RecordImplFieldGenerator;
 import org.platypus.builder.utils.javapoet.utils.ClassSpecUtils;
 import org.platypus.builder.utils.javapoet.utils.Constant;
@@ -75,11 +76,9 @@ public class JpaModelGenerator {
 
         jpaImplBuilder.addAnnotation(Entity.class);
         MetaInfoRecord rec = getRecord.apply(modelMerged.getName());
-        jpaImplBuilder.addSuperinterface(ClassName.get(rec.getPkg(), rec.getClassName()));
+        jpaImplBuilder.addSuperinterface(Utils.toRecord(rec));
 
         MethodSpec.Builder constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
-        TypeVariableName TvarRecord = TypeVariableName.get("T", ClassName.get(Record.class));
-//        RecordImpl<T extends Record, R extends Record, RI extends R>
 
         JpaImplFieldGenerator fieldGenerator = new JpaImplFieldGenerator(jpaImplBuilder, modelMerged.getName(), constructor);
         foreachValues(modelMerged.getBigStringField(), fieldGenerator::generateField);
@@ -96,6 +95,8 @@ public class JpaModelGenerator {
 
         foreachValues(modelMerged.getMtoField(), m -> fieldGenerator.generateField(m, getRecord));
         foreachValues(modelMerged.getOtoField(), m -> fieldGenerator.generateField(m, getRecord));
+        foreachValues(modelMerged.getMtmField(), m -> fieldGenerator.generateField(m, getRecord));
+        foreachValues(modelMerged.getOtmField(), m -> fieldGenerator.generateField(m, getRecord));
 
         jpaImplBuilder.addMethod(constructor.build());
         jpaImplBuiler.put(modelMerged.getName(), new HashSet<>());
@@ -108,39 +109,33 @@ public class JpaModelGenerator {
                                                Function<String, MetaInfoRecord> getRecord,
                                                Function<String, MetaInfoRecordCollection> getRecordCollection) {
         MetaInfoRecord rTarget = getRecord.apply(modelMerged.getName());
-        ClassName recordTarget = ClassName.get(rTarget.getPkg(), rTarget.getClassName());
+        ClassName recordTarget = Utils.toRecord(rTarget);
 
-        MetaInfoRecordCollection rcTarget = getRecordCollection.apply(modelMerged.getName());
-        ClassName recordCollectionTarget = ClassName.get(rcTarget.getPkg(), rcTarget.getClassName());
+        ClassName recordCollectionTarget = Utils.toRecordCollection(getRecordCollection.apply(modelMerged.getName()));
 
         ClassName recordTargetImpl = ClassName.get("", getImplHibernateName(modelMerged.getName()));
-        ClassName currentClassName = ClassName.get("org.platypus.generated.jpa", rTarget.getClassName() + "CollectionImpl");
+        ClassName currentClassName = Utils.toRecordCollectionImpl(rTarget);
 
         TypeSpec.Builder recordCollectionImpl = TypeSpec.classBuilder(currentClassName)
                 .addModifiers(Modifier.PUBLIC);
 
-        TypeVariableName Tvar = TypeVariableName.get("T", ClassName.get(Record.class));
 
-        recordCollectionImpl.addTypeVariable(Tvar);
-        ParameterizedTypeName superClass = ParameterizedTypeName.get(ClassName.get(RecordCollectionImpl.class), Tvar, recordTarget, recordTargetImpl, recordCollectionTarget);
+        ParameterizedTypeName superClass = ParameterizedTypeName.get(ClassName.get(RecordCollectionImpl.class),recordTarget, recordTargetImpl, recordCollectionTarget);
 
         recordCollectionImpl.superclass(superClass);
         recordCollectionImpl.addSuperinterface(recordCollectionTarget);
 
         ParameterizedTypeName listOfRecord = ParameterizedTypeName.get(ClassName.get(List.class), recordTargetImpl);
-        ParameterizedTypeName classRecord = ParameterizedTypeName.get(ClassName.get(Class.class), recordTargetImpl);
-        ParameterizedTypeName functionGetter = ParameterizedTypeName.get(ClassName.get(Function.class), Tvar, listOfRecord);
-        ParameterizedTypeName functionSetter = ParameterizedTypeName.get(ClassName.get(BiConsumer.class), Tvar, listOfRecord);
+        ParameterizedTypeName functionGetter = ParameterizedTypeName.get(ClassName.get(Supplier.class), listOfRecord);
+        ParameterizedTypeName functionSetter = ParameterizedTypeName.get(ClassName.get(Consumer.class), listOfRecord);
 
 
         MethodSpec.Builder constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
         constructor.addModifiers(Modifier.PUBLIC);
-        constructor.addParameter(ParameterSpec.builder(Tvar, "instance").build());
-        constructor.addParameter(ParameterSpec.builder(classRecord, "recordTarget").build());
         constructor.addParameter(ParameterSpec.builder(functionGetter, "getter").build());
         constructor.addParameter(ParameterSpec.builder(functionSetter, "setter").build());
 
-        constructor.addCode("super($N, $N, $N, $N);", "instance", "recordTarget", "getter", "setter");
+        constructor.addCode("super($N, $N);\n", "getter", "setter");
 
         recordCollectionImpl.addMethod(constructor.build());
         return recordCollectionImpl;
@@ -151,15 +146,15 @@ public class JpaModelGenerator {
                                    Function<String, MetaInfoRecord> getRecord,
                                    Function<String, MetaInfoRecordCollection> getRecordCollection) {
         MetaInfoRecord rTarget = getRecord.apply(modelMerged.getName());
-        ClassName recordTarget = ClassName.get(rTarget.getPkg(), rTarget.getClassName());
+        ClassName recordTarget = Utils.toRecord(rTarget);
 
         ClassName recordTargetImpl = ClassName.get("", getImplHibernateName(modelMerged.getName()));
-        ClassName currentClassName = ClassName.get("fakePkg", rTarget.getClassName() + "Impl");
+        ClassName currentClassName = Utils.toRecordImpl(rTarget);
 
         TypeSpec.Builder recordImpl = TypeSpec.classBuilder(currentClassName)
                 .addModifiers(Modifier.PUBLIC);
 
-        ParameterizedTypeName superClass = ParameterizedTypeName.get(recordTarget, recordTargetImpl);
+        ParameterizedTypeName superClass = ParameterizedTypeName.get(ClassName.get(RecordImpl.class), recordTarget, recordTargetImpl);
 
         recordImpl.superclass(superClass);
         recordImpl.addSuperinterface(recordTarget);
@@ -173,7 +168,7 @@ public class JpaModelGenerator {
         constructor.addParameter(ParameterSpec.builder(functionGetter, "getter").build());
         constructor.addParameter(ParameterSpec.builder(functionSetter, "setter").build());
 
-        constructor.addCode("super($N, $N);", "getter", "setter");
+        constructor.addCode("super($N, $N);\n", "getter", "setter");
 
         recordImpl.addMethod(constructor.build());
         RecordImplFieldGenerator fieldGenerator = new RecordImplFieldGenerator(recordImpl);
@@ -191,44 +186,8 @@ public class JpaModelGenerator {
 
         foreachValues(modelMerged.getMtoField(), f -> fieldGenerator.generateField(f, getRecord));
         foreachValues(modelMerged.getOtoField(), f -> fieldGenerator.generateField(f, getRecord));
-
-
-//
-//            for (RelationFieldLiteral f : fr.getAllRelationFieldDef()) {
-//                if (f.getRealType() == PlatypusType.OTM || f.getRealType() == PlatypusType.MTM) {
-//                    MethodSpec getter = MethodSpec.methodBuilder(f.getName())
-//                            .returns(allRecordCollections.get(f.getTargettFqn()))
-//                            .addCode("return get().$N();", f.getName())
-//                            .addAnnotation(Override.class)
-//                            .addModifiers(Modifier.PUBLIC)
-//                            .build();
-//                    recordImpl.addMethod(getter);
-//
-//                    MethodSpec setter = MethodSpec.methodBuilder(f.getName())
-//                            .addParameter(ParameterSpec.builder(allRecordCollections.get(f.getTargettFqn()), f.getName(), Modifier.FINAL).build())
-//                            .addCode("this.get().$N($N);", f.getName(), f.getName())
-//                            .addAnnotation(Override.class)
-//                            .addModifiers(Modifier.PUBLIC)
-//                            .build();
-//                    recordImpl.addMethod(setter);
-//                } else {
-//                    MethodSpec getter = MethodSpec.methodBuilder(f.getName())
-//                            .returns(allRecords.get(f.getTargettFqn()))
-//                            .addCode("return get().$N();", f.getName())
-//                            .addAnnotation(Override.class)
-//                            .addModifiers(Modifier.PUBLIC)
-//                            .build();
-//                    recordImpl.addMethod(getter);
-//
-//                    MethodSpec setter = MethodSpec.methodBuilder(f.getName())
-//                            .addParameter(ParameterSpec.builder(allRecords.get(f.getTargettFqn()), f.getName(), Modifier.FINAL).build())
-//                            .addCode("this.get().$N($N);", f.getName(), f.getName())
-//                            .addAnnotation(Override.class)
-//                            .addModifiers(Modifier.PUBLIC)
-//                            .build();
-//                    recordImpl.addMethod(setter);
-//                }
-//            }
+        foreachValues(modelMerged.getMtmField(), f -> fieldGenerator.generateField(f, getRecord));
+        foreachValues(modelMerged.getOtmField(), f -> fieldGenerator.generateField(f, getRecord));
         return recordImpl;
     }
 

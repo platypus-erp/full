@@ -23,6 +23,7 @@ public class OtoFieldLiteralMerger extends OneToOneFieldLiteral
 
     public OtoFieldLiteralMerger(MetaInfoOneToOneField field) {
         super(field.getName());
+        targettFqn = field.target();
         merge(field);
     }
 

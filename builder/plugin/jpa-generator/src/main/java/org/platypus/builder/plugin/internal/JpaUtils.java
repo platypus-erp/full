@@ -13,6 +13,7 @@ import org.platypus.api.annotations.field.DecimalFieldDefinition;
 import org.platypus.api.annotations.field.FloatFieldDefinition;
 import org.platypus.api.annotations.field.IntFieldDefinition;
 import org.platypus.api.annotations.field.LongFieldDefinition;
+import org.platypus.api.annotations.field.PlatypusCascadeType;
 import org.platypus.api.annotations.field.StringFieldDefinition;
 import org.platypus.api.annotations.field.TimeFieldDefinition;
 import org.platypus.api.fields.BigStringField;
@@ -51,11 +52,14 @@ import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 
+import javax.persistence.CascadeType;
+
 import java.lang.annotation.Annotation;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,7 +70,7 @@ import java.util.Map;
  * @version 0.1
  * @since 0.1
  */
-public class Utils {
+public class JpaUtils {
     private static final Map<String, TypeName> JAVA_TYPE = new HashMap<>(11);
     static {
         JAVA_TYPE.put(BigStringFieldDefinition.class.getCanonicalName(), ClassName.get(String.class));
@@ -122,20 +126,5 @@ public class Utils {
 
     public static TypeName getRecordFieldImpl(Annotation fieldType){
         return RECORD_FIELD_TYPE_IMPL.get(fieldType.annotationType().getCanonicalName());
-    }
-
-    public static ClassName toRecordCollection(MetaInfoRecordCollection representation) {
-        return ClassName.get(representation.getPkg(), representation.getClassName() + "RecordCollection");
-    }
-
-    public static ClassName toRecord(MetaInfoRecord representation) {
-        return ClassName.get(representation.getPkg(), representation.getClassName() + "Record");
-    }
-
-    public static String toRecordName(String value) {
-        return value + "Record";
-    }
-    public static String toRecordCollectionName(String value) {
-        return value + "RecordCollection";
     }
 }

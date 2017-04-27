@@ -1,9 +1,9 @@
-package org.platypus.erp.module.base.generated.models.generated.jpa;
+package org.platypus.erp.module.base.models.generated.jpa;
 
 import java.lang.String;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import org.platypus.erp.module.base.generated.models.generated.records.CompanyRecord;
+import org.platypus.erp.module.base.models.generated.records.CompanyRecord;
 
 @Table(
     name = ImplCompanyJPA.MODEL_NAME

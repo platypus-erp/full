@@ -1,4 +1,4 @@
-package org.platypus.erp.module.base.generated.models.generated.records;
+package org.platypus.erp.module.base.models.generated.records;
 
 import org.platypus.api.RecordCollection;
 

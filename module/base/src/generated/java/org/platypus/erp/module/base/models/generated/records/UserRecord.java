@@ -1,11 +1,9 @@
-package org.platypus.erp.module.base.generated.models.generated.records;
+package org.platypus.erp.module.base.models.generated.records;
 
 import org.platypus.api.Record;
 import org.platypus.api.fields.BinaryField;
 import org.platypus.api.fields.BooleanField;
 import org.platypus.api.fields.StringField;
-import org.platypus.erp.module.base.models.generated.records.CompanyRecord;
-import org.platypus.erp.module.base.models.generated.records.PartnerRecord;
 
 public interface UserRecord extends Record {
   BinaryField signature();
@@ -28,11 +26,19 @@ public interface UserRecord extends Record {
 
   void login(StringField login);
 
-  PartnerRecord partner();
+  GroupRecordCollection groups();
 
-  void partner(PartnerRecord partner);
+  GroupRecordCollection action();
+
+  void groups(GroupRecordCollection groups);
+
+  void action(GroupRecordCollection action);
 
   CompanyRecord company_id();
 
+  PartnerRecord partner();
+
   void company_id(CompanyRecord company_id);
+
+  void partner(PartnerRecord partner);
 }

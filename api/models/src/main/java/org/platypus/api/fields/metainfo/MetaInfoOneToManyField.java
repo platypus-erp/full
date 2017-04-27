@@ -15,13 +15,5 @@ import org.platypus.api.annotations.model.PlatypusModel;
  * @version 0.1
  * @since 0.1
  */
-public interface MetaInfoOneToManyField extends OneToManyFieldDefinition, Namable {
-
-    default String targetName(){
-        return target().getAnnotation(PlatypusModel.class).value();
-    }
-
-    default String targetPkg(){
-        return target().getPackage().getName();
-    }
+public interface MetaInfoOneToManyField extends OneToManyFieldDefinition, Namable , Targetable {
 }

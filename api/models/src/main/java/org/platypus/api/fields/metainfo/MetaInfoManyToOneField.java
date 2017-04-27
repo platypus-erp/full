@@ -16,14 +16,5 @@ import java.lang.annotation.Annotation;
  * @version 0.1
  * @since 0.1
  */
-public interface MetaInfoManyToOneField extends ManyToOneFieldDefinition, Namable {
-
-    default String targetName() {
-        return target().getAnnotation(PlatypusModel.class).value();
-    }
-
-    default String targetPkg() {
-        return target().getPackage().getName();
-    }
-
+public interface MetaInfoManyToOneField extends ManyToOneFieldDefinition, Namable , Targetable {
 }

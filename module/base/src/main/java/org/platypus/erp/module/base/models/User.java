@@ -33,8 +33,8 @@ public class User implements BaseModel{
     @BinaryFieldDefinition
     NewField signature;
 
-//    @ManyToManyFieldDefinition()
-//    NewField action;
+    @ManyToManyFieldDefinition(target = Group.class)
+    NewField action;
 
     @ManyToManyFieldDefinition(target = Group.class)
     NewField groups;

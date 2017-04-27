@@ -21,6 +21,7 @@ public class OtmFieldLiteralMerger extends OneToManyFieldLiteral
 
     public OtmFieldLiteralMerger(MetaInfoOneToManyField field) {
         super(field.getName());
+        targettFqn = field.target();
         merge(field);
     }
 
