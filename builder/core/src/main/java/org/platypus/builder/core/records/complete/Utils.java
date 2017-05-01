@@ -38,7 +38,6 @@ import org.platypus.api.fields.impl.LongFieldImpl;
 import org.platypus.api.fields.impl.StringFieldImpl;
 import org.platypus.api.fields.impl.TimeFieldImpl;
 import org.platypus.api.module.MetaInfoRecord;
-import org.platypus.api.module.MetaInfoRecordCollection;
 
 import javax.persistence.CascadeType;
 

@@ -27,7 +27,7 @@ public class DisplayTreeModule implements PlatypusPlugin {
 
     @Override
     public String getName() {
-        return "display-tree-module";
+        return "display-tree-ui";
     }
 
     @Override

@@ -79,6 +79,12 @@ task generate_records(type: JavaExec) {
     // arguments to pass to the application
     args = ["${sourceSets.main.java.srcDirs}", "${project.group}", "${project.name}", "${project.projectDir}"]
 }
+task platypus_views(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'org.platypus.builder.core.views.ViewsFinder'
+    // arguments to pass to the application
+    args = ["${sourceSets.main.resources.srcDirs}", "${project.group}", "${project.name}", "${project.projectDir}"]
+}
 clean {
     delete sourceSets.generated.java.srcDirs
 }

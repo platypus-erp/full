@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<platypus-views xmlns="/home/chmuchme/WorkSpace/TOTO/toto-maven-plugin/src/main/resources/org/platypus/erp/maven/shema/platypus-list-views.xsd">-->
+<platypus-views>
+    <platypus-list-view id="partner-list" target="partner" default-filter-id="FILTER1">
+        <header-filters>
+            <!--<filter filterId="FILTER3" label="FILTER3"/>-->
+            <group-filter label="Filtre 1" label-position="left">
+                <filter filterId="FILTER1" label="FILTER1"/>
+                <filter filterId="FILTER2" label="FILTER2"/>
+            </group-filter>
+            <group-filter label="Filtre 2" label-position="top">
+                <filter filterId="FILTER4" label="FILTER4"/>
+                <filter filterId="FILTER5" label="FILTER5"/>
+            </group-filter>
+        </header-filters>
+        <list id="partner-list-demo" title="Liste de Partner" page-size="40" type="PAGINATE">
+            <columns>
+                <string-column property="name" id="partner_name" />
+                <string-column property="email" id="partner_email"/>
+                <string-column property="lang" id="partner_lang"/>
+                <date-column property="createDate" id="partner_createDate" format="short"/>
+                <boolean-column property="customer" id="partner_customer" display="toggle"/>
+                <relation-column property="mainAddress" id="partner_mainAddress_name"/>
+            </columns>
+        </list>
+    </platypus-list-view>
+</platypus-views>
+
+
+
+

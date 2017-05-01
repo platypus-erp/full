@@ -6,7 +6,6 @@ import org.platypus.api.module.ModelOfModuleInfo;
 import org.platypus.builder.core.model.tree.ModelTree;
 import org.platypus.builder.core.model.tree.ModuleTreeModel;
 import org.platypus.builder.core.moduletree.ModuleTree;
-import org.platypus.builder.core.moduletree.ModuleTreeImpl;
 import org.platypus.builder.core.moduletree.ModuleTreeNode;
 
 import java.util.Collections;

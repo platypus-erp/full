@@ -1,5 +1,6 @@
 package orp.platypus.impl.module;
 
+
 import org.platypus.api.module.MetaInfoRecord;
 
 /**
@@ -7,7 +8,7 @@ import org.platypus.api.module.MetaInfoRecord;
  * @since 0.1
  * on 31/03/17.
  */
-public class MetaInfoRecordImpl implements MetaInfoRecord{
+public class MetaInfoRecordImpl implements MetaInfoRecord {
     private final String pkg;
     private final String className;
     private final String modelTarget;

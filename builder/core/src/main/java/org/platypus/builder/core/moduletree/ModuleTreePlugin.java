@@ -15,11 +15,11 @@ public class ModuleTreePlugin {
     private ModuleTreeImpl tree = new ModuleTreeImpl();
 
     public String name() {
-        return "module-registry";
+        return "ui-registry";
     }
 
     public void addModule(PlatypusCompleteModuleInfo moduleInfo) {
-        System.out.println("Load of module " + moduleInfo.getName());
+        System.out.println("Load of ui " + moduleInfo.getName());
         tree.addModule(moduleInfo);
     }
 

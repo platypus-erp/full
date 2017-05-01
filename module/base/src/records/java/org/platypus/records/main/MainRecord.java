@@ -10,7 +10,7 @@ import org.platypus.builder.QuickRecordBuilder;
  */
 public class MainRecord {
     public static void main(String[] args) throws Exception {
-        String projectDir = "/home/apasquier/WorkSpace/Java/full/module/base";
+        String projectDir = "/home/apasquier/WorkSpace/Java/full/ui/base";
         String group = "org.platypus.erp";
         String name = "base";
         QuickRecordBuilder.run(projectDir, group, name);

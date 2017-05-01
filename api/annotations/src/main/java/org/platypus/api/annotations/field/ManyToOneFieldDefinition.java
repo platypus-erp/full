@@ -36,7 +36,7 @@ public @interface ManyToOneFieldDefinition {
      */
     String columnDoc() default DEFAULT;
     /**
-     * (Optional) <br> Only if you want to erase all the definition of this field defined in other module
+     * (Optional) <br> Only if you want to erase all the definition of this field defined in other ui
      */
     boolean eraseWithYours() default false;
     /**

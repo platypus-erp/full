@@ -41,7 +41,7 @@ public @interface IntFieldDefinition {
     String uniqueHint() default DEFAULT;
 
     /**
-     * (Optional) Only if you want to erase all the definition of this field defined in other module
+     * (Optional) Only if you want to erase all the definition of this field defined in other ui
      */
     boolean eraseWithYours() default false;
 
