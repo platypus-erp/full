@@ -12,14 +12,14 @@ import org.platypus.builder.core.views.list.structure.SortableTag;
  * @since 0.1
  */
 public abstract class AbstractColumn implements ListViewColumn {
-    private String id;
-    private String propertyName;
-    private SortableTag sortableTag;
-    private String headerLabelKey;
-    private int order;
-    private boolean actif;
-    private final ColumnType columnType;
-    private boolean filterable;
+    protected String id;
+    protected String propertyName;
+    protected SortableTag sortableTag;
+    protected String headerLabelKey;
+    protected int order;
+    protected boolean actif;
+    protected final ColumnType columnType;
+    protected boolean filterable;
 
     public AbstractColumn(ColumnType columnType) {
         this.columnType = columnType;

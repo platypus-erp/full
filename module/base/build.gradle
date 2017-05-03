@@ -73,7 +73,7 @@ platypus {
     moduleVersion "1"
     depends = []
 }
-task generate_records(type: JavaExec) {
+task platypus_records(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'org.platypus.builder.QuickRecordBuilder'
     // arguments to pass to the application
@@ -85,6 +85,7 @@ task platypus_views(type: JavaExec) {
     // arguments to pass to the application
     args = ["${sourceSets.main.resources.srcDirs}", "${project.group}", "${project.name}", "${project.projectDir}"]
 }
+
 clean {
     delete sourceSets.generated.java.srcDirs
 }

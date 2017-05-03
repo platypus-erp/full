@@ -1,5 +1,7 @@
 package org.platypus.builder.core.views.list.structure.column.boolcol;
 
+import j2html.TagCreator;
+import j2html.tags.ContainerTag;
 import org.platypus.builder.core.views.list.structure.column.AbstractColumn;
 import org.platypus.builder.core.views.list.structure.column.ListViewColumn;
 
@@ -32,5 +34,19 @@ public class ListViewBooleanColumnImpl extends AbstractColumn implements ListVie
         return ListViewColumn.ColumnType.BOOLEAN;
     }
 
+    @Override
+    public ContainerTag toContainerTag() {
+        ContainerTag tag;
+        if (toggleDisplayed){
+            tag = TagCreator.tag("paper-toggle-button")
+                    .attr("disable", "true")
+                    .attr("checked", "[[item."+this.getPropertyName()+"]]");
 
+        } else {
+            tag = TagCreator.tag("paper-checkbox")
+                    .attr("disable", "true")
+                    .attr("checked", "[[item."+this.getPropertyName()+"]]");
+        }
+        return tag;
+    }
 }

@@ -1,5 +1,7 @@
 package org.platypus.builder.core.views.list.structure.column.timecol;
 
+import j2html.TagCreator;
+import j2html.tags.ContainerTag;
 import org.platypus.builder.core.views.list.structure.column.ListViewColumn;
 import org.platypus.builder.core.views.list.structure.column.AbstractColumn;
 
@@ -31,5 +33,12 @@ public class ListViewTimeColumnImpl extends AbstractColumn implements ListViewTi
 
     public void setSecondDisplayed(boolean secondDisplayed) {
         this.secondDisplayed = secondDisplayed;
+    }
+
+    @Override
+    public ContainerTag toContainerTag() {
+        return TagCreator.tag("toto-time")
+                .attr("time", "[[item."+propertyName+"]]")
+                .attr("second", Boolean.toString(secondDisplayed));
     }
 }

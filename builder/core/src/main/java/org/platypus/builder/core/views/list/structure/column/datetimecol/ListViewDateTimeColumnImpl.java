@@ -1,5 +1,7 @@
 package org.platypus.builder.core.views.list.structure.column.datetimecol;
 
+import j2html.TagCreator;
+import j2html.tags.ContainerTag;
 import org.platypus.builder.core.views.list.structure.column.AbstractColumn;
 
 /**
@@ -25,5 +27,12 @@ public class ListViewDateTimeColumnImpl extends AbstractColumn implements ListVi
 
     public void setDisplayType(DisplayType displayType) {
         this.displayType = displayType;
+    }
+
+    @Override
+    public ContainerTag toContainerTag() {
+        return TagCreator.tag("toto-date-time")
+                .attr("date", "[[item."+propertyName+"]]")
+                .attr("display", displayType.getValue());
     }
 }

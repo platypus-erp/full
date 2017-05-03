@@ -13,12 +13,10 @@
             </data-table-column>
         <#--BOOLEAN COLUMN-->
         <#list root.booleanColumns as column>
-            <data-table-column name="${column.headerLabelKey}"  order="${column.order}"
-                               filter-by="${column.propertyName}">
+            <data-table-column name="${column.headerLabelKey}"  order="${column.order}" filter-by="${column.propertyName}">
                 <template>
                     <#if column.toggleDisplayed>
-                        <paper-toggle-button disabled="true"
-                                             checked="[[item.${column.propertyName}]]"></paper-toggle-button>
+                        <paper-toggle-button disabled="true" checked="[[item.${column.propertyName}]]"></paper-toggle-button>
                     <#else>
                         <paper-checkbox disabled="true" checked="[[item.${column.propertyName}]]"></paper-checkbox>
                     </#if>

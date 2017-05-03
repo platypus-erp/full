@@ -6,6 +6,7 @@ import org.platypus.builder.core.records.quick.Visitor;
 import org.platypus.builder.core.views.list.SchemaValidator;
 import org.platypus.builder.core.views.list.parser.DomParser;
 import org.platypus.builder.core.views.list.parser.DomParserError;
+import org.platypus.builder.core.views.list.structure.ListView;
 import org.platypus.builder.core.views.list.structure.order.OrderGeneratorRegistry;
 
 import java.io.IOException;
@@ -15,6 +16,9 @@ import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -30,14 +34,19 @@ public class ViewsFinder {
         OrderGeneratorRegistry orderGeneratorRegistry = new OrderGeneratorRegistry();
         DomParser parser = new DomParser(orderGeneratorRegistry);
 
-        Stream.of(projectDir.replace("[", "").replace("]", "").split(","))
+        Set<ListView> listViews = Stream.of(projectDir.replace("[", "").replace("]", "").split(","))
                 .map(Paths::get)
                 .flatMap(ViewsFinder::walkPath)
                 .filter(p -> !Files.isDirectory(p))
                 .filter(javaMatcher::matches)
 //                .filter(schemaValidator::validateFile)
                 .map(parser::parseListView)
-                .forEach(DomParserError::getListView);
+                .map(DomParserError::getListView)
+                .collect(Collectors.toSet());
+
+        for (ListView lv: listViews){
+            lv.
+        }
     }
 
     private static Stream<Path> walkPath(Path p){

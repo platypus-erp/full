@@ -1,5 +1,7 @@
 package org.platypus.builder.core.views.list.structure.column;
 
+import j2html.tags.ContainerTag;
+import j2html.tags.EmptyTag;
 import org.platypus.builder.core.views.list.structure.SortableTag;
 
 import java.util.Arrays;
@@ -53,6 +55,8 @@ public interface ListViewColumn {
     int getOrder();
     void setOrder(int order);
     boolean isActif();
+
+    ContainerTag toContainerTag();
 
 
 }

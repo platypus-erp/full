@@ -15,6 +15,8 @@ import org.platypus.builder.core.views.list.structure.column.relation.ListViewRe
 import org.platypus.builder.core.views.list.structure.column.stringcol.ListViewStringColumn;
 import org.platypus.builder.core.views.list.structure.column.timecol.ListViewTimeColumn;
 
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -143,7 +145,8 @@ public class DataTableView {
 
     public Set<ListViewColumn> getAllColumns(){
         return columns.values().stream()
-                .flatMap(s -> s.stream())
+                .flatMap(Collection::stream)
+                .sorted(Comparator.comparingInt(ListViewColumn::getOrder))
                 .collect(toSet());
     }
 

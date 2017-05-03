@@ -1,5 +1,6 @@
 package org.platypus.builder.core.views.list.structure.column.currencycol;
 
+import j2html.tags.ContainerTag;
 import org.platypus.builder.core.views.list.structure.column.AbstractColumn;
 
 /**
@@ -13,5 +14,10 @@ import org.platypus.builder.core.views.list.structure.column.AbstractColumn;
 public class ListViewCurrencyColumnImpl extends AbstractColumn implements ListViewCurrencyColumn {
     public ListViewCurrencyColumnImpl() {
         super(ColumnType.CURRENCY);
+    }
+
+    @Override
+    public ContainerTag toContainerTag() {
+        return null;
     }
 }
