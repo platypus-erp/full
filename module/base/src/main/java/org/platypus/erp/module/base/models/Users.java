@@ -17,9 +17,6 @@ import org.platypus.api.fields.NewField;
 @ModelOrderBy(asc = {"name", "login"})
 public class Users implements BaseModel {
 
-    @IntFieldDefinition
-    NewField id;
-
     @Label("Related Partner")
     @Help("Partner-related data of the user")
     @OneToOneFieldDefinition(target = Partner.class, required = Bool.TRUE)
