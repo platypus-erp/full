@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface PlatypusInheritMulti {
+public @interface PlatypusModelComposer {
     String name();
     Class<? extends BaseModel>[] inherits();
 }

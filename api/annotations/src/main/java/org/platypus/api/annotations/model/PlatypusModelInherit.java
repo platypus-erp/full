@@ -14,6 +14,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface PlatypusInherit {
-    Class<? extends BaseModel> values();
+public @interface PlatypusModelInherit {
+    Class<? extends BaseModel> value();
 }

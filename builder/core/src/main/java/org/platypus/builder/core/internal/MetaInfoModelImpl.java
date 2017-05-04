@@ -1,8 +1,9 @@
 package org.platypus.builder.core.internal;
 
+import org.platypus.api.BaseModel;
 import org.platypus.api.TypeModel;
-import org.platypus.api.annotations.model.PlatypusInherit;
-import org.platypus.api.annotations.model.PlatypusInheritMulti;
+import org.platypus.api.annotations.model.PlatypusModelInherit;
+import org.platypus.api.annotations.model.PlatypusModelComposer;
 import org.platypus.api.annotations.model.PlatypusModel;
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
@@ -21,6 +22,7 @@ import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +36,7 @@ public class MetaInfoModelImpl implements MetaInfoModel {
     private final String className;
     private final String name;
     private final String[] inheritNames;
+    private final Class<? extends BaseModel>[] inherits;
     private final TypeModel typeModel;
     Set<MetaInfoStringField> stringField = new HashSet<>();
     Set<MetaInfoLongField> longField = new HashSet<>();
@@ -56,22 +59,25 @@ public class MetaInfoModelImpl implements MetaInfoModel {
         this.className = className;
         this.name = platypusModel.value();
         this.inheritNames = new String[0];
+        this.inherits = new Class[0];
         this.typeModel = TypeModel.ROOT;
     }
 
-    public MetaInfoModelImpl(String className, PlatypusInherit platypusInherit) {
+    public MetaInfoModelImpl(String className, PlatypusModelInherit platypusInherit) {
         this.className = className;
-        this.name = platypusInherit.values().getAnnotation(PlatypusModel.class).value();
+        this.name = platypusInherit.value().getAnnotation(PlatypusModel.class).value();
         this.inheritNames = new String[]{name};
+        this.inherits = new Class[]{platypusInherit.value()};
         this.typeModel = TypeModel.INHERIT;
     }
 
-    public MetaInfoModelImpl(String className, PlatypusInheritMulti platypusInheritMulti) {
+    public MetaInfoModelImpl(String className, PlatypusModelComposer platypusInheritMulti) {
         this.className = className;
         this.name = platypusInheritMulti.name();
+        this.inherits = platypusInheritMulti.inherits();
         this.inheritNames = Arrays.stream(platypusInheritMulti.inherits()).
                 map(c -> c.getAnnotation(PlatypusModel.class).value()).toArray(String[]::new);
-        this.typeModel = TypeModel.INHERIT_MULTI;
+        this.typeModel = TypeModel.COMPOSER;
     }
 
     @Override
@@ -87,6 +93,10 @@ public class MetaInfoModelImpl implements MetaInfoModel {
     @Override
     public String[] getInheritNames() {
         return inheritNames;
+    }
+
+    public Class[] getInherits() {
+        return inherits;
     }
 
     @Override

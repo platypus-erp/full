@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 @Repeatable(HelpRepeatable.class)
 public @interface Help {
 
-    String value();
+    String value() default "";
     String key() default "";
     String lang() default "";
 }

@@ -1,5 +1,6 @@
 package org.platypus.builder.core.views.list.structure.column.integercol;
 
+import j2html.tags.ContainerTag;
 import org.platypus.builder.core.views.list.structure.column.AbstractColumn;
 
 /**
@@ -13,5 +14,10 @@ import org.platypus.builder.core.views.list.structure.column.AbstractColumn;
 public class ListViewIntegerColumnImpl extends AbstractColumn implements ListViewIntegerColumn {
     public ListViewIntegerColumnImpl() {
         super(ColumnType.INTEGER);
+    }
+
+    @Override
+    public ContainerTag toContainerTag() {
+        return null;
     }
 }

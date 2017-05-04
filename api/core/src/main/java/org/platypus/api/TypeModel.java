@@ -8,5 +8,5 @@ package org.platypus.api;
  * @since 0.1
  */
 public enum TypeModel {
-    ROOT,INHERIT, ROOT_BASED, INHERIT_MULTI
+    ROOT,INHERIT, ROOT_BASED, COMPOSER
 }

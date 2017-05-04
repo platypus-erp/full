@@ -13,11 +13,11 @@ public class WebComponent {
 
 
     public static ContainerTag domModule() {
-        return new DomModule("dom-module");
+        return TagCreator.tag("dom-module");
     }
 
     public static ContainerTag template() {
-        return new DomModule("dom-module");
+        return TagCreator.tag("dom-module");
     }
 
     public static ContainerTag style() {

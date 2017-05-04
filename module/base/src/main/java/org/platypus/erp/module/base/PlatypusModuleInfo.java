@@ -6,7 +6,7 @@ import org.platypus.builder.core.AbstractModule;
 import org.platypus.erp.module.base.models.Partner;
 import org.platypus.erp.module.base.models.Company;
 import org.platypus.erp.module.base.models.Group;
-import org.platypus.erp.module.base.models.User;
+import org.platypus.erp.module.base.models.Users;
 
 /**
  * @author chmuchme
@@ -20,7 +20,7 @@ public class PlatypusModuleInfo extends AbstractModule{
         super("Sample Module with all platypus and community depends");
 //        setLongDesc("long-desc.adoc");
 //        setShortDesc("short-desc.adoc");
-        addModel(new User());
+        addModel(new Users());
         addModel(new Group());
         addModel(new Partner());
         addModel(new Company());

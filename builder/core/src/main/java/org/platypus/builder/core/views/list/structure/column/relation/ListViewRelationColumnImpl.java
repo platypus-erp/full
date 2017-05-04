@@ -1,5 +1,6 @@
 package org.platypus.builder.core.views.list.structure.column.relation;
 
+import j2html.tags.ContainerTag;
 import org.platypus.builder.core.views.list.structure.column.AbstractColumn;
 
 import static org.apache.commons.lang3.StringUtils.defaultIfBlank;
@@ -33,6 +34,11 @@ public class ListViewRelationColumnImpl extends AbstractColumn implements ListVi
 
     @Override
     public String getPropertyId() {
+        return null;
+    }
+
+    @Override
+    public ContainerTag toContainerTag() {
         return null;
     }
 }

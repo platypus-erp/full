@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 @Repeatable(LabelRepeatable.class)
 public @interface Label {
 
-    String value();
+    String value() default "";
     String key() default "";
     String lang() default "";
 }

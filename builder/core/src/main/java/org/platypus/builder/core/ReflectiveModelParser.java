@@ -2,6 +2,7 @@ package org.platypus.builder.core;
 
 
 import org.platypus.api.BaseModel;
+import org.platypus.api.TypeModel;
 import org.platypus.api.annotations.field.BigStringFieldDefinition;
 import org.platypus.api.annotations.field.BinaryFieldDefinition;
 import org.platypus.api.annotations.field.BooleanFieldDefinition;
@@ -18,11 +19,13 @@ import org.platypus.api.annotations.field.OneToOneFieldDefinition;
 import org.platypus.api.annotations.field.RelatedFieldDefinition;
 import org.platypus.api.annotations.field.StringFieldDefinition;
 import org.platypus.api.annotations.field.TimeFieldDefinition;
-import org.platypus.api.annotations.model.PlatypusInherit;
-import org.platypus.api.annotations.model.PlatypusInheritMulti;
+import org.platypus.api.annotations.model.FieldComposer;
+import org.platypus.api.annotations.model.PlatypusModelInherit;
 import org.platypus.api.annotations.model.PlatypusModel;
+import org.platypus.api.annotations.model.PlatypusModelComposer;
 import org.platypus.api.fields.NewField;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
+import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.builder.core.internal.MetaInfoModelImpl;
 import org.platypus.builder.core.internal.literral.BasicFieldDef;
 import org.platypus.builder.core.internal.literral.BigStringFieldLiteral;
@@ -42,7 +45,10 @@ import org.platypus.builder.core.internal.literral.TimeFieldLiteral;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 
 /**
@@ -62,12 +68,12 @@ public class ReflectiveModelParser implements BaseModel {
         //TODO replace with Java9 Optionnal#or
         Optional<MetaInfoModelImpl> impl = getAnnotation(baseModelClass, PlatypusModel.class)
                 .map(a -> new MetaInfoModelImpl(baseModelClass.getSimpleName(), a));
-//        impl = or(impl, getAnnotation(baseModelClass, PlatypusInherit.class)
-//                .map(ai -> new MetaInfoModelImpl(baseModelClass.getSimpleName(), ai))
-//        );
-//        impl = or(impl, getAnnotation(baseModelClass, PlatypusInheritMulti.class)
-//                .map(aim -> new MetaInfoModelImpl(baseModelClass.getSimpleName(), aim))
-//        );
+        impl = or(impl, getAnnotation(baseModelClass, PlatypusModelInherit.class)
+                .map(ai -> new MetaInfoModelImpl(baseModelClass.getSimpleName(), ai))
+        );
+        impl = or(impl, getAnnotation(baseModelClass, PlatypusModelComposer.class)
+                .map(aim -> new MetaInfoModelImpl(baseModelClass.getSimpleName(), aim))
+        );
         return reflectiveConstructMetaInfo(
                 impl.orElseThrow(IllegalAccessError::new),
                 baseModelClass.getDeclaredFields());
@@ -98,6 +104,13 @@ public class ReflectiveModelParser implements BaseModel {
             parseBasicField(f, ManyToOneFieldDefinition.class, ManyToOneFieldLiteral::new).ifPresent(impl::add);
             parseBasicField(f, ManyToManyFieldDefinition.class, ManyToManyFieldLiteral::new).ifPresent(impl::add);
             parseBasicField(f, OneToOneFieldDefinition.class, OneToOneFieldLiteral::new).ifPresent(impl::add);
+
+
+        }
+        if (impl.getType() == TypeModel.COMPOSER){
+            for (Field f : fields) {
+                parseFieldComposer(f, impl);
+            }
         }
         return impl;
     }
@@ -123,5 +136,24 @@ public class ReflectiveModelParser implements BaseModel {
         }
 
         return Optional.empty();
+    }
+
+    private void parseFieldComposer(Field field, MetaInfoModelImpl impl) {
+        if (field.isAnnotationPresent(FieldComposer.class)) {
+            if (field.isAnnotationPresent(ComputedFieldDefinition.class)
+                    && field.isAnnotationPresent(RelatedFieldDefinition.class)) {
+                throw new IllegalArgumentException(
+                        String.format("The field[%s] can't be computed and related in the same time", field.getName()));
+            }
+            List<String> inherits = Arrays.asList(impl.getInheritNames());
+            if (field.isAnnotationPresent(OneToOneFieldDefinition.class)){
+                Class<? extends BaseModel> target = field.getAnnotation(OneToOneFieldDefinition.class).target();
+                if (inherits.contains(target.getAnnotation(PlatypusModel.class).value())){
+                    MetaInfoOneToOneField otof = impl.otoField().stream().filter(f -> f.getName().equals(field.getName())).findFirst().
+                            orElseThrow(IllegalAccessError::new);
+                    otof.setFieldComposer(true);
+                }
+            }
+        }
     }
 }

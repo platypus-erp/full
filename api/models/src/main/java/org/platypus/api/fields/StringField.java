@@ -13,4 +13,5 @@ import org.platypus.api.GenericField;
 public interface StringField extends UnmutableStringField, GenericField<String> {
 
 
+
 }

@@ -29,7 +29,7 @@ public @interface OneToOneFieldDefinition {
      *
      * @see OneToOneFieldDefinition#target()
      */
-    String mappedBy();
+    String mappedBy() default "";
 
     /**
      * (Optional) <br> Define if this field can be updated<br>

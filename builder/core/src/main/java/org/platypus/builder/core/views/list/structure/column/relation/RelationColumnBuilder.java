@@ -21,4 +21,6 @@ public class RelationColumnBuilder extends ColumnBuilder<ListViewRelationColumnI
     protected void buildColumn(ListViewRelationColumnImpl col, Element node) {
         col.setSubProperty(node.getAttribute("sub-property"));
     }
+
+
 }

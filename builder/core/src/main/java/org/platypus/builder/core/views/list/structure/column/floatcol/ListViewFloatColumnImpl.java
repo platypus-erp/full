@@ -1,5 +1,7 @@
 package org.platypus.builder.core.views.list.structure.column.floatcol;
 
+import j2html.TagCreator;
+import j2html.tags.ContainerTag;
 import org.platypus.builder.core.views.list.structure.column.AbstractColumn;
 
 /**
@@ -13,5 +15,11 @@ import org.platypus.builder.core.views.list.structure.column.AbstractColumn;
 public class ListViewFloatColumnImpl extends AbstractColumn implements ListViewFloatColumn {
     public ListViewFloatColumnImpl() {
         super(ColumnType.FLOAT);
+    }
+
+    @Override
+    public ContainerTag toContainerTag() {
+        return TagCreator.tag("toto-label")
+                .attr("label", "[[item."+propertyName+"]]");
     }
 }

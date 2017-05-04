@@ -1,5 +1,6 @@
 package org.platypus.builder.core.views.list.structure.column.linkcol;
 
+import j2html.tags.ContainerTag;
 import org.platypus.builder.core.views.list.structure.column.AbstractColumn;
 import org.platypus.builder.core.views.list.structure.column.ListViewColumn;
 
@@ -17,4 +18,8 @@ public class ListViewLinkColumnImpl extends AbstractColumn implements ListViewLi
         super(ListViewColumn.ColumnType.LINK);
     }
 
+    @Override
+    public ContainerTag toContainerTag() {
+        return null;
+    }
 }

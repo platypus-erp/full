@@ -1,5 +1,6 @@
 package org.platypus.builder.core.views.list.structure.column.imgcol;
 
+import j2html.tags.ContainerTag;
 import org.platypus.builder.core.views.list.structure.column.AbstractColumn;
 
 /**
@@ -35,5 +36,10 @@ public class ListViewImgColumnImpl extends AbstractColumn implements ListViewImg
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    @Override
+    public ContainerTag toContainerTag() {
+        return null;
     }
 }

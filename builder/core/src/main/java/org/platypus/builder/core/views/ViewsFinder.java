@@ -44,9 +44,6 @@ public class ViewsFinder {
                 .map(DomParserError::getListView)
                 .collect(Collectors.toSet());
 
-        for (ListView lv: listViews){
-            lv.
-        }
     }
 
     private static Stream<Path> walkPath(Path p){
