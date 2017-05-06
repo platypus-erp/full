@@ -4,4 +4,3 @@ build
 .idea
 repo
 out
-!/builder/core/src/main/java/org/platypus/builder/PlatypusBuilder.java
