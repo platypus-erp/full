@@ -41,7 +41,7 @@ public final class PlatypusBuilderProjectRecord {
 
     private PlatypusBuilderProjectRecord(MainArgs mainArgs) {
         this.mainArgs = mainArgs;
-        moduleLoader = new ModuleLoaderImpl(mainArgs.getModulename());
+        moduleLoader = new ModuleLoaderImpl(mainArgs);
 //        Set<JavaFile.Builder> recordToCreate = moduleLoader.getRecordRegistry()
 //                .generateCurrentModuleRecord(mainArgs.getDefaultPkg());
 //

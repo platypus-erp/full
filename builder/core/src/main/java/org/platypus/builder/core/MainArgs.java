@@ -16,6 +16,7 @@ public class MainArgs {
     private Path projectDir;
     private Path projectDirGenerated;
     private String moduleVersion;
+    private String[] srcDirs;
     //    private  String[] depends;
     private String modulename;
     //    private  String moduleQuickDesc;
@@ -29,9 +30,13 @@ public class MainArgs {
                 .map(s -> s.split("="))
                 .collect(Collectors.toMap(t -> t[0], t -> t[1]));
         projectDir = Paths.get(argsMap.get("--directory"));
-        projectDirGenerated = Paths.get(argsMap.get("--directory"), "src", "generated", "java");
+        projectDirGenerated = toPathToGenerate(argsMap.get("--directory"));
         modulename = argsMap.get("--modulename");
         defaultPkg = argsMap.get("--defaultpkg");
+        srcDirs = argsMap.get("--srcDirs")
+                .replace("[", "")
+                .replace("]", "")
+                .split(",");
         moduleVersion = argsMap.get("--moduleVersion");
 
         conf = Stream.of(argsMap.getOrDefault("--plugins", ""))
@@ -43,8 +48,16 @@ public class MainArgs {
                 .collect(Collectors.toMap(PluginConf::getName, c -> c));
     }
 
+    public static Path toPathToGenerate(String projectDir){
+        return Paths.get(projectDir, "src", "generated", "java");
+    }
+
     public Path getProjectDir() {
         return projectDir;
+    }
+
+    public String[] getSrcDirs() {
+        return srcDirs;
     }
 
     public Path getProjectDirGenerated() {

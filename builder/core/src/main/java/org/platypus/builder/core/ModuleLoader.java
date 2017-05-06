@@ -4,7 +4,7 @@ import org.platypus.api.module.PlatypusCompleteModuleInfo;
 import org.platypus.builder.core.model.merger.ModelsMerged;
 import org.platypus.builder.core.model.tree.ModelTree;
 import org.platypus.builder.core.moduletree.ModuleTree;
-import org.platypus.builder.core.records.quick.AstRecordRegistry;
+import org.platypus.builder.core.records.manager.AstRecordRegistry;
 
 /**
  * @author chmuchme

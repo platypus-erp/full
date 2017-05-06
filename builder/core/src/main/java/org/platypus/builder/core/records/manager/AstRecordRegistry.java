@@ -1,11 +1,10 @@
-package org.platypus.builder.core.records.quick;
+package org.platypus.builder.core.records.manager;
 
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.api.module.RecordOfModuleInfo;
-import org.platypus.builder.core.model.merger.ModelMerged;
-import org.platypus.builder.core.records.quick.astvisitor.AstModel;
-import org.platypus.builder.core.records.quick.astvisitor.Visitor;
+import org.platypus.builder.core.records.manager.astvisitor.AstModel;
+import org.platypus.builder.core.records.manager.astvisitor.Visitor;
 
 import java.util.HashMap;
 import java.util.Map;

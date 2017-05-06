@@ -1,4 +1,4 @@
-package org.platypus.builder.core.records.quick;
+package org.platypus.builder.core.records.manager;
 
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -14,7 +14,7 @@ import org.platypus.builder.core.model.tree.ModelTree;
 import org.platypus.builder.core.model.tree.ModelTreeBuilder;
 import org.platypus.builder.core.moduletree.ModuleTree;
 import org.platypus.builder.core.moduletree.ModuleTreeBuilder;
-import org.platypus.builder.core.records.quick.astvisitor.AstModel;
+import org.platypus.builder.core.records.manager.astvisitor.AstModel;
 import org.platypus.builder.core.records.tree.RecordTree;
 import org.platypus.builder.core.records.tree.RecordTreeBuilder;
 import orp.platypus.impl.module.MetaInfoRecordCollectionImpl;
@@ -47,15 +47,17 @@ public class QuickRecordGenerator {
     private Map<String, String> rootRecordSimpleName;
     private final Path projectDir;
     private final String group;
+    private final Set<AstModel> astModels;
     private final String currentModuleName;
 
-    public QuickRecordGenerator(String projectDir, String group, String name) {
-        this.projectDir = Paths.get(projectDir, "src", "generated", "java");
+    public QuickRecordGenerator(Path dirToGenerate, String group, String name, Set<AstModel> astModels) {
+        this.projectDir = dirToGenerate;
         this.group = group;
         this.currentModuleName = name;
+        this.astModels = astModels;
     }
 
-    public void generateRecord(Set<AstModel> astModels) {
+    public void generateRecord() {
         Set<PlatypusCompleteModuleInfo> depends = init(currentModuleName);
         rootRecordSimpleName = depends.stream()
                 .flatMap(p -> p.getModel().values().stream())

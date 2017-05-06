@@ -7,6 +7,7 @@ import org.platypus.erp.module.base.models.Partner;
 import org.platypus.erp.module.base.models.Company;
 import org.platypus.erp.module.base.models.Group;
 import org.platypus.erp.module.base.models.Users;
+import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
 /**
  * @author chmuchme
@@ -20,9 +21,10 @@ public class PlatypusModuleInfo extends AbstractModule{
         super("Sample Module with all platypus and community depends");
 //        setLongDesc("long-desc.adoc");
 //        setShortDesc("short-desc.adoc");
-        addModel(new Users());
-        addModel(new Group());
-        addModel(new Partner());
-        addModel(new Company());
+        addModel(Users.class);
+        addModel(Group.class);
+        addModel(Partner.class);
+        addModel(Company.class);
+        addRecord(BaseUsersRecord.class);
     }
 }

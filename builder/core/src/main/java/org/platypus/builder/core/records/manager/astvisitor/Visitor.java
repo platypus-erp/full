@@ -1,4 +1,4 @@
-package org.platypus.builder.core.records.quick.astvisitor;
+package org.platypus.builder.core.records.manager.astvisitor;
 
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.PackageDeclaration;
@@ -20,23 +20,6 @@ import org.platypus.api.annotations.field.OneToManyFieldDefinition;
 import org.platypus.api.annotations.field.OneToOneFieldDefinition;
 import org.platypus.api.annotations.field.StringFieldDefinition;
 import org.platypus.api.annotations.field.TimeFieldDefinition;
-import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
-import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
-import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
-import org.platypus.api.fields.metainfo.MetaInfoDateField;
-import org.platypus.api.fields.metainfo.MetaInfoDateTimeField;
-import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
-import org.platypus.api.fields.metainfo.MetaInfoFloatField;
-import org.platypus.api.fields.metainfo.MetaInfoIntField;
-import org.platypus.api.fields.metainfo.MetaInfoLongField;
-import org.platypus.api.fields.metainfo.MetaInfoManyToManyField;
-import org.platypus.api.fields.metainfo.MetaInfoManyToOneField;
-import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
-import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
-import org.platypus.api.fields.metainfo.MetaInfoStringField;
-import org.platypus.api.fields.metainfo.MetaInfoTimeField;
-import org.platypus.builder.core.model.merger.ModelMerged;
-import org.platypus.builder.core.model.merger.internal.MultiColumnUniqueKey;
 
 import java.lang.annotation.Annotation;
 import java.util.Collections;

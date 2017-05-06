@@ -1,4 +1,4 @@
-package org.platypus.builder.core.records.quick;
+package org.platypus.builder.core.records.manager;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -10,8 +10,8 @@ import org.platypus.api.RecordCollection;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.Utils;
-import org.platypus.builder.core.records.quick.astvisitor.AstModel;
-import org.platypus.builder.core.records.quick.astvisitor.FieldModel;
+import org.platypus.builder.core.records.manager.astvisitor.AstModel;
+import org.platypus.builder.core.records.manager.astvisitor.FieldModel;
 import org.platypus.builder.utils.javapoet.builder.InterfaceBuilder;
 
 import java.util.Collection;

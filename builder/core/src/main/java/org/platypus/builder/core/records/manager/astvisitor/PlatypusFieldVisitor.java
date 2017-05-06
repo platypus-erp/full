@@ -1,4 +1,4 @@
-package org.platypus.builder.core.records.quick.astvisitor;
+package org.platypus.builder.core.records.manager.astvisitor;
 
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.VariableDeclarator;

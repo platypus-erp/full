@@ -49,7 +49,7 @@ public final class PlatypusBuilder {
     private PlatypusBuilder(MainArgs mainArgs) {
         this.mainArgs = mainArgs;
 
-        moduleLoader = new ModuleLoaderImpl(mainArgs.getModulename());
+        moduleLoader = new ModuleLoaderImpl(mainArgs);
 
         System.out.println("Load of platypus model processor");
         ServiceLoader<ModelProcessor> modelProcessorsService = ServiceLoader.load(ModelProcessor.class);

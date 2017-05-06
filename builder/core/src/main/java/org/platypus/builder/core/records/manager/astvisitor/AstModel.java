@@ -1,8 +1,5 @@
-package org.platypus.builder.core.records.quick.astvisitor;
+package org.platypus.builder.core.records.manager.astvisitor;
 
-import org.platypus.api.Namable;
-
-import java.util.Map;
 import java.util.Set;
 
 /**

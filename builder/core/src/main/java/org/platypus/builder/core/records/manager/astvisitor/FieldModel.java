@@ -1,9 +1,7 @@
-package org.platypus.builder.core.records.quick.astvisitor;
+package org.platypus.builder.core.records.manager.astvisitor;
 
 import com.squareup.javapoet.ClassName;
 import org.platypus.api.Bool;
-
-import java.lang.annotation.Annotation;
 
 /**
  * @author chmuchme

@@ -1,4 +1,4 @@
-package org.platypus.builder.core.records.quick.astvisitor;
+package org.platypus.builder.core.records.manager.astvisitor;
 
 import com.github.javaparser.ast.expr.AnnotationExpr;
 import com.github.javaparser.ast.expr.NormalAnnotationExpr;
