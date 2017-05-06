@@ -30,17 +30,17 @@ public interface BaseUsersRecord extends Record {
 
   void new_password(StringField new_password);
 
-  BaseCompanyRecordCollection companies();
+  BaseGroupRecordCollection action();
 
   BaseGroupRecordCollection groups();
 
-  BaseGroupRecordCollection action();
+  BaseCompanyRecordCollection companies();
 
-  void companies(BaseCompanyRecordCollection companies);
+  void action(BaseGroupRecordCollection action);
 
   void groups(BaseGroupRecordCollection groups);
 
-  void action(BaseGroupRecordCollection action);
+  void companies(BaseCompanyRecordCollection companies);
 
   BaseCompanyRecord company();
 
