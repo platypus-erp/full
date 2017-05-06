@@ -3,7 +3,7 @@ package org.platypus.builder.plugin.internal.field;
 import com.squareup.javapoet.*;
 import org.platypus.api.fields.metainfo.*;
 import org.platypus.api.module.MetaInfoRecord;
-import org.platypus.builder.core.records.complete.Utils;
+import org.platypus.builder.core.Utils;
 import org.platypus.builder.plugin.internal.JpaUtils;
 import org.platypus.builder.utils.javapoet.utils.FieldSpecUtils;
 

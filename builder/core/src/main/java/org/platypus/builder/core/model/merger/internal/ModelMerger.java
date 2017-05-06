@@ -32,8 +32,8 @@ import org.platypus.builder.core.model.merger.internal.field.OtmFieldLiteralMerg
 import org.platypus.builder.core.model.merger.internal.field.OtoFieldLiteralMerger;
 import org.platypus.builder.core.model.merger.internal.field.StringFieldLiteralMerger;
 import org.platypus.builder.core.model.merger.internal.field.TimeFieldLiteralMerger;
-import org.platypus.builder.core.model.tree.FieldNode;
-import org.platypus.builder.core.model.tree.ModelTree;
+import org.platypus.builder.core.field.tree.FieldNode;
+import org.platypus.builder.core.field.tree.FieldTree;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -78,15 +78,15 @@ public class ModelMerger {
         return multiColumnUniqueKeys;
     }
 
-    public ModelMerger(ModelTree modelTree) {
+    public ModelMerger(FieldTree modelTree) {
         merge(modelTree);
     }
 
-    public static ModelMerger combine(ModelMerger modelTreeMerger, ModelTree modelTree){
+    public static ModelMerger combine(ModelMerger modelTreeMerger, FieldTree modelTree){
         return modelTreeMerger == null ? new ModelMerger(modelTree) : modelTreeMerger.merge(modelTree);
     }
 
-    public ModelMerger merge(ModelTree modelTree) {
+    public ModelMerger merge(FieldTree modelTree) {
         this.name = modelTree.getName();
         mergeField(this.bigStringField, modelTree.getBigStringField(), BigStringFieldLiteralMerger::new);
         mergeField(this.binaryField, modelTree.getBinaryField(), BinaryFieldLiteralMerger::new);

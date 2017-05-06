@@ -51,22 +51,11 @@ public final class PlatypusBuilder {
 
         moduleLoader = new ModuleLoaderImpl(mainArgs.getModulename());
 
-        Set<JavaFile.Builder> recordToCreate = moduleLoader.getRecordRegistry().generateCurrentModuleRecord(mainArgs.getDefaultPkg());
-        for (JavaFile.Builder files : recordToCreate) {
-            System.out.println(files.build().packageName);
-            try {
-                files.build().writeTo(mainArgs.getProjectDirGenerated().toFile());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
         System.out.println("Load of platypus model processor");
         ServiceLoader<ModelProcessor> modelProcessorsService = ServiceLoader.load(ModelProcessor.class);
         modelProcessorsService.forEach(modelProcessors::add);
         System.out.println(modelProcessors.size()+" Model Processor loaded");
 
-        System.out.println(moduleLoader.getRecordRegistry().getRecords());
-        System.out.println(moduleLoader.getRecordRegistry().getRecordCollections());
         config = new Config(moduleLoader, mainArgs.getConf(), mainArgs.getDefaultPkg());
 
 

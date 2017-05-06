@@ -10,5 +10,7 @@ public interface MetaInfoRecord {
     String getPkg();
     String getClassName();
     String getModelTarget();
+    String getModelTargetClassName();
+    String getModelTargetPkg();
 
 }

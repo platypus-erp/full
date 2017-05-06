@@ -30,6 +30,8 @@ public interface MetaInfoModel extends
         MetaInfoTypableModel{
 
     String getClassName();
+    String getPkg();
+    String getModuleName();
 //    Set<OneToManyFieldDefinition> oneToMany();
 //    Set<OneToOneFieldDefinition> oneToOne();
 //    Set<ManyToOneFieldDefinition> manyToOne();

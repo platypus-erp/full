@@ -18,18 +18,19 @@ sourceSets {
             srcDir 'src/record/java'
         }
     }
-    main {
-        compileClasspath += sourceSets.models.output
-        runtimeClasspath += sourceSets.models.output
-    }
     generated {
-        compileClasspath += sourceSets.main.runtimeClasspath
+//        compileClasspath += sourceSets.main.runtimeClasspath
         java {
             srcDir 'src/generated/java'
         }
         resources {
             srcDir 'src/generated/resources'
         }
+    }
+    main {
+        compileClasspath += sourceSets.generated.output
+        compileClasspath += sourceSets.models.output
+        runtimeClasspath += sourceSets.models.output
     }
 }
 buildscript {
@@ -50,8 +51,10 @@ dependencies {
     compile project(':builder:core')
     compile project(':builder:plugin:jpa-generator')
     compile project(':builder:plugin:display-tree-module')
-    modelsCompile project(':api:annotations')
-    modelsCompile project(':api:models')
+    generatedCompile project(':api:annotations')
+    generatedCompile project(':api:models')
+    generatedCompile project(':impl:module')
+    generatedCompile project(':impl:models')
     recordsCompile project(':builder:core')
 }
 jar {

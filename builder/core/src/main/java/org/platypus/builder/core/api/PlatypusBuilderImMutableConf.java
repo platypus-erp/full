@@ -6,7 +6,7 @@ import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
 import org.platypus.builder.core.PluginConf;
 import org.platypus.builder.core.model.merger.ModelsMerged;
-import org.platypus.builder.core.model.tree.ModuleTreeModel;
+import org.platypus.builder.core.model.tree.ModelTree;
 import org.platypus.builder.core.moduletree.ModuleTree;
 
 import java.util.NoSuchElementException;
@@ -31,7 +31,7 @@ public interface PlatypusBuilderImMutableConf {
 
     ModuleTree getModuleTree();
 
-    ModuleTreeModel getModelTree();
+    ModelTree getModelTree();
 
     ModelsMerged getModelMerged();
 

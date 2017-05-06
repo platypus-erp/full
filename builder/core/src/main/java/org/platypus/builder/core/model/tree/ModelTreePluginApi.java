@@ -9,5 +9,5 @@ package org.platypus.builder.core.model.tree;
  */
 public interface ModelTreePluginApi {
 
-    ModuleTreeModel getTree();
+    ModelTree getTree();
 }

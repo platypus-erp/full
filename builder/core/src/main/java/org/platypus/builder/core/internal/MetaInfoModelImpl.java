@@ -33,8 +33,9 @@ import java.util.Set;
  * on 13/04/17.
  */
 public class MetaInfoModelImpl implements MetaInfoModel {
-    private final String className;
+    private final Class<?> classModel;
     private final String name;
+    private final String moduleName;
     private final String[] inheritNames;
     private final Class<? extends BaseModel>[] inherits;
     private final TypeModel typeModel;
@@ -55,34 +56,37 @@ public class MetaInfoModelImpl implements MetaInfoModel {
     Set<MetaInfoManyToManyField> mtmField = new HashSet<>();
     Set<MetaInfoManyToOneField> mtoField = new HashSet<>();
 
-    public MetaInfoModelImpl(String className, PlatypusModel platypusModel) {
-        this.className = className;
+    public MetaInfoModelImpl(String moduleName, Class<?> aclass, PlatypusModel platypusModel) {
+        this.classModel = aclass;
+        this.moduleName = moduleName;
         this.name = platypusModel.value();
         this.inheritNames = new String[0];
         this.inherits = new Class[0];
         this.typeModel = TypeModel.ROOT;
     }
 
-    public MetaInfoModelImpl(String className, PlatypusModelInherit platypusInherit) {
-        this.className = className;
+    public MetaInfoModelImpl(String moduleName, Class<?> aclass, PlatypusModelInherit platypusInherit) {
+        this.classModel = aclass;
+        this.moduleName = moduleName;
         this.name = platypusInherit.value().getAnnotation(PlatypusModel.class).value();
         this.inheritNames = new String[]{name};
         this.inherits = new Class[]{platypusInherit.value()};
         this.typeModel = TypeModel.INHERIT;
     }
 
-    public MetaInfoModelImpl(String className, PlatypusModelComposer platypusInheritMulti) {
-        this.className = className;
-        this.name = platypusInheritMulti.name();
-        this.inherits = platypusInheritMulti.inherits();
-        this.inheritNames = Arrays.stream(platypusInheritMulti.inherits()).
-                map(c -> c.getAnnotation(PlatypusModel.class).value()).toArray(String[]::new);
-        this.typeModel = TypeModel.COMPOSER;
+    @Override
+    public String getPkg() {
+        return classModel.getPackage().getName();
+    }
+
+    @Override
+    public String getModuleName() {
+        return null;
     }
 
     @Override
     public String getClassName() {
-        return className;
+        return classModel.getSimpleName();
     }
 
     @Override

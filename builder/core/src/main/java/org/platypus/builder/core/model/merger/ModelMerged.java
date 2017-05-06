@@ -16,7 +16,6 @@ import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 import org.platypus.builder.core.model.merger.internal.MultiColumnUniqueKey;
-import org.platypus.builder.core.model.tree.FieldNode;
 
 import java.util.Map;
 import java.util.Set;

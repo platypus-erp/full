@@ -14,7 +14,7 @@ import java.util.Set;
  * @version 0.1
  * @since 0.1
  */
-public class ModuleTreeNodeImpl implements ModuleTreeNode{
+class ModuleTreeNodeImpl implements ModuleTreeNode{
 
     private final PlatypusCompleteModuleInfo current;
     private Set<ModuleTreeNodeImpl> parent = new HashSet<>();

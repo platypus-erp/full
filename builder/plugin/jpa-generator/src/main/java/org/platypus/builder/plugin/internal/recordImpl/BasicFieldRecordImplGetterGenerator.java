@@ -1,11 +1,10 @@
 package org.platypus.builder.plugin.internal.recordImpl;
 
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import org.platypus.api.fields.metainfo.*;
 import org.platypus.api.module.MetaInfoRecord;
-import org.platypus.builder.core.records.complete.Utils;
+import org.platypus.builder.core.Utils;
 import org.platypus.builder.plugin.internal.JpaUtils;
 
 import javax.lang.model.element.Modifier;

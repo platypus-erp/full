@@ -2,14 +2,11 @@ package org.platypus.builder.core;
 
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
 import org.platypus.builder.core.model.merger.ModelsMerged;
-import org.platypus.builder.core.model.merger.ModelMergerPlugin;
-import org.platypus.builder.core.model.tree.ModelTreePlugin;
-import org.platypus.builder.core.model.tree.ModuleTreeModel;
+import org.platypus.builder.core.model.tree.ModelTree;
 import org.platypus.builder.core.moduletree.ModuleTree;
-import org.platypus.builder.core.moduletree.ModuleTreePlugin;
-import org.platypus.builder.core.records.complete.RecordRegistry;
+import org.platypus.builder.core.records.quick.AstRecordRegistry;
 
-import java.util.ServiceLoader;
+import java.util.Set;
 
 /**
  * @author chmuchme
@@ -18,68 +15,77 @@ import java.util.ServiceLoader;
  */
 public class ModuleLoaderImpl implements ModuleLoader{
 
-    private PlatypusCompleteModuleInfo currentModule;
-    private final ModuleTree moduleTree;
-    private final ModuleTreeModel treeModel;
-    private final ModelsMerged modelsMerged;
-    private final RecordRegistry recordRegistry;
+//    private PlatypusCompleteModuleInfo currentModule;
+//    private ModuleTree moduleTree;
+//    private ModuleTreeModel treeModel;
+//    private ModelsMerged modelsMerged;
+//    private RecordRegistry recordRegistry;
 
     public ModuleLoaderImpl(String currentModuleName){
-        ServiceLoader<PlatypusCompleteModuleInfo> platypusCompleteModuleInfos = ServiceLoader.load(PlatypusCompleteModuleInfo.class);
-
-        for (PlatypusCompleteModuleInfo m : platypusCompleteModuleInfos) {
-            if (currentModuleName.equals(m.techincalName())) {
-                System.out.println("current module is : " + currentModuleName);
-                currentModule = m;
-            }
-        }
-        if (currentModule == null) {
-            throw new IllegalArgumentException("Module[" + currentModuleName + "] not found");
-        }
-        currentModule.getModel().values().forEach(m -> System.out.println(m.mtoField()));
-        ModuleTreePlugin moduleTreePlugin = new ModuleTreePlugin();
-        platypusCompleteModuleInfos.forEach(moduleTreePlugin::addModule);
-        moduleTree = moduleTreePlugin.build();
-
-        ModelTreePlugin modelTreePlugin = new ModelTreePlugin();
-        platypusCompleteModuleInfos.forEach(m -> modelTreePlugin.addModel(m.techincalName(), m));
-        treeModel = modelTreePlugin.build(moduleTree);
-
-        modelsMerged = new ModelMergerPlugin(treeModel).build();
-
-
-        recordRegistry = new RecordRegistry();
-        platypusCompleteModuleInfos.forEach(m -> recordRegistry.addModule(m.techincalName(), m));
-        currentModule.getModel().forEach((k, v) ->
-                recordRegistry.addCurrentModuleModel(
-                        modelsMerged.getModel(k),
-                        v.getClassName()
-                )
-        );
+//        ServiceLoader<PlatypusCompleteModuleInfo> platypusCompleteModuleInfos = ServiceLoader.load(PlatypusCompleteModuleInfo.class);
+//        PlatypusCompleteModuleInfo currentModule = null;
+//        Set<PlatypusCompleteModuleInfo> depends = new HashSet<>();
+//        for (PlatypusCompleteModuleInfo m : platypusCompleteModuleInfos) {
+//            if (currentModuleName.equals(m.techincalName())) {
+//                System.out.println("current module is : " + currentModuleName);
+//                currentModule = m;
+//            } else {
+//                depends.add(m);
+//            }
+//        }
+//        if (currentModule == null) {
+//            throw new IllegalArgumentException("Module[" + currentModuleName + "] not found");
+//        }
+//        execute(currentModule, depends);
     }
+
+    public void execute(PlatypusCompleteModuleInfo currentModule, Set<PlatypusCompleteModuleInfo> depends){
+//        this.currentModule = currentModule;
+//        currentModule.getModel().values().forEach(m -> System.out.println(m.mtoField()));
+//        ModuleTreeBuilder moduleTreePlugin = new ModuleTreeBuilder();
+//        depends.forEach(moduleTreePlugin::addModule);
+//        moduleTree = moduleTreePlugin.build();
+//
+//        FieldTreeBuilder modelTreePlugin = new FieldTreeBuilder();
+//        depends.forEach(m -> modelTreePlugin.addModel(m.techincalName(), m));
+//        treeModel = modelTreePlugin.build(moduleTree);
+//
+//        modelsMerged = new ModelMergerBuilder(treeModel).build();
+//
+//        recordRegistry = new RecordRegistry();
+//        depends.forEach(m -> recordRegistry.addModule(m.techincalName(), m));
+//        currentModule.getModel().forEach((k, v) ->
+//                recordRegistry.addCurrentModuleModel(
+//                        modelsMerged.getModel(k),
+//                        v.getClassName()
+//                )
+//        );
+    }
+
+
 
     @Override
     public PlatypusCompleteModuleInfo getCurrentModule() {
-        return currentModule;
+        return null;
     }
 
     @Override
     public ModuleTree getModuleTree() {
-        return moduleTree;
+        return null;
     }
 
     @Override
-    public ModuleTreeModel getModelTree() {
-        return treeModel;
+    public ModelTree getModelTree() {
+        return null;
     }
 
     @Override
     public ModelsMerged getModelsMerged() {
-        return modelsMerged;
+        return null;
     }
 
     @Override
-    public RecordRegistry getRecordRegistry() {
-        return recordRegistry;
+    public AstRecordRegistry getRecordRegistry() {
+        return null;
     }
 }

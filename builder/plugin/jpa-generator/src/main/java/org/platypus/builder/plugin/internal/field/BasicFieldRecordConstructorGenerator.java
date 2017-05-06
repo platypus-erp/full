@@ -1,6 +1,5 @@
 package org.platypus.builder.plugin.internal.field;
 
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.TypeName;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +20,7 @@ import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 import org.platypus.api.module.MetaInfoRecord;
-import org.platypus.builder.core.records.complete.Utils;
+import org.platypus.builder.core.Utils;
 import org.platypus.builder.plugin.internal.JpaUtils;
 
 import java.util.function.Function;

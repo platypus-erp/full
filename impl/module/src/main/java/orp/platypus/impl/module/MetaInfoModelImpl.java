@@ -52,6 +52,16 @@ public final class MetaInfoModelImpl implements MetaInfoModel {
     }
 
     @Override
+    public String getPkg() {
+        return null;
+    }
+
+    @Override
+    public String getModuleName() {
+        return null;
+    }
+
+    @Override
     public TypeModel getType() {
         return typeModel;
     }

@@ -42,16 +42,16 @@ public final class PlatypusBuilderProjectRecord {
     private PlatypusBuilderProjectRecord(MainArgs mainArgs) {
         this.mainArgs = mainArgs;
         moduleLoader = new ModuleLoaderImpl(mainArgs.getModulename());
-        Set<JavaFile.Builder> recordToCreate = moduleLoader.getRecordRegistry()
-                .generateCurrentModuleRecord(mainArgs.getDefaultPkg());
-
-        for (JavaFile.Builder files : recordToCreate) {
-            System.out.println(files.build().packageName);
-            try {
-                files.build().writeTo(mainArgs.getProjectDirGenerated().toFile());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        Set<JavaFile.Builder> recordToCreate = moduleLoader.getRecordRegistry()
+//                .generateCurrentModuleRecord(mainArgs.getDefaultPkg());
+//
+//        for (JavaFile.Builder files : recordToCreate) {
+//            System.out.println(files.build().packageName);
+//            try {
+//                files.build().writeTo(mainArgs.getProjectDirGenerated().toFile());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 }

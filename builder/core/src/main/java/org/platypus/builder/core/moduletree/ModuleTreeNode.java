@@ -2,6 +2,7 @@ package org.platypus.builder.core.moduletree;
 
 
 import org.platypus.api.module.ModuleInfo;
+import org.platypus.api.module.PlatypusCompleteModuleInfo;
 
 import java.util.Set;
 
@@ -12,7 +13,7 @@ import java.util.Set;
  */
 public interface ModuleTreeNode {
 
-    ModuleInfo info();
+    PlatypusCompleteModuleInfo info();
 
     Set<ModuleTreeNode> getChildren();
     Set<ModuleTreeNode> getParent();

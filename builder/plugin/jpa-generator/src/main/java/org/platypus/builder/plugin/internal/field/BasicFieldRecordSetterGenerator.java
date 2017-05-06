@@ -4,7 +4,7 @@ import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
 import org.platypus.api.fields.metainfo.*;
 import org.platypus.api.module.MetaInfoRecord;
-import org.platypus.builder.core.records.complete.Utils;
+import org.platypus.builder.core.Utils;
 import org.platypus.builder.plugin.internal.JpaUtils;
 
 import javax.lang.model.element.Modifier;

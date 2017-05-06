@@ -8,7 +8,7 @@ import org.platypus.builder.core.PluginConf;
 import org.platypus.builder.core.api.ModelProcessor;
 import org.platypus.builder.core.api.PlatypusBuilderMutableConf;
 import org.platypus.builder.core.model.merger.ModelsMerged;
-import org.platypus.builder.core.model.tree.ModuleTreeModel;
+import org.platypus.builder.core.model.tree.ModelTree;
 import org.platypus.builder.core.moduletree.ModuleTree;
 
 import java.util.ArrayList;
@@ -53,19 +53,19 @@ public class Config implements PlatypusBuilderMutableConf {
     }
 
     @Override
-    public ModuleTreeModel getModelTree() {
+    public ModelTree getModelTree() {
         return moduleLoader.getModelTree();
     }
 
 
     @Override
     public MetaInfoRecord getRecord(String name) {
-        return moduleLoader.getRecordRegistry().getRecords().get(name);
+        return moduleLoader.getRecordRegistry().getMetaInfoTargetByClassName(name);
     }
 
     @Override
     public MetaInfoRecordCollection getRecordCollection(String name) {
-        return moduleLoader.getRecordRegistry().getRecordCollections().get(name);
+        return moduleLoader.getRecordRegistry().getMetaInfoCollectionTargetByClassName(name);
     }
 
     @Override

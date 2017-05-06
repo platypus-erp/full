@@ -14,5 +14,4 @@ import org.platypus.api.annotations.model.PlatypusModel;
  * @since 0.1
  */
 public interface MetaInfoOneToOneField extends OneToOneFieldDefinition, Namable, Targetable {
-    void setFieldComposer(boolean b);
 }

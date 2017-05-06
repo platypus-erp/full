@@ -58,7 +58,7 @@ import java.util.function.BiFunction;
  */
 public class ReflectiveModelParser implements BaseModel {
 
-    public MetaInfoModel parse(BaseModel model) {
+    public MetaInfoModel parse(String moduleTechnicalName, Class<?> model) {
         if (!model.getClass().isAnnotationPresent(PlatypusModel.class)) {
             throw new IllegalArgumentException(String.format("The class[%s] should be annotated with %s",
                     model.getClass().getCanonicalName(),
@@ -67,12 +67,9 @@ public class ReflectiveModelParser implements BaseModel {
         Class<?> baseModelClass = model.getClass();
         //TODO replace with Java9 Optionnal#or
         Optional<MetaInfoModelImpl> impl = getAnnotation(baseModelClass, PlatypusModel.class)
-                .map(a -> new MetaInfoModelImpl(baseModelClass.getSimpleName(), a));
+                .map(a -> new MetaInfoModelImpl(moduleTechnicalName, baseModelClass, a));
         impl = or(impl, getAnnotation(baseModelClass, PlatypusModelInherit.class)
-                .map(ai -> new MetaInfoModelImpl(baseModelClass.getSimpleName(), ai))
-        );
-        impl = or(impl, getAnnotation(baseModelClass, PlatypusModelComposer.class)
-                .map(aim -> new MetaInfoModelImpl(baseModelClass.getSimpleName(), aim))
+                .map(ai -> new MetaInfoModelImpl(moduleTechnicalName, baseModelClass, ai))
         );
         return reflectiveConstructMetaInfo(
                 impl.orElseThrow(IllegalAccessError::new),
@@ -107,11 +104,6 @@ public class ReflectiveModelParser implements BaseModel {
 
 
         }
-        if (impl.getType() == TypeModel.COMPOSER){
-            for (Field f : fields) {
-                parseFieldComposer(f, impl);
-            }
-        }
         return impl;
     }
 
@@ -136,24 +128,5 @@ public class ReflectiveModelParser implements BaseModel {
         }
 
         return Optional.empty();
-    }
-
-    private void parseFieldComposer(Field field, MetaInfoModelImpl impl) {
-        if (field.isAnnotationPresent(FieldComposer.class)) {
-            if (field.isAnnotationPresent(ComputedFieldDefinition.class)
-                    && field.isAnnotationPresent(RelatedFieldDefinition.class)) {
-                throw new IllegalArgumentException(
-                        String.format("The field[%s] can't be computed and related in the same time", field.getName()));
-            }
-            List<String> inherits = Arrays.asList(impl.getInheritNames());
-            if (field.isAnnotationPresent(OneToOneFieldDefinition.class)){
-                Class<? extends BaseModel> target = field.getAnnotation(OneToOneFieldDefinition.class).target();
-                if (inherits.contains(target.getAnnotation(PlatypusModel.class).value())){
-                    MetaInfoOneToOneField otof = impl.otoField().stream().filter(f -> f.getName().equals(field.getName())).findFirst().
-                            orElseThrow(IllegalAccessError::new);
-                    otof.setFieldComposer(true);
-                }
-            }
-        }
     }
 }

@@ -2,7 +2,6 @@ package org.platypus.builder.core.views;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import org.platypus.builder.core.records.quick.Visitor;
 import org.platypus.builder.core.views.list.SchemaValidator;
 import org.platypus.builder.core.views.list.parser.DomParser;
 import org.platypus.builder.core.views.list.parser.DomParserError;
@@ -16,7 +15,6 @@ import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

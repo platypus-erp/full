@@ -1,6 +1,6 @@
 package org.platypus.erp.module.base.models;
 
-import org.platypus.erp.module.base.models.generated.records.UserRecord;
+import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
 /**
  * Created by apasquier on 04/05/17.
@@ -8,7 +8,7 @@ import org.platypus.erp.module.base.models.generated.records.UserRecord;
 public class UserBusiness {
 
 
-    public void onChangeLogin(UserRecord record) {
+    public void onChangeLogin(BaseUsersRecord record) {
         if (record.login().match("")){
 //            record.
         }

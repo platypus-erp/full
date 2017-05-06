@@ -21,7 +21,7 @@ import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
 import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
-import org.platypus.builder.core.records.complete.Utils;
+import org.platypus.builder.core.Utils;
 import org.platypus.builder.utils.javapoet.utils.JavaPoetTypeUtils;
 
 import javax.lang.model.element.Modifier;

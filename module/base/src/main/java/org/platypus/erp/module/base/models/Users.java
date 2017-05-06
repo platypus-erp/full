@@ -13,14 +13,13 @@ import org.platypus.api.fields.NewField;
  * @since 0.1
  * on 11/04/17.
  */
-@PlatypusModelComposer(name = "users", inherits = Partner.class)
+@PlatypusModel("users")
 @ModelOrderBy(asc = {"name", "login"})
 public class Users implements BaseModel {
 
     @Label("Related Partner")
     @Help("Partner-related data of the user")
     @OneToOneFieldDefinition(target = Partner.class, required = Bool.TRUE)
-    @FieldComposer
     NewField partner;
 
     @Label("Login")

@@ -4,11 +4,15 @@ import org.apache.commons.io.IOUtils;
 import org.platypus.api.BaseModel;
 import org.platypus.api.annotations.ModuleInfo;
 import org.platypus.api.annotations.PlatypusVersion;
+import org.platypus.api.annotations.model.PlatypusModel;
+import org.platypus.api.annotations.record.RecordOf;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
 import org.platypus.api.views.View;
+import orp.platypus.impl.module.MetaInfoRecordCollectionImpl;
+import orp.platypus.impl.module.MetaInfoRecordImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,7 +44,7 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
     private final Map<String, MetaInfoRecord> metaInfoRecordMap;
     private final Map<String, MetaInfoRecordCollection> metaInfoRecordCollectionMap;
     private final Set<Locale> supportedLocal;
-    ReflectiveModelParser parser = new ReflectiveModelParser();
+    final ReflectiveModelParser parser = new ReflectiveModelParser();
 
     public AbstractModule(String name) {
         ModuleInfo info = this.getClass().getAnnotation(ModuleInfo.class);
@@ -57,9 +61,30 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
         this.supportedLocal = new HashSet<>();
     }
 
-    protected void addModel(BaseModel model) {
-        MetaInfoModel m = parser.parse(Objects.requireNonNull(model));
+    protected void addModel(Class<?> model) {
+        MetaInfoModel m = parser.parse(technicalName, Objects.requireNonNull(model));
         metaInfoModelMap.put(m.getName(), m);
+    }
+
+    protected void addRecord(Class<?> record) {
+        RecordOf recordOf = record.getAnnotation(RecordOf.class);
+        MetaInfoRecord metaInfoRecord = new MetaInfoRecordImpl(
+                record.getPackage().getName(),
+                record.getSimpleName(),
+                recordOf.rootModel().getAnnotation(PlatypusModel.class).value(),
+                recordOf.rootModel().getSimpleName(),
+                recordOf.rootModel().getPackage().getName());
+        metaInfoRecordMap.put(recordOf.rootModel().getSimpleName(), metaInfoRecord);
+    }
+    protected void addRecordCollection(Class<?> record) {
+        RecordOf recordOf = record.getAnnotation(RecordOf.class);
+        MetaInfoRecordCollection metaInfoRecord = new MetaInfoRecordCollectionImpl(
+                record.getPackage().getName(),
+                record.getSimpleName(),
+                recordOf.rootModel().getAnnotation(PlatypusModel.class).value(),
+                recordOf.rootModel().getSimpleName(),
+                recordOf.rootModel().getPackage().getName());
+        metaInfoRecordCollectionMap.put(recordOf.rootModel().getSimpleName(), metaInfoRecord);
     }
 
     protected void setLongDesc(String filename) {
@@ -165,7 +190,7 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
 
     @Override
     public Map<String, MetaInfoRecordCollection> getRecordCollection() {
-        return Collections.emptyMap();
+        return Collections.unmodifiableMap(metaInfoRecordCollectionMap);
     }
 
     @Override
@@ -180,7 +205,7 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
 
     @Override
     public Map<String, MetaInfoRecord> getRecord() {
-        return Collections.emptyMap();
+        return Collections.unmodifiableMap(metaInfoRecordMap);
     }
 
     @Override
