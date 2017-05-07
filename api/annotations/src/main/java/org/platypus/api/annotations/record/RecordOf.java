@@ -16,6 +16,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface RecordOf {
 
-    Class<?> model();
-    Class<? extends BaseModel> rootModel();
+    String modelPkg();
+    String modelClassName();
+    String modelName();
 }

@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -26,6 +27,7 @@ public class RecordFinder {
         PathMatcher javaMatcher =
                 FileSystems.getDefault().getPathMatcher("glob:**.java");
         return Stream.of(srcDirs)
+                .map(String::trim)
                 .map(Paths::get)
                 .flatMap(RecordFinder::walkPath)
                 .filter(p -> !Files.isDirectory(p))
@@ -45,7 +47,6 @@ public class RecordFinder {
     }
 
     private static CompilationUnit parseJava(Path path) {
-        System.out.println(path.toString());
         try {
             return JavaParser.parse(path);
         } catch (IOException e) {

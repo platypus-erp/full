@@ -39,7 +39,6 @@ public class PlatypusFieldVisitor extends VoidVisitorAdapter<Void> {
 
     @Override
     public void visit(MarkerAnnotationExpr n, Void arg) {
-        System.out.println(n);
         if (Utils.isSupportedInterfaceByName(n.getName().getIdentifier())){
             model.annotatedWith = Utils.getInterfaceByName(n.getName().getIdentifier());
             model.annotatedWithName = n.getName().getIdentifier();
@@ -49,7 +48,6 @@ public class PlatypusFieldVisitor extends VoidVisitorAdapter<Void> {
 
     @Override
     public void visit(NormalAnnotationExpr n, Void arg) {
-        System.out.println(n);
         if (Utils.isSupportedInterfaceByName(n.getName().getIdentifier())){
             model.annotatedWith = Utils.getInterfaceByName(n.getName().getIdentifier());
             model.annotatedWithName = n.getName().getIdentifier();
@@ -59,15 +57,14 @@ public class PlatypusFieldVisitor extends VoidVisitorAdapter<Void> {
 
     @Override
     public void visit(MemberValuePair n, Void arg) {
-        super.visit(n, arg);
         if ("target".equals(n.getNameAsString())){
             model.classNameTarget = n.getValue().toString().replace(".class", "");
         }
+        super.visit(n, arg);
     }
 
     @Override
     public void visit(SingleMemberAnnotationExpr n, Void arg) {
-        System.out.println(n);
         if (Utils.isSupportedInterfaceByName(n.getName().getIdentifier())){
             model.annotatedWith = Utils.getInterfaceByName(n.getName().getIdentifier());
             model.annotatedWithName = n.getName().getIdentifier();

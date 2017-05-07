@@ -17,7 +17,7 @@ import java.util.stream.Stream;
  * @since 0.1
  * on 24/04/17.
  */
-public class ViewsFinder {
+public class MenusFinder {
 
     public static void main(String[] args) {
         System.out.println(find("/home/chmuchme/WorkSpace/PLATYPUS/full/module/base", "base"));
@@ -29,8 +29,8 @@ public class ViewsFinder {
         SchemaValidator schemaValidator = new SchemaValidator();
 
         return Stream.of(MainArgs.toPathToMainRessources(projectDirStr, moduleName)
-                .resolve("views"))
-                .flatMap(ViewsFinder::walkPath)
+                .resolve("menus"))
+                .flatMap(MenusFinder::walkPath)
                 .filter(p -> !Files.isDirectory(p))
                 .filter(javaMatcher::matches)
                 .map(p -> MainArgs.toPathToMainRessources(projectDirStr, moduleName).relativize(p))

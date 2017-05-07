@@ -58,13 +58,12 @@ import java.util.function.BiFunction;
  */
 public class ReflectiveModelParser implements BaseModel {
 
-    public MetaInfoModel parse(String moduleTechnicalName, Class<?> model) {
-        if (!model.getClass().isAnnotationPresent(PlatypusModel.class)) {
+    public MetaInfoModel parse(String moduleTechnicalName, Class<?> baseModelClass) {
+        if (!baseModelClass.isAnnotationPresent(PlatypusModel.class)) {
             throw new IllegalArgumentException(String.format("The class[%s] should be annotated with %s",
-                    model.getClass().getCanonicalName(),
+                    baseModelClass.getCanonicalName(),
                     PlatypusModel.class.getCanonicalName()));
         }
-        Class<?> baseModelClass = model.getClass();
         //TODO replace with Java9 Optionnal#or
         Optional<MetaInfoModelImpl> impl = getAnnotation(baseModelClass, PlatypusModel.class)
                 .map(a -> new MetaInfoModelImpl(moduleTechnicalName, baseModelClass, a));

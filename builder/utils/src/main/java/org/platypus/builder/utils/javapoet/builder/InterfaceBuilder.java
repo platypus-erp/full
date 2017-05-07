@@ -1,5 +1,6 @@
 package org.platypus.builder.utils.javapoet.builder;
 
+import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
@@ -93,5 +94,9 @@ public class InterfaceBuilder {
 
     public TypeSpec build() {
         return internalBuilder.build();
+    }
+
+    public void addAnnotation(AnnotationSpec.Builder builder) {
+        internalBuilder.addAnnotation(builder.build());
     }
 }

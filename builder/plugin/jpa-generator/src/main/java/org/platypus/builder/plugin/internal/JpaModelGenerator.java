@@ -63,6 +63,7 @@ public class JpaModelGenerator {
 
         TypeSpec.Builder jpaImplBuilder = ClassSpecUtils.publicClass(getImplHibernateName(modelMerged.getName()));
         String tableName = TO_SQL.apply(modelMerged.getName());
+        System.out.println(modelMerged.getName());
 
         jpaImplBuilder.addField(Constant.publicStaticFinalString("MODEL_NAME", tableName));
 

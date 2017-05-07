@@ -13,30 +13,33 @@ import java.util.stream.Stream;
  * on 18/04/17.
  */
 public class MainArgs {
-    private Path projectDir;
-    private Path projectDirGenerated;
-    private String moduleVersion;
-    private String[] srcDirs;
-    //    private  String[] depends;
-    private String modulename;
+    public final Path projectDir;
+    public final String projectDirStr;
+    public final Path projectDirGenerated;
+    public final String moduleVersion;
+    public final String[] srcDirs;
+    public final String[] depends;
+    public final String modulename;
+    public final String quickDesc;
     //    private  String moduleQuickDesc;
-    private String defaultPkg;
+    public final String defaultPkg;
     //    private  String shortDesc;
 //    private  String longDesc;
-    private Map<String, PluginConf> conf;
+    public final Map<String, PluginConf> conf;
 
     public MainArgs(String... args) {
+//        System.out.println(Arrays.toString(args));
         Map<String, String> argsMap = Arrays.stream(args)
                 .map(s -> s.split("="))
                 .collect(Collectors.toMap(t -> t[0], t -> t[1]));
-        projectDir = Paths.get(argsMap.get("--directory"));
-        projectDirGenerated = toPathToGenerate(argsMap.get("--directory"));
         modulename = argsMap.get("--modulename");
+        quickDesc = argsMap.get("--moduleQuickDesc");
+        projectDir = Paths.get(argsMap.get("--directory"));
+        projectDirStr = argsMap.get("--directory");
+        projectDirGenerated = toPathToGenerate(argsMap.get("--directory"));
+        depends = toArray(argsMap.get("--depends"));
         defaultPkg = argsMap.get("--defaultpkg");
-        srcDirs = argsMap.get("--srcDirs")
-                .replace("[", "")
-                .replace("]", "")
-                .split(",");
+        srcDirs = toArray(argsMap.get("--srcDirs"));
         moduleVersion = argsMap.get("--moduleVersion");
 
         conf = Stream.of(argsMap.getOrDefault("--plugins", ""))
@@ -48,59 +51,32 @@ public class MainArgs {
                 .collect(Collectors.toMap(PluginConf::getName, c -> c));
     }
 
-    public static Path toPathToGenerate(String projectDir){
+    public static Path toPathToGenerate(String projectDir) {
         return Paths.get(projectDir, "src", "generated", "java");
     }
 
-    public Path getProjectDir() {
-        return projectDir;
+    public static Path toPathToMainJava(String projectDir) {
+        return Paths.get(projectDir, "src", "main", "java");
+    }
+    public static Path toPathToMainJava(String projectDir, String modulename) {
+        return Paths.get(projectDir, "src", "main", "java", modulename);
+    }
+    public static Path toPathToMainRessources(String projectDir) {
+        return Paths.get(projectDir, "src", "main", "resources");
+    }
+    public static Path toPathToMainRessources(String projectDir, String modulename) {
+        return Paths.get(projectDir, "src", "main", "resources", modulename);
+    }
+    public static Path toPathToMainServices(String projectDir) {
+        return Paths.get(projectDir, "src", "main", "resources", "META-INF", "services");
     }
 
-    public String[] getSrcDirs() {
-        return srcDirs;
-    }
-
-    public Path getProjectDirGenerated() {
-        return projectDirGenerated;
-    }
-
-    public String getModuleVersion() {
-        return moduleVersion;
-    }
-
-    public String getModulename() {
-        return modulename;
-    }
-
-    public String getDefaultPkg() {
-        return defaultPkg;
-    }
-
-    public Map<String, PluginConf> getConf() {
-        return conf;
-    }
-
-    public void setProjectDir(Path projectDir) {
-        this.projectDir = projectDir;
-    }
-
-    public void setProjectDirGenerated(Path projectDirGenerated) {
-        this.projectDirGenerated = projectDirGenerated;
-    }
-
-    public void setModuleVersion(String moduleVersion) {
-        this.moduleVersion = moduleVersion;
-    }
-
-    public void setModulename(String modulename) {
-        this.modulename = modulename;
-    }
-
-    public void setDefaultPkg(String defaultPkg) {
-        this.defaultPkg = defaultPkg;
-    }
-
-    public void setConf(Map<String, PluginConf> conf) {
-        this.conf = conf;
+    public static String[] toArray(String array) {
+        String formalStr = array.replace("[", "")
+                .replace("]", "");
+        if (formalStr.isEmpty()){
+            return new String[0];
+        }
+        return formalStr.split(",");
     }
 }

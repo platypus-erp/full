@@ -35,6 +35,7 @@ public class Config implements PlatypusBuilderMutableConf {
         this.moduleLoader = moduleLoader;
         this.conf = conf;
         this.defaultPkg = defaultPkg;
+        System.out.println(moduleLoader.getRecordRegistry());
     }
 
     @Override
@@ -60,12 +61,12 @@ public class Config implements PlatypusBuilderMutableConf {
 
     @Override
     public MetaInfoRecord getRecord(String name) {
-        return moduleLoader.getRecordRegistry().getMetaInfoTargetByClassName(name);
+        return moduleLoader.getRecordRegistry().getMetaInfoTargetByTargetName(name);
     }
 
     @Override
     public MetaInfoRecordCollection getRecordCollection(String name) {
-        return moduleLoader.getRecordRegistry().getMetaInfoCollectionTargetByClassName(name);
+        return moduleLoader.getRecordRegistry().getMetaInfoCollectionTargetByTargetName(name);
     }
 
     @Override

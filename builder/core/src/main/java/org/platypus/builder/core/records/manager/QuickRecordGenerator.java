@@ -2,9 +2,10 @@ package org.platypus.builder.core.records.manager;
 
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
-import org.apache.commons.lang3.StringUtils;
 import org.platypus.api.Namable;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
+import org.platypus.api.module.MetaInfoRecord;
+import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
 import org.platypus.builder.core.field.tree.FieldTreeApi;
 import org.platypus.builder.core.field.tree.FieldTreeBuilder;
@@ -17,14 +18,12 @@ import org.platypus.builder.core.moduletree.ModuleTreeBuilder;
 import org.platypus.builder.core.records.manager.astvisitor.AstModel;
 import org.platypus.builder.core.records.tree.RecordTree;
 import org.platypus.builder.core.records.tree.RecordTreeBuilder;
-import orp.platypus.impl.module.MetaInfoRecordCollectionImpl;
-import orp.platypus.impl.module.MetaInfoRecordImpl;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,6 +42,7 @@ public class QuickRecordGenerator {
     private RecordTree recordTree;
     private ModelsMerged modelsMerged;
     private AstRecordRegistry recordRegistry;
+    private AstRecordRegistry currentModuleRegistry;
     private TypeSpec.Builder moduleInfoBuilder;
     private Map<String, String> rootRecordSimpleName;
     private final Path projectDir;
@@ -55,6 +55,7 @@ public class QuickRecordGenerator {
         this.group = group;
         this.currentModuleName = name;
         this.astModels = astModels;
+        currentModuleRegistry = new AstRecordRegistry();
     }
 
     public void generateRecord() {
@@ -64,30 +65,18 @@ public class QuickRecordGenerator {
                 .collect(Collectors.toMap(MetaInfoModel::getClassName, Namable::getName));
         AstRecordGenerator astRecordGenerator = new AstRecordGenerator();
         for (AstModel astModel : astModels) {
-            if (astModel.isRootModel()) {
-                String recordClassName = StringUtils.capitalize(currentModuleName)
-                        + StringUtils.capitalize(astModel.getClassName())
-                        + "RecordCollection";
-                MetaInfoRecordCollectionImpl rcImpl = new MetaInfoRecordCollectionImpl(
-                        astModel.getPkg() + ".generated.records",
-                        recordClassName,
-                        astModel.getModelName(),
-                        astModel.getClassName(),
-                        astModel.getPkg()
-                );
-                recordRegistry.addRecordCollection(currentModuleName, rcImpl);
-            }
-            String recordClassName = StringUtils.capitalize(currentModuleName)
-                    + StringUtils.capitalize(astModel.getClassName())
-                    + "Record";
-            MetaInfoRecordImpl i = new MetaInfoRecordImpl(
-                    astModel.getPkg() + ".generated.records",
-                    recordClassName,
-                    astModel.getModelName(),
-                    astModel.getClassName(),
-                    astModel.getPkg()
+            Optional<MetaInfoRecordCollection> rc = AstModelHelper.convertToRecordCollection(currentModuleName, astModel);
+            Optional<MetaInfoRecord> r = AstModelHelper.convertToRecord(currentModuleName, astModel);
+            rc.ifPresent(m -> {
+                        currentModuleRegistry.addRecordCollectionFromAst(currentModuleName, m);
+                        recordRegistry.addRecordCollectionFromAst(currentModuleName, m);
+                    }
             );
-            recordRegistry.addRecord(currentModuleName, i);
+            r.ifPresent(m -> {
+                        currentModuleRegistry.addRecordFromAst(currentModuleName, m);
+                        recordRegistry.addRecordFromAst(currentModuleName, m);
+                    }
+            );
         }
         astModels.forEach(ast -> astRecordGenerator.generateRootRecord(ast, recordRegistry));
         for (JavaFile.Builder files : astRecordGenerator.fileToGenerate.stream()
@@ -137,7 +126,7 @@ public class QuickRecordGenerator {
             RecordTreeBuilder recordTreeCreator = new RecordTreeBuilder();
             recordTree = recordTreeCreator.build(modelTree);
 
-            depends.forEach(m -> recordRegistry.addModule(m.techincalName(), m));
+            depends.forEach(m -> recordRegistry.addModuleFromServiceLoader(m.techincalName(), m));
 
             modelsMerged = new ModelMergerBuilder().build(treeField);
         }

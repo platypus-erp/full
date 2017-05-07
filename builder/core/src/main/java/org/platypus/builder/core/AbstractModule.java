@@ -33,12 +33,12 @@ import java.util.Set;
 public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
     private final String technicalName;
     private final String name;
-    private String subpathShortDesc;
     private String shortDesc;
-    private String subpathLongDesc;
     private String longdesc;
     private final String version;
     private final Set<String> depends;
+    private final Set<String> views;
+    private final Set<String> menus;
     private final PlatypusVersion platypusVersion;
     private final Map<String, MetaInfoModel> metaInfoModelMap;
     private final Map<String, MetaInfoRecord> metaInfoRecordMap;
@@ -59,6 +59,8 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
         this.metaInfoRecordMap = new HashMap<>();
         this.metaInfoRecordCollectionMap = new HashMap<>();
         this.supportedLocal = new HashSet<>();
+        this.views = new HashSet<>();
+        this.menus = new HashSet<>();
     }
 
     protected void addModel(Class<?> model) {
@@ -71,20 +73,20 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
         MetaInfoRecord metaInfoRecord = new MetaInfoRecordImpl(
                 record.getPackage().getName(),
                 record.getSimpleName(),
-                recordOf.rootModel().getAnnotation(PlatypusModel.class).value(),
-                recordOf.rootModel().getSimpleName(),
-                recordOf.rootModel().getPackage().getName());
-        metaInfoRecordMap.put(recordOf.rootModel().getSimpleName(), metaInfoRecord);
+                recordOf.modelName(),
+                recordOf.modelClassName(),
+                recordOf.modelPkg());
+        metaInfoRecordMap.put(recordOf.modelClassName(), metaInfoRecord);
     }
     protected void addRecordCollection(Class<?> record) {
         RecordOf recordOf = record.getAnnotation(RecordOf.class);
         MetaInfoRecordCollection metaInfoRecord = new MetaInfoRecordCollectionImpl(
                 record.getPackage().getName(),
                 record.getSimpleName(),
-                recordOf.rootModel().getAnnotation(PlatypusModel.class).value(),
-                recordOf.rootModel().getSimpleName(),
-                recordOf.rootModel().getPackage().getName());
-        metaInfoRecordCollectionMap.put(recordOf.rootModel().getSimpleName(), metaInfoRecord);
+                recordOf.modelName(),
+                recordOf.modelClassName(),
+                recordOf.modelPkg());
+        metaInfoRecordCollectionMap.put(recordOf.modelClassName(), metaInfoRecord);
     }
 
     protected void setLongDesc(String filename) {
@@ -94,26 +96,10 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
                     "Unable to find "+ this.getClass().getPackage().getName() +"::"+ filename);
         }
     }
-    protected void setLongDesc(String subpath, String filename) {
-        subpathLongDesc = Objects.requireNonNull(subpath);
-        longdesc = Objects.requireNonNull(filename);
-        if (null == getLongDecription()){
-            throw new IllegalArgumentException(
-                    "Unable to find "+ this.getClass().getPackage().getName() +"::"+ filename);
-        }
-    }
 
     protected void setShortDesc(String filename) {
         shortDesc = Objects.requireNonNull(filename);
-        if (null == getLongDecription()){
-            throw new IllegalArgumentException(
-                    "Unable to find "+ this.getClass().getPackage().getName() +"::"+ filename);
-        }
-    }
-    protected void setShortDesc(String subpath, String filename) {
-        subpathShortDesc = Objects.requireNonNull(subpath);
-        shortDesc = Objects.requireNonNull(filename);
-        if (null == getLongDecription()){
+        if (null == getShortDecription()){
             throw new IllegalArgumentException(
                     "Unable to find "+ this.getClass().getPackage().getName() +"::"+ filename);
         }
@@ -123,12 +109,11 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
         supportedLocal.add(locale);
     }
 
-    protected void addRecord(MetaInfoRecord record) {
-        metaInfoRecordMap.put(record.getModelTarget(), record);
+    protected void addView(String relativePathToView) {
+        views.add(relativePathToView);
     }
-
-    protected void addRecordCollection(MetaInfoRecordCollection recordCollection) {
-        metaInfoRecordCollectionMap.put(recordCollection.getModelTarget(), recordCollection);
+    protected void addMenu(String relativePathToMenu) {
+        menus.add(relativePathToMenu);
     }
 
     @Override
@@ -158,7 +143,7 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
 
     @Override
     public String getLongDecription() {
-        return toStr(getAsStream(subpathLongDesc, shortDesc));
+        return toStr(getAsStream(shortDesc));
     }
 
     @Override
@@ -168,12 +153,12 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
 
     @Override
     public String getShortDecription() {
-        return toStr(getAsStream(subpathShortDesc, shortDesc));
+        return toStr(getAsStream(shortDesc));
 
     }
 
-    private InputStream getAsStream(String pathTo, String fileNameParam) {
-        return this.getClass().getResourceAsStream(pathTo + "/" + fileNameParam);
+    private InputStream getAsStream(String fileNameParam) {
+        return this.getClass().getResourceAsStream(fileNameParam);
     }
 
     private String toStr(InputStream s) {
@@ -214,12 +199,12 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
     }
 
     @Override
-    public Map<String, View> getViews() {
-        return Collections.emptyMap();
+    public Set<String> getViews() {
+        return views;
     }
 
     @Override
-    public Map<String, View> getMenus() {
-        return Collections.emptyMap();
+    public Set<String> getMenus() {
+        return menus;
     }
 }

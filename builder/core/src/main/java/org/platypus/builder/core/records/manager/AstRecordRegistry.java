@@ -18,23 +18,27 @@ public class AstRecordRegistry {
 
     private final Map<String, MetaInfoRecord> records;
     private final Map<String, MetaInfoRecordCollection> recordCollections;
+    private final Map<String, MetaInfoRecord> recordsByName;
+    private final Map<String, MetaInfoRecordCollection> recordCollectionsByName;
     private final Map<String, Visitor> currentModuleModelMerged;
 
     public AstRecordRegistry() {
         records = new HashMap<>();
         recordCollections = new HashMap<>();
         currentModuleModelMerged = new HashMap<>();
+        recordsByName = new HashMap<>();
+        recordCollectionsByName = new HashMap<>();
     }
 
-    public void addModule(String moduleName, RecordOfModuleInfo moduleInfo) {
-        records.putAll(moduleInfo.getRecord());
-        recordCollections.putAll(moduleInfo.getRecordCollection());
+    public void addModuleFromServiceLoader(String moduleName, RecordOfModuleInfo moduleInfo) {
+        recordsByName.putAll(moduleInfo.getRecord());
+        recordCollectionsByName.putAll(moduleInfo.getRecordCollection());
     }
 
-    public void addRecord(String moduleName, MetaInfoRecord metaInfoRecord){
+    public void addRecordFromAst(String moduleName, MetaInfoRecord metaInfoRecord){
         records.put(metaInfoRecord.getModelTargetClassName(), metaInfoRecord);
     }
-    public void addRecordCollection(String moduleName, MetaInfoRecordCollection metaInfoRecord){
+    public void addRecordCollectionFromAst(String moduleName, MetaInfoRecordCollection metaInfoRecord){
         recordCollections.put(metaInfoRecord.getModelTargetClassName(), metaInfoRecord);
     }
 
@@ -46,11 +50,30 @@ public class AstRecordRegistry {
         return recordCollections.get(classNameTarget);
     }
 
+    public MetaInfoRecord getMetaInfoTargetByTargetName(String classNameTarget) {
+        return recordsByName.get(classNameTarget);
+    }
+
+    public MetaInfoRecordCollection getMetaInfoCollectionTargetByTargetName(String classNameTarget) {
+        return recordCollectionsByName.get(classNameTarget);
+    }
+
     public MetaInfoRecord getMetaInfoTargetByClassName(AstModel classNameTarget) {
         return records.get(classNameTarget.getClassName());
     }
 
     public MetaInfoRecordCollection getMetaInfoCollectionTargetByClassName(AstModel classNameTarget) {
         return recordCollections.get(classNameTarget.getClassName());
+    }
+
+    @Override
+    public String toString() {
+        return "AstRecordRegistry{" +
+                "records=" + records +
+                ",\n recordCollections=" + recordCollections +
+                ",\n recordsByName=" + recordsByName +
+                ",\n recordCollectionsByName=" + recordCollectionsByName +
+                ",\n currentModuleModelMerged=" + currentModuleModelMerged +
+                '}';
     }
 }

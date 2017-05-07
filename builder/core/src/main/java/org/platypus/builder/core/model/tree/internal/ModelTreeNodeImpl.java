@@ -4,6 +4,7 @@ package org.platypus.builder.core.model.tree.internal;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.builder.core.model.tree.ModelTreeNode;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -17,8 +18,8 @@ public class ModelTreeNodeImpl implements ModelTreeNode {
 
     private final MetaInfoModel info;
     private String moduleName;
-    private Set<ModelTreeNode> children;
-    private Set<ModelTreeNode> parents;
+    private Set<ModelTreeNode> children= new HashSet<>();
+    private Set<ModelTreeNode> parents= new HashSet<>();
 
     public ModelTreeNodeImpl(MetaInfoModel info) {
         this.info = info;

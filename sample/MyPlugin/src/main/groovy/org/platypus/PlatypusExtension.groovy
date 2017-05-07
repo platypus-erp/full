@@ -14,6 +14,7 @@ class PlatypusExtension {
     String modulename
     String moduleQuickDesc
     String baseGeneratedPackage
+    File[] srcDirs
 
     File shortDesc
     File longDesc
@@ -23,14 +24,16 @@ class PlatypusExtension {
         modulename = project.name
         moduleVersion = project.version
         baseGeneratedPackage = project.group.toString() + "." + project.name
-        shortDesc = project.file('src/main/ressources/' + baseGeneratedPackage + '/short-desc.adoc')
-        longDesc = project.file('src/main/ressources/' + baseGeneratedPackage + '/long-desc.adoc')
+        srcDirs = [project.file('src/main/java/'), project.file('src/main/resources')]
+        shortDesc = project.file('src/main/resources/' + baseGeneratedPackage + '/short-desc.adoc')
+        longDesc = project.file('src/main/resources/' + baseGeneratedPackage + '/long-desc.adoc')
     }
 
     String[] getArgs(){
         return ["--directory=${projectDir}",
                 "--modulename=${modulename}",
                 "--plugins=${conf}",
+                "--srcDirs=${srcDirs}",
                 "--defaultpkg=${baseGeneratedPackage}",
                 "--moduleVersion=${moduleVersion}",
                 "--depends=${depends}",

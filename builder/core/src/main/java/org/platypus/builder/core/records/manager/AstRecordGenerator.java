@@ -1,5 +1,6 @@
 package org.platypus.builder.core.records.manager;
 
+import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -7,6 +8,7 @@ import com.squareup.javapoet.TypeSpec;
 import org.platypus.api.Bool;
 import org.platypus.api.Record;
 import org.platypus.api.RecordCollection;
+import org.platypus.api.annotations.record.RecordOf;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.Utils;
@@ -50,6 +52,12 @@ public class AstRecordGenerator {
 
         InterfaceBuilder recordBuilder = InterfaceBuilder.publicInterface(currentRec.getClassName());
         recordBuilder.addSuperInterfaces(Record.class);
+        recordBuilder.addAnnotation(
+                AnnotationSpec.builder(RecordOf.class)
+                .addMember("modelPkg", "$S", merged.getPkg())
+                .addMember("modelClassName", "$S", merged.getClassName())
+                .addMember("modelName", "$L", merged.getModelName())
+        );
 
         generateBasicFieldRecord(merged, recordBuilder);
 
@@ -63,6 +71,12 @@ public class AstRecordGenerator {
                     ParameterizedTypeName.get(
                             ClassName.get(RecordCollection.class),
                             Utils.toRecord(currentRec))
+            );
+            recordCollectionBuilder.addAnnotation(
+                    AnnotationSpec.builder(RecordOf.class)
+                            .addMember("modelPkg", "$S", merged.getPkg())
+                            .addMember("modelClassName", "$S", merged.getClassName())
+                            .addMember("modelName", "$L", merged.getModelName())
             );
             fileToGenerate.add(new FileToGenerate(currentRC.getPkg(), recordCollectionBuilder.toBuilder()));
         }

@@ -3,11 +3,10 @@ package org.platypus.erp.module.base;
 
 import org.platypus.api.annotations.ModuleInfo;
 import org.platypus.builder.core.AbstractModule;
-import org.platypus.erp.module.base.models.Partner;
 import org.platypus.erp.module.base.models.Company;
 import org.platypus.erp.module.base.models.Group;
+import org.platypus.erp.module.base.models.Partner;
 import org.platypus.erp.module.base.models.Users;
-import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
 /**
  * @author chmuchme
@@ -25,6 +24,5 @@ public class PlatypusModuleInfo extends AbstractModule{
         addModel(Group.class);
         addModel(Partner.class);
         addModel(Company.class);
-        addRecord(BaseUsersRecord.class);
     }
 }

@@ -59,6 +59,9 @@ public class ModelTreeImpl implements ModelTree{
     }
 
     private void recursiveCalculateTree(ModuleTreeNode node, Map<String, ModelTreeNodeImpl> modelsTree) {
+        if (node == null){
+            return;
+        }
         for (MetaInfoModel model : modulesNodeByName.get(node.info().techincalName()).getModel().values()) {
             ModelTreeNodeImpl modelTree = new ModelTreeNodeImpl(model);
             if (modelsTree.putIfAbsent(model.getName(), modelTree) != null) {

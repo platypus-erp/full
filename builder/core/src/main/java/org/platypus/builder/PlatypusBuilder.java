@@ -38,7 +38,6 @@ public final class PlatypusBuilder {
     private final MainArgs mainArgs;
 
     public static void main(String... args) {
-        System.out.println(Arrays.toString(args));
         new PlatypusBuilder(new MainArgs(args)).run();
     }
 
@@ -56,13 +55,13 @@ public final class PlatypusBuilder {
         modelProcessorsService.forEach(modelProcessors::add);
         System.out.println(modelProcessors.size()+" Model Processor loaded");
 
-        config = new Config(moduleLoader, mainArgs.getConf(), mainArgs.getDefaultPkg());
+        config = new Config(moduleLoader, mainArgs.conf, mainArgs.defaultPkg);
 
 
 
         System.out.println("Load of platypus plugins");
         ServiceLoader<PlatypusPlugin> plugins = ServiceLoader.load(PlatypusPlugin.class);
-        plugins.forEach(p -> p.applyConf(mainArgs.getConf().getOrDefault(p.getName(), p.getDefaultConf())));
+        plugins.forEach(p -> p.applyConf(mainArgs.conf.getOrDefault(p.getName(), p.getDefaultConf())));
         plugins.forEach(p -> pluginsDiscovered.put(p.getName(), p));
     }
 
@@ -90,7 +89,7 @@ public final class PlatypusBuilder {
             for (JavaFile.Builder files : processor.getResultProcessing(config).getAllFile()) {
                 System.out.println(files.build().packageName);
                 try {
-                    files.build().writeTo(mainArgs.getProjectDirGenerated().toFile());
+                    files.build().writeTo(mainArgs.projectDirGenerated.toFile());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

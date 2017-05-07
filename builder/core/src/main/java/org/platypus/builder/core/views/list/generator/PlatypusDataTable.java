@@ -31,7 +31,9 @@ public class PlatypusDataTable extends ContainerTag {
                                     col.toContainerTag()
                             )
                     );
+            dataTable.with(colum);
         }
+        with(dataTable);
     }
 
 

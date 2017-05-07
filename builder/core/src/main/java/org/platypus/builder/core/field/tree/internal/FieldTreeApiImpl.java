@@ -60,6 +60,9 @@ public class FieldTreeApiImpl implements FieldTreeApi {
     }
 
     private void recursiveCalculateTree(ModuleTreeNode node, Map<String, FieldTreeImpl> modelsTree) {
+        if (node == null){
+            return;
+        }
         for (MetaInfoModel model : modulesNodeByName.get(node.info().techincalName()).getModel().values()) {
             FieldTreeImpl modelTree = modelsTree.getOrDefault(model.getName(), new FieldTreeImpl(model.getName()));
             model.bigStringField().forEach(f -> modelTree.addBigStringField(f.getName(), new FieldNodeImpl<>(f)));

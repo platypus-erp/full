@@ -26,9 +26,9 @@ public interface PlatypusCompleteModuleInfo extends ModuleInfo, ModelOfModuleInf
 
     Set<String> getDemoData();
 
-    Map<String, View> getViews();
+    Set<String> getViews();
 
-    Map<String, View> getMenus();
+    Set<String> getMenus();
 
 
 }

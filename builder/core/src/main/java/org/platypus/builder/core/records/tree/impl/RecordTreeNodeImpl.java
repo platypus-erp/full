@@ -7,6 +7,7 @@ import org.platypus.builder.core.model.tree.ModelTreeNode;
 import org.platypus.builder.core.model.tree.internal.ModelTreeNodeImpl;
 import org.platypus.builder.core.records.tree.RecordTreeNode;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -18,8 +19,8 @@ public class RecordTreeNodeImpl implements RecordTreeNode{
 
     private final MetaInfoRecord info;
     private String moduleName;
-    private Set<RecordTreeNode> children;
-    private Set<RecordTreeNode> parents;
+    private Set<RecordTreeNode> children= new HashSet<>();
+    private Set<RecordTreeNode> parents= new HashSet<>();
 
     public RecordTreeNodeImpl(MetaInfoRecord info) {
         this.info = info;
