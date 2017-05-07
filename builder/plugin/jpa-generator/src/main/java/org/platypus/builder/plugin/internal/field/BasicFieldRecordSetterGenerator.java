@@ -4,6 +4,7 @@ import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
 import org.platypus.api.fields.metainfo.*;
 import org.platypus.api.module.MetaInfoRecord;
+import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.Utils;
 import org.platypus.builder.plugin.internal.JpaUtils;
 
@@ -75,14 +76,14 @@ public class BasicFieldRecordSetterGenerator {
         return getSetterUnwrap(field.getName(), Utils.toRecord(record), JpaImplT);
     }
     public Optional<MethodSpec> generateSetter(MetaInfoOneToManyField field,
-                                               Function<String, MetaInfoRecord> getRecord) {
-        MetaInfoRecord record = getRecord.apply(field.targetName());
+                                               Function<String, MetaInfoRecordCollection> getRecord) {
+        MetaInfoRecordCollection record = getRecord.apply(field.targetName());
         ClassName JpaImplT = ClassName.get("",getImplHibernateName(field.target().getSimpleName()));
         return getSetterUnwrapAsList(field.getName(), Utils.toRecordCollection(record), JpaImplT);
     }
     public Optional<MethodSpec> generateSetter(MetaInfoManyToManyField field,
-                                               Function<String, MetaInfoRecord> getRecord) {
-        MetaInfoRecord record = getRecord.apply(field.targetName());
+                                               Function<String, MetaInfoRecordCollection> getRecord) {
+        MetaInfoRecordCollection record = getRecord.apply(field.targetName());
         ClassName JpaImplT = ClassName.get("",getImplHibernateName(field.target().getSimpleName()));
         return getSetterUnwrapAsList(field.getName(), Utils.toRecordCollection(record), JpaImplT);
     }

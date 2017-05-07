@@ -93,8 +93,8 @@ public class JpaModelGenerator {
 
         foreachValues(modelMerged.getMtoField(), m -> fieldGenerator.generateField(m, getRecord));
         foreachValues(modelMerged.getOtoField(), m -> fieldGenerator.generateField(m, getRecord));
-        foreachValues(modelMerged.getMtmField(), m -> fieldGenerator.generateField(m, getRecord));
-        foreachValues(modelMerged.getOtmField(), m -> fieldGenerator.generateField(m, getRecord));
+        foreachValues(modelMerged.getMtmField(), m -> fieldGenerator.generateField(m, getRecordCollection));
+        foreachValues(modelMerged.getOtmField(), m -> fieldGenerator.generateField(m, getRecordCollection));
 
         jpaImplBuilder.addMethod(constructor.build());
         jpaImplBuiler.put(modelMerged.getName(), new HashSet<>());
@@ -112,7 +112,7 @@ public class JpaModelGenerator {
         ClassName recordCollectionTarget = Utils.toRecordCollection(getRecordCollection.apply(modelMerged.getName()));
 
         ClassName recordTargetImpl = ClassName.get("", getImplHibernateName(modelMerged.getName()));
-        ClassName currentClassName = Utils.toRecordCollectionImpl(rTarget);
+        ClassName currentClassName = Utils.toRecordCollectionImpl(getRecordCollection.apply(modelMerged.getName()));
 
         TypeSpec.Builder recordCollectionImpl = TypeSpec.classBuilder(currentClassName)
                 .addModifiers(Modifier.PUBLIC);

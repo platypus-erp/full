@@ -3,6 +3,7 @@ package org.platypus.builder.plugin.internal.field;
 import com.squareup.javapoet.*;
 import org.platypus.api.fields.metainfo.*;
 import org.platypus.api.module.MetaInfoRecord;
+import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.Utils;
 import org.platypus.builder.plugin.internal.JpaUtils;
 import org.platypus.builder.utils.javapoet.utils.FieldSpecUtils;
@@ -60,11 +61,11 @@ public class BasicFieldRecordGenerator {
         return getField( name, Utils.toRecord(record));
     }
     public FieldSpec generateField(MetaInfoManyToManyField field,
-                                   Function<String, MetaInfoRecord> getRecord) {
+                                   Function<String, MetaInfoRecordCollection> getRecord) {
         return generateRecordCollectionField(field.getName(), getRecord.apply(field.targetName()));
     }
     public FieldSpec generateField(MetaInfoOneToManyField field,
-                                   Function<String, MetaInfoRecord> getRecord) {
+                                   Function<String, MetaInfoRecordCollection> getRecord) {
         return generateRecordCollectionField(field.getName(), getRecord.apply(field.targetName()));
     }
     private FieldSpec generateRecordCollectionField(String name, MetaInfoRecord record) {

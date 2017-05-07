@@ -97,10 +97,6 @@ task platypus_module_info(type: JavaExec) {
     main = 'org.platypus.builder.ModuleInfoBuilder'
     args(project.platypus.getArgs())
 }
-task platypus_clean() {
-    delete new File(sourceSets.main.java.srcDirs[0], project.name)
-    delete Paths.get(sourceSets.main.resources.srcDirs[0].path, "META-INF", "services").toFile()
-}
 task platypus_views(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'org.platypus.builder.core.views.ViewsFinder'
@@ -108,7 +104,6 @@ task platypus_views(type: JavaExec) {
     args = ["${sourceSets.main.resources.srcDirs}", "${project.group}", "${project.name}", "${project.projectDir}"]
 }
 task platypus_build(type: JavaExec) {
-    dependsOn platypus_module_info
     classpath = sourceSets.main.runtimeClasspath
     main = 'org.platypus.builder.PlatypusBuilder'
     args(project.platypus.getArgs())
@@ -116,5 +111,7 @@ task platypus_build(type: JavaExec) {
 
 clean {
     delete sourceSets.generated.java.srcDirs
+    delete new File(sourceSets.main.java.srcDirs[0], project.name)
+    delete Paths.get(sourceSets.main.resources.srcDirs[0].path, "META-INF", "services").toFile()
 }
 

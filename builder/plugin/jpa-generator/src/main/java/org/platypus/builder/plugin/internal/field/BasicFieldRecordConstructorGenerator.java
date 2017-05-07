@@ -20,6 +20,7 @@ import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 import org.platypus.api.module.MetaInfoRecord;
+import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.Utils;
 import org.platypus.builder.plugin.internal.JpaUtils;
 
@@ -105,14 +106,15 @@ public class BasicFieldRecordConstructorGenerator {
                 StringUtils.capitalize(name));
     }
     public CodeBlock generateField(MetaInfoOneToManyField field,
-                                   Function<String, MetaInfoRecord> getRecord) {
+                                   Function<String, MetaInfoRecordCollection> getRecord) {
         return generateRecordCollectionField(field.getName(), field.targetName(),field.target(), getRecord);
     }
     public CodeBlock generateField(MetaInfoManyToManyField field,
-                                   Function<String, MetaInfoRecord> getRecord) {
+                                   Function<String, MetaInfoRecordCollection> getRecord) {
         return generateRecordCollectionField(field.getName(), field.targetName(), field.target(), getRecord);
     }
-    private CodeBlock generateRecordCollectionField(String name, String fieldTargetName, Class<? extends BaseModel> target, Function<String, MetaInfoRecord> getRecord) {
+    private CodeBlock generateRecordCollectionField(String name, String fieldTargetName,
+                                                    Class<? extends BaseModel> target, Function<String, ? extends MetaInfoRecord> getRecord) {
         return CodeBlock.of("$N = new $T(this::get$N, this::set$N);\n",
                 name + "Field",
                 Utils.toRecordCollectionImpl(getRecord.apply(fieldTargetName)),

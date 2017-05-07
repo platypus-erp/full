@@ -31,8 +31,8 @@ public class AstRecordRegistry {
     }
 
     public void addModuleFromServiceLoader(String moduleName, RecordOfModuleInfo moduleInfo) {
-        recordsByName.putAll(moduleInfo.getRecord());
-        recordCollectionsByName.putAll(moduleInfo.getRecordCollection());
+        moduleInfo.getRecord().forEach((k,v) -> recordsByName.put(v.getModelTarget(), v));
+        moduleInfo.getRecordCollection().forEach((k,v) -> recordCollectionsByName.put(v.getModelTarget(), v));
     }
 
     public void addRecordFromAst(String moduleName, MetaInfoRecord metaInfoRecord){

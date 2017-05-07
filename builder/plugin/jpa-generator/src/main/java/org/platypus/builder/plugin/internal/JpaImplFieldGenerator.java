@@ -4,6 +4,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import org.platypus.api.fields.metainfo.*;
 import org.platypus.api.module.MetaInfoRecord;
+import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.plugin.internal.field.*;
 
 
@@ -152,7 +153,7 @@ public class JpaImplFieldGenerator {
         constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta, getRecord));
     }
 
-    public void generateField(MetaInfoOneToManyField meta, Function<String, MetaInfoRecord> getRecord){
+    public void generateField(MetaInfoOneToManyField meta, Function<String, MetaInfoRecordCollection> getRecord){
         basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
         basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
         basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
@@ -161,7 +162,7 @@ public class JpaImplFieldGenerator {
         jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta, getRecord));
         constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta, getRecord));
     }
-    public void generateField(MetaInfoManyToManyField meta, Function<String, MetaInfoRecord> getRecord){
+    public void generateField(MetaInfoManyToManyField meta, Function<String, MetaInfoRecordCollection> getRecord){
         basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
         basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
         basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
