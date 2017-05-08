@@ -1,7 +1,21 @@
 package org.platypus.builder.plugin.internal.field;
 
 import com.squareup.javapoet.*;
-import org.platypus.api.fields.metainfo.*;
+import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
+import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
+import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
+import org.platypus.api.fields.metainfo.MetaInfoDateField;
+import org.platypus.api.fields.metainfo.MetaInfoDateTimeField;
+import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
+import org.platypus.api.fields.metainfo.MetaInfoFloatField;
+import org.platypus.api.fields.metainfo.MetaInfoIntField;
+import org.platypus.api.fields.metainfo.MetaInfoLongField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoManyToOneField;
+import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
+import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
+import org.platypus.api.fields.metainfo.MetaInfoStringField;
+import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.Utils;

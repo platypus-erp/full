@@ -1,8 +1,6 @@
 package org.platypus.builder.core.api;
 
 import org.platypus.api.Namable;
-import org.platypus.api.fields.metainfo.MetaInfoModel;
-import org.platypus.builder.core.model.tree.ModelTreeNode;
 
 import java.util.Set;
 

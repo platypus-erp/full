@@ -9,8 +9,6 @@ import org.platypus.api.annotations.field.RequiredType;
 import org.platypus.api.annotations.field.StringFieldDefinition;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 
-import java.util.Arrays;
-
 /**
  * TODO Add JavaDoc
  *

@@ -1,10 +1,6 @@
 package org.platypus.builder.core.records.tree.impl;
 
-import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.api.module.MetaInfoRecord;
-import org.platypus.api.module.RecordOfModuleInfo;
-import org.platypus.builder.core.model.tree.ModelTreeNode;
-import org.platypus.builder.core.model.tree.internal.ModelTreeNodeImpl;
 import org.platypus.builder.core.records.tree.RecordTreeNode;
 
 import java.util.HashSet;

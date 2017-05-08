@@ -1,14 +1,10 @@
 package org.platypus.builder.core.model.merger.internal.field;
 
 
-import org.platypus.api.fields.metainfo.MetaInfoFloatField;
 import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
-import org.platypus.builder.core.internal.literral.FloatFieldLiteral;
 import org.platypus.builder.core.internal.literral.OneToOneFieldLiteral;
 
 import static org.platypus.builder.utils.ValuesUtils.bool;
-import static org.platypus.builder.utils.ValuesUtils.fltMax;
-import static org.platypus.builder.utils.ValuesUtils.fltMin;
 
 /**
  * TODO Add JavaDoc

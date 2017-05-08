@@ -1,16 +1,13 @@
 package org.platypus.builder.core;
 
 import org.apache.commons.io.IOUtils;
-import org.platypus.api.BaseModel;
 import org.platypus.api.annotations.ModuleInfo;
 import org.platypus.api.annotations.PlatypusVersion;
-import org.platypus.api.annotations.model.PlatypusModel;
 import org.platypus.api.annotations.record.RecordOf;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
-import org.platypus.api.views.View;
 import orp.platypus.impl.module.MetaInfoRecordCollectionImpl;
 import orp.platypus.impl.module.MetaInfoRecordImpl;
 

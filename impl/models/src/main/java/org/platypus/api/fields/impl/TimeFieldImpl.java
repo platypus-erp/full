@@ -3,9 +3,7 @@ package org.platypus.api.fields.impl;
 import org.platypus.api.fields.TimeField;
 
 import java.time.LocalTime;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**

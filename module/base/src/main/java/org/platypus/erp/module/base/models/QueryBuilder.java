@@ -1,8 +1,6 @@
 package org.platypus.erp.module.base.models;
 
 import org.platypus.api.QueryPath;
-import org.platypus.api.UnmutableGenericField;
-import org.platypus.api.fields.StringField;
 
 /**
  * @author chmuchme

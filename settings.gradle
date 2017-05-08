@@ -1,8 +1,5 @@
 rootProject.name = 'platypus'
-include 'api:annotations'
 include 'api:core'
-include 'api:models'
-include 'api:module'
 include 'api:views'
 include 'api:security'
 

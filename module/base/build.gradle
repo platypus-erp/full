@@ -21,25 +21,24 @@ buildscript {
 configurations {
     modelsCompile.extendsFrom platypusCompile
     generatedCompile.extendsFrom platypusCompile
+    mainCompile.extendsFrom platypusCompile
 }
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     emptyCompile project(':builder:core')
 
-    platypusCompile project(':api:annotations')
-    platypusCompile project(':api:models')
+    platypusCompile project(':api:core')
 
     compile project(':impl:module')
     compile project(':impl:models')
     compile project(':builder:core')
 
-    compile project(':api:models')
     compile project(':builder:plugin:jpa-generator')
     compile project(':builder:plugin:display-tree-module')
 
     //only needed when you generate JPA implemetation of the record(Collection)
-//    generatedCompile project(':impl:module')
-//    generatedCompile project(':impl:models')
+    generatedCompile project(':impl:module')
+    generatedCompile project(':impl:models')
 }
 jar {
     from sourceSets.models.output

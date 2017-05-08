@@ -2,7 +2,6 @@ package org.platypus.builder.core;
 
 
 import org.platypus.api.BaseModel;
-import org.platypus.api.TypeModel;
 import org.platypus.api.annotations.field.BigStringFieldDefinition;
 import org.platypus.api.annotations.field.BinaryFieldDefinition;
 import org.platypus.api.annotations.field.BooleanFieldDefinition;
@@ -19,13 +18,10 @@ import org.platypus.api.annotations.field.OneToOneFieldDefinition;
 import org.platypus.api.annotations.field.RelatedFieldDefinition;
 import org.platypus.api.annotations.field.StringFieldDefinition;
 import org.platypus.api.annotations.field.TimeFieldDefinition;
-import org.platypus.api.annotations.model.FieldComposer;
 import org.platypus.api.annotations.model.PlatypusModelInherit;
 import org.platypus.api.annotations.model.PlatypusModel;
-import org.platypus.api.annotations.model.PlatypusModelComposer;
 import org.platypus.api.fields.NewField;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
-import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.builder.core.internal.MetaInfoModelImpl;
 import org.platypus.builder.core.internal.literral.BasicFieldDef;
 import org.platypus.builder.core.internal.literral.BigStringFieldLiteral;
@@ -45,10 +41,7 @@ import org.platypus.builder.core.internal.literral.TimeFieldLiteral;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.BiFunction;
 
 /**

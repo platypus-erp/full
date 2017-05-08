@@ -155,7 +155,7 @@ public class Visitor extends VoidVisitorAdapter<Void> implements AstModel{
                 ",\nisRootModel=" + isRootModel +
                 ",\nmodelName='" + modelName + '\'' +
                 ",\nisValidModel=" + isValidModel +
-                ",\nfields=" + fields +
+                ",\norg.platypus.api.fields=" + fields +
                 '}');
         return "";
     }

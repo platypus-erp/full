@@ -3,7 +3,6 @@ package org.platypus.builder.core.internal;
 import org.platypus.api.BaseModel;
 import org.platypus.api.TypeModel;
 import org.platypus.api.annotations.model.PlatypusModelInherit;
-import org.platypus.api.annotations.model.PlatypusModelComposer;
 import org.platypus.api.annotations.model.PlatypusModel;
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
@@ -22,8 +21,6 @@ import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 

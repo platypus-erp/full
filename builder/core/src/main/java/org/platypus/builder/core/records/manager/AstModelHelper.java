@@ -1,7 +1,6 @@
 package org.platypus.builder.core.records.manager;
 
 import org.apache.commons.lang3.StringUtils;
-import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.records.manager.astvisitor.AstModel;

@@ -2,9 +2,7 @@ package org.platypus.builder.core.model.merger.internal.field;
 
 
 import org.platypus.api.fields.metainfo.MetaInfoManyToManyField;
-import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
 import org.platypus.builder.core.internal.literral.ManyToManyFieldLiteral;
-import org.platypus.builder.core.internal.literral.OneToManyFieldLiteral;
 
 import static org.platypus.builder.utils.ValuesUtils.bool;
 import static org.platypus.builder.utils.ValuesUtils.str;

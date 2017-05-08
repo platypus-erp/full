@@ -13,7 +13,6 @@ import org.platypus.api.annotations.field.DecimalFieldDefinition;
 import org.platypus.api.annotations.field.FloatFieldDefinition;
 import org.platypus.api.annotations.field.IntFieldDefinition;
 import org.platypus.api.annotations.field.LongFieldDefinition;
-import org.platypus.api.annotations.field.PlatypusCascadeType;
 import org.platypus.api.annotations.field.StringFieldDefinition;
 import org.platypus.api.annotations.field.TimeFieldDefinition;
 import org.platypus.api.fields.BigStringField;
@@ -38,28 +37,12 @@ import org.platypus.api.fields.impl.IntFieldImpl;
 import org.platypus.api.fields.impl.LongFieldImpl;
 import org.platypus.api.fields.impl.StringFieldImpl;
 import org.platypus.api.fields.impl.TimeFieldImpl;
-import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
-import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
-import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
-import org.platypus.api.fields.metainfo.MetaInfoDateField;
-import org.platypus.api.fields.metainfo.MetaInfoDateTimeField;
-import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
-import org.platypus.api.fields.metainfo.MetaInfoFloatField;
-import org.platypus.api.fields.metainfo.MetaInfoIntField;
-import org.platypus.api.fields.metainfo.MetaInfoLongField;
-import org.platypus.api.fields.metainfo.MetaInfoStringField;
-import org.platypus.api.fields.metainfo.MetaInfoTimeField;
-import org.platypus.api.module.MetaInfoRecord;
-import org.platypus.api.module.MetaInfoRecordCollection;
-
-import javax.persistence.CascadeType;
 
 import java.lang.annotation.Annotation;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
