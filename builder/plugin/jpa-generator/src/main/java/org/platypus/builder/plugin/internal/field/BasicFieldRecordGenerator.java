@@ -68,7 +68,7 @@ public class BasicFieldRecordGenerator {
                                    Function<String, MetaInfoRecordCollection> getRecord) {
         return generateRecordCollectionField(field.getName(), getRecord.apply(field.targetName()));
     }
-    private FieldSpec generateRecordCollectionField(String name, MetaInfoRecord record) {
+    private FieldSpec generateRecordCollectionField(String name, MetaInfoRecordCollection record) {
         return getField( name, Utils.toRecordCollection(record));
     }
     private FieldSpec getField(String name, TypeName field){

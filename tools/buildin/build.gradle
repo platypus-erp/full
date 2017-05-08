@@ -1,0 +1,9 @@
+group 'org.platypus.tools'
+version '1'
+apply plugin: 'java'
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+

@@ -13,7 +13,7 @@ import org.platypus.api.module.PlatypusCompleteModuleInfo;
 import org.platypus.builder.core.AbstractModule;
 import org.platypus.builder.core.MainArgs;
 import org.platypus.builder.core.records.manager.AstModelHelper;
-import org.platypus.builder.core.records.manager.RecordFinder;
+import org.platypus.builder.core.records.manager.ModelsFinder;
 import org.platypus.builder.core.records.manager.astvisitor.AstModel;
 import org.platypus.builder.core.views.ViewsFinder;
 
@@ -37,8 +37,7 @@ import java.util.stream.Collectors;
 public class ModuleInfoBuilder {
     public static void main(String[] args) {
         MainArgs mainArgs = new MainArgs(args);
-        Set<AstModel> models = RecordFinder.run(mainArgs.srcDirs);
-
+        Set<AstModel> models = ModelsFinder.run(mainArgs.modelsDir);
         Set<MetaInfoRecordCollection> metaInfoRecordCollections = models.stream()
                 .map(m -> AstModelHelper.convertToRecordCollection(mainArgs.modulename, m))
                 .filter(Optional::isPresent)
@@ -88,7 +87,6 @@ public class ModuleInfoBuilder {
         JavaFile file = JavaFile.builder(mainArgs.modulename, moduleInfo.build())
                 .indent("    ")
                 .build();
-        System.out.println();
         try {
             file.writeTo(MainArgs.toPathToMainJava(mainArgs.projectDirStr).toFile());
             Path pathservices = MainArgs.toPathToMainServices(mainArgs.projectDirStr);

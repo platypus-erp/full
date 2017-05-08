@@ -14,6 +14,8 @@ import java.util.stream.Stream;
  */
 public class MainArgs {
     public final Path projectDir;
+    public final Path mainDir;
+    public final Path modelsDir;
     public final String projectDirStr;
     public final Path projectDirGenerated;
     public final String moduleVersion;
@@ -28,18 +30,21 @@ public class MainArgs {
     public final Map<String, PluginConf> conf;
 
     public MainArgs(String... args) {
-//        System.out.println(Arrays.toString(args));
+        System.out.println(Arrays.toString(args));
         Map<String, String> argsMap = Arrays.stream(args)
                 .map(s -> s.split("="))
                 .collect(Collectors.toMap(t -> t[0], t -> t[1]));
-        modulename = argsMap.get("--modulename");
-        quickDesc = argsMap.get("--moduleQuickDesc");
         projectDir = Paths.get(argsMap.get("--directory"));
         projectDirStr = argsMap.get("--directory");
-        projectDirGenerated = toPathToGenerate(argsMap.get("--directory"));
+        modulename = argsMap.get("--modulename");
+        mainDir = Paths.get(argsMap.get("--mainDir"));
+        modelsDir = Paths.get(argsMap.get("--modelsDir"));
+        projectDirGenerated = Paths.get(argsMap.get("--generatedDir"));
+        srcDirs = toArray(argsMap.get("--srcDirs"));
+
+        quickDesc = argsMap.get("--moduleQuickDesc");
         depends = toArray(argsMap.get("--depends"));
         defaultPkg = argsMap.get("--defaultpkg");
-        srcDirs = toArray(argsMap.get("--srcDirs"));
         moduleVersion = argsMap.get("--moduleVersion");
 
         conf = Stream.of(argsMap.getOrDefault("--plugins", ""))

@@ -66,6 +66,7 @@ public class InterfaceBuilder {
     }
 
     public InterfaceBuilder addOnlyReturnMethod(String methodName, TypeName returnType) {
+        System.out.println("add getMethod[" + methodName + "] retrun " + returnType);
         this.internalBuilder.addMethod(
                 methodBuilder(methodName)
                         .returns(returnType)
@@ -75,14 +76,14 @@ public class InterfaceBuilder {
         return this;
     }
 
-    public InterfaceBuilder addSuperInterfaces(Class<?>... superInterfaces){
+    public InterfaceBuilder addSuperInterfaces(Class<?>... superInterfaces) {
         Arrays.stream(superInterfaces)
                 .map(ClassName::get)
                 .forEach(this.internalBuilder::addSuperinterface);
         return this;
     }
 
-    public InterfaceBuilder addSuperInterfaces(TypeName... superInterfaces){
+    public InterfaceBuilder addSuperInterfaces(TypeName... superInterfaces) {
         Arrays.stream(superInterfaces)
                 .forEach(this.internalBuilder::addSuperinterface);
         return this;

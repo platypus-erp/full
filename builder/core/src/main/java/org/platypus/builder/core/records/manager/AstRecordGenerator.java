@@ -122,7 +122,6 @@ public class AstRecordGenerator {
     }
 
     private ClassName toClassName(Function<String, MetaInfoRecord> recordRegistry, FieldModel targetable) {
-        System.out.println(targetable.getClassNameTarget());
         MetaInfoRecord target = recordRegistry.apply(targetable.getClassNameTarget());
         return ClassName.get(target.getPkg(), target.getClassName());
     }

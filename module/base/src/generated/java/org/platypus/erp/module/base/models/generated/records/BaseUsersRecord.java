@@ -24,29 +24,29 @@ public interface BaseUsersRecord extends Record {
 
   void share(BooleanField share);
 
-  StringField new_password();
-
   StringField password();
 
   StringField login();
 
-  void new_password(StringField new_password);
+  StringField new_password();
 
   void password(StringField password);
 
   void login(StringField login);
 
-  BaseCompanyRecordCollection companies();
-
-  BaseGroupRecordCollection action();
+  void new_password(StringField new_password);
 
   BaseGroupRecordCollection groups();
 
-  void companies(BaseCompanyRecordCollection companies);
+  BaseGroupRecordCollection action();
+
+  BaseCompanyRecordCollection companies();
+
+  void groups(BaseGroupRecordCollection groups);
 
   void action(BaseGroupRecordCollection action);
 
-  void groups(BaseGroupRecordCollection groups);
+  void companies(BaseCompanyRecordCollection companies);
 
   BaseCompanyRecord company();
 

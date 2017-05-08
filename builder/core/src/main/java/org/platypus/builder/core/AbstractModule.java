@@ -207,4 +207,9 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
     public Set<String> getMenus() {
         return menus;
     }
+
+    @Override
+    public String toString() {
+        return technicalName;
+    }
 }

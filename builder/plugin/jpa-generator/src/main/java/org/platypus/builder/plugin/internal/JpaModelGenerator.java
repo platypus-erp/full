@@ -184,8 +184,8 @@ public class JpaModelGenerator {
 
         foreachValues(modelMerged.getMtoField(), f -> fieldGenerator.generateField(f, getRecord));
         foreachValues(modelMerged.getOtoField(), f -> fieldGenerator.generateField(f, getRecord));
-        foreachValues(modelMerged.getMtmField(), f -> fieldGenerator.generateField(f, getRecord));
-        foreachValues(modelMerged.getOtmField(), f -> fieldGenerator.generateField(f, getRecord));
+        foreachValues(modelMerged.getMtmField(), f -> fieldGenerator.generateField(f, getRecordCollection));
+        foreachValues(modelMerged.getOtmField(), f -> fieldGenerator.generateField(f, getRecordCollection));
         return recordImpl;
     }
 

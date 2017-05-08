@@ -42,6 +42,7 @@ import org.platypus.api.fields.impl.LongFieldImpl;
 import org.platypus.api.fields.impl.StringFieldImpl;
 import org.platypus.api.fields.impl.TimeFieldImpl;
 import org.platypus.api.module.MetaInfoRecord;
+import org.platypus.api.module.MetaInfoRecordCollection;
 
 import javax.persistence.CascadeType;
 
@@ -131,7 +132,7 @@ public class Utils {
         return RECORD_FIELD_TYPE_IMPL.get(fieldType.annotationType().getCanonicalName());
     }
 
-    public static ClassName toRecordCollection(MetaInfoRecord representation) {
+    public static ClassName toRecordCollection(MetaInfoRecordCollection representation) {
         return ClassName.get(representation.getPkg(), representation.getClassName());
     }
     public static ClassName toRecordCollectionImpl(MetaInfoRecord representation) {

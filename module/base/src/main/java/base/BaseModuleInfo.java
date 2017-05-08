@@ -22,18 +22,18 @@ import org.platypus.erp.module.base.models.generated.records.BaseUsersRecordColl
 public class BaseModuleInfo extends AbstractModule {
     public BaseModuleInfo() {
         super("Sample Module with all platypus and community depends");
-        addModel(Company.class);
-        addModel(Group.class);
         addModel(Users.class);
+        addModel(Group.class);
+        addModel(Company.class);
         addModel(Partner.class);
-        addRecord(BaseCompanyRecord.class);
         addRecord(BaseGroupRecord.class);
-        addRecord(BasePartnerRecord.class);
         addRecord(BaseUsersRecord.class);
+        addRecord(BaseCompanyRecord.class);
+        addRecord(BasePartnerRecord.class);
         addRecordCollection(BaseCompanyRecordCollection.class);
-        addRecordCollection(BaseUsersRecordCollection.class);
         addRecordCollection(BasePartnerRecordCollection.class);
         addRecordCollection(BaseGroupRecordCollection.class);
+        addRecordCollection(BaseUsersRecordCollection.class);
         addView("views/partner-list.xml");
     }
 }

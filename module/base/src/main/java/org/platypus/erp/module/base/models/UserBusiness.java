@@ -1,6 +1,5 @@
 package org.platypus.erp.module.base.models;
 
-import org.platypus.api.fields.StringField;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
 /**

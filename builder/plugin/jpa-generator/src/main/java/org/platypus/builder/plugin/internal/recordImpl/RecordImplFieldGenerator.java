@@ -3,6 +3,7 @@ package org.platypus.builder.plugin.internal.recordImpl;
 import com.squareup.javapoet.TypeSpec;
 import org.platypus.api.fields.metainfo.*;
 import org.platypus.api.module.MetaInfoRecord;
+import org.platypus.api.module.MetaInfoRecordCollection;
 
 import java.util.function.Function;
 
@@ -76,12 +77,12 @@ public class RecordImplFieldGenerator {
         basicFieldRecordImplSetterGenerator.generateSetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
     }
 
-    public void generateField(MetaInfoOneToManyField meta, Function<String, MetaInfoRecord> getRecord){
+    public void generateField(MetaInfoOneToManyField meta, Function<String, MetaInfoRecordCollection> getRecord){
         basicFieldRecordImplGetterGenerator.generateGetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
         basicFieldRecordImplSetterGenerator.generateSetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
     }
 
-    public void generateField(MetaInfoManyToManyField meta, Function<String, MetaInfoRecord> getRecord){
+    public void generateField(MetaInfoManyToManyField meta, Function<String, MetaInfoRecordCollection> getRecord){
         basicFieldRecordImplGetterGenerator.generateGetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
         basicFieldRecordImplSetterGenerator.generateSetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
     }

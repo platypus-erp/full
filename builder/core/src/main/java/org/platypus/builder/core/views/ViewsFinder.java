@@ -17,6 +17,7 @@ import java.util.stream.Stream;
  * @since 0.1
  * on 24/04/17.
  */
+
 public class ViewsFinder {
 
     public static void main(String[] args) {

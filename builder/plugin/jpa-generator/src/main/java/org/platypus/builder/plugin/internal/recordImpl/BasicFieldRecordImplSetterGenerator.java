@@ -5,6 +5,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import org.platypus.api.fields.metainfo.*;
 import org.platypus.api.module.MetaInfoRecord;
+import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.Utils;
 import org.platypus.builder.plugin.internal.JpaUtils;
 
@@ -61,11 +62,11 @@ public class BasicFieldRecordImplSetterGenerator {
         return getSetter(field.getName(), Utils.toRecord(getRecord.apply(field.targetName())));
     }
     public Optional<MethodSpec> generateSetter(MetaInfoOneToManyField field,
-                                               Function<String, MetaInfoRecord> getRecord) {
+                                               Function<String, MetaInfoRecordCollection> getRecord) {
         return getSetter(field.getName(), Utils.toRecordCollection(getRecord.apply(field.targetName())));
     }
     public Optional<MethodSpec> generateSetter(MetaInfoManyToManyField field,
-                                               Function<String, MetaInfoRecord> getRecord) {
+                                               Function<String, MetaInfoRecordCollection> getRecord) {
         return getSetter(field.getName(), Utils.toRecordCollection(getRecord.apply(field.targetName())));
     }
     private Optional<MethodSpec> getSetter(String name, TypeName field){

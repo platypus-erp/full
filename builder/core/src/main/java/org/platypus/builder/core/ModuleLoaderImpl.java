@@ -14,7 +14,7 @@ import org.platypus.builder.core.moduletree.ModuleTree;
 import org.platypus.builder.core.moduletree.ModuleTreeBuilder;
 import org.platypus.builder.core.records.manager.AstModelHelper;
 import org.platypus.builder.core.records.manager.AstRecordRegistry;
-import org.platypus.builder.core.records.manager.RecordFinder;
+import org.platypus.builder.core.records.manager.ModelsFinder;
 import org.platypus.builder.core.records.manager.astvisitor.AstModel;
 import org.platypus.builder.core.records.tree.RecordTree;
 import org.platypus.builder.core.records.tree.RecordTreeBuilder;
@@ -62,7 +62,7 @@ public class ModuleLoaderImpl implements ModuleLoader {
     }
 
     private void parseProjectModels() {
-        astModels = RecordFinder.run(mainArgs.srcDirs);
+        astModels = ModelsFinder.run(mainArgs.modelsDir);
     }
 
     private void parseProjectViews() {
@@ -72,15 +72,14 @@ public class ModuleLoaderImpl implements ModuleLoader {
         rootRecordSimpleName = depends.stream()
                 .flatMap(p -> p.getModel().values().stream())
                 .collect(Collectors.toMap(MetaInfoModel::getClassName, Namable::getName));
-        Set<AstModel> models = RecordFinder.run(mainArgs.srcDirs);
 
-        models.stream()
+        astModels.stream()
                 .map(m -> AstModelHelper.convertToRecordCollection(mainArgs.modulename, m))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .forEach(m -> recordRegistry.addRecordCollectionFromAst(mainArgs.modulename, m));
 
-        models.stream()
+        astModels.stream()
                 .map(m -> AstModelHelper.convertToRecord(mainArgs.modulename, m))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -90,10 +89,9 @@ public class ModuleLoaderImpl implements ModuleLoader {
     private Set<PlatypusCompleteModuleInfo> loadDependecies() {
         ServiceLoader<PlatypusCompleteModuleInfo> platypusCompleteModuleInfos = ServiceLoader.load(PlatypusCompleteModuleInfo.class);
         depends = new HashSet<>();
-        for (PlatypusCompleteModuleInfo m : platypusCompleteModuleInfos) {
-            depends.add(m);
-        }
-        System.out.println(depends);
+        platypusCompleteModuleInfos.forEach(depends::add);
+
+        System.out.println("depends "+depends);
         recordRegistry = new AstRecordRegistry();
         moduleTree = new ModuleTreeBuilder().build(depends);
 

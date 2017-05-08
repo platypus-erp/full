@@ -1,13 +1,23 @@
-group 'org.platypus.tools'
+group 'org.platypus'
 version '1.0-SNAPSHOT'
-apply plugin: 'java'
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
     compile gradleApi()
+    compile localGroovy()
 }
-
-sourceCompatibility = 1.8
-
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../../repo'))
+        }
+    }
+}
