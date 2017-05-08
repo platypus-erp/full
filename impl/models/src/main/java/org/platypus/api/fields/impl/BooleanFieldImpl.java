@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  */
 public class BooleanFieldImpl extends AbstractFieldImpl<Boolean> implements BooleanField {
 
-    public BooleanFieldImpl(Supplier<Boolean> getter, Consumer<Boolean> setter) {
-        super(getter, setter);
+    public BooleanFieldImpl(String name, Supplier<Boolean> getter, Consumer<Boolean> setter) {
+        super(name, getter, setter);
     }
 }

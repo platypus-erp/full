@@ -20,14 +20,15 @@ import java.util.function.Supplier;
  */
 public class RecordImpl<R extends Record, RI extends R> extends AbstractFieldImpl<RI> implements GenericField<RI>, Record{
 
-    public RecordImpl(Supplier<RI> getter, Consumer<RI> setter) {
-        super(getter, setter);
+    public RecordImpl(String name, Supplier<RI> getter, Consumer<RI> setter) {
+        super(name, getter, setter);
     }
 
-//    @Override
-//    public LongField id() {
-//        return get().id();
-//    }
+    @Override
+    public LongField id() {
+        return get().id();
+    }
+
 //
 //    @Override
 //    public void id(long id) {

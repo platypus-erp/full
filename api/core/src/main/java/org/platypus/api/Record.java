@@ -1,7 +1,12 @@
 package org.platypus.api;
 
 
+import org.platypus.api.fields.IntField;
+import org.platypus.api.fields.LongField;
+
 public interface Record {
+
+    LongField id();
 
     default <T extends Record> T unWrap(Class<T> type){
         if (type != this.getClass()) {

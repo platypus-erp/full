@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  */
 public class IntFieldImpl extends AbstractFieldImpl<Integer> implements IntField {
 
-    public IntFieldImpl(Supplier<Integer> getter, Consumer<Integer> setter) {
-        super(getter, setter);
+    public IntFieldImpl(String name, Supplier<Integer> getter, Consumer<Integer> setter) {
+        super(name, getter, setter);
     }
 }

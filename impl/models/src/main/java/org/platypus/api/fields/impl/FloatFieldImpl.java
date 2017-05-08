@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  */
 public class FloatFieldImpl extends AbstractFieldImpl<Float> implements FloatField {
 
-    public FloatFieldImpl(Supplier<Float> getter, Consumer<Float> setter) {
-        super(getter, setter);
+    public FloatFieldImpl(String name, Supplier<Float> getter, Consumer<Float> setter) {
+        super(name, getter, setter);
     }
 }

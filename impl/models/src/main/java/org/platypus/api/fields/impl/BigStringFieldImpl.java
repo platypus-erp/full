@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  */
 public class BigStringFieldImpl extends AbstractFieldImpl<String> implements BigStringField {
 
-    public BigStringFieldImpl(Supplier<String> getter, Consumer<String> setter) {
-        super(getter, setter);
+    public BigStringFieldImpl(String name, Supplier<String> getter, Consumer<String> setter) {
+        super(name, getter, setter);
     }
 }

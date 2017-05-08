@@ -19,6 +19,7 @@ dependencies {
     compile 'javax.validation:validation-api:1.1.0.Final'
     compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
     compile group: 'org.picketlink', name: 'picketlink-api', version: '2.7.1.Final'
+    compile 'org.picketlink:picketlink-idm-simple-schema:2.7.1.Final'
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.6.2'
     compile 'org.hibernate:hibernate-validator:5.1.2.Final'

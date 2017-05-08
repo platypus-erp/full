@@ -21,8 +21,8 @@ import java.util.function.*;
 public class RecordCollectionImpl<R extends Record,RI extends R, RC extends RecordCollection<R>> extends AbstractFieldImpl<List<RI>> implements GenericField<List<RI>>, RecordCollection<R> {
 
 
-    public RecordCollectionImpl(Supplier<List<RI>> getter, Consumer<List<RI>> setter) {
-        super(getter, setter);
+    public RecordCollectionImpl(String name, Supplier<List<RI>> getter, Consumer<List<RI>> setter) {
+        super(name, getter, setter);
     }
 
 

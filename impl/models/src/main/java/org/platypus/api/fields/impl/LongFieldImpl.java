@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  */
 public class LongFieldImpl extends AbstractFieldImpl<Long> implements LongField {
 
-    public LongFieldImpl(Supplier<Long> getter, Consumer<Long> setter) {
-        super(getter, setter);
+    public LongFieldImpl(String name, Supplier<Long> getter, Consumer<Long> setter) {
+        super(name, getter, setter);
     }
 }

@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  */
 public class DateFieldImpl extends AbstractFieldImpl<LocalDate> implements DateField {
 
-    public DateFieldImpl(Supplier<LocalDate> getter, Consumer<LocalDate> setter) {
-        super(getter, setter);
+    public DateFieldImpl(String name, Supplier<LocalDate> getter, Consumer<LocalDate> setter) {
+        super(name, getter, setter);
     }
 }

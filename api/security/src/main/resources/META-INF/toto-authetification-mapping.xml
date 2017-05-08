@@ -5,21 +5,21 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
                  version="1.0">
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.PartitionTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.AccountTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.RelationshipTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.AttributedTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.AttributeTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.AbstractCredentialTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.X509CredentialTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.GroupTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.OTPCredentialTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.TokenCredentialTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.RoleTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.PasswordCredentialTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.RelationshipIdentityTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.IdentityTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.DigestCredentialTypeEntity"/>-->
-    <!--<entity class="org.picketlink.idm.jpa.model.sample.simple.PermissionTypeEntity"/>-->
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.PartitionTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.AccountTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.RelationshipTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.AttributedTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.AttributeTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.AbstractCredentialTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.X509CredentialTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.GroupTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.OTPCredentialTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.TokenCredentialTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.RoleTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.PasswordCredentialTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.RelationshipIdentityTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.IdentityTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.DigestCredentialTypeEntity"/>
+    <entity class="org.picketlink.idm.jpa.model.sample.simple.PermissionTypeEntity"/>
 </entity-mappings>
 

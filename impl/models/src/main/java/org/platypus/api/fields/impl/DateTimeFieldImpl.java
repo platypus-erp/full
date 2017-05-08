@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  */
 public class DateTimeFieldImpl extends AbstractFieldImpl<LocalDateTime> implements DateTimeField {
 
-    public DateTimeFieldImpl(Supplier<LocalDateTime> getter, Consumer<LocalDateTime> setter) {
-        super(getter, setter);
+    public DateTimeFieldImpl(String name, Supplier<LocalDateTime> getter, Consumer<LocalDateTime> setter) {
+        super(name, getter, setter);
     }
 }

@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  */
 public class StringFieldImpl extends AbstractFieldImpl<String> implements StringField {
 
-    public StringFieldImpl(Supplier<String> getter, Consumer<String> setter) {
-        super(getter, setter);
+    public StringFieldImpl(String name, Supplier<String> getter, Consumer<String> setter) {
+        super(name, getter, setter);
     }
 }

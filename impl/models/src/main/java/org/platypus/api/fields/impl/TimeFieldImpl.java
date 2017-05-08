@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  */
 public class TimeFieldImpl extends AbstractFieldImpl<LocalTime> implements TimeField {
 
-    public TimeFieldImpl(Supplier<LocalTime> getter, Consumer<LocalTime> setter) {
-        super(getter, setter);
+    public TimeFieldImpl(String name, Supplier<LocalTime> getter, Consumer<LocalTime> setter) {
+        super(name, getter, setter);
     }
 }

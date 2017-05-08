@@ -11,5 +11,9 @@ public class UserBusiness {
     public void onChangeLogin(BaseUsersRecord record) {
         if (record.login().match("")){
         }
+
+
+        QueryBuilder.Predicate query = QueryBuilder.eq(record.login(), "sdlfmsd");
+        record.partner().getId().getPath();
     }
 }

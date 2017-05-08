@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  */
 public class DecimalFieldImpl extends AbstractFieldImpl<BigDecimal> implements DecimalField {
 
-    public DecimalFieldImpl(Supplier<BigDecimal> getter, Consumer<BigDecimal> setter) {
-        super(getter, setter);
+    public DecimalFieldImpl(String name, Supplier<BigDecimal> getter, Consumer<BigDecimal> setter) {
+        super(name, getter, setter);
     }
 }

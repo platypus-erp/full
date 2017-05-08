@@ -101,7 +101,7 @@ public class LoginRoute {
 
         query.setParameter(Grant.ASSIGNEE, account);
 
-        List<Role> roles = new ArrayList<Role>();
+        List<Role> roles = new ArrayList<>();
 
         for (Grant grant: query.getResultList()) {
             roles.add(grant.getRole());

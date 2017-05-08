@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  */
 public class BinaryFieldImpl extends AbstractFieldImpl<byte[]> implements BinaryField {
 
-    public BinaryFieldImpl(Supplier<byte[]> getter, Consumer<byte[]> setter) {
-        super(getter, setter);
+    public BinaryFieldImpl(String name, Supplier<byte[]> getter, Consumer<byte[]> setter) {
+        super(name, getter, setter);
     }
 }
