@@ -10,5 +10,5 @@ import org.platypus.api.annotations.field.IntFieldDefinition;
  * @version 0.1
  * @since 0.1
  */
-public interface MetaInfoIntField extends IntFieldDefinition, Namable {
+public interface MetaInfoIntField extends IntFieldDefinition, MetaInfoField {
 }

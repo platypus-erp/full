@@ -44,7 +44,7 @@ public class ManyToOneFieldLiteral implements MetaInfoManyToOneField, BasicField
         this.newField = newField;
     }
 
-    public ManyToOneFieldLiteral(String name) {
+    protected ManyToOneFieldLiteral(String name) {
         this.name = name;
     }
 

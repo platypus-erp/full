@@ -37,67 +37,67 @@ public class RecordImplFieldGenerator {
     }
 
     public void generateField(MetaInfoBigStringField meta){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
     }
     public void generateField(MetaInfoBinaryField meta){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
     }
     public void generateField(MetaInfoBooleanField meta){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
     }
     public void generateField(MetaInfoDateField meta){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
     }
     public void generateField(MetaInfoDateTimeField meta){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
     }
     public void generateField(MetaInfoDecimalField meta){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
     }
     public void generateField(MetaInfoFloatField meta){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
     }
     public void generateField(MetaInfoIntField meta){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
     }
     public void generateField(MetaInfoLongField meta){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
     }
     public void generateField(MetaInfoStringField meta){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
     }
     public void generateField(MetaInfoTimeField meta){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta).ifPresent(recordImplBuilder::addMethod);
     }
 
     public void generateField(MetaInfoManyToOneField meta, Function<String, MetaInfoRecord> getRecord){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
     }
 
     public void generateField(MetaInfoOneToOneField meta, Function<String, MetaInfoRecord> getRecord){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
     }
 
     public void generateField(MetaInfoOneToManyField meta, Function<String, MetaInfoRecordCollection> getRecord){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
     }
 
     public void generateField(MetaInfoManyToManyField meta, Function<String, MetaInfoRecordCollection> getRecord){
-        basicFieldRecordImplGetterGenerator.generateGetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
-        basicFieldRecordImplSetterGenerator.generateSetter(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplGetterGenerator.generate(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
+        basicFieldRecordImplSetterGenerator.generate(meta, getRecord).ifPresent(recordImplBuilder::addMethod);
     }
 }

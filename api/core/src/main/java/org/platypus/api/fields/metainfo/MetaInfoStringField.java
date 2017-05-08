@@ -10,6 +10,6 @@ import org.platypus.api.annotations.field.StringFieldDefinition;
  * @version 0.1
  * @since 0.1
  */
-public interface MetaInfoStringField extends StringFieldDefinition, Namable {
+public interface MetaInfoStringField extends StringFieldDefinition, MetaInfoField {
     
 }

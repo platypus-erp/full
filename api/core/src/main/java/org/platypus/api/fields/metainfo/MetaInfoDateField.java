@@ -11,5 +11,5 @@ import org.platypus.api.annotations.field.DateFieldDefinition;
  * @version 0.1
  * @since 0.1
  */
-public interface MetaInfoDateField extends DateFieldDefinition, Namable {
+public interface MetaInfoDateField extends DateFieldDefinition , MetaInfoField{
 }

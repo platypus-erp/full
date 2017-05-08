@@ -10,6 +10,8 @@ package org.platypus.api;
 public interface EmptyCheckable {
 
     boolean isEmpty();
-    boolean isNotEmpty();
+    default boolean isNotEmpty(){
+        return !isEmpty();
+    }
 
 }

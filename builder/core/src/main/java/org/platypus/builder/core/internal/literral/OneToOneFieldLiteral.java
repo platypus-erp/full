@@ -42,7 +42,7 @@ public class OneToOneFieldLiteral implements MetaInfoOneToOneField, BasicFieldDe
         this.newField = newField;
     }
 
-    public OneToOneFieldLiteral(String name) {
+    protected OneToOneFieldLiteral(String name) {
         this.name = name;
     }
 

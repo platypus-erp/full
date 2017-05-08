@@ -8,6 +8,7 @@ import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
 import org.platypus.api.fields.metainfo.MetaInfoDateField;
 import org.platypus.api.fields.metainfo.MetaInfoDateTimeField;
 import org.platypus.api.fields.metainfo.MetaInfoDecimalField;
+import org.platypus.api.fields.metainfo.MetaInfoField;
 import org.platypus.api.fields.metainfo.MetaInfoFloatField;
 import org.platypus.api.fields.metainfo.MetaInfoIntField;
 import org.platypus.api.fields.metainfo.MetaInfoLongField;
@@ -26,71 +27,24 @@ import javax.lang.model.element.Modifier;
 
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * @author chmuchme
  * @since 0.1
  * on 19/04/17.
  */
-public class BasicFieldRecordImplGetterGenerator {
-    public Optional<MethodSpec> generateGetter(MetaInfoBigStringField field){
-        return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
-    }
-    public Optional<MethodSpec> generateGetter(MetaInfoBinaryField field){
-        return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
-    }
-    public Optional<MethodSpec> generateGetter(MetaInfoBooleanField field){
-        return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
-    }
-    public Optional<MethodSpec> generateGetter(MetaInfoDateField field){
-        return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
-    }
-    public Optional<MethodSpec> generateGetter(MetaInfoDateTimeField field){
-        return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
-    }
-    public Optional<MethodSpec> generateGetter(MetaInfoDecimalField field){
-        return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
-    }
-    public Optional<MethodSpec> generateGetter(MetaInfoFloatField field){
-        return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
-    }
-    public Optional<MethodSpec> generateGetter(MetaInfoIntField field){
-        return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
-    }
-    public Optional<MethodSpec> generateGetter(MetaInfoLongField field){
-        return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
-    }
-    public Optional<MethodSpec> generateGetter(MetaInfoStringField field){
-        return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
-    }
-    public Optional<MethodSpec> generateGetter(MetaInfoTimeField field){
-        return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
+public class BasicFieldRecordImplGetterGenerator extends FieldGenerator{
+
+    public BasicFieldRecordImplGetterGenerator() {
+        super(f -> false);
     }
 
-    public Optional<MethodSpec> generateGetter(MetaInfoManyToOneField field,
-                                               Function<String, MetaInfoRecord> getRecord) {
-        MetaInfoRecord record = getRecord.apply(field.targetName());
-        return getGetter(field.getName(), Utils.toRecord(record));
-    }
-    public Optional<MethodSpec> generateGetter(MetaInfoOneToOneField field,
-                                               Function<String, MetaInfoRecord> getRecord) {
-        MetaInfoRecord record = getRecord.apply(field.targetName());
-        return getGetter(field.getName(), Utils.toRecord(record));
-    }
-    public Optional<MethodSpec> generateGetter(MetaInfoOneToManyField field,
-                                               Function<String, MetaInfoRecordCollection> getRecord) {
-        MetaInfoRecordCollection record = getRecord.apply(field.targetName());
-        return getGetter(field.getName(), Utils.toRecordCollection(record));
-    }
-    public Optional<MethodSpec> generateGetter(MetaInfoManyToManyField field,
-                                               Function<String, MetaInfoRecordCollection> getRecord) {
-        MetaInfoRecordCollection record = getRecord.apply(field.targetName());
-        return getGetter(field.getName(), Utils.toRecordCollection(record));
-    }
-    private Optional<MethodSpec> getGetter(String name, TypeName field){
+    @Override
+    protected Optional<MethodSpec> getMethod(String name, TypeName field){
         return Optional.of(MethodSpec.methodBuilder(name)
                 .returns(field)
-                .addCode("return get().$N();\n", name)
+                .addCode("return getOrDefault().$N();\n", name)
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .build());

@@ -1,5 +1,6 @@
 package org.platypus.api.fields.impl;
 
+import org.platypus.api.QueryPath;
 import org.platypus.api.fields.IntField;
 
 import java.util.function.Consumer;
@@ -14,7 +15,16 @@ import java.util.function.Supplier;
  */
 public class IntFieldImpl extends AbstractFieldImpl<Integer> implements IntField {
 
-    public IntFieldImpl(String name, Supplier<Integer> getter, Consumer<Integer> setter) {
-        super(name, getter, setter);
+
+    public IntFieldImpl(String name, Supplier<QueryPath> getPath, Supplier<Integer> getter, Consumer<Integer> setter) {
+        super(name, getPath, getter, setter, () ->0);
+    }
+
+    public IntFieldImpl(String name,
+                        Supplier<QueryPath> getPath,
+                        Supplier<Integer> getter,
+                        Consumer<Integer> setter,
+                        Integer defaultValue) {
+        super(name, getPath, getter, setter, () ->defaultValue);
     }
 }

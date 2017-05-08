@@ -19,8 +19,13 @@ import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
-import org.platypus.builder.plugin.internal.field.*;
-
+import org.platypus.builder.plugin.internal.field.BasicFieldJavaGetterGenerator;
+import org.platypus.builder.plugin.internal.field.BasicFieldJavaSetterGenerator;
+import org.platypus.builder.plugin.internal.field.BasicFieldJpaGenerator;
+import org.platypus.builder.plugin.internal.field.BasicFieldRecordConstructorGenerator;
+import org.platypus.builder.plugin.internal.field.BasicFieldRecordGenerator;
+import org.platypus.builder.plugin.internal.field.BasicFieldRecordGetterGenerator;
+import org.platypus.builder.plugin.internal.field.BasicFieldRecordSetterGenerator;
 
 import java.util.function.Function;
 
@@ -48,142 +53,244 @@ public class JpaImplFieldGenerator {
                 new BasicFieldRecordConstructorGenerator(getImplHibernateName(currentModelClassName));
     }
 
-    public void generateField(MetaInfoBigStringField meta){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta));
-    }
-    public void generateField(MetaInfoBinaryField meta){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta));
-    }
-    public void generateField(MetaInfoBooleanField meta){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta));
-    }
-    public void generateField(MetaInfoDateField meta){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta));
-    }
-    public void generateField(MetaInfoDateTimeField meta){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta));
-    }
-    public void generateField(MetaInfoDecimalField meta){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta));
-    }
-    public void generateField(MetaInfoFloatField meta){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta));
-    }
-    public void generateField(MetaInfoIntField meta){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta));
-    }
-    public void generateField(MetaInfoLongField meta){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta));
-    }
-    public void generateField(MetaInfoStringField meta){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta));
-    }
-    public void generateField(MetaInfoTimeField meta){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta));
+    public void generateField(MetaInfoBigStringField meta) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
     }
 
-    public void generateField(MetaInfoManyToOneField meta, Function<String, MetaInfoRecord> getRecord){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta, getRecord));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta, getRecord));
-    }
-    public void generateField(MetaInfoOneToOneField meta, Function<String, MetaInfoRecord> getRecord){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta, getRecord));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta, getRecord));
+    public void generateField(MetaInfoBinaryField meta) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
     }
 
-    public void generateField(MetaInfoOneToManyField meta, Function<String, MetaInfoRecordCollection> getRecord){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta, getRecord));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta, getRecord));
+    public void generateField(MetaInfoBooleanField meta) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
     }
-    public void generateField(MetaInfoManyToManyField meta, Function<String, MetaInfoRecordCollection> getRecord){
-        basicFieldJpaGenerator.generatedFieldImpl(meta).ifPresent(jpaImplBuilder::addField);
-        basicFieldJavaGetterGenerator.generateGetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldJavaSetterGenerator.generateSetter(meta).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordSetterGenerator.generateSetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
-        basicFieldRecordGetterGenerator.generateGetter(meta, getRecord).ifPresent(jpaImplBuilder::addMethod);
-        jpaImplBuilder.addField(basicFieldRecordGenerator.generateField(meta, getRecord));
-        constructor.addCode(basicFieldRecordConstructorGenerator.generateField(meta, getRecord));
+
+    public void generateField(MetaInfoDateField meta) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoDateTimeField meta) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoDecimalField meta) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoFloatField meta) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoIntField meta) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoLongField meta) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoStringField meta) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoTimeField meta) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoManyToOneField meta, Function<String, MetaInfoRecord> getRecord) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta, getRecord)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta, getRecord)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta, getRecord)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoOneToOneField meta, Function<String, MetaInfoRecord> getRecord) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta, getRecord)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta, getRecord)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta, getRecord)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoOneToManyField meta, Function<String, MetaInfoRecordCollection> getRecord) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta, getRecord)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta, getRecord)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta, getRecord)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
+    }
+
+    public void generateField(MetaInfoManyToManyField meta, Function<String, MetaInfoRecordCollection> getRecord) {
+        basicFieldJpaGenerator.generatedFieldImpl(meta)
+                .ifPresent(jpaImplBuilder::addField);
+
+        basicFieldJavaGetterGenerator.generateGetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldJavaSetterGenerator.generateSetter(meta)
+                .ifPresent(jpaImplBuilder::addMethod);
+
+        basicFieldRecordSetterGenerator.generateSetter(meta, getRecord)
+                .ifPresent(jpaImplBuilder::addMethod);
+        basicFieldRecordGetterGenerator.generateGetter(meta, getRecord)
+                .map(mb -> mb.addCode(basicFieldRecordConstructorGenerator.generateField(meta, getRecord)).build())
+                .ifPresent(jpaImplBuilder::addMethod);
     }
 
 }

@@ -33,65 +33,64 @@ import java.util.function.Function;
  * on 19/04/17.
  */
 public class BasicFieldRecordGetterGenerator {
-    public Optional<MethodSpec> generateGetter(MetaInfoBigStringField field){
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoBigStringField field){
         return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoBinaryField field){
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoBinaryField field){
         return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoBooleanField field){
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoBooleanField field){
         return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoDateField field){
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoDateField field){
         return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoDateTimeField field){
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoDateTimeField field){
         return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoDecimalField field){
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoDecimalField field){
         return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoFloatField field){
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoFloatField field){
         return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoIntField field){
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoIntField field){
         return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoLongField field){
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoLongField field){
         return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoStringField field){
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoStringField field){
         return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoTimeField field){
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoTimeField field){
         return getGetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoManyToOneField field,
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoManyToOneField field,
                                               Function<String, MetaInfoRecord> getRecord) {
         MetaInfoRecord record = getRecord.apply(field.targetName());
         return getGetter(field.getName(), Utils.toRecord(record));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoOneToOneField field,
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoOneToOneField field,
                                               Function<String, MetaInfoRecord> getRecord) {
         MetaInfoRecord record = getRecord.apply(field.targetName());
         return getGetter(field.getName(), Utils.toRecord(record));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoOneToManyField field,
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoOneToManyField field,
                                                Function<String, MetaInfoRecordCollection> getRecord) {
         MetaInfoRecordCollection record = getRecord.apply(field.targetName());
         return getGetter(field.getName(), Utils.toRecordCollection(record));
     }
-    public Optional<MethodSpec> generateGetter(MetaInfoManyToManyField field,
+    public Optional<MethodSpec.Builder> generateGetter(MetaInfoManyToManyField field,
                                                Function<String, MetaInfoRecordCollection> getRecord) {
         MetaInfoRecordCollection record = getRecord.apply(field.targetName());
         return getGetter(field.getName(), Utils.toRecordCollection(record));
     }
-    private Optional<MethodSpec> getGetter(String name, TypeName field){
+    private Optional<MethodSpec.Builder> getGetter(String name, TypeName field){
         return Optional.of(MethodSpec.methodBuilder(name)
                 .returns(field)
-                .addCode("return $N;\n", name+"Field")
+//                .addCode("return $N;\n", name+"Field")
                 .addAnnotation(Override.class)
-                .addModifiers(Modifier.PUBLIC)
-                .build());
+                .addModifiers(Modifier.PUBLIC));
     }
 }

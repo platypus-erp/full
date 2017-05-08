@@ -8,12 +8,13 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import org.apache.commons.lang3.StringUtils;
+import org.platypus.api.QueryPath;
 import org.platypus.api.fields.impl.RecordCollectionImpl;
 import org.platypus.api.fields.impl.RecordImpl;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
-import org.platypus.builder.core.model.merger.ModelMerged;
 import org.platypus.builder.core.Utils;
+import org.platypus.builder.core.model.merger.ModelMerged;
 import org.platypus.builder.plugin.internal.recordImpl.RecordImplFieldGenerator;
 import org.platypus.builder.utils.javapoet.utils.ClassSpecUtils;
 import org.platypus.builder.utils.javapoet.utils.Constant;
@@ -60,8 +61,18 @@ public class JpaModelGenerator {
     public void generate(ModelMerged modelMerged,
                          Function<String, MetaInfoRecord> getRecord,
                          Function<String, MetaInfoRecordCollection> getRecordCollection) {
+        jpaImplBuiler.put(modelMerged.getName(), new HashSet<>());
+        jpaImplBuiler.get(modelMerged.getName()).add(generateImplJpa(modelMerged, getRecord, getRecordCollection));
+        jpaImplBuiler.get(modelMerged.getName()).add(generateRecordImpl(modelMerged, getRecord, getRecordCollection));
+        jpaImplBuiler.get(modelMerged.getName()).add(generateRecordCollectionImpl(modelMerged, getRecord, getRecordCollection));
+    }
 
-        TypeSpec.Builder jpaImplBuilder = ClassSpecUtils.publicClass(getImplHibernateName(modelMerged.getName()));
+    private TypeSpec.Builder generateImplJpa(ModelMerged modelMerged,
+                                             Function<String, MetaInfoRecord> getRecord,
+                                             Function<String, MetaInfoRecordCollection> getRecordCollection) {
+
+        String className = getImplHibernateName(modelMerged.getName());
+        TypeSpec.Builder jpaImplBuilder = ClassSpecUtils.publicClass(className);
         String tableName = TO_SQL.apply(modelMerged.getName());
         System.out.println(modelMerged.getName());
 
@@ -69,15 +80,15 @@ public class JpaModelGenerator {
 
         jpaImplBuilder.addAnnotation(AnnotationSpec
                 .builder(Table.class)
-                .addMember("name", "$N.$N", jpaImplBuilder.build().name, "MODEL_NAME")
+                .addMember("name", "$N.$N", className, "MODEL_NAME")
                 .build());
 
         jpaImplBuilder.addAnnotation(Entity.class);
         MetaInfoRecord rec = getRecord.apply(modelMerged.getName());
-        jpaImplBuilder.addSuperinterface(Utils.toRecord(rec));
+        jpaImplBuilder.superclass(Utils.toRecordImpl(rec));
 
         MethodSpec.Builder constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
-
+        constructor.addCode("super(MODEL_NAME);\n");
         JpaImplFieldGenerator fieldGenerator = new JpaImplFieldGenerator(jpaImplBuilder, modelMerged.getName(), constructor);
         foreachValues(modelMerged.getBigStringField(), fieldGenerator::generateField);
         foreachValues(modelMerged.getBinaryField(), fieldGenerator::generateField);
@@ -97,15 +108,12 @@ public class JpaModelGenerator {
         foreachValues(modelMerged.getOtmField(), m -> fieldGenerator.generateField(m, getRecordCollection));
 
         jpaImplBuilder.addMethod(constructor.build());
-        jpaImplBuiler.put(modelMerged.getName(), new HashSet<>());
-        jpaImplBuiler.get(modelMerged.getName()).add(jpaImplBuilder);
-        jpaImplBuiler.get(modelMerged.getName()).add(generateRecordImpl(modelMerged, getRecord, getRecordCollection));
-        jpaImplBuiler.get(modelMerged.getName()).add(generateRecordCollectionImpl(modelMerged, getRecord, getRecordCollection));
+        return jpaImplBuilder;
     }
 
     public TypeSpec.Builder generateRecordCollectionImpl(ModelMerged modelMerged,
-                                               Function<String, MetaInfoRecord> getRecord,
-                                               Function<String, MetaInfoRecordCollection> getRecordCollection) {
+                                                         Function<String, MetaInfoRecord> getRecord,
+                                                         Function<String, MetaInfoRecordCollection> getRecordCollection) {
         MetaInfoRecord rTarget = getRecord.apply(modelMerged.getName());
         ClassName recordTarget = Utils.toRecord(rTarget);
 
@@ -118,22 +126,25 @@ public class JpaModelGenerator {
                 .addModifiers(Modifier.PUBLIC);
 
 
-        ParameterizedTypeName superClass = ParameterizedTypeName.get(ClassName.get(RecordCollectionImpl.class),recordTarget, recordTargetImpl, recordCollectionTarget);
+        ParameterizedTypeName superClass = ParameterizedTypeName.get(ClassName.get(RecordCollectionImpl.class), recordTarget, recordTargetImpl, recordCollectionTarget);
 
         recordCollectionImpl.superclass(superClass);
         recordCollectionImpl.addSuperinterface(recordCollectionTarget);
 
         ParameterizedTypeName listOfRecord = ParameterizedTypeName.get(ClassName.get(List.class), recordTargetImpl);
         ParameterizedTypeName functionGetter = ParameterizedTypeName.get(ClassName.get(Supplier.class), listOfRecord);
+        ParameterizedTypeName getPath = ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(QueryPath.class));
         ParameterizedTypeName functionSetter = ParameterizedTypeName.get(ClassName.get(Consumer.class), listOfRecord);
 
 
         MethodSpec.Builder constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
         constructor.addModifiers(Modifier.PUBLIC);
+        constructor.addParameter(ParameterSpec.builder(ClassName.get(String.class), "name").build());
+        constructor.addParameter(ParameterSpec.builder(getPath, "getPath").build());
         constructor.addParameter(ParameterSpec.builder(functionGetter, "getter").build());
         constructor.addParameter(ParameterSpec.builder(functionSetter, "setter").build());
 
-        constructor.addCode("super($N, $N);\n", "getter", "setter");
+        constructor.addCode("super($N, $N, $N, $N);\n", "name", "getPath", "getter", "setter");
 
         recordCollectionImpl.addMethod(constructor.build());
         return recordCollectionImpl;
@@ -141,8 +152,8 @@ public class JpaModelGenerator {
     }
 
     public TypeSpec.Builder generateRecordImpl(ModelMerged modelMerged,
-                                   Function<String, MetaInfoRecord> getRecord,
-                                   Function<String, MetaInfoRecordCollection> getRecordCollection) {
+                                               Function<String, MetaInfoRecord> getRecord,
+                                               Function<String, MetaInfoRecordCollection> getRecordCollection) {
         MetaInfoRecord rTarget = getRecord.apply(modelMerged.getName());
         ClassName recordTarget = Utils.toRecord(rTarget);
 
@@ -159,16 +170,26 @@ public class JpaModelGenerator {
 
         ParameterizedTypeName functionGetter = ParameterizedTypeName.get(ClassName.get(Supplier.class), recordTargetImpl);
         ParameterizedTypeName functionSetter = ParameterizedTypeName.get(ClassName.get(Consumer.class), recordTargetImpl);
+        ParameterizedTypeName getPath = ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(QueryPath.class));
 
-
-        MethodSpec.Builder constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
+        MethodSpec.Builder constructor = MethodSpec.constructorBuilder();
         constructor.addModifiers(Modifier.PUBLIC);
+        constructor.addParameter(ParameterSpec.builder(ClassName.get(String.class), "name").build());
+        constructor.addParameter(ParameterSpec.builder(getPath, "getPath").build());
         constructor.addParameter(ParameterSpec.builder(functionGetter, "getter").build());
         constructor.addParameter(ParameterSpec.builder(functionSetter, "setter").build());
 
-        constructor.addCode("super($N, $N);\n", "getter", "setter");
+        constructor.addCode("super($N,$N, $N, $N, $T::new);\n", "name", "getPath", "getter", "setter", recordTargetImpl);
 
         recordImpl.addMethod(constructor.build());
+
+
+        MethodSpec.Builder constructorSelf = MethodSpec.constructorBuilder().addModifiers(Modifier.PROTECTED);
+        constructorSelf.addParameter(ParameterSpec.builder(ClassName.get(String.class), "name").build());
+        constructorSelf.addCode("super($N, $T::new);\n", "name", recordTargetImpl);
+
+        recordImpl.addMethod(constructorSelf.build());
+
         RecordImplFieldGenerator fieldGenerator = new RecordImplFieldGenerator(recordImpl);
         foreachValues(modelMerged.getBigStringField(), fieldGenerator::generateField);
         foreachValues(modelMerged.getBinaryField(), fieldGenerator::generateField);

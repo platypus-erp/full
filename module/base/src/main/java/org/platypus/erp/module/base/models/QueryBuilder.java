@@ -1,5 +1,6 @@
 package org.platypus.erp.module.base.models;
 
+import org.platypus.api.Pathable;
 import org.platypus.api.QueryPath;
 
 /**
@@ -9,7 +10,7 @@ import org.platypus.api.QueryPath;
  */
 public class QueryBuilder {
 
-    public static Predicate eq(QueryPath column, Object value){
+    public static Predicate eq(Pathable column, Object value){
         Predicate pre = new Predicate();
         pre.path = column.getPath();
         pre.sqlSymbole = SqlSymbole.EQ;
@@ -18,14 +19,14 @@ public class QueryBuilder {
     }
 
     static class Predicate{
-        String  path;
+        QueryPath path;
         SqlSymbole sqlSymbole;
         PredicateValue value;
     }
 
     static class PredicateValue{
 
-        public static PredicateValue of(QueryPath column, Object value) {
+        public static PredicateValue of(Pathable column, Object value) {
             return new PredicateValue();
         }
     }

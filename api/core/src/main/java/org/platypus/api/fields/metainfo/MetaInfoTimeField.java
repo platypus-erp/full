@@ -11,5 +11,5 @@ import org.platypus.api.annotations.field.TimeFieldDefinition;
  * @version 0.1
  * @since 0.1
  */
-public interface MetaInfoTimeField extends TimeFieldDefinition, Namable {
+public interface MetaInfoTimeField extends TimeFieldDefinition, MetaInfoField {
 }

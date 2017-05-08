@@ -1,14 +1,10 @@
 package org.platypus.api.fields.impl;
 
 import org.platypus.api.GenericField;
+import org.platypus.api.QueryPath;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -23,20 +19,47 @@ abstract class AbstractFieldImpl<T> implements GenericField<T> {
     private final Supplier<T> getter;
     private final Consumer<T> setter;
     private final String name;
-    private final LinkedList<String> path;
+    private final Supplier<T> defaultValue;
+    protected final QueryPath path;
 
-    public AbstractFieldImpl(String name, Supplier<T> getter, Consumer<T> setter) {
+    public AbstractFieldImpl(String name,
+                             Supplier<QueryPath> getPath,
+                             Supplier<T> getter,
+                             Consumer<T> setter,
+                             Supplier<T> defaultValue) {
         this.getter = getter;
         this.setter = setter;
         this.name = name;
-        path = new LinkedList<>();
-        path.add(name);
-        path.addFirst(name);
+        this.defaultValue = defaultValue;
+        path = getPath.get().resolve(name);
+    }
+
+    public AbstractFieldImpl(String name,Supplier<T> defaultValue) {
+        this(name,
+                QueryPath::new,
+                () -> {
+                    throw new UnsupportedOperationException("can't be called");
+                },
+                m -> {
+                    throw new UnsupportedOperationException("can't be called");
+                },
+                defaultValue);
     }
 
     @Override
     public T get() {
         return getter.get();
+    }
+
+    @Override
+    public T getDefaultValue() {
+        return defaultValue.get();
+    }
+
+    @Override
+    public T getOrDefault(T defaultValue) {
+        T result = getter.get();
+        return result != null ? result : defaultValue;
     }
 
     @Override
@@ -50,12 +73,7 @@ abstract class AbstractFieldImpl<T> implements GenericField<T> {
     }
 
     @Override
-    public String getPath() {
-        return path.stream().collect(Collectors.joining("."));
-    }
-
-    @Override
-    public String[] getPathSplited() {
-        return path.toArray(new String[path.size()]);
+    public QueryPath getPath() {
+        return path;
     }
 }

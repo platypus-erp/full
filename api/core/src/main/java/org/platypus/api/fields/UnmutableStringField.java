@@ -19,7 +19,4 @@ public interface UnmutableStringField extends UnmutableGenericField<String> {
         return isEmpty() ? defaultValueIfEmpty : this.get().matches(regex);
     }
 
-    default boolean isEmpty(){
-        return get().isEmpty();
-    }
 }

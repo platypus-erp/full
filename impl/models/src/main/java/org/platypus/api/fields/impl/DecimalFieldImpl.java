@@ -1,5 +1,6 @@
 package org.platypus.api.fields.impl;
 
+import org.platypus.api.QueryPath;
 import org.platypus.api.fields.DecimalField;
 
 import java.math.BigDecimal;
@@ -15,7 +16,18 @@ import java.util.function.Supplier;
  */
 public class DecimalFieldImpl extends AbstractFieldImpl<BigDecimal> implements DecimalField {
 
-    public DecimalFieldImpl(String name, Supplier<BigDecimal> getter, Consumer<BigDecimal> setter) {
-        super(name, getter, setter);
+    public DecimalFieldImpl(String name,
+                            Supplier<QueryPath> getPath,
+                            Supplier<BigDecimal> getter,
+                            Consumer<BigDecimal> setter) {
+        super(name,getPath, getter, setter, () ->BigDecimal.ZERO);
     }
+    public DecimalFieldImpl(String name,
+                            Supplier<QueryPath> getPath,
+                            Supplier<BigDecimal> getter,
+                            Consumer<BigDecimal> setter,
+                            BigDecimal def) {
+        super(name,getPath, getter, setter, () ->def);
+    }
+
 }

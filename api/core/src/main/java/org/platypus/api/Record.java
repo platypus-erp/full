@@ -3,7 +3,7 @@ package org.platypus.api;
 
 import org.platypus.api.fields.LongField;
 
-public interface Record {
+public interface Record extends Pathable, Booleanable, EmptyCheckable{
 
     LongField id();
 

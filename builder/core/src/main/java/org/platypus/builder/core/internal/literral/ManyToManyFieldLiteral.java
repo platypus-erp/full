@@ -43,7 +43,7 @@ public class ManyToManyFieldLiteral implements MetaInfoManyToManyField, BasicFie
         this.newField = newField;
     }
 
-    public ManyToManyFieldLiteral(String name) {
+    protected ManyToManyFieldLiteral(String name) {
         this.name = name;
     }
 

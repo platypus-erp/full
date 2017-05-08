@@ -40,7 +40,7 @@ public class BigStringFieldLiteral implements BasicFieldDef, MetaInfoBigStringFi
         this.newField = newField;
     }
 
-    public BigStringFieldLiteral(String name) {
+    protected BigStringFieldLiteral(String name) {
         this.name = name;
     }
     public BigStringFieldLiteral(String name, BigStringFieldDefinition annotation) {

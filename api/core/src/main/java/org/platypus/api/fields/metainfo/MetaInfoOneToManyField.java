@@ -11,5 +11,5 @@ import org.platypus.api.annotations.field.OneToManyFieldDefinition;
  * @version 0.1
  * @since 0.1
  */
-public interface MetaInfoOneToManyField extends OneToManyFieldDefinition, Namable , Targetable {
+public interface MetaInfoOneToManyField extends OneToManyFieldDefinition, MetaInfoField , Targetable {
 }

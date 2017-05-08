@@ -11,5 +11,5 @@ import org.platypus.api.annotations.field.DecimalFieldDefinition;
  * @version 0.1
  * @since 0.1
  */
-public interface MetaInfoDecimalField extends DecimalFieldDefinition, Namable {
+public interface MetaInfoDecimalField extends DecimalFieldDefinition , MetaInfoField{
 }

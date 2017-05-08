@@ -11,5 +11,5 @@ import org.platypus.api.annotations.field.FloatFieldDefinition;
  * @version 0.1
  * @since 0.1
  */
-public interface MetaInfoFloatField extends FloatFieldDefinition, Namable {
+public interface MetaInfoFloatField extends FloatFieldDefinition, MetaInfoField {
 }

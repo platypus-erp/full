@@ -46,7 +46,7 @@ public class StringFieldLiteral implements BasicFieldDef, MetaInfoStringField {
     public void setNewField(boolean newField) {
         this.newField = newField;
     }
-    public StringFieldLiteral(String name) {
+    protected StringFieldLiteral(String name) {
         this.name = name;
     }
     public StringFieldLiteral(String name, StringFieldDefinition annotation) {

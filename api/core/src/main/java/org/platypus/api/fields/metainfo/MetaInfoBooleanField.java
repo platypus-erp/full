@@ -11,5 +11,5 @@ import org.platypus.api.annotations.field.BooleanFieldDefinition;
  * @version 0.1
  * @since 0.1
  */
-public interface MetaInfoBooleanField extends BooleanFieldDefinition, Namable {
+public interface MetaInfoBooleanField extends BooleanFieldDefinition , MetaInfoField{
 }

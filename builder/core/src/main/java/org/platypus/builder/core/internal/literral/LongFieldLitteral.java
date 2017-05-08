@@ -145,5 +145,11 @@ public class LongFieldLitteral implements MetaInfoLongField, BasicFieldDef {
     public Class<LongFieldDefinition> annotationType() {
         return LongFieldDefinition.class;
     }
+
+    public static LongFieldLitteral idField() {
+        LongFieldLitteral idField = new LongFieldLitteral("id");
+        idField.readonly = Bool.TRUE;
+        return idField;
+    }
     //</editor-fold>
 }

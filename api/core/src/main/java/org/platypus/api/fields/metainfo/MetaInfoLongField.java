@@ -11,5 +11,5 @@ import org.platypus.api.annotations.field.LongFieldDefinition;
  * @version 0.1
  * @since 0.1
  */
-public interface MetaInfoLongField extends LongFieldDefinition, Namable {
+public interface MetaInfoLongField extends LongFieldDefinition, MetaInfoField {
 }

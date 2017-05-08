@@ -196,7 +196,7 @@ public class BasicFieldJpaGenerator {
                 .addMember(UPDATABLE, LITTERAL, isTrueOrDefault(field.updatable()))
                 .build());
 
-        if (Integer.MIN_VALUE == field.defaultValue()) {
+        if (Long.MIN_VALUE == field.defaultValue()) {
             f.initializer(LITTERAL, 0);
         } else {
             f.initializer(LITTERAL, field.defaultValue());

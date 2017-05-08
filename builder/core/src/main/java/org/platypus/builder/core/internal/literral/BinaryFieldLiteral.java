@@ -39,7 +39,7 @@ public class BinaryFieldLiteral implements MetaInfoBinaryField, BasicFieldDef {
     public void setNewField(boolean newField) {
         this.newField = newField;
     }
-    public BinaryFieldLiteral(String name) {
+    protected BinaryFieldLiteral(String name) {
         this.name = name;
     }
     public BinaryFieldLiteral(String name, BinaryFieldDefinition annotation) {

@@ -11,5 +11,5 @@ import org.platypus.api.annotations.field.BigStringFieldDefinition;
  * @version 0.1
  * @since 0.1
  */
-public interface MetaInfoBigStringField extends BigStringFieldDefinition, Namable {
+public interface MetaInfoBigStringField extends BigStringFieldDefinition , MetaInfoField{
 }

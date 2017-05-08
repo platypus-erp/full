@@ -1,5 +1,6 @@
 package org.platypus.erp.module.base.models;
 
+import org.platypus.erp.module.base.models.generated.jpa.ImplUsersJPA;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
 /**
@@ -15,5 +16,11 @@ public class UserBusiness {
 
         QueryBuilder.Predicate query = QueryBuilder.eq(record.login(), "sdlfmsd");
         record.partner().id().getPath();
+    }
+
+
+    public static void main(String[] args) {
+        ImplUsersJPA record = new ImplUsersJPA();
+        System.out.println(record.partner().id().getPath());
     }
 }

@@ -25,6 +25,9 @@ configurations {
 }
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    generatedCompile 'javax.validation:validation-api:1.1.0.Final'
+    generatedCompile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
+
     emptyCompile project(':builder:core')
 
     platypusCompile project(':api:core')
@@ -40,6 +43,7 @@ dependencies {
     generatedCompile project(':impl:module')
     generatedCompile project(':impl:models')
 }
+
 jar {
     from sourceSets.models.output
     from sourceSets.main.output

@@ -1,5 +1,6 @@
 package org.platypus.api.fields.impl;
 
+import org.platypus.api.QueryPath;
 import org.platypus.api.fields.TimeField;
 
 import java.time.LocalTime;
@@ -15,7 +16,17 @@ import java.util.function.Supplier;
  */
 public class TimeFieldImpl extends AbstractFieldImpl<LocalTime> implements TimeField {
 
-    public TimeFieldImpl(String name, Supplier<LocalTime> getter, Consumer<LocalTime> setter) {
-        super(name, getter, setter);
+
+    public TimeFieldImpl(String name, Supplier<QueryPath> getPath, Supplier<LocalTime> getter, Consumer<LocalTime> setter) {
+        super(name, getPath, getter, setter, () ->LocalTime.MIDNIGHT);
     }
+
+    public TimeFieldImpl(String name,
+                         Supplier<QueryPath> getPath,
+                         Supplier<LocalTime> getter,
+                         Consumer<LocalTime> setter,
+                         LocalTime defaultNow) {
+        super(name, getPath, getter, setter, () -> defaultNow);
+    }
+
 }

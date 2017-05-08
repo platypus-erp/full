@@ -1,6 +1,7 @@
 package org.platypus.builder.plugin.internal.field;
 
 import com.squareup.javapoet.*;
+import org.platypus.api.Bool;
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
 import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
@@ -36,36 +37,69 @@ import static org.platypus.builder.plugin.internal.JpaModelGenerator.getImplHibe
  */
 public class BasicFieldRecordSetterGenerator {
     public Optional<MethodSpec> generateSetter(MetaInfoBigStringField field){
+        if (field.readonly() == Bool.TRUE){
+            return Optional.empty();
+        }
         return getSetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
     public Optional<MethodSpec> generateSetter(MetaInfoBinaryField field){
+        if (field.readonly() == Bool.TRUE){
+            return Optional.empty();
+        }
         return getSetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
     public Optional<MethodSpec> generateSetter(MetaInfoBooleanField field){
+        if (field.readonly() == Bool.TRUE){
+            return Optional.empty();
+        }
         return getSetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
     public Optional<MethodSpec> generateSetter(MetaInfoDateField field){
+        if (field.readonly() == Bool.TRUE){
+            return Optional.empty();
+        }
         return getSetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
     public Optional<MethodSpec> generateSetter(MetaInfoDateTimeField field){
+        if (field.readonly() == Bool.TRUE){
+            return Optional.empty();
+        }
         return getSetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
     public Optional<MethodSpec> generateSetter(MetaInfoDecimalField field){
+        if (field.readonly() == Bool.TRUE){
+            return Optional.empty();
+        }
         return getSetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
     public Optional<MethodSpec> generateSetter(MetaInfoFloatField field){
+        if (field.readonly() == Bool.TRUE){
+            return Optional.empty();
+        }
         return getSetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
     public Optional<MethodSpec> generateSetter(MetaInfoIntField field){
+        if (field.readonly() == Bool.TRUE){
+            return Optional.empty();
+        }
         return getSetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
     public Optional<MethodSpec> generateSetter(MetaInfoLongField field){
+        if (field.readonly() == Bool.TRUE){
+            return Optional.empty();
+        }
         return getSetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
     public Optional<MethodSpec> generateSetter(MetaInfoStringField field){
+        if (field.readonly() == Bool.TRUE){
+            return Optional.empty();
+        }
         return getSetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
     public Optional<MethodSpec> generateSetter(MetaInfoTimeField field){
+        if (field.readonly() == Bool.TRUE){
+            return Optional.empty();
+        }
         return getSetter(field.getName(), JpaUtils.getRecordFieldInterface(field));
     }
 

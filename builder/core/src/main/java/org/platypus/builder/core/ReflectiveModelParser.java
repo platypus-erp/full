@@ -1,7 +1,6 @@
 package org.platypus.builder.core;
 
 
-import org.platypus.api.BaseModel;
 import org.platypus.api.annotations.field.BigStringFieldDefinition;
 import org.platypus.api.annotations.field.BinaryFieldDefinition;
 import org.platypus.api.annotations.field.BooleanFieldDefinition;
@@ -18,8 +17,8 @@ import org.platypus.api.annotations.field.OneToOneFieldDefinition;
 import org.platypus.api.annotations.field.RelatedFieldDefinition;
 import org.platypus.api.annotations.field.StringFieldDefinition;
 import org.platypus.api.annotations.field.TimeFieldDefinition;
-import org.platypus.api.annotations.model.PlatypusModelInherit;
 import org.platypus.api.annotations.model.PlatypusModel;
+import org.platypus.api.annotations.model.PlatypusModelInherit;
 import org.platypus.api.fields.NewField;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.builder.core.internal.MetaInfoModelImpl;
@@ -49,7 +48,7 @@ import java.util.function.BiFunction;
  * @since 0.1
  * on 13/04/17.
  */
-public class ReflectiveModelParser implements BaseModel {
+public class ReflectiveModelParser {
 
     public MetaInfoModel parse(String moduleTechnicalName, Class<?> baseModelClass) {
         if (!baseModelClass.isAnnotationPresent(PlatypusModel.class)) {
@@ -77,7 +76,9 @@ public class ReflectiveModelParser implements BaseModel {
     }
 
     private MetaInfoModel reflectiveConstructMetaInfo(MetaInfoModelImpl impl, Field[] fields) {
+        impl.add(LongFieldLitteral.idField());
         for (Field f : fields) {
+
             parseBasicField(f, BigStringFieldDefinition.class, BigStringFieldLiteral::new).ifPresent(impl::add);
             parseBasicField(f, BinaryFieldDefinition.class, BinaryFieldLiteral::new).ifPresent(impl::add);
             parseBasicField(f, BooleanFieldDefinition.class, BooleanFieldLiteral::new).ifPresent(impl::add);

@@ -83,41 +83,44 @@ public class BasicFieldRecordConstructorGenerator {
     }
 
     private CodeBlock getField(String name, TypeName field) {
-        return CodeBlock.of("$N = new $T(this::get$N, this::set$N);\n",
-                name + "Field",
+        return CodeBlock.of("return new $T($S, this::$N, this::get$N, this::set$N);\n",
                 field,
+                name,
+                "getPath",
                 StringUtils.capitalize(name),
                 StringUtils.capitalize(name)
         );
     }
     public CodeBlock generateField(MetaInfoManyToOneField field,
                                    Function<String, MetaInfoRecord> getRecord) {
-        return generateRecordField(field.getName(), field.targetName(),field.target(), getRecord);
+        return generateRecordField(field.getName(), field.targetName(), getRecord);
     }
     public CodeBlock generateField(MetaInfoOneToOneField field,
                                    Function<String, MetaInfoRecord> getRecord) {
-        return generateRecordField(field.getName(), field.targetName(), field.target(), getRecord);
+        return generateRecordField(field.getName(), field.targetName(), getRecord);
     }
-    private CodeBlock generateRecordField(String name, String fieldTargetName, Class<? extends BaseModel> target, Function<String, MetaInfoRecord> getRecord) {
-        return CodeBlock.of("$N = new $T(this::get$N, this::set$N);\n",
-                name + "Field",
+    private CodeBlock generateRecordField(String name, String fieldTargetName, Function<String, MetaInfoRecord> getRecord) {
+        return CodeBlock.of("return new $T($S, this::$N, this::get$N, this::set$N);\n",
                 Utils.toRecordImpl(getRecord.apply(fieldTargetName)),
+                name,
+                "getPath",
                 StringUtils.capitalize(name),
                 StringUtils.capitalize(name));
     }
     public CodeBlock generateField(MetaInfoOneToManyField field,
                                    Function<String, MetaInfoRecordCollection> getRecord) {
-        return generateRecordCollectionField(field.getName(), field.targetName(),field.target(), getRecord);
+        return generateRecordCollectionField(field.getName(), field.targetName(), getRecord);
     }
     public CodeBlock generateField(MetaInfoManyToManyField field,
                                    Function<String, MetaInfoRecordCollection> getRecord) {
-        return generateRecordCollectionField(field.getName(), field.targetName(), field.target(), getRecord);
+        return generateRecordCollectionField(field.getName(), field.targetName(), getRecord);
     }
     private CodeBlock generateRecordCollectionField(String name, String fieldTargetName,
-                                                    Class<? extends BaseModel> target, Function<String, ? extends MetaInfoRecord> getRecord) {
-        return CodeBlock.of("$N = new $T(this::get$N, this::set$N);\n",
-                name + "Field",
+                                                    Function<String, ? extends MetaInfoRecord> getRecord) {
+        return CodeBlock.of("return new $T($S,this::$N, this::get$N, this::set$N);\n",
                 Utils.toRecordCollectionImpl(getRecord.apply(fieldTargetName)),
+                name,
+                "getPath",
                 StringUtils.capitalize(name),
                 StringUtils.capitalize(name));
     }
