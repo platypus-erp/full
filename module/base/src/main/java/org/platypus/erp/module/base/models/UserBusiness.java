@@ -14,6 +14,6 @@ public class UserBusiness {
 
 
         QueryBuilder.Predicate query = QueryBuilder.eq(record.login(), "sdlfmsd");
-        record.partner().getId().getPath();
+        record.partner().id().getPath();
     }
 }
