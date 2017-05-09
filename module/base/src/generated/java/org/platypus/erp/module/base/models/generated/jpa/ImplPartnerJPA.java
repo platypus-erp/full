@@ -27,7 +27,6 @@ public class ImplPartnerJPA extends BasePartnerRecordImpl {
 
   public ImplPartnerJPA(Supplier<QueryPath> getPath) {
     super(MODEL_NAME, getPath);
-    System.out.println("impl path -- " + getPath.get());
   }
 
   public ImplPartnerJPA() {

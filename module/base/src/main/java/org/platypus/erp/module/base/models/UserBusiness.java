@@ -1,6 +1,7 @@
 package org.platypus.erp.module.base.models;
 
 import org.platypus.erp.module.base.models.generated.jpa.ImplUsersJPA;
+import org.platypus.erp.module.base.models.generated.records.BasePartnerRecord;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
 /**
@@ -24,6 +25,9 @@ public class UserBusiness {
         ImplUsersJPA record = new ImplUsersJPA();
 //        System.out.println(record.getPath());
 //        System.out.println(record.partner().getPath());
-        System.out.println(record.partner().id().getPath());
+        BasePartnerRecord r = record.partner();
+        System.out.println(r.id().getPath());
+        System.out.println(r.id().getPath());
+        System.out.println(record.share().getPath());
     }
 }

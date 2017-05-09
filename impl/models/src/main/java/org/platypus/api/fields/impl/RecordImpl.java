@@ -40,18 +40,9 @@ public class RecordImpl<R extends Record, RI extends R> extends AbstractFieldImp
         return defaultValue.apply(path).get();
     }
 
-    protected RI getOrDefaultWithPath(){
-        RI def = super.getOrDefault();
-        System.out.println("Path path.get "+ path.get());
-        System.out.println("Path def "+ def.getPath());
-        System.out.println("Path reel "+ getPath());
-        System.out.println("Path new  "+ def.id().getPath());
-        return def;
-    }
-
     @Override
     public LongField id() {
-        return getOrDefaultWithPath().id();
+        return getDefaultValue().id();
     }
 
 

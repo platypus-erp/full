@@ -26,6 +26,6 @@ public class BasePartnerRecordImpl extends RecordImpl<BasePartnerRecord, ImplPar
 
     @Override
     public LongField id() {
-        return getOrDefaultWithPath().id();
+        return getDefaultValue().id();
     }
 }
