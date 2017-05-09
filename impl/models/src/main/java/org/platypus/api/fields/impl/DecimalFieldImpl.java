@@ -20,14 +20,18 @@ public class DecimalFieldImpl extends AbstractFieldImpl<BigDecimal> implements D
                             Supplier<QueryPath> getPath,
                             Supplier<BigDecimal> getter,
                             Consumer<BigDecimal> setter) {
-        super(name,getPath, getter, setter, () ->BigDecimal.ZERO);
+        super(name,getPath, getter, setter);
     }
     public DecimalFieldImpl(String name,
                             Supplier<QueryPath> getPath,
                             Supplier<BigDecimal> getter,
                             Consumer<BigDecimal> setter,
                             BigDecimal def) {
-        super(name,getPath, getter, setter, () ->def);
+        super(name,getPath, getter, setter);
     }
 
+    @Override
+    public BigDecimal getDefaultValue() {
+        return BigDecimal.ZERO;
+    }
 }

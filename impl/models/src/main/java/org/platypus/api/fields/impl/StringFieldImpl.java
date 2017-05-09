@@ -18,7 +18,7 @@ public class StringFieldImpl extends AbstractFieldImpl<String> implements String
 
 
     public StringFieldImpl(String name, Supplier<QueryPath> getPath, Supplier<String> getter, Consumer<String> setter) {
-        super(name,getPath, getter, setter, () ->"");
+        super(name,getPath, getter, setter);
     }
 
     public StringFieldImpl(String name,
@@ -26,7 +26,12 @@ public class StringFieldImpl extends AbstractFieldImpl<String> implements String
                            Supplier<String> getter,
                            Consumer<String> setter,
                            String defaultValue) {
-        super(name,getPath, getter, setter, () ->defaultValue);
+        super(name,getPath, getter, setter);
+    }
+
+    @Override
+    public String getDefaultValue() {
+        return "";
     }
 
     @Override

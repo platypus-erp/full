@@ -11,6 +11,7 @@ public class UserBusiness {
 
     public void onChangeLogin(BaseUsersRecord record) {
         if (record.login().match("")){
+
         }
 
 
@@ -21,6 +22,8 @@ public class UserBusiness {
 
     public static void main(String[] args) {
         ImplUsersJPA record = new ImplUsersJPA();
+//        System.out.println(record.getPath());
+//        System.out.println(record.partner().getPath());
         System.out.println(record.partner().id().getPath());
     }
 }

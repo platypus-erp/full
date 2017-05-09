@@ -19,13 +19,18 @@ public class FloatFieldImpl extends AbstractFieldImpl<Float> implements FloatFie
                           Supplier<QueryPath> getPath,
                           Supplier<Float> getter,
                           Consumer<Float> setter) {
-        super(name,getPath, getter, setter, () ->0F);
+        super(name,getPath, getter, setter);
     }
     public FloatFieldImpl(String name,
                           Supplier<QueryPath> getPath,
                           Supplier<Float> getter,
                           Consumer<Float> setter,
                           Float def) {
-        super(name,getPath, getter, setter, () ->def);
+        super(name,getPath, getter, setter);
+    }
+
+    @Override
+    public Float getDefaultValue() {
+        return 0F;
     }
 }

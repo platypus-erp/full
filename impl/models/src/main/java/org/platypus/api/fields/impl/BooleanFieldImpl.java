@@ -17,13 +17,18 @@ import java.util.function.Supplier;
 public class BooleanFieldImpl extends AbstractFieldImpl<Boolean> implements BooleanField {
 
     public BooleanFieldImpl(String name, Supplier<QueryPath> getPath, Supplier<Boolean> getter, Consumer<Boolean> setter) {
-        super(name,getPath, getter, setter, () ->Boolean.FALSE);
+        super(name,getPath, getter, setter);
     }
     public BooleanFieldImpl(String name,
                             Supplier<QueryPath> getPath,
                             Supplier<Boolean> getter,
                             Consumer<Boolean> setter,
                             Boolean def) {
-        super(name,getPath, getter, setter, () ->def);
+        super(name,getPath, getter, setter);
+    }
+
+    @Override
+    public Boolean getDefaultValue() {
+        return Boolean.FALSE;
     }
 }

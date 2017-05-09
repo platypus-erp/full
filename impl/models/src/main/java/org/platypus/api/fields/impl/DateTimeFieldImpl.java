@@ -18,13 +18,18 @@ import java.util.function.Supplier;
 public class DateTimeFieldImpl extends AbstractFieldImpl<LocalDateTime> implements DateTimeField {
 
     public DateTimeFieldImpl(String name, Supplier<QueryPath> getPath, Supplier<LocalDateTime> getter, Consumer<LocalDateTime> setter) {
-        super(name,getPath, getter, setter,() ->LocalDateTime.MIN);
+        super(name,getPath, getter, setter);
     }
     public DateTimeFieldImpl(String name,
                              Supplier<QueryPath> getPath,
                              Supplier<LocalDateTime> getter,
                              Consumer<LocalDateTime> setter,
                              LocalDateTime def) {
-        super(name,getPath, getter, setter, () ->def);
+        super(name,getPath, getter, setter);
+    }
+
+    @Override
+    public LocalDateTime getDefaultValue() {
+        return LocalDateTime.MIN;
     }
 }

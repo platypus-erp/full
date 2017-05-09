@@ -17,6 +17,11 @@ import java.util.function.Supplier;
 public class BigStringFieldImpl extends AbstractFieldImpl<String> implements BigStringField {
 
     public BigStringFieldImpl(String name, Supplier<QueryPath> getPath, Supplier<String> getter, Consumer<String> setter) {
-        super(name,getPath, getter, setter, () ->"");
+        super(name,getPath, getter, setter);
+    }
+
+    @Override
+    public String getDefaultValue() {
+        return "";
     }
 }

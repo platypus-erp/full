@@ -17,7 +17,7 @@ public class LongFieldImpl extends AbstractFieldImpl<Long> implements LongField 
 
 
     public LongFieldImpl(String name,Supplier<QueryPath> getPath, Supplier<Long> getter, Consumer<Long> setter) {
-        super(name,getPath, getter, setter, () ->0L);
+        super(name,getPath, getter, setter);
     }
 
     public LongFieldImpl(String name,
@@ -25,6 +25,11 @@ public class LongFieldImpl extends AbstractFieldImpl<Long> implements LongField 
                          Supplier<Long> getter,
                          Consumer<Long> setter,
                          Long defaultValue) {
-        super(name,getPath, getter, setter , () ->defaultValue);
+        super(name,getPath, getter, setter);
+    }
+
+    @Override
+    public Long getDefaultValue() {
+        return 0L;
     }
 }

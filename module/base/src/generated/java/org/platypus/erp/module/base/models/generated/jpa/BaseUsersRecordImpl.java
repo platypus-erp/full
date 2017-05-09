@@ -19,11 +19,15 @@ import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 public class BaseUsersRecordImpl extends RecordImpl<BaseUsersRecord, ImplUsersJPA> implements BaseUsersRecord {
   public BaseUsersRecordImpl(String name, Supplier<QueryPath> getPath,
       Supplier<ImplUsersJPA> getter, Consumer<ImplUsersJPA> setter) {
-    super(name,getPath, getter, setter, ImplUsersJPA::new);
+    super(name,getPath, getter, setter, (s) -> () -> new ImplUsersJPA(s));
   }
 
   protected BaseUsersRecordImpl(String name) {
-    super(name, ImplUsersJPA::new);
+    super(name, (s) -> () -> new ImplUsersJPA(s));
+  }
+
+  protected BaseUsersRecordImpl(String name, Supplier<QueryPath> getPath) {
+    super(name, getPath, (s) -> () -> new ImplUsersJPA(s));
   }
 
   @Override
@@ -122,16 +126,6 @@ public class BaseUsersRecordImpl extends RecordImpl<BaseUsersRecord, ImplUsersJP
   }
 
   @Override
-  public BaseGroupRecordCollection action() {
-    return getOrDefault().action();
-  }
-
-  @Override
-  public void action(final BaseGroupRecordCollection action) {
-    getOrDefault().action(action);
-  }
-
-  @Override
   public BaseGroupRecordCollection groups() {
     return getOrDefault().groups();
   }
@@ -139,5 +133,15 @@ public class BaseUsersRecordImpl extends RecordImpl<BaseUsersRecord, ImplUsersJP
   @Override
   public void groups(final BaseGroupRecordCollection groups) {
     getOrDefault().groups(groups);
+  }
+
+  @Override
+  public BaseGroupRecordCollection action() {
+    return getOrDefault().action();
+  }
+
+  @Override
+  public void action(final BaseGroupRecordCollection action) {
+    getOrDefault().action(action);
   }
 }

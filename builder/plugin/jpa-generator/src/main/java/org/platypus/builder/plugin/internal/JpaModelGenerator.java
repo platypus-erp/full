@@ -89,6 +89,13 @@ public class JpaModelGenerator {
 
         MethodSpec.Builder constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
         constructor.addCode("super(MODEL_NAME);\n");
+
+        MethodSpec.Builder constructorGetPath = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
+        ParameterizedTypeName getPath = ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(QueryPath.class));
+        constructorGetPath.addParameter(getPath, "getPath");
+        constructorGetPath.addCode("super(MODEL_NAME, getPath);\n");
+        jpaImplBuilder.addMethod(constructorGetPath.build());
+
         JpaImplFieldGenerator fieldGenerator = new JpaImplFieldGenerator(jpaImplBuilder, modelMerged.getName(), constructor);
         foreachValues(modelMerged.getBigStringField(), fieldGenerator::generateField);
         foreachValues(modelMerged.getBinaryField(), fieldGenerator::generateField);
@@ -187,8 +194,13 @@ public class JpaModelGenerator {
         MethodSpec.Builder constructorSelf = MethodSpec.constructorBuilder().addModifiers(Modifier.PROTECTED);
         constructorSelf.addParameter(ParameterSpec.builder(ClassName.get(String.class), "name").build());
         constructorSelf.addCode("super($N, $T::new);\n", "name", recordTargetImpl);
-
         recordImpl.addMethod(constructorSelf.build());
+
+        MethodSpec.Builder constructorSelfGetPath = MethodSpec.constructorBuilder().addModifiers(Modifier.PROTECTED);
+        constructorSelfGetPath.addParameter(ParameterSpec.builder(ClassName.get(String.class), "name").build());
+        constructorSelfGetPath.addParameter(getPath, "getPath");
+        constructorSelfGetPath.addCode("super($N, $N, $T::new);\n", "name", "getPath", recordTargetImpl);
+        recordImpl.addMethod(constructorSelfGetPath.build());
 
         RecordImplFieldGenerator fieldGenerator = new RecordImplFieldGenerator(recordImpl);
         foreachValues(modelMerged.getBigStringField(), fieldGenerator::generateField);

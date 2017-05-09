@@ -3,6 +3,7 @@ package org.platypus.erp.module.base.models.generated.jpa;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
+import java.util.function.Supplier;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import org.platypus.api.QueryPath;
 import org.platypus.api.fields.BinaryField;
 import org.platypus.api.fields.BooleanField;
 import org.platypus.api.fields.LongField;
@@ -128,18 +130,22 @@ public class ImplUsersJPA extends BaseUsersRecordImpl {
   @ManyToMany
   @JoinTable
   @JoinColumn(
+      name = "\"groups\"",
+      updatable = true
+  )
+  private List<ImplGroupJPA> groups;
+
+  @ManyToMany
+  @JoinTable
+  @JoinColumn(
       name = "\"action\"",
       updatable = true
   )
   private List<ImplGroupJPA> action;
 
-  @ManyToMany
-  @JoinTable
-  @JoinColumn(
-      name = "\"groups\"",
-      updatable = true
-  )
-  private List<ImplGroupJPA> groups;
+  public ImplUsersJPA(Supplier<QueryPath> getPath) {
+    super(MODEL_NAME, getPath);
+  }
 
   public ImplUsersJPA() {
     super(MODEL_NAME);
@@ -320,24 +326,6 @@ public class ImplUsersJPA extends BaseUsersRecordImpl {
     return new BaseCompanyRecordCollectionImpl("companies",this::getPath, this::getCompanies, this::setCompanies);
   }
 
-  public List<ImplGroupJPA> getAction() {
-    return this.action;
-  }
-
-  public void setAction(final List<ImplGroupJPA> action) {
-    this.action = action;
-  }
-
-  @Override
-  public void action(final BaseGroupRecordCollection actionField) {
-    this.setAction(actionField.unWrapAsList(ImplGroupJPA.class));
-  }
-
-  @Override
-  public BaseGroupRecordCollection action() {
-    return new BaseGroupRecordCollectionImpl("action",this::getPath, this::getAction, this::setAction);
-  }
-
   public List<ImplGroupJPA> getGroups() {
     return this.groups;
   }
@@ -354,5 +342,23 @@ public class ImplUsersJPA extends BaseUsersRecordImpl {
   @Override
   public BaseGroupRecordCollection groups() {
     return new BaseGroupRecordCollectionImpl("groups",this::getPath, this::getGroups, this::setGroups);
+  }
+
+  public List<ImplGroupJPA> getAction() {
+    return this.action;
+  }
+
+  public void setAction(final List<ImplGroupJPA> action) {
+    this.action = action;
+  }
+
+  @Override
+  public void action(final BaseGroupRecordCollection actionField) {
+    this.setAction(actionField.unWrapAsList(ImplGroupJPA.class));
+  }
+
+  @Override
+  public BaseGroupRecordCollection action() {
+    return new BaseGroupRecordCollectionImpl("action",this::getPath, this::getAction, this::setAction);
   }
 }

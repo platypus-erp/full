@@ -17,7 +17,7 @@ public class IntFieldImpl extends AbstractFieldImpl<Integer> implements IntField
 
 
     public IntFieldImpl(String name, Supplier<QueryPath> getPath, Supplier<Integer> getter, Consumer<Integer> setter) {
-        super(name, getPath, getter, setter, () ->0);
+        super(name, getPath, getter, setter);
     }
 
     public IntFieldImpl(String name,
@@ -25,6 +25,11 @@ public class IntFieldImpl extends AbstractFieldImpl<Integer> implements IntField
                         Supplier<Integer> getter,
                         Consumer<Integer> setter,
                         Integer defaultValue) {
-        super(name, getPath, getter, setter, () ->defaultValue);
+        super(name, getPath, getter, setter);
+    }
+
+    @Override
+    public Integer getDefaultValue() {
+        return 0;
     }
 }

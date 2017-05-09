@@ -25,7 +25,12 @@ public class RecordCollectionImpl<R extends Record,RI extends R, RC extends Reco
     private final Supplier<List<RI>> defaultValue = ArrayList<RI>::new;
 
     public RecordCollectionImpl(String name, Supplier<QueryPath> getPath, Supplier<List<RI>> getter, Consumer<List<RI>> setter) {
-        super(name,getPath, getter, setter, ArrayList::new);
+        super(name,getPath, getter, setter);
+    }
+
+    @Override
+    public List<RI> getDefaultValue() {
+        return new ArrayList<>();
     }
 
     //<editor-fold desc="Methode to impl">

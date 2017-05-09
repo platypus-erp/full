@@ -16,8 +16,16 @@ public class QueryPath {
     public QueryPath(String name) {
         this.name = name;
     }
+    public QueryPath(QueryPath qp) {
+        this.name = qp.name;
+        this.previous = qp.previous;
+        this.next = qp.next;
+    }
 
     public QueryPath resolve(QueryPath next) {
+        if (next.name == this.name){
+            return this;
+        }
         this.next = next;
         next.previous = this;
         return next;

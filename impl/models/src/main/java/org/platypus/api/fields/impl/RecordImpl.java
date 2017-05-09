@@ -6,6 +6,7 @@ import org.platypus.api.Record;
 import org.platypus.api.fields.LongField;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -16,18 +17,41 @@ import java.util.function.Supplier;
  * @since 0.1
  */
 public class RecordImpl<R extends Record, RI extends R> extends AbstractFieldImpl<RI> implements GenericField<RI>, Record{
+    protected Function<Supplier<QueryPath>, Supplier<RI>> defaultValue;
 
-    public RecordImpl(String name, Supplier<QueryPath> getPath, Supplier<RI> getter, Consumer<RI> setter, Supplier<RI> defaultValue) {
-        super(name,getPath, getter, setter, defaultValue);
+    protected RecordImpl(String name, Supplier<QueryPath> getPath, Supplier<RI> getter, Consumer<RI> setter,
+                         Function<Supplier<QueryPath>, Supplier<RI>> defaultValue) {
+        super(name,getPath, getter, setter);
+        this.defaultValue = defaultValue;
     }
 
-    protected RecordImpl(String name, Supplier<RI> defaultValue) {
-        super(name, defaultValue);
+    protected RecordImpl(String name, Function<Supplier<QueryPath>, Supplier<RI>> defaultValue) {
+        super(name);
+        this.defaultValue = defaultValue;
+    }
+
+    protected RecordImpl(String name, Supplier<QueryPath> getPath, Function<Supplier<QueryPath>, Supplier<RI>> defaultValue) {
+        super(name, getPath);
+        this.defaultValue = defaultValue;
+    }
+
+    @Override
+    public RI getDefaultValue() {
+        return defaultValue.apply(path).get();
+    }
+
+    protected RI getOrDefaultWithPath(){
+        RI def = super.getOrDefault();
+        System.out.println("Path path.get "+ path.get());
+        System.out.println("Path def "+ def.getPath());
+        System.out.println("Path reel "+ getPath());
+        System.out.println("Path new  "+ def.id().getPath());
+        return def;
     }
 
     @Override
     public LongField id() {
-        return getOrDefault().id();
+        return getOrDefaultWithPath().id();
     }
 
 

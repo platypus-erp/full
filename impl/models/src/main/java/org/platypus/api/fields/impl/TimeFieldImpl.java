@@ -18,7 +18,7 @@ public class TimeFieldImpl extends AbstractFieldImpl<LocalTime> implements TimeF
 
 
     public TimeFieldImpl(String name, Supplier<QueryPath> getPath, Supplier<LocalTime> getter, Consumer<LocalTime> setter) {
-        super(name, getPath, getter, setter, () ->LocalTime.MIDNIGHT);
+        super(name, getPath, getter, setter);
     }
 
     public TimeFieldImpl(String name,
@@ -26,7 +26,11 @@ public class TimeFieldImpl extends AbstractFieldImpl<LocalTime> implements TimeF
                          Supplier<LocalTime> getter,
                          Consumer<LocalTime> setter,
                          LocalTime defaultNow) {
-        super(name, getPath, getter, setter, () -> defaultNow);
+        super(name, getPath, getter, setter);
     }
 
+    @Override
+    public LocalTime getDefaultValue() {
+        return LocalTime.MIDNIGHT;
+    }
 }

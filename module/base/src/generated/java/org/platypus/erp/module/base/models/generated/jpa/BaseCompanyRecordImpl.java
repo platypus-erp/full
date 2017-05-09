@@ -12,11 +12,15 @@ import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecord;
 public class BaseCompanyRecordImpl extends RecordImpl<BaseCompanyRecord, ImplCompanyJPA> implements BaseCompanyRecord {
   public BaseCompanyRecordImpl(String name, Supplier<QueryPath> getPath,
       Supplier<ImplCompanyJPA> getter, Consumer<ImplCompanyJPA> setter) {
-    super(name,getPath, getter, setter, ImplCompanyJPA::new);
+    super(name,getPath, getter, setter, (s) -> () -> new ImplCompanyJPA(s));
   }
 
   protected BaseCompanyRecordImpl(String name) {
-    super(name, ImplCompanyJPA::new);
+    super(name, (s) -> () -> new ImplCompanyJPA(s));
+  }
+
+  protected BaseCompanyRecordImpl(String name, Supplier<QueryPath> getPath) {
+    super(name, getPath, (s) -> () -> new ImplCompanyJPA(s));
   }
 
   @Override

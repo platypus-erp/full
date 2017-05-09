@@ -2,9 +2,11 @@ package org.platypus.erp.module.base.models.generated.jpa;
 
 import java.lang.Override;
 import java.lang.String;
+import java.util.function.Supplier;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import org.platypus.api.QueryPath;
 import org.platypus.api.fields.LongField;
 import org.platypus.api.fields.impl.LongFieldImpl;
 
@@ -22,6 +24,10 @@ public class ImplCompanyJPA extends BaseCompanyRecordImpl {
       updatable = true
   )
   private long id = 0;
+
+  public ImplCompanyJPA(Supplier<QueryPath> getPath) {
+    super(MODEL_NAME, getPath);
+  }
 
   public ImplCompanyJPA() {
     super(MODEL_NAME);

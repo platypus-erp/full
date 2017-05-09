@@ -18,10 +18,15 @@ import java.util.function.Supplier;
 public class DateFieldImpl extends AbstractFieldImpl<LocalDate> implements DateField {
 
     public DateFieldImpl(String name, Supplier<QueryPath> getPath, Supplier<LocalDate> getter, Consumer<LocalDate> setter) {
-        super(name,getPath, getter, setter, () ->LocalDate.MIN);
+        super(name,getPath, getter, setter);
     }
     public DateFieldImpl(String name, Supplier<QueryPath> getPath, Supplier<LocalDate> getter, Consumer<LocalDate> setter,
                          LocalDate def) {
-        super(name,getPath, getter, setter, () ->def);
+        super(name,getPath, getter, setter);
+    }
+
+    @Override
+    public LocalDate getDefaultValue() {
+        return LocalDate.MIN;
     }
 }
