@@ -1,7 +1,7 @@
 package org.platypus.erp.module.base.models;
 
 import org.platypus.api.Pathable;
-import org.platypus.api.QueryPath;
+import org.platypus.api.query.QueryPath;
 
 /**
  * @author chmuchme

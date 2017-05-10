@@ -26,7 +26,7 @@ public class UserBusiness {
 //        System.out.println(record.getPath());
 //        System.out.println(record.partner().getPath());
         BasePartnerRecord r = record.partner();
-        System.out.println(r.id().getPath());
+        System.out.println(record.getPath());
         System.out.println(r.id().getPath());
         System.out.println(record.share().getPath());
     }

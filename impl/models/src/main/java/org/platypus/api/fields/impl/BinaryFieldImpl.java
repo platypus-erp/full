@@ -1,6 +1,6 @@
 package org.platypus.api.fields.impl;
 
-import org.platypus.api.QueryPath;
+import org.platypus.api.query.QueryPath;
 import org.platypus.api.fields.BinaryField;
 
 import java.util.function.Consumer;
@@ -15,8 +15,8 @@ import java.util.function.Supplier;
  */
 public class BinaryFieldImpl extends AbstractFieldImpl<byte[]> implements BinaryField {
 
-    public BinaryFieldImpl(String name, Supplier<QueryPath> getPath, Supplier<byte[]> getter, Consumer<byte[]> setter) {
-        super(name, getPath, getter, setter);
+    public BinaryFieldImpl(String table, String name, Supplier<QueryPath> getPath, Supplier<byte[]> getter, Consumer<byte[]> setter) {
+        super(table, name, getPath, getter, setter);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package org.platypus.api.fields.impl;
 
 import org.platypus.api.GenericField;
-import org.platypus.api.QueryPath;
+import org.platypus.api.query.QueryPath;
 import org.platypus.api.Record;
 import org.platypus.api.RecordCollection;
 import org.platypus.api.TypedRecordCollection;
@@ -20,12 +20,12 @@ import java.util.function.*;
  * @version 0.1
  * @since 0.1
  */
-public class RecordCollectionImpl<R extends Record,RI extends R, RC extends RecordCollection<R>> extends AbstractFieldImpl<List<RI>> implements GenericField<List<RI>>, RecordCollection<R> {
+public class RecordCollectionImpl<R extends Record, RI extends R, RC extends RecordCollection<R>> extends AbstractFieldImpl<List<RI>> implements GenericField<List<RI>>, RecordCollection<R> {
 
     private final Supplier<List<RI>> defaultValue = ArrayList<RI>::new;
 
-    public RecordCollectionImpl(String name, Supplier<QueryPath> getPath, Supplier<List<RI>> getter, Consumer<List<RI>> setter) {
-        super(name,getPath, getter, setter);
+    public RecordCollectionImpl(String table, String name, Supplier<QueryPath> getPath, Supplier<List<RI>> getter, Consumer<List<RI>> setter) {
+        super(table, name, getPath, getter, setter);
     }
 
     @Override

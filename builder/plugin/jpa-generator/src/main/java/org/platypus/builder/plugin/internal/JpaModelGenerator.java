@@ -8,7 +8,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import org.apache.commons.lang3.StringUtils;
-import org.platypus.api.QueryPath;
+import org.platypus.api.query.QueryPath;
 import org.platypus.api.fields.impl.RecordCollectionImpl;
 import org.platypus.api.fields.impl.RecordImpl;
 import org.platypus.api.module.MetaInfoRecord;

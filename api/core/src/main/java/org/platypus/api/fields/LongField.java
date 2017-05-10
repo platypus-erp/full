@@ -2,7 +2,7 @@ package org.platypus.api.fields;
 
 
 import org.platypus.api.GenericField;
-import org.platypus.api.QueryPath;
+import org.platypus.api.query.QueryPath;
 
 /**
  * TODO Add JavaDoc

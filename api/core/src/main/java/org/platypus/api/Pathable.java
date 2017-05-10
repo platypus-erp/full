@@ -1,5 +1,7 @@
 package org.platypus.api;
 
+import org.platypus.api.query.QueryPath;
+
 /**
  * @author chmuchme
  * @since 0.1

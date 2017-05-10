@@ -4,7 +4,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import org.platypus.api.QueryPath;
+import org.platypus.api.query.QueryPath;
 import org.platypus.api.fields.BinaryField;
 import org.platypus.api.fields.BooleanField;
 import org.platypus.api.fields.LongField;
@@ -19,15 +19,15 @@ import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 public class BaseUsersRecordImpl extends RecordImpl<BaseUsersRecord, ImplUsersJPA> implements BaseUsersRecord {
   public BaseUsersRecordImpl(String name, Supplier<QueryPath> getPath,
       Supplier<ImplUsersJPA> getter, Consumer<ImplUsersJPA> setter) {
-    super(name,getPath, getter, setter, (s) -> () -> new ImplUsersJPA(s));
+    super(ImplUsersJPA.MODEL_NAME, name,getPath, getter, setter, (s) -> () -> new ImplUsersJPA(s));
   }
 
-  protected BaseUsersRecordImpl(String name) {
-    super(name, (s) -> () -> new ImplUsersJPA(s));
+  protected BaseUsersRecordImpl() {
+    super(ImplUsersJPA.MODEL_NAME, "id", (s) -> () -> new ImplUsersJPA(s));
   }
 
-  protected BaseUsersRecordImpl(String name, Supplier<QueryPath> getPath) {
-    super(name, getPath, (s) -> () -> new ImplUsersJPA(s));
+  protected BaseUsersRecordImpl(Supplier<QueryPath> getPath) {
+    super(ImplUsersJPA.MODEL_NAME, "id", getPath, (s) -> () -> new ImplUsersJPA(s));
   }
 
   @Override

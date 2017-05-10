@@ -1,11 +1,10 @@
 package org.platypus.api.fields.impl;
 
 import org.platypus.api.GenericField;
-import org.platypus.api.QueryPath;
+import org.platypus.api.query.QueryPath;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 /**
  * TODO Add JavaDoc
@@ -21,20 +20,17 @@ abstract class AbstractFieldImpl<T> implements GenericField<T> {
     protected final String name;
     protected Supplier<QueryPath> path;
 
-    public AbstractFieldImpl(String name,
+    public AbstractFieldImpl(String table,String name,
                              Supplier<QueryPath> getPath,
                              Supplier<T> getter,
                              Consumer<T> setter) {
         this.getter = getter;
         this.setter = setter;
         this.name = name;
-        path = () -> getPath.get().resolve(name);
+        path = () -> getPath.get().resolve(table, name);
     }
 
-    public AbstractFieldImpl(String name) {
-        this(name, QueryPath::new);
-    }
-    public AbstractFieldImpl(String name, Supplier<QueryPath> getPath) {
+    public AbstractFieldImpl(String table,String name,Supplier<QueryPath> getPath) {
         this.getter = () -> {
             throw new UnsupportedOperationException("can't be called");
         };
@@ -42,7 +38,7 @@ abstract class AbstractFieldImpl<T> implements GenericField<T> {
             throw new UnsupportedOperationException("can't be called");
         };
         this.name = name;
-        path = () -> getPath.get().resolve(name);
+        path = () -> getPath.get().resolve(table, name);
     }
 
     @Override

@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import org.platypus.api.QueryPath;
+import org.platypus.api.query.QueryPath;
 import org.platypus.api.fields.BinaryField;
 import org.platypus.api.fields.BooleanField;
 import org.platypus.api.fields.LongField;
@@ -114,10 +114,10 @@ public class ImplUsersJPA extends BaseUsersRecordImpl {
       optional = false
   )
   @JoinColumn(
-      name = "\"partner\"",
+      name = "\"partner_id\"",
       updatable = true
   )
-  private ImplPartnerJPA partner;
+  private ImplPartnerJPA partner_id;
 
   @ManyToMany
   @JoinTable
@@ -144,11 +144,11 @@ public class ImplUsersJPA extends BaseUsersRecordImpl {
   private List<ImplGroupJPA> action;
 
   public ImplUsersJPA(Supplier<QueryPath> getPath) {
-    super(MODEL_NAME, getPath);
+    super(getPath);
   }
 
   public ImplUsersJPA() {
-    super(MODEL_NAME);
+    super();
   }
 
   public byte[] getSignature() {
@@ -166,7 +166,7 @@ public class ImplUsersJPA extends BaseUsersRecordImpl {
 
   @Override
   public BinaryField signature() {
-    return new BinaryFieldImpl("signature", this::getPath, this::getSignature, this::setSignature);
+    return new BinaryFieldImpl(MODEL_NAME, "signature", this::getPath, this::getSignature, this::setSignature);
   }
 
   public boolean getActive() {
@@ -184,7 +184,7 @@ public class ImplUsersJPA extends BaseUsersRecordImpl {
 
   @Override
   public BooleanField active() {
-    return new BooleanFieldImpl("active", this::getPath, this::getActive, this::setActive);
+    return new BooleanFieldImpl(MODEL_NAME, "active", this::getPath, this::getActive, this::setActive);
   }
 
   public boolean getShare() {
@@ -202,7 +202,7 @@ public class ImplUsersJPA extends BaseUsersRecordImpl {
 
   @Override
   public BooleanField share() {
-    return new BooleanFieldImpl("share", this::getPath, this::getShare, this::setShare);
+    return new BooleanFieldImpl(MODEL_NAME, "share", this::getPath, this::getShare, this::setShare);
   }
 
   public long getId() {
@@ -215,7 +215,7 @@ public class ImplUsersJPA extends BaseUsersRecordImpl {
 
   @Override
   public LongField id() {
-    return new LongFieldImpl("id", this::getPath, this::getId, this::setId);
+    return new LongFieldImpl(MODEL_NAME, "id", this::getPath, this::getId, this::setId);
   }
 
   public String getPassword() {
@@ -233,7 +233,7 @@ public class ImplUsersJPA extends BaseUsersRecordImpl {
 
   @Override
   public StringField password() {
-    return new StringFieldImpl("password", this::getPath, this::getPassword, this::setPassword);
+    return new StringFieldImpl(MODEL_NAME, "password", this::getPath, this::getPassword, this::setPassword);
   }
 
   public String getNew_password() {
@@ -251,7 +251,7 @@ public class ImplUsersJPA extends BaseUsersRecordImpl {
 
   @Override
   public StringField new_password() {
-    return new StringFieldImpl("new_password", this::getPath, this::getNew_password, this::setNew_password);
+    return new StringFieldImpl(MODEL_NAME, "new_password", this::getPath, this::getNew_password, this::setNew_password);
   }
 
   public String getLogin() {
@@ -269,7 +269,7 @@ public class ImplUsersJPA extends BaseUsersRecordImpl {
 
   @Override
   public StringField login() {
-    return new StringFieldImpl("login", this::getPath, this::getLogin, this::setLogin);
+    return new StringFieldImpl(MODEL_NAME, "login", this::getPath, this::getLogin, this::setLogin);
   }
 
   public ImplCompanyJPA getCompany() {
@@ -287,15 +287,15 @@ public class ImplUsersJPA extends BaseUsersRecordImpl {
 
   @Override
   public BaseCompanyRecord company() {
-    return new BaseCompanyRecordImpl("company", this::getPath, this::getCompany, this::setCompany);
+    return new BaseCompanyRecordImpl(MODEL_NAME, "company", this::getPath, this::getCompany, this::setCompany);
   }
 
   public ImplPartnerJPA getPartner() {
-    return this.partner;
+    return this.partner_id;
   }
 
-  public void setPartner(final ImplPartnerJPA partner) {
-    this.partner = partner;
+  public void setPartner(final ImplPartnerJPA partner_id) {
+    this.partner_id = partner_id;
   }
 
   @Override

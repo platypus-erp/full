@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import org.platypus.api.QueryPath;
+import org.platypus.api.query.QueryPath;
 import org.platypus.api.fields.LongField;
 import org.platypus.api.fields.impl.LongFieldImpl;
 
@@ -26,11 +26,11 @@ public class ImplCompanyJPA extends BaseCompanyRecordImpl {
   private long id = 0;
 
   public ImplCompanyJPA(Supplier<QueryPath> getPath) {
-    super(MODEL_NAME, getPath);
+    super(getPath);
   }
 
   public ImplCompanyJPA() {
-    super(MODEL_NAME);
+    super();
   }
 
   public long getId() {
@@ -43,6 +43,6 @@ public class ImplCompanyJPA extends BaseCompanyRecordImpl {
 
   @Override
   public LongField id() {
-    return new LongFieldImpl("id", this::getPath, this::getId, this::setId);
+    return new LongFieldImpl(MODEL_NAME, "id", this::getPath, this::getId, this::setId);
   }
 }

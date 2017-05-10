@@ -1,9 +1,8 @@
 package org.platypus.api.fields.impl;
 
-import org.platypus.api.QueryPath;
+import org.platypus.api.query.QueryPath;
 import org.platypus.api.fields.BigStringField;
 
-import java.math.BigDecimal;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -16,8 +15,8 @@ import java.util.function.Supplier;
  */
 public class BigStringFieldImpl extends AbstractFieldImpl<String> implements BigStringField {
 
-    public BigStringFieldImpl(String name, Supplier<QueryPath> getPath, Supplier<String> getter, Consumer<String> setter) {
-        super(name,getPath, getter, setter);
+    public BigStringFieldImpl(String table, String name, Supplier<QueryPath> getPath, Supplier<String> getter, Consumer<String> setter) {
+        super(table, name, getPath, getter, setter);
     }
 
     @Override
