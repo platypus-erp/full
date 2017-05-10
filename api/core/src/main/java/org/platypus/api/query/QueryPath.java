@@ -12,10 +12,20 @@ public class QueryPath {
     public final String tableName;
     QueryPath next;
     QueryPath previous;
+    public final boolean isRelation;
 
-    public QueryPath(String columnName, String tableName) {
+    private QueryPath(String tableName, String columnName, boolean isRelation) {
         this.columnName = columnName;
         this.tableName = tableName;
+        this.isRelation = isRelation;
+    }
+
+    public static QueryPath relation(String tableName, String column) {
+        return new QueryPath(tableName, column, true);
+    }
+
+    public static QueryPath basic(String tableName, String column) {
+        return new QueryPath(tableName, column, false);
     }
 
     public QueryPath(QueryPath path) {
@@ -23,45 +33,49 @@ public class QueryPath {
         this.tableName = path.tableName;
         this.previous = path.previous;
         this.next = path.next;
+        this.isRelation = path.isRelation;
     }
 
-    
+
     public QueryPath resolve(QueryPath next) {
+//        if (next.tableName.equals(this.tableName) && next.columnName.equals(this.columnName)){
+//            return this;
+//        }
         this.next = next;
         next.previous = this;
         return next;
     }
 
-    public QueryPath resolve(String columnName, String tableName) {
-        return resolve(new QueryPath(columnName, tableName));
-    }
-    
     public Optional<QueryPath> getNext() {
         return Optional.ofNullable(next);
     }
 
-    
+
     public Optional<QueryPath> getPrevious() {
         return Optional.ofNullable(previous);
     }
 
-    
+
     public String getColumnName() {
         return columnName;
     }
 
-    
+
     public String getTableName() {
         return tableName;
     }
 
-    
+
     public boolean isRelation() {
-        return true;
+        return isRelation;
     }
 
-    
+
     public String toString() {
-        return (this.previous != null && !this.previous.toString().isEmpty() ? this.previous.toString()+ "." : "") + this.tableName+"["+this.columnName+"]";
+        String str = this.tableName + "[" + this.columnName + "|" + isRelation() + "]";
+        if (this.previous != null) {
+            str = this.previous.toString() + "." + str;
+        }
+        return str;
     }
 }

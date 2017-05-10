@@ -5,54 +5,57 @@ import org.platypus.api.annotations.record.RecordOf;
 import org.platypus.api.fields.BinaryField;
 import org.platypus.api.fields.BooleanField;
 import org.platypus.api.fields.StringField;
+import org.platypus.api.query.SearchBuilder;
 
 @RecordOf(
-    modelPkg = "org.platypus.erp.module.base.models",
-    modelClassName = "Users",
-    modelName = "users"
+        modelPkg = "org.platypus.erp.module.base.models",
+        modelClassName = "Users",
+        modelName = "users"
 )
 public interface BaseUsersRecord extends Record {
-  BinaryField signature();
 
-  void signature(BinaryField signature);
 
-  BooleanField active();
+    BinaryField signature();
 
-  BooleanField share();
+    void signature(BinaryField signature);
 
-  void active(BooleanField active);
+    BooleanField active();
 
-  void share(BooleanField share);
+    BooleanField share();
 
-  StringField password();
+    void active(BooleanField active);
 
-  StringField login();
+    void share(BooleanField share);
 
-  StringField new_password();
+    StringField password();
 
-  void password(StringField password);
+    StringField login();
 
-  void login(StringField login);
+    StringField new_password();
 
-  void new_password(StringField new_password);
+    void password(StringField password);
 
-  BaseGroupRecordCollection groups();
+    void login(StringField login);
 
-  BaseGroupRecordCollection action();
+    void new_password(StringField new_password);
 
-  BaseCompanyRecordCollection companies();
+    BaseGroupRecordCollection groups();
 
-  void groups(BaseGroupRecordCollection groups);
+    BaseGroupRecordCollection action();
 
-  void action(BaseGroupRecordCollection action);
+    BaseCompanyRecordCollection companies();
 
-  void companies(BaseCompanyRecordCollection companies);
+    void groups(BaseGroupRecordCollection groups);
 
-  BaseCompanyRecord company();
+    void action(BaseGroupRecordCollection action);
 
-  void company(BaseCompanyRecord company);
+    void companies(BaseCompanyRecordCollection companies);
 
-  BasePartnerRecord partner();
+    BaseCompanyRecord company();
 
-  void partner(BasePartnerRecord partner);
+    void company(BaseCompanyRecord company);
+
+    BasePartnerRecord partner();
+
+    void partner(BasePartnerRecord partner);
 }

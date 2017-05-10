@@ -1,5 +1,6 @@
 package org.platypus.api.fields.impl;
 
+import org.platypus.api.Record;
 import org.platypus.api.query.QueryPath;
 import org.platypus.api.fields.LongField;
 

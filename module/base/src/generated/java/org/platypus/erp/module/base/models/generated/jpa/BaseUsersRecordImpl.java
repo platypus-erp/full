@@ -17,17 +17,15 @@ import org.platypus.erp.module.base.models.generated.records.BasePartnerRecord;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
 public class BaseUsersRecordImpl extends RecordImpl<BaseUsersRecord, ImplUsersJPA> implements BaseUsersRecord {
-  public BaseUsersRecordImpl(String name, Supplier<QueryPath> getPath,
+
+  public BaseUsersRecordImpl(String tableName, String name, Supplier<QueryPath> getPath,
       Supplier<ImplUsersJPA> getter, Consumer<ImplUsersJPA> setter) {
-    super(ImplUsersJPA.MODEL_NAME, name,getPath, getter, setter, (s) -> () -> new ImplUsersJPA(s));
+    super(tableName, name,getPath, getter, setter, ImplUsersJPA::new);
   }
 
-  protected BaseUsersRecordImpl() {
-    super(ImplUsersJPA.MODEL_NAME, "id", (s) -> () -> new ImplUsersJPA(s));
-  }
-
-  protected BaseUsersRecordImpl(Supplier<QueryPath> getPath) {
-    super(ImplUsersJPA.MODEL_NAME, "id", getPath, (s) -> () -> new ImplUsersJPA(s));
+  @Override
+  public QueryPath resolve(QueryPath queryPath) {
+    return getPath().resolve(queryPath);
   }
 
   @Override

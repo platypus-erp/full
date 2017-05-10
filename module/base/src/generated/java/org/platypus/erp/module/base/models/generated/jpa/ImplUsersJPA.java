@@ -1,9 +1,20 @@
 package org.platypus.erp.module.base.models.generated.jpa;
 
-import java.lang.Override;
-import java.lang.String;
-import java.util.List;
-import java.util.function.Supplier;
+import org.platypus.api.fields.BinaryField;
+import org.platypus.api.fields.BooleanField;
+import org.platypus.api.fields.LongField;
+import org.platypus.api.fields.StringField;
+import org.platypus.api.fields.impl.BinaryFieldImpl;
+import org.platypus.api.fields.impl.BooleanFieldImpl;
+import org.platypus.api.fields.impl.LongFieldImpl;
+import org.platypus.api.fields.impl.StringFieldImpl;
+import org.platypus.api.query.QueryPath;
+import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecord;
+import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecordCollection;
+import org.platypus.erp.module.base.models.generated.records.BaseGroupRecordCollection;
+import org.platypus.erp.module.base.models.generated.records.BasePartnerRecord;
+import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,349 +27,356 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import org.platypus.api.query.QueryPath;
-import org.platypus.api.fields.BinaryField;
-import org.platypus.api.fields.BooleanField;
-import org.platypus.api.fields.LongField;
-import org.platypus.api.fields.StringField;
-import org.platypus.api.fields.impl.BinaryFieldImpl;
-import org.platypus.api.fields.impl.BooleanFieldImpl;
-import org.platypus.api.fields.impl.LongFieldImpl;
-import org.platypus.api.fields.impl.StringFieldImpl;
-import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecord;
-import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecordCollection;
-import org.platypus.erp.module.base.models.generated.records.BaseGroupRecordCollection;
-import org.platypus.erp.module.base.models.generated.records.BasePartnerRecord;
+
+import java.util.List;
 
 @Table(
-    name = ImplUsersJPA.MODEL_NAME
+        name = ImplUsersJPA.MODEL_NAME
 )
 @Entity
-public class ImplUsersJPA extends BaseUsersRecordImpl {
-  public static final String MODEL_NAME = "users";
+public class ImplUsersJPA implements BaseUsersRecord {
+    public static final String MODEL_NAME = "users";
 
-  @Lob
-  @Basic(
-      fetch = FetchType.EAGER
-  )
-  @Column(
-      name = "\"signature\"",
-      nullable = true,
-      insertable = true,
-      updatable = true
-  )
-  private byte[] signature;
+    @Lob
+    @Basic(
+            fetch = FetchType.EAGER
+    )
+    @Column(
+            name = "\"signature\"",
+            nullable = true,
+            insertable = true,
+            updatable = true
+    )
+    private byte[] signature;
 
-  @Column(
-      name = "\"active\"",
-      nullable = false,
-      insertable = true,
-      updatable = true
-  )
-  private boolean active;
+    @Column(
+            name = "\"active\"",
+            nullable = false,
+            insertable = true,
+            updatable = true
+    )
+    private boolean active;
 
-  @Column(
-      name = "\"share\"",
-      nullable = false,
-      insertable = true,
-      updatable = true
-  )
-  private boolean share;
+    @Column(
+            name = "\"share\"",
+            nullable = false,
+            insertable = true,
+            updatable = true
+    )
+    private boolean share;
 
-  @Column(
-      name = "\"id\"",
-      nullable = true,
-      insertable = true,
-      updatable = true
-  )
-  private long id = 0;
+    @Column(
+            name = "\"id\"",
+            nullable = true,
+            insertable = true,
+            updatable = true
+    )
+    private long id = 0;
 
-  @Size(
-      max = 64
-  )
-  @Column(
-      name = "\"password\"",
-      insertable = true,
-      updatable = true
-  )
-  private String password;
+    @Size(
+            max = 64
+    )
+    @Column(
+            name = "\"password\"",
+            insertable = true,
+            updatable = true
+    )
+    private String password;
 
-  @Size(
-      max = 64
-  )
-  @Column(
-      name = "\"new_password\"",
-      insertable = true,
-      updatable = true
-  )
-  private String new_password;
+    @Size(
+            max = 64
+    )
+    @Column(
+            name = "\"new_password\"",
+            insertable = true,
+            updatable = true
+    )
+    private String new_password;
 
-  @Size(
-      max = 64
-  )
-  @Column(
-      name = "\"login\"",
-      insertable = true,
-      updatable = true
-  )
-  private String login;
+    @Size(
+            max = 64
+    )
+    @Column(
+            name = "\"login\"",
+            insertable = true,
+            updatable = true
+    )
+    private String login;
 
-  @ManyToOne
-  @JoinColumn(
-      name = "\"company\"",
-      updatable = true
-  )
-  private ImplCompanyJPA company;
+    @ManyToOne
+    @JoinColumn(
+            name = "\"company\"",
+            updatable = true
+    )
+    private ImplCompanyJPA company;
 
-  @OneToOne(
-      optional = false
-  )
-  @JoinColumn(
-      name = "\"partner_id\"",
-      updatable = true
-  )
-  private ImplPartnerJPA partner_id;
+    @OneToOne(
+            optional = false
+    )
+    @JoinColumn(
+            name = "\"partner_id\"",
+            updatable = true
+    )
+    private ImplPartnerJPA partner_id;
 
-  @ManyToMany
-  @JoinTable
-  @JoinColumn(
-      name = "\"companies\"",
-      updatable = true
-  )
-  private List<ImplCompanyJPA> companies;
+    @ManyToMany
+    @JoinTable
+    @JoinColumn(
+            name = "\"companies\"",
+            updatable = true
+    )
+    private List<ImplCompanyJPA> companies;
 
-  @ManyToMany
-  @JoinTable
-  @JoinColumn(
-      name = "\"groups\"",
-      updatable = true
-  )
-  private List<ImplGroupJPA> groups;
+    @ManyToMany
+    @JoinTable
+    @JoinColumn(
+            name = "\"groups\"",
+            updatable = true
+    )
+    private List<ImplGroupJPA> groups;
 
-  @ManyToMany
-  @JoinTable
-  @JoinColumn(
-      name = "\"action\"",
-      updatable = true
-  )
-  private List<ImplGroupJPA> action;
+    @ManyToMany
+    @JoinTable
+    @JoinColumn(
+            name = "\"action\"",
+            updatable = true
+    )
+    private List<ImplGroupJPA> action;
 
-  public ImplUsersJPA(Supplier<QueryPath> getPath) {
-    super(getPath);
-  }
 
-  public ImplUsersJPA() {
-    super();
-  }
+    @Override
+    public boolean bool() {
+        return false;
+    }
+    private QueryPath path = QueryPath.basic(MODEL_NAME, "id");
+    @Override
+    public void setPath(QueryPath queryPath) {
+        this.path = queryPath;
+    }
 
-  public byte[] getSignature() {
-    return this.signature;
-  }
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 
-  public void setSignature(final byte[] signature) {
-    this.signature = signature;
-  }
+    @Override
+    public QueryPath getPath() {
+        return path;
+    }
 
-  @Override
-  public void signature(final BinaryField signatureField) {
-    this.setSignature(signatureField.get());
-  }
+    @Override
+    public QueryPath resolve(QueryPath queryPath) {
+        return getPath().resolve(queryPath);
+    }
 
-  @Override
-  public BinaryField signature() {
-    return new BinaryFieldImpl(MODEL_NAME, "signature", this::getPath, this::getSignature, this::setSignature);
-  }
+    public byte[] getSignature() {
+        return this.signature;
+    }
 
-  public boolean getActive() {
-    return this.active;
-  }
+    public void setSignature(final byte[] signature) {
+        this.signature = signature;
+    }
 
-  public void setActive(final boolean active) {
-    this.active = active;
-  }
+    @Override
+    public void signature(final BinaryField signatureField) {
+        this.setSignature(signatureField.get());
+    }
 
-  @Override
-  public void active(final BooleanField activeField) {
-    this.setActive(activeField.get());
-  }
+    @Override
+    public BinaryField signature() {
+        return new BinaryFieldImpl(MODEL_NAME, "signature", this::getPath, this::getSignature, this::setSignature);
+    }
 
-  @Override
-  public BooleanField active() {
-    return new BooleanFieldImpl(MODEL_NAME, "active", this::getPath, this::getActive, this::setActive);
-  }
+    public boolean getActive() {
+        return this.active;
+    }
 
-  public boolean getShare() {
-    return this.share;
-  }
+    public void setActive(final boolean active) {
+        this.active = active;
+    }
 
-  public void setShare(final boolean share) {
-    this.share = share;
-  }
+    @Override
+    public void active(final BooleanField activeField) {
+        this.setActive(activeField.get());
+    }
 
-  @Override
-  public void share(final BooleanField shareField) {
-    this.setShare(shareField.get());
-  }
+    @Override
+    public BooleanField active() {
+        return new BooleanFieldImpl(MODEL_NAME, "active", this::getPath, this::getActive, this::setActive);
+    }
 
-  @Override
-  public BooleanField share() {
-    return new BooleanFieldImpl(MODEL_NAME, "share", this::getPath, this::getShare, this::setShare);
-  }
+    public boolean getShare() {
+        return this.share;
+    }
 
-  public long getId() {
-    return this.id;
-  }
+    public void setShare(final boolean share) {
+        this.share = share;
+    }
 
-  public void setId(final long id) {
-    this.id = id;
-  }
+    @Override
+    public void share(final BooleanField shareField) {
+        this.setShare(shareField.get());
+    }
 
-  @Override
-  public LongField id() {
-    return new LongFieldImpl(MODEL_NAME, "id", this::getPath, this::getId, this::setId);
-  }
+    @Override
+    public BooleanField share() {
+        return new BooleanFieldImpl(MODEL_NAME, "share", this::getPath, this::getShare, this::setShare);
+    }
 
-  public String getPassword() {
-    return this.password;
-  }
+    public long getId() {
+        return this.id;
+    }
 
-  public void setPassword(final String password) {
-    this.password = password;
-  }
+    public void setId(final long id) {
+        this.id = id;
+    }
 
-  @Override
-  public void password(final StringField passwordField) {
-    this.setPassword(passwordField.get());
-  }
+    @Override
+    public LongField id() {
+        return new LongFieldImpl(MODEL_NAME, "id", this::getPath, this::getId, this::setId);
+    }
 
-  @Override
-  public StringField password() {
-    return new StringFieldImpl(MODEL_NAME, "password", this::getPath, this::getPassword, this::setPassword);
-  }
+    public String getPassword() {
+        return this.password;
+    }
 
-  public String getNew_password() {
-    return this.new_password;
-  }
+    public void setPassword(final String password) {
+        this.password = password;
+    }
 
-  public void setNew_password(final String new_password) {
-    this.new_password = new_password;
-  }
+    @Override
+    public void password(final StringField passwordField) {
+        this.setPassword(passwordField.get());
+    }
 
-  @Override
-  public void new_password(final StringField new_passwordField) {
-    this.setNew_password(new_passwordField.get());
-  }
+    @Override
+    public StringField password() {
+        return new StringFieldImpl(MODEL_NAME, "password", this::getPath, this::getPassword, this::setPassword);
+    }
 
-  @Override
-  public StringField new_password() {
-    return new StringFieldImpl(MODEL_NAME, "new_password", this::getPath, this::getNew_password, this::setNew_password);
-  }
+    public String getNew_password() {
+        return this.new_password;
+    }
 
-  public String getLogin() {
-    return this.login;
-  }
+    public void setNew_password(final String new_password) {
+        this.new_password = new_password;
+    }
 
-  public void setLogin(final String login) {
-    this.login = login;
-  }
+    @Override
+    public void new_password(final StringField new_passwordField) {
+        this.setNew_password(new_passwordField.get());
+    }
 
-  @Override
-  public void login(final StringField loginField) {
-    this.setLogin(loginField.get());
-  }
+    @Override
+    public StringField new_password() {
+        return new StringFieldImpl(MODEL_NAME, "new_password", this::getPath, this::getNew_password, this::setNew_password);
+    }
 
-  @Override
-  public StringField login() {
-    return new StringFieldImpl(MODEL_NAME, "login", this::getPath, this::getLogin, this::setLogin);
-  }
+    public String getLogin() {
+        return this.login;
+    }
 
-  public ImplCompanyJPA getCompany() {
-    return this.company;
-  }
+    public void setLogin(final String login) {
+        this.login = login;
+    }
 
-  public void setCompany(final ImplCompanyJPA company) {
-    this.company = company;
-  }
+    @Override
+    public void login(final StringField loginField) {
+        this.setLogin(loginField.get());
+    }
 
-  @Override
-  public void company(final BaseCompanyRecord companyField) {
-    this.setCompany(companyField.unWrap(ImplCompanyJPA.class));
-  }
+    @Override
+    public StringField login() {
+        return new StringFieldImpl(MODEL_NAME, "login", this::getPath, this::getLogin, this::setLogin);
+    }
 
-  @Override
-  public BaseCompanyRecord company() {
-    return new BaseCompanyRecordImpl(MODEL_NAME, "company", this::getPath, this::getCompany, this::setCompany);
-  }
+    public ImplCompanyJPA getCompany() {
+        return this.company;
+    }
 
-  public ImplPartnerJPA getPartner() {
-    return this.partner_id;
-  }
+    public void setCompany(final ImplCompanyJPA company) {
+        this.company = company;
+    }
 
-  public void setPartner(final ImplPartnerJPA partner_id) {
-    this.partner_id = partner_id;
-  }
+    @Override
+    public void company(final BaseCompanyRecord companyField) {
+        this.setCompany(companyField.unWrap(ImplCompanyJPA.class));
+    }
 
-  @Override
-  public void partner(final BasePartnerRecord partnerField) {
-    this.setPartner(partnerField.unWrap(ImplPartnerJPA.class));
-  }
+    @Override
+    public BaseCompanyRecord company() {
+        return new BaseCompanyRecordImpl(MODEL_NAME, "company", this::getPath, this::getCompany, this::setCompany);
+    }
 
-  @Override
-  public BasePartnerRecord partner() {
-    return new BasePartnerRecordImpl("partner", this::getPath, this::getPartner, this::setPartner);
-  }
+    public ImplPartnerJPA getPartner() {
+        return this.partner_id;
+    }
 
-  public List<ImplCompanyJPA> getCompanies() {
-    return this.companies;
-  }
+    public void setPartner(final ImplPartnerJPA partner_id) {
+        this.partner_id = partner_id;
+    }
 
-  public void setCompanies(final List<ImplCompanyJPA> companies) {
-    this.companies = companies;
-  }
+    @Override
+    public void partner(final BasePartnerRecord partnerField) {
+        this.setPartner(partnerField.unWrap(ImplPartnerJPA.class));
+    }
 
-  @Override
-  public void companies(final BaseCompanyRecordCollection companiesField) {
-    this.setCompanies(companiesField.unWrapAsList(ImplCompanyJPA.class));
-  }
+    @Override
+    public BasePartnerRecord partner() {
+        return new BasePartnerRecordImpl("partner", this::getPath, this::getPartner, this::setPartner);
+    }
 
-  @Override
-  public BaseCompanyRecordCollection companies() {
-    return new BaseCompanyRecordCollectionImpl("companies",this::getPath, this::getCompanies, this::setCompanies);
-  }
+    public List<ImplCompanyJPA> getCompanies() {
+        return this.companies;
+    }
 
-  public List<ImplGroupJPA> getGroups() {
-    return this.groups;
-  }
+    public void setCompanies(final List<ImplCompanyJPA> companies) {
+        this.companies = companies;
+    }
 
-  public void setGroups(final List<ImplGroupJPA> groups) {
-    this.groups = groups;
-  }
+    @Override
+    public void companies(final BaseCompanyRecordCollection companiesField) {
+        this.setCompanies(companiesField.unWrapAsList(ImplCompanyJPA.class));
+    }
 
-  @Override
-  public void groups(final BaseGroupRecordCollection groupsField) {
-    this.setGroups(groupsField.unWrapAsList(ImplGroupJPA.class));
-  }
+    @Override
+    public BaseCompanyRecordCollection companies() {
+        return new BaseCompanyRecordCollectionImpl("companies", this::getPath, this::getCompanies, this::setCompanies);
+    }
 
-  @Override
-  public BaseGroupRecordCollection groups() {
-    return new BaseGroupRecordCollectionImpl("groups",this::getPath, this::getGroups, this::setGroups);
-  }
+    public List<ImplGroupJPA> getGroups() {
+        return this.groups;
+    }
 
-  public List<ImplGroupJPA> getAction() {
-    return this.action;
-  }
+    public void setGroups(final List<ImplGroupJPA> groups) {
+        this.groups = groups;
+    }
 
-  public void setAction(final List<ImplGroupJPA> action) {
-    this.action = action;
-  }
+    @Override
+    public void groups(final BaseGroupRecordCollection groupsField) {
+        this.setGroups(groupsField.unWrapAsList(ImplGroupJPA.class));
+    }
 
-  @Override
-  public void action(final BaseGroupRecordCollection actionField) {
-    this.setAction(actionField.unWrapAsList(ImplGroupJPA.class));
-  }
+    @Override
+    public BaseGroupRecordCollection groups() {
+        return new BaseGroupRecordCollectionImpl("groups", this::getPath, this::getGroups, this::setGroups);
+    }
 
-  @Override
-  public BaseGroupRecordCollection action() {
-    return new BaseGroupRecordCollectionImpl("action",this::getPath, this::getAction, this::setAction);
-  }
+    public List<ImplGroupJPA> getAction() {
+        return this.action;
+    }
+
+    public void setAction(final List<ImplGroupJPA> action) {
+        this.action = action;
+    }
+
+    @Override
+    public void action(final BaseGroupRecordCollection actionField) {
+        this.setAction(actionField.unWrapAsList(ImplGroupJPA.class));
+    }
+
+    @Override
+    public BaseGroupRecordCollection action() {
+        return new BaseGroupRecordCollectionImpl("action", this::getPath, this::getAction, this::setAction);
+    }
 }

@@ -7,9 +7,8 @@ import org.platypus.api.query.QueryPath;
  * @since 0.1
  * on 08/05/17.
  */
-public interface Pathable {
+public interface SetPathable extends Pathable{
 
-    QueryPath getPath();
-    QueryPath resolve(QueryPath queryPath);
+    void setPath(QueryPath queryPath);
 
 }

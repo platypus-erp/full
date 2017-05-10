@@ -1,6 +1,7 @@
 package org.platypus.api.fields.impl;
 
 import org.platypus.api.GenericField;
+import org.platypus.api.SetPathable;
 import org.platypus.api.query.QueryPath;
 import org.platypus.api.Record;
 import org.platypus.api.RecordCollection;
@@ -24,7 +25,11 @@ public class RecordCollectionImpl<R extends Record, RI extends R, RC extends Rec
 
     private final Supplier<List<RI>> defaultValue = ArrayList<RI>::new;
 
-    public RecordCollectionImpl(String table, String name, Supplier<QueryPath> getPath, Supplier<List<RI>> getter, Consumer<List<RI>> setter) {
+    public RecordCollectionImpl(String table,
+                                String name,
+                                Supplier<QueryPath> getPath,
+                                Supplier<List<RI>> getter,
+                                Consumer<List<RI>> setter) {
         super(table, name, getPath, getter, setter);
     }
 

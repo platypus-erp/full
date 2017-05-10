@@ -27,7 +27,7 @@ abstract class AbstractFieldImpl<T> implements GenericField<T> {
         this.getter = getter;
         this.setter = setter;
         this.name = name;
-        path = () -> getPath.get().resolve(table, name);
+        path = () -> getPath.get().resolve(QueryPath.basic(table, name));
     }
 
     public AbstractFieldImpl(String table,String name,Supplier<QueryPath> getPath) {
@@ -38,7 +38,7 @@ abstract class AbstractFieldImpl<T> implements GenericField<T> {
             throw new UnsupportedOperationException("can't be called");
         };
         this.name = name;
-        path = () -> getPath.get().resolve(table, name);
+        path = () -> getPath.get().resolve(QueryPath.basic(table, name));
     }
 
     @Override
@@ -65,5 +65,10 @@ abstract class AbstractFieldImpl<T> implements GenericField<T> {
     @Override
     public QueryPath getPath() {
         return new QueryPath(path.get());
+    }
+
+    @Override
+    public QueryPath resolve(QueryPath queryPath) {
+        return getPath().resolve(queryPath);
     }
 }
