@@ -44,10 +44,8 @@ public class JpaImplFieldGenerator {
     BasicFieldRecordGenerator basicFieldRecordGenerator = new BasicFieldRecordGenerator();
     BasicFieldRecordConstructorGenerator basicFieldRecordConstructorGenerator;
     TypeSpec.Builder jpaImplBuilder;
-    MethodSpec.Builder constructor;
 
-    public JpaImplFieldGenerator(TypeSpec.Builder jpaImplBuilder, String currentModelClassName, MethodSpec.Builder constructor) {
-        this.constructor = constructor;
+    public JpaImplFieldGenerator(TypeSpec.Builder jpaImplBuilder, String currentModelClassName) {
         this.jpaImplBuilder = jpaImplBuilder;
         basicFieldRecordConstructorGenerator =
                 new BasicFieldRecordConstructorGenerator(getImplHibernateName(currentModelClassName));

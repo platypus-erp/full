@@ -1,64 +1,55 @@
 package org.platypus.erp.module.base.models.generated.jpa;
 
+import java.lang.Override;
+import java.lang.String;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import org.platypus.api.fields.LongField;
 import org.platypus.api.fields.impl.LongFieldImpl;
 import org.platypus.api.query.QueryPath;
 import org.platypus.erp.module.base.models.generated.records.BaseGroupRecord;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 @Table(
-        name = ImplGroupJPA.MODEL_NAME
+    name = ImplGroupJPA.MODEL_NAME
 )
 @Entity
-public class ImplGroupJPA implements BaseGroupRecord{
-    public static final String MODEL_NAME = "group";
-    private QueryPath path = QueryPath.basic(MODEL_NAME, "id");
-    @Column(
-            name = "\"id\"",
-            nullable = true,
-            insertable = true,
-            updatable = true
-    )
-    private long id = 0;
+public class ImplGroupJPA implements BaseGroupRecord {
+  public static final String MODEL_NAME = "group";
 
-    public long getId() {
-        return this.id;
-    }
+  private QueryPath path = QueryPath.basic(MODEL_NAME, "id");
 
-    public void setId(final long id) {
-        this.id = id;
-    }
+  @Column(
+      name = "\"id\"",
+      nullable = true,
+      insertable = true,
+      updatable = true
+  )
+  private long id = 0;
 
-    @Override
-    public boolean bool() {
-        return false;
-    }
+  @Override
+  public QueryPath getPath() {
+    return this.path;}
 
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
+  @Override
+  public void setPath(QueryPath path) {
+    this.path = path;}
 
-    @Override
-    public QueryPath getPath() {
-        return this.path;
-    }
+  @Override
+  public QueryPath resolve(QueryPath path) {
+    return this.path.resolve(path);
+  }
 
-    @Override
-    public QueryPath resolve(QueryPath queryPath) {
-        return getPath().resolve(queryPath);
-    }
+  public long getId() {
+    return this.id;
+  }
 
-    @Override
-    public void setPath(QueryPath queryPath) {
-        this.path = queryPath;
-    }
+  public void setId(final long id) {
+    this.id = id;
+  }
 
-    @Override
-    public LongField id() {
-        return new LongFieldImpl(MODEL_NAME, "id", this::getPath, this::getId, this::setId);
-    }
+  @Override
+  public LongField id() {
+    return new LongFieldImpl(MODEL_NAME, "id", this::getPath, this::getId, this::setId);
+  }
 }

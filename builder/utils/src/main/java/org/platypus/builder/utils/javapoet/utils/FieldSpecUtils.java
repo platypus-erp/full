@@ -21,6 +21,9 @@ public class FieldSpecUtils {
     public static FieldSpec privateField(Class<?> fieldType, String fieldName) {
         return FieldSpec.builder(fieldType, fieldName, Modifier.PRIVATE).build();
     }
+    public static FieldSpec.Builder privateFieldBuilder(Class<?> fieldType, String fieldName) {
+        return FieldSpec.builder(fieldType, fieldName, Modifier.PRIVATE);
+    }
 
     public static FieldSpec privateField(Class<?> fieldType, String fieldName, Object value) {
         return FieldSpec

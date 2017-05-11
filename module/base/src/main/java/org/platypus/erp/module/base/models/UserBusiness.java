@@ -1,17 +1,12 @@
 package org.platypus.erp.module.base.models;
 
-import org.platypus.api.fields.StringField;
+import base.BaseRecordPool;
 import org.platypus.api.query.Filter;
 import org.platypus.api.query.SearchBuilder;
+import org.platypus.api.query.SearchResult;
 import org.platypus.erp.module.base.models.generated.jpa.ImplUsersJPA;
 import org.platypus.erp.module.base.models.generated.records.BasePartnerRecord;
-import org.platypus.erp.module.base.models.generated.records.BasePool;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.platypus.api.query.SearchBuilder.*;
 
 /**
  * Created by apasquier on 04/05/17.
@@ -29,12 +24,10 @@ public class UserBusiness {
         record.partner().id().getPath();
     }
 
-    static BasePool pool;
-    static BasePool.TestPool pool2;
+    static BaseRecordPool pool;
 
 
     public static void main(String[] args) {
-        Filter.Complexe<BaseUsersRecord> my_filter = r -> and(r.active().isUnSet(), r.active().isTrue());
 
 
         ImplUsersJPA record = new ImplUsersJPA();
@@ -51,28 +44,21 @@ public class UserBusiness {
         System.out.println(pre);
 
 
-        BaseUsersRecord rec = pool.getUser();
-
-        BasePool.TestUserRecord rec2 = pool2.getUser();
+        BaseUsersRecord rec = pool.getUsers();
 
 
-        SearchBuilder<BaseUsersRecord> loginActive = search(rec);
-        loginActive
-                .get(BaseUsersRecord::active)
-                .get(BaseUsersRecord::id)
-                .get(BaseUsersRecord::login)
-                .get(r -> r.partner().id())
-                .get(BaseUsersRecord::partner)
-                .filter(
-                        or(record.active().isTrue(),
-                                and(
-                                        record.active().isFalse(),
-                                        record.active().isUnSet()
-                                )
-                        )
-                ).filter(my_filter)
-                .sortAsc(record.id());
+        SearchResult<BaseUsersRecord> loginActive = new SearchBuilder()
+                .add(rec.new_password())
+                .add(rec.id())
+                .add(rec.login())
+                .add(rec.partner().id())
+                .add(rec.partner())
+                .where(rec.active()).isFalse()
+                .and(rec.login()).contains("toto")
+                .or(rec.new_password()).eq(null)
+                .execute(rec);
+
+
     }
 
-    Filter.Basic<BaseUsersRecord> my_filter2 = r -> r.active().isUnSet();
 }

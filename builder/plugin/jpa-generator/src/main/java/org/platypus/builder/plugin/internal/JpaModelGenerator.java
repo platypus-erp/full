@@ -8,16 +8,19 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import org.apache.commons.lang3.StringUtils;
-import org.platypus.api.query.QueryPath;
 import org.platypus.api.fields.impl.RecordCollectionImpl;
 import org.platypus.api.fields.impl.RecordImpl;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
+import org.platypus.api.query.QueryPath;
 import org.platypus.builder.core.Utils;
 import org.platypus.builder.core.model.merger.ModelMerged;
 import org.platypus.builder.plugin.internal.recordImpl.RecordImplFieldGenerator;
 import org.platypus.builder.utils.javapoet.utils.ClassSpecUtils;
 import org.platypus.builder.utils.javapoet.utils.Constant;
+import org.platypus.builder.utils.javapoet.utils.FieldSpecUtils;
+import org.platypus.builder.utils.javapoet.utils.JavaPoetTypeUtils;
+import org.platypus.builder.utils.javapoet.utils.MethodSpecUtils;
 
 import javax.lang.model.element.Modifier;
 import javax.persistence.Entity;
@@ -74,7 +77,6 @@ public class JpaModelGenerator {
         String className = getImplHibernateName(modelMerged.getName());
         TypeSpec.Builder jpaImplBuilder = ClassSpecUtils.publicClass(className);
         String tableName = TO_SQL.apply(modelMerged.getName());
-        System.out.println(modelMerged.getName());
 
         jpaImplBuilder.addField(Constant.publicStaticFinalString("MODEL_NAME", tableName));
 
@@ -85,18 +87,26 @@ public class JpaModelGenerator {
 
         jpaImplBuilder.addAnnotation(Entity.class);
         MetaInfoRecord rec = getRecord.apply(modelMerged.getName());
-        jpaImplBuilder.superclass(Utils.toRecordImpl(rec));
+        jpaImplBuilder.addSuperinterface(Utils.toRecord(rec));
+        ClassName queryPathCls = ClassName.get(QueryPath.class);
+        jpaImplBuilder.addField(
+                FieldSpecUtils.privateFieldBuilder(QueryPath.class, "path")
+                        .initializer("$T.basic(MODEL_NAME, $S)", queryPathCls, "id")
+                        .build());
 
-        MethodSpec.Builder constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
-        constructor.addCode("super(MODEL_NAME);\n");
+        jpaImplBuilder.addMethod(MethodSpecUtils.classicOverrideGetter("path", queryPathCls));
+        jpaImplBuilder.addMethod(MethodSpecUtils.classicOverrideSetter("path", queryPathCls));
 
-        MethodSpec.Builder constructorGetPath = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
-        ParameterizedTypeName getPath = ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(QueryPath.class));
-        constructorGetPath.addParameter(getPath, "getPath");
-        constructorGetPath.addCode("super(MODEL_NAME, getPath);\n");
-        jpaImplBuilder.addMethod(constructorGetPath.build());
+        MethodSpec.Builder resolvePath = MethodSpec.methodBuilder("resolve")
+                .addModifiers(Modifier.PUBLIC)
+                .addAnnotation(Override.class)
+                .returns(queryPathCls)
+                .addParameter(queryPathCls, "path")
+                .addCode("return this.$N.resolve($N);\n", "path", "path");
 
-        JpaImplFieldGenerator fieldGenerator = new JpaImplFieldGenerator(jpaImplBuilder, modelMerged.getName(), constructor);
+        jpaImplBuilder.addMethod(resolvePath.build());
+
+        JpaImplFieldGenerator fieldGenerator = new JpaImplFieldGenerator(jpaImplBuilder, modelMerged.getName());
         foreachValues(modelMerged.getBigStringField(), fieldGenerator::generateField);
         foreachValues(modelMerged.getBinaryField(), fieldGenerator::generateField);
         foreachValues(modelMerged.getBooleanField(), fieldGenerator::generateField);
@@ -114,7 +124,6 @@ public class JpaModelGenerator {
         foreachValues(modelMerged.getMtmField(), m -> fieldGenerator.generateField(m, getRecordCollection));
         foreachValues(modelMerged.getOtmField(), m -> fieldGenerator.generateField(m, getRecordCollection));
 
-        jpaImplBuilder.addMethod(constructor.build());
         return jpaImplBuilder;
     }
 
@@ -146,12 +155,14 @@ public class JpaModelGenerator {
 
         MethodSpec.Builder constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
         constructor.addModifiers(Modifier.PUBLIC);
-        constructor.addParameter(ParameterSpec.builder(ClassName.get(String.class), "name").build());
-        constructor.addParameter(ParameterSpec.builder(getPath, "getPath").build());
-        constructor.addParameter(ParameterSpec.builder(functionGetter, "getter").build());
-        constructor.addParameter(ParameterSpec.builder(functionSetter, "setter").build());
+        constructor.addParameter(JavaPoetTypeUtils.STRING_TYPE, "table");
+        constructor.addParameter(JavaPoetTypeUtils.STRING_TYPE, "name");
+        constructor.addParameter(getPath, "getPath");
+        constructor.addParameter(functionGetter, "getter");
+        constructor.addParameter(functionSetter, "setter");
 
-        constructor.addCode("super($N, $N, $N, $N);\n", "name", "getPath", "getter", "setter");
+        constructor.addCode("super($N, $N, $N, $N, $N);\n",
+                "table", "name", "getPath", "getter", "setter");
 
         recordCollectionImpl.addMethod(constructor.build());
         return recordCollectionImpl;
@@ -181,26 +192,15 @@ public class JpaModelGenerator {
 
         MethodSpec.Builder constructor = MethodSpec.constructorBuilder();
         constructor.addModifiers(Modifier.PUBLIC);
-        constructor.addParameter(ParameterSpec.builder(ClassName.get(String.class), "name").build());
-        constructor.addParameter(ParameterSpec.builder(getPath, "getPath").build());
-        constructor.addParameter(ParameterSpec.builder(functionGetter, "getter").build());
-        constructor.addParameter(ParameterSpec.builder(functionSetter, "setter").build());
+        constructor.addParameter(JavaPoetTypeUtils.STRING_TYPE, "table");
+        constructor.addParameter(JavaPoetTypeUtils.STRING_TYPE, "name");
+        constructor.addParameter(getPath, "getPath");
+        constructor.addParameter(functionGetter, "getter");
+        constructor.addParameter(functionSetter, "setter");
 
-        constructor.addCode("super($N,$N, $N, $N, $T::new);\n", "name", "getPath", "getter", "setter", recordTargetImpl);
+        constructor.addCode("super($N, $N, $N, $N, $N, $T::new);\n", "table", "name", "getPath", "getter", "setter", recordTargetImpl);
 
         recordImpl.addMethod(constructor.build());
-
-
-        MethodSpec.Builder constructorSelf = MethodSpec.constructorBuilder().addModifiers(Modifier.PROTECTED);
-        constructorSelf.addParameter(ParameterSpec.builder(ClassName.get(String.class), "name").build());
-        constructorSelf.addCode("super($N, $T::new);\n", "name", recordTargetImpl);
-        recordImpl.addMethod(constructorSelf.build());
-
-        MethodSpec.Builder constructorSelfGetPath = MethodSpec.constructorBuilder().addModifiers(Modifier.PROTECTED);
-        constructorSelfGetPath.addParameter(ParameterSpec.builder(ClassName.get(String.class), "name").build());
-        constructorSelfGetPath.addParameter(getPath, "getPath");
-        constructorSelfGetPath.addCode("super($N, $N, $T::new);\n", "name", "getPath", recordTargetImpl);
-        recordImpl.addMethod(constructorSelfGetPath.build());
 
         RecordImplFieldGenerator fieldGenerator = new RecordImplFieldGenerator(recordImpl);
         foreachValues(modelMerged.getBigStringField(), fieldGenerator::generateField);

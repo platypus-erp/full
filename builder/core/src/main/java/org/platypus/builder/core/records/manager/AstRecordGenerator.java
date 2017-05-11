@@ -5,6 +5,7 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
+import org.apache.commons.lang3.StringUtils;
 import org.platypus.api.Bool;
 import org.platypus.api.Record;
 import org.platypus.api.RecordCollection;
@@ -30,33 +31,40 @@ import java.util.function.Predicate;
 public class AstRecordGenerator {
 
     Set<FileToGenerate> fileToGenerate = new HashSet<>();
+    final InterfaceBuilder poolBuilder;
+    final String moduleName;
 
-    public static class FileToGenerate{
+    public AstRecordGenerator(String moduleName) {
+        this.moduleName = moduleName;
+        poolBuilder = InterfaceBuilder.publicInterface(StringUtils.capitalize(moduleName) + "RecordPool");
+    }
+
+    static class FileToGenerate {
         final TypeSpec.Builder builder;
         final String pkg;
 
-        public FileToGenerate(String pkg, TypeSpec.Builder builder) {
+        FileToGenerate(String pkg, TypeSpec.Builder builder) {
             this.builder = builder;
             this.pkg = pkg;
         }
 
-        public JavaFile.Builder toJavaFile(){
+        JavaFile.Builder toJavaFile() {
             return JavaFile.builder(pkg, builder.build());
         }
     }
 
 
-    public void generateRootRecord(AstModel merged, AstRecordRegistry recordRegistry) {
+    void generateRootRecord(AstModel merged, AstRecordRegistry recordRegistry) {
         MetaInfoRecord currentRec = recordRegistry.getMetaInfoTargetByClassName(merged);
         MetaInfoRecordCollection currentRC = recordRegistry.getMetaInfoCollectionTargetByClassName(merged);
-
-        InterfaceBuilder recordBuilder = InterfaceBuilder.publicInterface(currentRec.getClassName());
+        ClassName recordClassName = ClassName.get(currentRec.getPkg(), currentRec.getClassName());
+        InterfaceBuilder recordBuilder = InterfaceBuilder.publicInterface(recordClassName);
         recordBuilder.addSuperInterfaces(Record.class);
         recordBuilder.addAnnotation(
                 AnnotationSpec.builder(RecordOf.class)
-                .addMember("modelPkg", "$S", merged.getPkg())
-                .addMember("modelClassName", "$S", merged.getClassName())
-                .addMember("modelName", "$L", merged.getModelName())
+                        .addMember("modelPkg", "$S", merged.getPkg())
+                        .addMember("modelClassName", "$S", merged.getClassName())
+                        .addMember("modelName", "$S", merged.getModelName())
         );
 
         generateBasicFieldRecord(merged, recordBuilder);
@@ -64,8 +72,8 @@ public class AstRecordGenerator {
         generateRelationFieldRecord(merged, recordBuilder, recordRegistry);
 
         fileToGenerate.add(new FileToGenerate(currentRec.getPkg(), recordBuilder.toBuilder()));
-
-        if (merged.isRootModel()){
+        poolBuilder.addOnlyReturnMethod("get" + StringUtils.capitalize(merged.getModelName()), recordClassName);
+        if (merged.isRootModel()) {
             InterfaceBuilder recordCollectionBuilder = InterfaceBuilder.publicInterface(currentRC.getClassName());
             recordCollectionBuilder.addSuperInterfaces(
                     ParameterizedTypeName.get(
@@ -76,7 +84,7 @@ public class AstRecordGenerator {
                     AnnotationSpec.builder(RecordOf.class)
                             .addMember("modelPkg", "$S", merged.getPkg())
                             .addMember("modelClassName", "$S", merged.getClassName())
-                            .addMember("modelName", "$L", merged.getModelName())
+                            .addMember("modelName", "$S", merged.getModelName())
             );
             fileToGenerate.add(new FileToGenerate(currentRC.getPkg(), recordCollectionBuilder.toBuilder()));
         }

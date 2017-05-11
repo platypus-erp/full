@@ -4,12 +4,12 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import org.platypus.api.query.QueryPath;
 import org.platypus.api.fields.BinaryField;
 import org.platypus.api.fields.BooleanField;
 import org.platypus.api.fields.LongField;
 import org.platypus.api.fields.StringField;
 import org.platypus.api.fields.impl.RecordImpl;
+import org.platypus.api.query.QueryPath;
 import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecord;
 import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecordCollection;
 import org.platypus.erp.module.base.models.generated.records.BaseGroupRecordCollection;
@@ -17,15 +17,9 @@ import org.platypus.erp.module.base.models.generated.records.BasePartnerRecord;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
 public class BaseUsersRecordImpl extends RecordImpl<BaseUsersRecord, ImplUsersJPA> implements BaseUsersRecord {
-
-  public BaseUsersRecordImpl(String tableName, String name, Supplier<QueryPath> getPath,
+  public BaseUsersRecordImpl(String table, String name, Supplier<QueryPath> getPath,
       Supplier<ImplUsersJPA> getter, Consumer<ImplUsersJPA> setter) {
-    super(tableName, name,getPath, getter, setter, ImplUsersJPA::new);
-  }
-
-  @Override
-  public QueryPath resolve(QueryPath queryPath) {
-    return getPath().resolve(queryPath);
+    super(table, name, getPath, getter, setter, ImplUsersJPA::new);
   }
 
   @Override
@@ -124,16 +118,6 @@ public class BaseUsersRecordImpl extends RecordImpl<BaseUsersRecord, ImplUsersJP
   }
 
   @Override
-  public BaseGroupRecordCollection groups() {
-    return getOrDefault().groups();
-  }
-
-  @Override
-  public void groups(final BaseGroupRecordCollection groups) {
-    getOrDefault().groups(groups);
-  }
-
-  @Override
   public BaseGroupRecordCollection action() {
     return getOrDefault().action();
   }
@@ -141,5 +125,15 @@ public class BaseUsersRecordImpl extends RecordImpl<BaseUsersRecord, ImplUsersJP
   @Override
   public void action(final BaseGroupRecordCollection action) {
     getOrDefault().action(action);
+  }
+
+  @Override
+  public BaseGroupRecordCollection groups() {
+    return getOrDefault().groups();
+  }
+
+  @Override
+  public void groups(final BaseGroupRecordCollection groups) {
+    getOrDefault().groups(groups);
   }
 }

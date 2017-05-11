@@ -16,8 +16,8 @@ public enum  SqlPredicate {
     MORE(">"),
     MORE_EQ(">="),
     OR("or"),
-    AND("and")
-    ;
+    AND("and"),
+    LIKE("like");
 
     public final String sql;
 

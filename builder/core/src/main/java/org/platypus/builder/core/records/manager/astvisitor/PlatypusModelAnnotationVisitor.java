@@ -3,6 +3,7 @@ package org.platypus.builder.core.records.manager.astvisitor;
 import com.github.javaparser.ast.expr.AnnotationExpr;
 import com.github.javaparser.ast.expr.NormalAnnotationExpr;
 import com.github.javaparser.ast.expr.SingleMemberAnnotationExpr;
+import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 /**
@@ -20,11 +21,16 @@ public class PlatypusModelAnnotationVisitor extends VoidVisitorAdapter<Void>{
     }
     @Override
     public void visit(NormalAnnotationExpr n, Void arg) {
-        modelName = n.getPairs().get(0).getValue().toString();
+        n.getPairs().get(0).getValue().accept(this, arg);
     }
 
     @Override
     public void visit(SingleMemberAnnotationExpr n, Void arg) {
-        modelName = n.getMemberValue().toString();
+        n.getMemberValue().accept(this, arg);
+    }
+
+    @Override
+    public void visit(final StringLiteralExpr n, Void arg) {
+        modelName = n.getValue();
     }
 }

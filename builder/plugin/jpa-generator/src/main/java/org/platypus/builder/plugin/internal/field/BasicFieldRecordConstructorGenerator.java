@@ -83,7 +83,7 @@ public class BasicFieldRecordConstructorGenerator {
     }
 
     private CodeBlock getField(String name, TypeName field) {
-        return CodeBlock.of("return new $T($S, this::$N, this::get$N, this::set$N);\n",
+        return CodeBlock.of("return new $T(MODEL_NAME, $S, this::$N, this::get$N, this::set$N);\n",
                 field,
                 name,
                 "getPath",
@@ -100,7 +100,7 @@ public class BasicFieldRecordConstructorGenerator {
         return generateRecordField(field.getName(), field.targetName(), getRecord);
     }
     private CodeBlock generateRecordField(String name, String fieldTargetName, Function<String, MetaInfoRecord> getRecord) {
-        return CodeBlock.of("return new $T($S, this::$N, this::get$N, this::set$N);\n",
+        return CodeBlock.of("return new $T(MODEL_NAME, $S, this::$N, this::get$N, this::set$N);\n",
                 Utils.toRecordImpl(getRecord.apply(fieldTargetName)),
                 name,
                 "getPath",
@@ -117,7 +117,7 @@ public class BasicFieldRecordConstructorGenerator {
     }
     private CodeBlock generateRecordCollectionField(String name, String fieldTargetName,
                                                     Function<String, ? extends MetaInfoRecord> getRecord) {
-        return CodeBlock.of("return new $T($S,this::$N, this::get$N, this::set$N);\n",
+        return CodeBlock.of("return new $T(MODEL_NAME, $S,this::$N, this::get$N, this::set$N);\n",
                 Utils.toRecordCollectionImpl(getRecord.apply(fieldTargetName)),
                 name,
                 "getPath",

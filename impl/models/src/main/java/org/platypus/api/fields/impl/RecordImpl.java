@@ -24,7 +24,8 @@ public abstract class RecordImpl<R extends Record, RI extends R> implements Gene
     protected final String name;
     protected Supplier<QueryPath> path;
 
-    protected RecordImpl(String tableName, String name,
+    protected RecordImpl(String tableName,
+                         String name,
                          Supplier<QueryPath> getPath,
                          Supplier<RI> getter,
                          Consumer<RI> setter,

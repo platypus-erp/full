@@ -63,7 +63,7 @@ public class QuickRecordGenerator {
         rootRecordSimpleName = depends.stream()
                 .flatMap(p -> p.getModel().values().stream())
                 .collect(Collectors.toMap(MetaInfoModel::getClassName, Namable::getName));
-        AstRecordGenerator astRecordGenerator = new AstRecordGenerator();
+        AstRecordGenerator astRecordGenerator = new AstRecordGenerator(currentModuleName);
         for (AstModel astModel : astModels) {
             Optional<MetaInfoRecordCollection> rc = AstModelHelper.convertToRecordCollection(currentModuleName, astModel);
             Optional<MetaInfoRecord> r = AstModelHelper.convertToRecord(currentModuleName, astModel);
@@ -82,11 +82,16 @@ public class QuickRecordGenerator {
         for (JavaFile.Builder files : astRecordGenerator.fileToGenerate.stream()
                 .map(AstRecordGenerator.FileToGenerate::toJavaFile)
                 .collect(Collectors.toSet())) {
-            try {
-                files.build().writeTo(projectDir.toFile());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            createFile(files);
+        }
+        createFile(JavaFile.builder(currentModuleName, astRecordGenerator.poolBuilder.build()));
+    }
+
+    private void createFile(JavaFile.Builder files) {
+        try {
+            files.indent("   ").build().writeTo(projectDir.toFile());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
