@@ -10,13 +10,19 @@ import org.platypus.api.fields.UnmutableBooleanField;
 public interface BooleanFieldQuery {
 
 
-    QueryPredicate<UnmutableBooleanField> isTrue();
-    QueryPredicate<UnmutableBooleanField> isFalse();
-    QueryPredicate<UnmutableBooleanField> isUnSet();
-    QueryPredicate<UnmutableBooleanField> isUnSetOrTrue();
-    QueryPredicate<UnmutableBooleanField> isUnSetOrFalse();
-    QueryPredicate<UnmutableBooleanField> isSet();
-    QueryPredicate<UnmutableBooleanField> eq(boolean value);
+    QueryPredicate<Boolean> isTrue();
+
+    QueryPredicate<Boolean> isFalse();
+
+    QueryPredicate<Boolean> isUnSet();
+
+    QueryPredicate<Boolean> isUnSetOrTrue();
+
+    QueryPredicate<Boolean> isUnSetOrFalse();
+
+    QueryPredicate<Boolean> isSet();
+
+    QueryPredicate<Boolean> eq(boolean value);
 
 
 }

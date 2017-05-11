@@ -9,5 +9,4 @@ package org.platypus.api;
  */
 public interface Pool {
 
-    <R extends Record> R create(Class<R> tClass);
 }
