@@ -7,52 +7,53 @@ import org.platypus.api.fields.BooleanField;
 import org.platypus.api.fields.StringField;
 
 @RecordOf(
-      modelPkg = "org.platypus.erp.module.base.models",
-      modelClassName = "Users",
-      modelName = "users"
+        modelPkg = "org.platypus.erp.module.base.models",
+        modelClassName = "Users",
+        modelName = "users"
 )
 public interface BaseUsersRecord extends Record {
-   BinaryField signature();
 
-   void signature(BinaryField signature);
+    BinaryField signature();
 
-   BooleanField active();
+    void signature(BinaryField signature);
 
-   BooleanField share();
+    BooleanField active();
 
-   void active(BooleanField active);
+    BooleanField share();
 
-   void share(BooleanField share);
+    void active(BooleanField active);
 
-   StringField new_password();
+    void share(BooleanField share);
 
-   StringField login();
+    StringField new_password();
 
-   StringField password();
+    StringField login();
 
-   void new_password(StringField new_password);
+    StringField password();
 
-   void login(StringField login);
+    void new_password(StringField new_password);
 
-   void password(StringField password);
+    void login(StringField login);
 
-   BaseCompanyRecordCollection companies();
+    void password(StringField password);
 
-   BaseGroupRecordCollection action();
+    BaseCompanyRecordCollection companies();
 
-   BaseGroupRecordCollection groups();
+    BaseGroupRecordCollection action();
 
-   void companies(BaseCompanyRecordCollection companies);
+    BaseGroupRecordCollection groups();
 
-   void action(BaseGroupRecordCollection action);
+    void companies(BaseCompanyRecordCollection companies);
 
-   void groups(BaseGroupRecordCollection groups);
+    void action(BaseGroupRecordCollection action);
 
-   BaseCompanyRecord company();
+    void groups(BaseGroupRecordCollection groups);
 
-   void company(BaseCompanyRecord company);
+    BaseCompanyRecord company();
 
-   BasePartnerRecord partner();
+    void company(BaseCompanyRecord company);
 
-   void partner(BasePartnerRecord partner);
+    BasePartnerRecord partner();
+
+    void partner(BasePartnerRecord partner);
 }

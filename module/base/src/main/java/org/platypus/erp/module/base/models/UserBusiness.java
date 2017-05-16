@@ -1,12 +1,16 @@
 package org.platypus.erp.module.base.models;
 
 import base.BaseRecordPool;
-import org.platypus.api.query.Filter;
+import org.platypus.api.fields.StringField;
+import org.platypus.api.query.PredicateCombinator;
 import org.platypus.api.query.SearchBuilder;
-import org.platypus.api.query.SearchResult;
+import org.platypus.api.query.predicate.PredicateBuilder;
 import org.platypus.erp.module.base.models.generated.jpa.ImplUsersJPA;
 import org.platypus.erp.module.base.models.generated.records.BasePartnerRecord;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
+
+import static org.platypus.api.query.PredicateCombinator.AND;
+
 
 /**
  * Created by apasquier on 04/05/17.
@@ -44,19 +48,20 @@ public class UserBusiness {
         System.out.println(pre);
 
 
-        BaseUsersRecord rec = pool.getUsers();
 
 
-        SearchResult<BaseUsersRecord> loginActive = new SearchBuilder()
-                .add(rec.new_password())
-                .add(rec.id())
-                .add(rec.login())
-                .add(rec.partner().id())
-                .add(rec.partner())
-                .where(rec.active()).isFalse()
-                .and(rec.login()).contains("toto")
-                .or(rec.new_password()).eq(null)
-                .execute(rec);
+
+
+        SearchBuilder<BaseUsersRecord> loginActive = SearchBuilder.from(BaseUsersRecord.class)
+                .add(BaseUsersRecord::partner)
+                .add(BaseUsersRecord::login)
+                .add(r -> r.partner().id())
+                .add(new PredicateBuilder<BaseUsersRecord>().avg(BaseUsersRecord::login))
+                .where(
+                        r -> r.login().contains("toto"),
+                        AND,
+                        r -> r.active().isFalse()
+                );
 
 
     }

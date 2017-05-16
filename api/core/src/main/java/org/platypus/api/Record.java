@@ -3,7 +3,7 @@ package org.platypus.api;
 
 import org.platypus.api.fields.LongField;
 
-public interface Record extends Pathable,SetPathable{
+public interface Record extends PlatypusField,SetPathable{
 
     LongField id();
 

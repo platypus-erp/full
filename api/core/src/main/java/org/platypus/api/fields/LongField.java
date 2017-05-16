@@ -2,8 +2,7 @@ package org.platypus.api.fields;
 
 
 import org.platypus.api.GenericField;
-import org.platypus.api.Record;
-import org.platypus.api.query.QueryPath;
+import org.platypus.api.UnmutableGenericField;
 
 /**
  * TODO Add JavaDoc
@@ -12,7 +11,7 @@ import org.platypus.api.query.QueryPath;
  * @version 0.1
  * @since 0.1
  */
-public interface LongField extends UnmutatableLongField, GenericField<Long> {
+public interface LongField extends GenericField<Long> {
 
 //    static LongField of(long value){
 //        return new EmptyLongField(value);

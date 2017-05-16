@@ -2,6 +2,7 @@ package org.platypus.api.fields;
 
 
 import org.platypus.api.GenericField;
+import org.platypus.api.UnmutableGenericField;
 
 /**
  * TODO Add JavaDoc
@@ -10,5 +11,5 @@ import org.platypus.api.GenericField;
  * @version 0.1
  * @since 0.1
  */
-public interface IntField extends UnmutableIntField, GenericField<Integer> {
+public interface IntField extends GenericField<Integer> {
 }

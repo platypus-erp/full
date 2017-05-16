@@ -25,13 +25,15 @@ configurations {
 }
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    platypusCompile project(':api:core')
+
     generatedCompile 'javax.validation:validation-api:1.1.0.Final'
     generatedCompile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
 
     emptyCompile project(':builder:core')
 
-    platypusCompile project(':api:core')
 
+    compile project(':api:core')
     compile project(':impl:module')
     compile project(':impl:models')
     compile project(':builder:core')

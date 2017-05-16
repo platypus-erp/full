@@ -7,7 +7,7 @@ package org.platypus.api;
  * @version 0.1
  * @since 0.1
  */
-public interface UnmutableGenericField<T> extends Namable, Pathable, Booleanable, EmptyCheckable{
+public interface UnmutableGenericField<T> extends PlatypusField, Booleanable, EmptyCheckable{
 
     T get();
 

@@ -2,6 +2,7 @@ package org.platypus.api.fields;
 
 
 import org.platypus.api.GenericField;
+import org.platypus.api.UnmutableGenericField;
 
 import java.math.BigDecimal;
 
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
  * @version 0.1
  * @since 0.1
  */
-public interface DecimalField extends UnmutableDecimalField , GenericField<BigDecimal> {
+public interface DecimalField extends GenericField<BigDecimal> {
 
 
     void set(BigDecimal date);

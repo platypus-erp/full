@@ -3,7 +3,8 @@ package org.platypus.api.query;
 /**
  * @author chmuchme
  * @since 0.1
- * on 10/05/17.
+ * on 16/05/17.
  */
-public interface AndQueryPredicate {
+public enum  PredicateCombinator {
+    AND,OR
 }

@@ -15,9 +15,9 @@ public enum  SqlPredicate {
     LESS_EQ("<="),
     MORE(">"),
     MORE_EQ(">="),
-    OR("or"),
-    AND("and"),
-    LIKE("like");
+    LIKE("like"),
+    IS_NOT_NULL("is not null"),
+    IS_NULL("is null");
 
     public final String sql;
 
