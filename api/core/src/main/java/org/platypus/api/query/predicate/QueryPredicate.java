@@ -10,9 +10,6 @@ import java.util.function.Function;
  * @since 0.1
  * on 10/05/17.
  */
-public interface QueryPredicate<T>{
+public interface QueryPredicate<T> extends PlatypusPredicate<T, SqlPredicate, T>{
 
-    T getColumn();
-    SqlPredicate getPredicate();
-    T getValue();
 }

@@ -26,17 +26,17 @@ public class PredicateImpl<T extends PlatypusField> implements QueryPredicate<T>
     }
 
     @Override
-    public T getColumn() {
+    public T getLeft() {
         return null;
     }
 
     @Override
-    public SqlPredicate getPredicate() {
+    public SqlPredicate getCondition() {
         return sqlPredicate;
     }
 
     @Override
-    public T getValue() {
+    public T getRight() {
         return value;
     }
 }

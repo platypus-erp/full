@@ -48,19 +48,15 @@ public class UserBusiness {
         System.out.println(pre);
 
 
-
-
-
-
         SearchBuilder<BaseUsersRecord> loginActive = SearchBuilder.from(BaseUsersRecord.class)
-                .add(BaseUsersRecord::partner)
-                .add(BaseUsersRecord::login)
-                .add(r -> r.partner().id())
-                .add(new PredicateBuilder<BaseUsersRecord>().avg(BaseUsersRecord::login))
-                .where(
+                .get(BaseUsersRecord::partner, BaseUsersRecord::login, r -> r.partner().id())
+                .get(new PredicateBuilder<BaseUsersRecord>().avg(BaseUsersRecord::login))
+                .filter(
                         r -> r.login().contains("toto"),
                         AND,
                         r -> r.active().isFalse()
+                ).or().filter(
+                        r -> r.new_password().isNotNull()
                 );
 
 

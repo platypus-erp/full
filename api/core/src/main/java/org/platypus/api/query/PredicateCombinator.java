@@ -6,5 +6,5 @@ package org.platypus.api.query;
  * on 16/05/17.
  */
 public enum  PredicateCombinator {
-    AND,OR
+    AND,OR,
 }
