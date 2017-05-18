@@ -3,7 +3,7 @@ package org.platypus.api.fields;
 
 import org.platypus.api.GenericField;
 import org.platypus.api.query.SqlPredicate;
-import org.platypus.api.query.predicate.PredicateImpl;
+import org.platypus.api.query.predicate.impl.PredicateImpl;
 import org.platypus.api.query.predicate.QueryPredicate;
 
 /**

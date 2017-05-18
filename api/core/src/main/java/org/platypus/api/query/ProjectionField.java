@@ -27,4 +27,16 @@ public class ProjectionField<T  extends Record> {
         this.aggregator = null;
         this.supValue = null;
     }
+
+    public Function<T, ? extends PlatypusField> getField() {
+        return field;
+    }
+
+    public SqlAggregator getAggregator() {
+        return aggregator;
+    }
+
+    public Object getSupValue() {
+        return supValue;
+    }
 }

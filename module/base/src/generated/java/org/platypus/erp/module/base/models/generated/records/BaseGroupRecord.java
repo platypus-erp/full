@@ -9,4 +9,9 @@ import org.platypus.api.annotations.record.RecordOf;
       modelName = "group"
 )
 public interface BaseGroupRecord extends Record {
+
+    @Override
+    default String getName() {
+        return "group";
+    }
 }

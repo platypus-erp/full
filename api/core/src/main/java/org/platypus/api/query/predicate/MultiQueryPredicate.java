@@ -8,5 +8,5 @@ import org.platypus.api.query.PredicateCombinator;
  * @since 0.1
  * on 10/05/17.
  */
-public interface MultiQueryPredicate<RF, LF> extends PlatypusPredicate<QueryPredicate<LF>, PredicateCombinator, QueryPredicate<RF>>{
+public interface MultiQueryPredicate<L, R> extends PlatypusPredicate<QueryPredicate<L>, PredicateCombinator, QueryPredicate<R>>{
 }

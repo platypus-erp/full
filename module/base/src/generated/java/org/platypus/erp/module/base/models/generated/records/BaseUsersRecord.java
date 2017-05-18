@@ -13,6 +13,8 @@ import org.platypus.api.fields.StringField;
 )
 public interface BaseUsersRecord extends Record {
 
+
+
     BinaryField signature();
 
     void signature(BinaryField signature);

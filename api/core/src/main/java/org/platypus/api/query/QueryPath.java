@@ -38,9 +38,6 @@ public class QueryPath {
 
 
     public QueryPath resolve(QueryPath next) {
-//        if (next.tableName.equals(this.tableName) && next.columnName.equals(this.columnName)){
-//            return this;
-//        }
         this.next = next;
         next.previous = this;
         return next;
@@ -56,23 +53,29 @@ public class QueryPath {
     }
 
 
-    public String getColumnName() {
-        return columnName;
+    public QueryPath reverse(){
+        return recursiveReverse(this);
     }
 
-
-    public String getTableName() {
-        return tableName;
+    private QueryPath recursiveReverse(QueryPath queryPath){
+        if (queryPath.previous == null){
+            return queryPath;
+        } else {
+            return recursiveReverse(queryPath.previous);
+        }
     }
 
-
-    public boolean isRelation() {
-        return isRelation;
+    public String getTablePath(){
+        String str = this.tableName;
+        if (this.previous != null) {
+            str = this.previous.getTablePath() + "." + str;
+        }
+        return str;
     }
 
 
     public String toString() {
-        String str = this.tableName + "[" + this.columnName + "|" + isRelation() + "]";
+        String str = this.tableName + "[" + this.columnName + "|" + isRelation + "]";
         if (this.previous != null) {
             str = this.previous.toString() + "." + str;
         }

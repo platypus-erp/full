@@ -1,4 +1,4 @@
-package org.platypus.api.query.predicate;
+package org.platypus.api.query.predicate.impl;
 
 import org.platypus.api.PlatypusField;
 import org.platypus.api.Record;

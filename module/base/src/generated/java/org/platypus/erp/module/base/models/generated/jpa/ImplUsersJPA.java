@@ -36,7 +36,10 @@ import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 @Entity
 public class ImplUsersJPA implements BaseUsersRecord {
   public static final String MODEL_NAME = "users";
-
+  @Override
+  public String getName() {
+    return "users";
+  }
   private QueryPath path = QueryPath.basic(MODEL_NAME, "id");
 
   @Lob

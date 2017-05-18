@@ -9,4 +9,9 @@ import org.platypus.api.annotations.record.RecordOf;
       modelName = "partner"
 )
 public interface BasePartnerRecord extends Record {
+
+    @Override
+    default String getName() {
+        return "partner";
+    }
 }

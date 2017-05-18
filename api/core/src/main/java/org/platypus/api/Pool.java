@@ -9,4 +9,7 @@ package org.platypus.api;
  */
 public interface Pool {
 
+
+    <T extends Record> T get(Class<T> aRecordClass);
+
 }
