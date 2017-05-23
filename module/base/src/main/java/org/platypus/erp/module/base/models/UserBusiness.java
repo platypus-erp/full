@@ -7,7 +7,6 @@ import org.platypus.api.query.QueryPath;
 import org.platypus.api.query.SearchBuilder;
 import org.platypus.api.query.predicate.impl.PredicateBuilder;
 import org.platypus.erp.module.base.models.generated.jpa.ImplUsersJPA;
-import org.platypus.erp.module.base.models.generated.records.BasePartnerRecord;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
 import java.util.ArrayList;

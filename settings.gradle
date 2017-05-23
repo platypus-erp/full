@@ -1,32 +1,8 @@
 rootProject.name = 'platypus'
-include 'api:core'
-include 'api:views'
-include 'api:security'
-
-include 'impl:models'
-include 'impl:module'
-
-
-include 'builder:core'
-include 'builder:utils'
-
-include 'builder:plugin:jpa-generator'
-include 'builder:plugin:display-tree-module'
-include 'builder:plugin:polymere-ui'
-
-include 'sample:sample_depends'
-include 'sample:sample_erp'
-
+include 'erp'
 include 'module:base'
-include 'module:hr'
-include 'module:product'
-include 'module:stock'
-
-include 'tools:gradle-plugin'
 include 'tools:buildin'
+include 'tools:gradle-plugin'
+include 'polymere-ui'
 
-
-include 'engine:configuration'
-include 'engine:core'
-include 'engine:utility'
 

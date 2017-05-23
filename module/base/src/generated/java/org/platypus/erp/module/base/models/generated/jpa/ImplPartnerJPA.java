@@ -4,7 +4,10 @@ import java.lang.Override;
 import java.lang.String;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.platypus.api.fields.LongField;
 import org.platypus.api.fields.impl.LongFieldImpl;
 import org.platypus.api.query.QueryPath;
@@ -16,9 +19,9 @@ import org.platypus.erp.module.base.models.generated.records.BasePartnerRecord;
 @Entity
 public class ImplPartnerJPA implements BasePartnerRecord {
   public static final String MODEL_NAME = "partner";
-
+  @Transient
   private QueryPath path = QueryPath.basic(MODEL_NAME, "id");
-
+  @Id
   @Column(
       name = "\"id\"",
       nullable = true,

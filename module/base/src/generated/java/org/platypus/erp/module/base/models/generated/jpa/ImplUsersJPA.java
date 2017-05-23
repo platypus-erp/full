@@ -7,6 +7,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import org.platypus.api.fields.BinaryField;
 import org.platypus.api.fields.BooleanField;
@@ -40,6 +42,8 @@ public class ImplUsersJPA implements BaseUsersRecord {
   public String getName() {
     return "users";
   }
+
+  @Transient
   private QueryPath path = QueryPath.basic(MODEL_NAME, "id");
 
   @Lob
@@ -70,6 +74,7 @@ public class ImplUsersJPA implements BaseUsersRecord {
   )
   private boolean share;
 
+  @Id
   @Column(
       name = "\"id\"",
       nullable = true,

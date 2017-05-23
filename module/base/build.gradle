@@ -4,6 +4,7 @@ group 'org.platypus.erp.module'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'org.platypus.gradle-plugin'
+apply plugin: 'war'
 
 repositories {
     mavenCentral()
@@ -25,25 +26,16 @@ configurations {
 }
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    platypusCompile project(':api:core')
+    compile project(':erp')
+    modelsCompile project(':erp')
+    generatedCompile project(':erp')
 
     generatedCompile 'javax.validation:validation-api:1.1.0.Final'
     generatedCompile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
 
-    emptyCompile project(':builder:core')
-
-
-    compile project(':api:core')
-    compile project(':impl:module')
-    compile project(':impl:models')
-    compile project(':builder:core')
-
-    compile project(':builder:plugin:jpa-generator')
-    compile project(':builder:plugin:display-tree-module')
-
-    //only needed when you generate JPA implemetation of the record(Collection)
-    generatedCompile project(':impl:module')
-    generatedCompile project(':impl:models')
+    compile 'javax.validation:validation-api:1.1.0.Final'
+    compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
+    compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
 }
 
 jar {

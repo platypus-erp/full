@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<entity-mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+                 version="1.0">
+    <entity class="org.platypus.erp.notification.Notification"/>
+    <entity class="org.platypus.erp.core.business.entity.ResBank"/>
+    <entity class="org.platypus.erp.core.business.entity.ResCompany"/>
+    <entity class="org.platypus.erp.core.business.entity.ResConfig"/>
+    <entity class="org.platypus.erp.core.business.entity.ResConfigInstaller"/>
+    <entity class="org.platypus.erp.core.business.entity.ResConfigSetting"/>
+    <entity class="org.platypus.erp.core.business.entity.ResCountry"/>
+    <entity class="org.platypus.erp.core.business.entity.ResCountryGroup"/>
+    <entity class="org.platypus.erp.core.business.entity.ResCountryState"/>
+    <entity class="org.platypus.erp.core.business.entity.ResCurrency"/>
+    <entity class="org.platypus.erp.core.business.entity.ResCurrencyRate"/>
+    <entity class="org.platypus.erp.core.business.entity.ResGroup"/>
+    <entity class="org.platypus.erp.core.business.entity.ResLang"/>
+    <entity class="org.platypus.erp.core.partner.Partner"/>
+    <entity class="org.platypus.erp.core.partner.Address"/>
+    <entity class="org.platypus.erp.core.business.entity.ResPartnerBank"/>
+    <entity class="org.platypus.erp.core.business.entity.ResPartnerBankType"/>
+    <entity class="org.platypus.erp.core.business.entity.ResPartnerBankTypeField"/>
+    <entity class="org.platypus.erp.core.business.entity.ResPartnerCategory"/>
+    <entity class="org.platypus.erp.core.business.entity.ResPartnerTitle"/>
+    <entity class="org.platypus.erp.core.business.entity.ResRequestLink"/>
+    <entity class="org.platypus.erp.core.business.entity.ResUser"/>
+</entity-mappings>
+
