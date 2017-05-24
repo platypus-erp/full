@@ -16,19 +16,19 @@ import org.platypus.api.query.predicate.QueryPredicate;
 public interface BooleanField extends GenericField<Boolean> {
 
     default QueryPredicate<BooleanField> isTrue(){
-        return new PredicateImpl<>(this, SqlPredicate.EQ, True());
+        return new PredicateImpl<>(BooleanField.class, this, SqlPredicate.EQ, True());
     }
 
     default QueryPredicate<BooleanField> isFalse(){
-        return new PredicateImpl<>(this, SqlPredicate.EQ, False());
+        return new PredicateImpl<>(BooleanField.class, this, SqlPredicate.EQ, False());
     }
 
     default QueryPredicate<BooleanField> eq(boolean value){
-        return new PredicateImpl<>(this, SqlPredicate.EQ, of(value));
+        return new PredicateImpl<>(BooleanField.class, this, SqlPredicate.EQ, of(value));
     }
 
     default QueryPredicate<BooleanField> eq(BooleanField booleanField){
-        return new PredicateImpl<>(this, SqlPredicate.EQ, booleanField);
+        return new PredicateImpl<>(BooleanField.class, this, SqlPredicate.EQ, booleanField);
     }
 
     static BooleanField of(boolean value) {

@@ -10,14 +10,14 @@ public enum  SqlPredicate {
     NOT_EQ("<>"),
     IN("in"),
     NOT_IN("not in"),
-    BETWEEN("between"),
+//    BETWEEN("between"),
     LESS("<"),
     LESS_EQ("<="),
     MORE(">"),
     MORE_EQ(">="),
     LIKE("like"),
     IS_NOT_NULL("is not null"),
-    IS_NULL("is null");
+    IS_NULL("is null"), NOT_LIKE("not like");
 
     public final String sql;
 

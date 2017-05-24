@@ -13,30 +13,33 @@ import java.util.function.Function;
  * @since 0.1
  * on 17/05/17.
  */
-public class PredicateNode<R extends Record> implements
-        PlatypusPredicate<Function<R, QueryPredicate<? extends PlatypusField<?>>>, PredicateCombinator, PredicateNode<R>> {
+public class PredicateHolder<R extends Record> implements
+        PlatypusPredicate<
+                Function<R, QueryPredicate<? extends PlatypusField<?>>>,
+                PredicateCombinator,
+                PredicateHolder<R>> {
 
     Function<R, QueryPredicate<? extends PlatypusField<?>>> current;
     PredicateCombinator predicateCombinator;
-    PredicateNode<R> next;
+    PredicateHolder<R> next;
 
-    public PredicateNode(Function<R, QueryPredicate<? extends PlatypusField<?>>> current,
-                         PredicateCombinator predicateCombinator,
-                         PredicateNode<R> next) {
+    public PredicateHolder(Function<R, QueryPredicate<? extends PlatypusField<?>>> current,
+                           PredicateCombinator predicateCombinator,
+                           PredicateHolder<R> next) {
         this.current = current;
         this.predicateCombinator = predicateCombinator;
         this.next = next;
     }
 
-    public PredicateNode(Function<R, QueryPredicate<? extends PlatypusField<?>>> current,
-                         PredicateCombinator predicateCombinator,
-                         Function<R, QueryPredicate<?extends PlatypusField<?>>> next) {
+    public PredicateHolder(Function<R, QueryPredicate<? extends PlatypusField<?>>> current,
+                           PredicateCombinator predicateCombinator,
+                           Function<R, QueryPredicate<?extends PlatypusField<?>>> next) {
         this.current = current;
         this.predicateCombinator = predicateCombinator;
-        this.next = new PredicateNode<>(next);
+        this.next = new PredicateHolder<>(next);
     }
 
-    public PredicateNode(Function<R, QueryPredicate<? extends PlatypusField<?>>> current) {
+    public PredicateHolder(Function<R, QueryPredicate<? extends PlatypusField<?>>> current) {
         this.current = current;
         this.predicateCombinator = null;
         this.next = null;
@@ -53,7 +56,7 @@ public class PredicateNode<R extends Record> implements
     }
 
     @Override
-    public PredicateNode<R> getRight() {
+    public PredicateHolder<R> getRight() {
         return next;
     }
 }

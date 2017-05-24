@@ -33,4 +33,5 @@ dependencies {
     compile 'commons-io:commons-io:2.5'
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.squareup:javapoet:1.9.0'
+    compile 'org.paumard:streams-utils:1.6'
 }

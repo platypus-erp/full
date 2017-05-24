@@ -2,8 +2,9 @@ package org.platypus.api.query;
 
 import org.platypus.api.PlatypusField;
 import org.platypus.api.Record;
+import org.platypus.api.query.predicate.FilterContainer;
 import org.platypus.api.query.predicate.QueryPredicate;
-import org.platypus.api.query.predicate.impl.PredicateNode;
+import org.platypus.api.query.predicate.impl.PredicateHolder;
 import org.platypus.api.query.predicate.impl.PredicateTree;
 
 import java.util.ArrayList;
@@ -15,11 +16,10 @@ import java.util.function.Function;
  * @since 0.1
  * on 10/05/17.
  */
-public class SearchBuilder<T extends Record> implements SearchDomainBuilder<T> {
+public class SearchBuilder<T extends Record> /*implements SearchDomainBuilder<T>*/ {
     private final Class<T> classResult;
     List<ProjectionField<T>> projection = new ArrayList<>();
-    PredicateTree<T> predicateTree = null;
-    PredicateCombinator combinator;
+    PredicateTree<T> predicateTree = new PredicateTree<>();
     List<SortField<T>> sort = new ArrayList<>();
 
     private SearchBuilder(Class<T> aClass) {
@@ -123,221 +123,31 @@ public class SearchBuilder<T extends Record> implements SearchDomainBuilder<T> {
     //</editor-fold>
 
 
-    @Override
-    public SearchBuilder<T> filter(Function<T, QueryPredicate<? extends PlatypusField<?>>> predicate) {
-        PredicateNode<T> currentNode = new PredicateNode<>(predicate);
-        predicateTree = new PredicateTree<>(predicateTree, combinator, currentNode);
+    public SearchBuilder<T> filter(Function<T, QueryPredicate<? extends PlatypusField>> predicate) {
+        predicateTree = predicateTree.addNext(new FilterContainer<>(predicate));
         return this;
     }
 
-    @Override
     public SearchBuilder<T> or() {
-        combinator = PredicateCombinator.OR;
+        predicateTree = predicateTree.or();
         return this;
     }
 
-    @Override
     public SearchBuilder<T> and() {
-        combinator = PredicateCombinator.AND;
+        predicateTree = predicateTree.and();
         return this;
     }
 
     //<editor-fold desc="Over load filter">
-    @Override
     public SearchBuilder<T> filter(Function<T, QueryPredicate<?>> predicate1,
                                    PredicateCombinator combinator1,
                                    Function<T, QueryPredicate<?>> predicate2) {
-        PredicateNode currentNode = new PredicateNode<>(predicate1, combinator1, predicate2);
-        predicateTree = new PredicateTree(predicateTree, combinator, currentNode);
-        combinator = PredicateCombinator.AND;
+        predicateTree = predicateTree.addNext(new FilterContainer<>(predicate1, combinator1, predicate2));
         return this;
     }
 
-    @Override
-    public SearchBuilder<T> filter(Function<T, QueryPredicate<?>> predicate1,
-                                   PredicateCombinator combinator1,
-                                   Function<T, QueryPredicate<?>> predicate2,
-                                   PredicateCombinator combinator2,
-                                   Function<T, QueryPredicate<?>> predicate3) {
-        PredicateNode currentNode = new PredicateNode<>(predicate1, combinator1,
-                new PredicateNode<>(predicate2, combinator2, predicate3));
-        predicateTree = new PredicateTree(predicateTree, combinator, currentNode);
-        combinator = PredicateCombinator.AND;
-        return this;
-    }
 
-    @Override
-    public SearchDomainBuilder<T> filter(Function<T, QueryPredicate<?>> predicate1,
-                                         PredicateCombinator combinator1,
-                                         Function<T, QueryPredicate<?>> predicate2,
-                                         PredicateCombinator combinator2,
-                                         Function<T, QueryPredicate<?>> predicate3,
-                                         PredicateCombinator combinator3,
-                                         Function<T, QueryPredicate<?>> predicate4) {
-        PredicateNode currentNode = new PredicateNode<>(predicate1, combinator1,
-                new PredicateNode<>(predicate2, combinator2,
-                        new PredicateNode<>(predicate3, combinator3, predicate4)
-                )
-        );
-        predicateTree = new PredicateTree(predicateTree, combinator, currentNode);
-        combinator = PredicateCombinator.AND;
-        return this;
-    }
-
-    @Override
-    public SearchDomainBuilder<T> filter(Function<T, QueryPredicate<?>> predicate1,
-                                         PredicateCombinator combinator1,
-                                         Function<T, QueryPredicate<?>> predicate2,
-                                         PredicateCombinator combinator2,
-                                         Function<T, QueryPredicate<?>> predicate3,
-                                         PredicateCombinator combinator3,
-                                         Function<T, QueryPredicate<?>> predicate4,
-                                         PredicateCombinator combinator4,
-                                         Function<T, QueryPredicate<?>> predicate5) {
-        PredicateNode currentNode = new PredicateNode<>(predicate1, combinator1,
-                new PredicateNode<>(predicate2, combinator2,
-                        new PredicateNode<>(predicate3, combinator3,
-                                new PredicateNode<>(predicate4, combinator4, predicate5)
-                        )
-                )
-        );
-        predicateTree = new PredicateTree(predicateTree, combinator, currentNode);
-        combinator = PredicateCombinator.AND;
-        return this;
-    }
-
-    @Override
-    public SearchDomainBuilder<T> filter(Function<T, QueryPredicate<?>> predicate1,
-                                         PredicateCombinator combinator1,
-                                         Function<T, QueryPredicate<?>> predicate2,
-                                         PredicateCombinator combinator2,
-                                         Function<T, QueryPredicate<?>> predicate3,
-                                         PredicateCombinator combinator3,
-                                         Function<T, QueryPredicate<?>> predicate4,
-                                         PredicateCombinator combinator4,
-                                         Function<T, QueryPredicate<?>> predicate5,
-                                         PredicateCombinator combinator5,
-                                         Function<T, QueryPredicate<?>> predicate6) {
-        PredicateNode currentNode = new PredicateNode<>(predicate1, combinator1,
-                new PredicateNode<>(predicate2, combinator2,
-                        new PredicateNode<>(predicate3, combinator3,
-                                new PredicateNode<>(predicate4, combinator4,
-                                        new PredicateNode<T>(predicate5, combinator5, predicate6)
-                                )
-                        )
-                )
-        );
-        predicateTree = new PredicateTree(predicateTree, combinator, currentNode);
-        combinator = PredicateCombinator.AND;
-        return this;
-    }
-
-    @Override
-    public SearchDomainBuilder<T> filter(Function<T, QueryPredicate<?>> predicate1,
-                                         PredicateCombinator combinator1,
-                                         Function<T, QueryPredicate<?>> predicate2,
-                                         PredicateCombinator combinator2,
-                                         Function<T, QueryPredicate<?>> predicate3,
-                                         PredicateCombinator combinator3,
-                                         Function<T, QueryPredicate<?>> predicate4,
-                                         PredicateCombinator combinator4,
-                                         Function<T, QueryPredicate<?>> predicate5,
-                                         PredicateCombinator combinator5,
-                                         Function<T, QueryPredicate<?>> predicate6,
-                                         PredicateCombinator combinator6,
-                                         Function<T, QueryPredicate<?>> predicate7) {
-        PredicateNode currentNode = new PredicateNode<>(predicate1, combinator1,
-                new PredicateNode<>(predicate2, combinator2,
-                        new PredicateNode<>(predicate3, combinator3,
-                                new PredicateNode<>(predicate4, combinator4,
-                                        new PredicateNode<>(predicate5, combinator5,
-                                                new PredicateNode<>(predicate6, combinator6, predicate7)
-                                        )
-                                )
-                        )
-                )
-        );
-        predicateTree = new PredicateTree(predicateTree, combinator, currentNode);
-        combinator = PredicateCombinator.AND;
-        return this;
-    }
-
-    @Override
-    public SearchDomainBuilder<T> filter(Function<T, QueryPredicate<?>> predicate1,
-                                         PredicateCombinator combinator1,
-                                         Function<T, QueryPredicate<?>> predicate2,
-                                         PredicateCombinator combinator2,
-                                         Function<T, QueryPredicate<?>> predicate3,
-                                         PredicateCombinator combinator3,
-                                         Function<T, QueryPredicate<?>> predicate4,
-                                         PredicateCombinator combinator4,
-                                         Function<T, QueryPredicate<?>> predicate5,
-                                         PredicateCombinator combinator5,
-                                         Function<T, QueryPredicate<?>> predicate6,
-                                         PredicateCombinator combinator6,
-                                         Function<T, QueryPredicate<?>> predicate7,
-                                         PredicateCombinator combinator7,
-                                         Function<T, QueryPredicate<?>> predicate8) {
-        PredicateNode currentNode = new PredicateNode<>(predicate1, combinator1,
-                new PredicateNode<>(predicate2, combinator2,
-                        new PredicateNode<>(predicate3, combinator3,
-                                new PredicateNode<>(predicate4, combinator4,
-                                        new PredicateNode<>(predicate5, combinator5,
-                                                new PredicateNode<>(predicate6, combinator6,
-                                                        new PredicateNode<>(predicate7, combinator7, predicate8)
-                                                )
-                                        )
-                                )
-                        )
-                )
-        );
-        predicateTree = new PredicateTree(predicateTree, combinator, currentNode);
-        combinator = PredicateCombinator.AND;
-        return this;
-    }
-
-    @Override
-    public SearchDomainBuilder<T> filter(Function<T, QueryPredicate<?>> predicate1,
-                                         PredicateCombinator combinator1,
-                                         Function<T, QueryPredicate<?>> predicate2,
-                                         PredicateCombinator combinator2,
-                                         Function<T, QueryPredicate<?>> predicate3,
-                                         PredicateCombinator combinator3,
-                                         Function<T, QueryPredicate<?>> predicate4,
-                                         PredicateCombinator combinator4,
-                                         Function<T, QueryPredicate<?>> predicate5,
-                                         PredicateCombinator combinator5,
-                                         Function<T, QueryPredicate<?>> predicate6,
-                                         PredicateCombinator combinator6,
-                                         Function<T, QueryPredicate<?>> predicate7,
-                                         PredicateCombinator combinator7,
-                                         Function<T, QueryPredicate<?>> predicate8,
-                                         PredicateCombinator combinator8,
-                                         Function<T, QueryPredicate<?>> predicate9) {
-        PredicateNode currentNode = new PredicateNode<>(predicate1, combinator1,
-                new PredicateNode<>(predicate2, combinator2,
-                        new PredicateNode<>(predicate3, combinator3,
-                                new PredicateNode<>(predicate4, combinator4,
-                                        new PredicateNode<>(predicate5, combinator5,
-                                                new PredicateNode<>(predicate6, combinator6,
-                                                        new PredicateNode<>(predicate7, combinator7,
-                                                                new PredicateNode<>(predicate8, combinator8, predicate9
-                                                                )
-                                                        )
-                                                )
-
-                                        )
-                                )
-                        )
-                )
-        );
-        predicateTree = new PredicateTree(predicateTree, combinator, currentNode);
-        combinator = PredicateCombinator.AND;
-        return this;
-    }
-
-    @Override
-    public SearchDomainBuilder<T> filter(Function<T, QueryPredicate<?>> predicate1,
+    public SearchBuilder<T> filter(Function<T, QueryPredicate<? extends PlatypusField>> predicate1,
                                          PredicateCombinator combinator1,
                                          Function<T, QueryPredicate<?>> predicate2,
                                          PredicateCombinator combinator2,
@@ -356,27 +166,19 @@ public class SearchBuilder<T extends Record> implements SearchDomainBuilder<T> {
                                          Function<T, QueryPredicate<?>> predicate9,
                                          PredicateCombinator combinator9,
                                          Function<T, QueryPredicate<?>> predicate10) {
-        PredicateNode currentNode = new PredicateNode<>(predicate1, combinator1,
-                new PredicateNode<>(predicate2, combinator2,
-                        new PredicateNode<>(predicate3, combinator3,
-                                new PredicateNode<>(predicate4, combinator4,
-                                        new PredicateNode<>(predicate5, combinator5,
-                                                new PredicateNode<>(predicate6, combinator6,
-                                                        new PredicateNode<>(predicate7, combinator7,
-                                                                new PredicateNode<>(predicate8, combinator8,
-                                                                        new PredicateNode<>(predicate9, combinator9, predicate10
-                                                                        )
-                                                                )
-                                                        )
-                                                )
+        predicateTree = predicateTree.addNext(new FilterContainer<>(
+                predicate1, combinator1,
+                predicate2,combinator2,
+                predicate3,combinator3,
+                predicate4,combinator4,
+                predicate5,combinator5,
+                predicate6,combinator6,
+                predicate7,combinator7,
+                predicate8,combinator8,
+                predicate9,combinator9,
+                predicate10
+                ));
 
-                                        )
-                                )
-                        )
-                )
-        );
-        predicateTree = new PredicateTree(predicateTree, combinator, currentNode);
-        combinator = PredicateCombinator.AND;
         return this;
     }
 
@@ -398,10 +200,6 @@ public class SearchBuilder<T extends Record> implements SearchDomainBuilder<T> {
 
     PredicateTree<T> getPredicateTree() {
         return predicateTree;
-    }
-
-    PredicateCombinator getCombinator() {
-        return combinator;
     }
 
     List<SortField<T>> getSort() {

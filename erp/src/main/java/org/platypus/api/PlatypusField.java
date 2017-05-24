@@ -1,5 +1,7 @@
 package org.platypus.api;
 
+import org.platypus.api.fields.FieldType;
+
 /**
  * TODO Add JavaDoc
  *
@@ -9,4 +11,6 @@ package org.platypus.api;
  */
 public interface PlatypusField<T> extends Namable, Pathable, EmptyCheckable {
     T get();
+
+    FieldType getType();
 }

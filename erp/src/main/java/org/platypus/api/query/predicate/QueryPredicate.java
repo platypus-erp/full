@@ -1,6 +1,7 @@
 package org.platypus.api.query.predicate;
 
 import org.platypus.api.PlatypusField;
+import org.platypus.api.fields.FieldType;
 import org.platypus.api.query.SqlPredicate;
 
 /**
@@ -9,5 +10,7 @@ import org.platypus.api.query.SqlPredicate;
  * on 10/05/17.
  */
 public interface QueryPredicate<T extends PlatypusField> extends PlatypusPredicate<T, SqlPredicate, T>{
+
+    FieldType getFieldType();
 
 }

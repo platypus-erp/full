@@ -42,7 +42,6 @@ public class PathTest {
                         r -> r.active().isFalse()
                 ).or().filter(
                         r -> r.new_password().isNotNull()
-                ).and().filter(
                 );
         baseUsersRecordSearchExecutor.count(loginActive);
     }

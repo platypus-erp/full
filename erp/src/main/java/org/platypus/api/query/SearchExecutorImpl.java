@@ -1,23 +1,36 @@
 package org.platypus.api.query;
 
-import org.platypus.api.PlatypusField;
+import org.paumard.streams.StreamsUtils;
 import org.platypus.api.Pool;
 import org.platypus.api.Record;
-import org.platypus.api.query.predicate.QueryPredicate;
-import org.platypus.api.query.predicate.impl.PredicateNode;
+import org.platypus.api.query.predicate.FilterContainer;
+import org.platypus.api.query.predicate.FilterResolver;
 import org.platypus.api.query.predicate.impl.PredicateTree;
 
-import javax.annotation.Resource;
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Tuple;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.From;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Selection;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableSet;
+import java.util.Queue;
+import java.util.TreeSet;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * @author chmuchme
@@ -31,13 +44,21 @@ public class SearchExecutorImpl<T extends Record> implements SearchExecutor<T> {
 
     @Inject
     Pool pool;
+    CriteriaBuilder cb;
+    
+    @PostConstruct
+    public void postConstruct(){
+        cb = entityManager.getCriteriaBuilder();
+    }
 
 
     @Override
+    @SuppressWarnings("unchecked")
     public long count(SearchBuilder<T> searchBuilder) {
+        PlatypusToJpa p2j = new PlatypusToJpa(cb);
         T instance = pool.get(searchBuilder.getClassResult());
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Tuple> cq = cb.createTupleQuery();
+
         Root<T> from = cq.from((Class<T>) instance.getClass());
 
         List<ProjectionField<T>> projection = searchBuilder.getProjection();
@@ -58,7 +79,7 @@ public class SearchExecutorImpl<T extends Record> implements SearchExecutor<T> {
             System.out.println(pathreverse.isRelation);
 
             System.out.println(path);
-            From<?, ?> join = getJoin(path, tableJoin, from);
+            From<?, ?> join = p2j.getJoin(path, tableJoin, from);
             if (path.isRelation) {
                 //Appended only when the field needed is en relation and we want only the name field + the id
 //                automaticaly add the field name
@@ -102,10 +123,15 @@ public class SearchExecutorImpl<T extends Record> implements SearchExecutor<T> {
         if (!selectAggregator.isEmpty()) {
             cq.groupBy(selectNonAgregator);
         }
+        //TODO make recusive
         PredicateTree<T> tree = searchBuilder.getPredicateTree();
-        PredicateTree<T> left = tree.getLeft();
-        PredicateNode<T> right = tree.getRight();
-        PredicateCombinator combinator = tree.getCondition();
+
+        FilterContainer<T> filter = tree.getFilter();
+        FilterResolver<T> resolver = new FilterResolver<>(instance, filter);
+        Predicate predicate = resolveJpaPredicate(p2j, from, tableJoin, resolver);
+
+
+        cq.where(predicate);
 
 
         List<Tuple> tuples = entityManager.createQuery(cq).getResultList();
@@ -113,39 +139,62 @@ public class SearchExecutorImpl<T extends Record> implements SearchExecutor<T> {
         return 0;
     }
 
-
-    private Predicate nodeToPredicate(CriteriaBuilder cb, PredicateNode<T> node, T instance, Map<String, From<?, ?>> tableJoin, From<?, ?> from) {
-        if (node == null) {
-            return null;
+    private Predicate resolveJpaPredicate(PlatypusToJpa p2j,
+                                     Root<T> from,
+                                     Map<String, From<?, ?>> tableJoin,
+                                     FilterResolver<T> resolver) {
+        Predicate res = null;
+        for (String order : resolver.getOrder()) {
+            switch (resolver.getType(order)) {
+                case BIG_STRING:
+                    res = and(res, p2j.bigStringToPredicate(resolver.getBigString(order), tableJoin, from));
+                    break;
+                case BINARY:
+                    res = and(res, p2j.binaryToPredicate(resolver.getBinary(order), tableJoin, from));
+                    break;
+                case BOOLEAN:
+                    res = and(res, p2j.booleanToPredicate(resolver.getBoolean(order), tableJoin, from));
+                    break;
+                case DATE:
+                    res = and(res, p2j.dateToPredicate(resolver.getDate(order), tableJoin, from));
+                    break;
+                case DATE_TIME:
+                    res = and(res, p2j.dateTimeToPredicate(resolver.getDateTime(order), tableJoin, from));
+                    break;
+                case DECIMAL:
+                    res = and(res, p2j.decimalToPredicate(resolver.getDecimal(order), tableJoin, from));
+                    break;
+                case FLOAT:
+                    res = and(res, p2j.floatToPredicate(resolver.getFloat(order), tableJoin, from));
+                    break;
+                case INT:
+                    res = and(res, p2j.intToPredicate(resolver.getInt(order), tableJoin, from));
+                    break;
+                case LONG:
+                    res = and(res, p2j.longToPredicate(resolver.getLong(order), tableJoin, from));
+                    break;
+                case STRING:
+                    res = and(res, p2j.stringToPredicate(resolver.getString(order), tableJoin, from));
+                    break;
+                case TIME:
+                    res = and(res, p2j.timeToPredicate(resolver.getTime(order), tableJoin, from));
+                    break;
+                default:
+                    throw new UnsupportedOperationException(
+                            "The field" + order + " of type" + resolver.getType(order) + " is not supported"
+                    );
+            }
         }
-        QueryPredicate<? extends PlatypusField<?>> predicateLeft = node.getLeft().apply(instance);
-        PlatypusField<?> field = predicateLeft.getRight();
-
-
-        Path<?> path1 = getJoin(field.getPath().reverse(), tableJoin, from).get(field.getPath().columnName);
-        PlatypusField<?> value = predicateLeft.getLeft();
-        Path<?> path2 = null;
-        if (value.isEmpty()) {
-            path2 = getJoin(value.getPath().reverse(), tableJoin, from).get(value.getPath().columnName);
-        }
-
-        switch (predicateLeft.getCondition()) {
-            case EQ:
-                return value.isEmpty() ? cb.equal(path1, path2) : cb.equal(path1, value.get());
-        }
-        return null;
+        
+        return res;
     }
-
-    private From<?, ?> getJoin(QueryPath path, Map<String, From<?, ?>> tableJoin, From<?, ?> from) {
-        From<?, ?> j = tableJoin.get(path.getTablePath());
-        if (j == null) {
-            j = from.join(path.columnName);
-            tableJoin.putIfAbsent(path.getTablePath(), j);
+    
+    private Predicate and(Predicate p1, Predicate p2){
+        if (p1 == null){
+            return p2;
+        } else {
+            return cb.and(p1, p2);
         }
-        if (path.isRelation && path.next != null) {
-            j = getJoin(path.next, tableJoin, j);
-        }
-        return j;
     }
 
     @Override

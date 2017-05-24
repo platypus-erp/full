@@ -14,8 +14,14 @@ public class PredicateImpl<T extends PlatypusField> implements QueryPredicate<T>
     final T field;
     T value;
     SqlPredicate sqlPredicate;
+    Class<T> type;
 
-    public PredicateImpl(T field, SqlPredicate sqlPredicate, T value){
+    @Override
+    public Class<T> getFieldType() {
+        return type;
+    }
+
+    public PredicateImpl(Class<T> type, T field, SqlPredicate sqlPredicate, T value){
         this.field = field;
         this.sqlPredicate = sqlPredicate;
         this.value = value;
