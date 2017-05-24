@@ -7,9 +7,7 @@ package org.platypus.api;
  * @version 0.1
  * @since 0.1
  */
-public interface UnmutableGenericField<T> extends PlatypusField, Booleanable, EmptyCheckable{
-
-    T get();
+public interface UnmutableGenericField<T> extends PlatypusField<T>, Booleanable, EmptyCheckable{
 
     default T getOrDefault(T defaultValue){
         T result = get();

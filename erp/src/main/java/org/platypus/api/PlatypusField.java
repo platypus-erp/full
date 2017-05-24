@@ -7,5 +7,6 @@ package org.platypus.api;
  * @version 0.1
  * @since 0.1
  */
-public interface PlatypusField extends Namable, Pathable{
+public interface PlatypusField<T> extends Namable, Pathable, EmptyCheckable {
+    T get();
 }

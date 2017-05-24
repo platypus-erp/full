@@ -1,5 +1,6 @@
 package org.platypus.api.query.predicate;
 
+import org.platypus.api.PlatypusField;
 import org.platypus.api.query.SqlPredicate;
 
 /**
@@ -7,6 +8,6 @@ import org.platypus.api.query.SqlPredicate;
  * @since 0.1
  * on 10/05/17.
  */
-public interface QueryPredicate<T> extends PlatypusPredicate<T, SqlPredicate, T>{
+public interface QueryPredicate<T extends PlatypusField> extends PlatypusPredicate<T, SqlPredicate, T>{
 
 }

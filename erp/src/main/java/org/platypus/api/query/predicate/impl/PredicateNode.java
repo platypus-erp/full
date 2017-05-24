@@ -1,5 +1,6 @@
 package org.platypus.api.query.predicate.impl;
 
+import org.platypus.api.PlatypusField;
 import org.platypus.api.Record;
 import org.platypus.api.query.PredicateCombinator;
 import org.platypus.api.query.predicate.PlatypusPredicate;
@@ -12,32 +13,37 @@ import java.util.function.Function;
  * @since 0.1
  * on 17/05/17.
  */
-public class PredicateNode<R extends Record> implements PlatypusPredicate<Function<R, QueryPredicate<?>>, PredicateCombinator, PredicateNode> {
+public class PredicateNode<R extends Record> implements
+        PlatypusPredicate<Function<R, QueryPredicate<? extends PlatypusField<?>>>, PredicateCombinator, PredicateNode<R>> {
 
-    Function<R, QueryPredicate<?>> current;
+    Function<R, QueryPredicate<? extends PlatypusField<?>>> current;
     PredicateCombinator predicateCombinator;
     PredicateNode<R> next;
 
-    public PredicateNode(Function<R, QueryPredicate<?>> current, PredicateCombinator predicateCombinator, PredicateNode<R> next) {
+    public PredicateNode(Function<R, QueryPredicate<? extends PlatypusField<?>>> current,
+                         PredicateCombinator predicateCombinator,
+                         PredicateNode<R> next) {
         this.current = current;
         this.predicateCombinator = predicateCombinator;
         this.next = next;
     }
 
-    public PredicateNode(Function<R, QueryPredicate<?>> current, PredicateCombinator predicateCombinator, Function<R, QueryPredicate<?>> next) {
+    public PredicateNode(Function<R, QueryPredicate<? extends PlatypusField<?>>> current,
+                         PredicateCombinator predicateCombinator,
+                         Function<R, QueryPredicate<?extends PlatypusField<?>>> next) {
         this.current = current;
         this.predicateCombinator = predicateCombinator;
         this.next = new PredicateNode<>(next);
     }
 
-    public PredicateNode(Function<R, QueryPredicate<?>> current) {
+    public PredicateNode(Function<R, QueryPredicate<? extends PlatypusField<?>>> current) {
         this.current = current;
         this.predicateCombinator = null;
         this.next = null;
     }
 
     @Override
-    public Function<R, QueryPredicate<?>> getLeft() {
+    public Function<R, QueryPredicate<? extends PlatypusField<?>>> getLeft() {
         return current;
     }
 
@@ -47,7 +53,7 @@ public class PredicateNode<R extends Record> implements PlatypusPredicate<Functi
     }
 
     @Override
-    public PredicateNode getRight() {
+    public PredicateNode<R> getRight() {
         return next;
     }
 }

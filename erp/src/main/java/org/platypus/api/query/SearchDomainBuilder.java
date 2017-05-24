@@ -1,5 +1,6 @@
 package org.platypus.api.query;
 
+import org.platypus.api.PlatypusField;
 import org.platypus.api.Record;
 import org.platypus.api.query.predicate.QueryPredicate;
 
@@ -12,7 +13,7 @@ import java.util.function.Function;
  */
 public interface SearchDomainBuilder<T extends Record> {
 
-    SearchDomainBuilder<T> filter(Function<T, QueryPredicate<?>> predicate);
+    SearchDomainBuilder<T> filter(Function<T, QueryPredicate<? extends PlatypusField<?>>> predicate);
 
     SearchDomainBuilder<T> or();
 

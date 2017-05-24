@@ -1,20 +1,18 @@
 package org.platypus.api.query;
 
+import org.platypus.api.PlatypusField;
 import org.platypus.api.Pool;
 import org.platypus.api.Record;
+import org.platypus.api.query.predicate.QueryPredicate;
+import org.platypus.api.query.predicate.impl.PredicateNode;
+import org.platypus.api.query.predicate.impl.PredicateTree;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Tuple;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.From;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Selection;
+import javax.persistence.criteria.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +38,7 @@ public class SearchExecutorImpl<T extends Record> implements SearchExecutor<T> {
         T instance = pool.get(searchBuilder.getClassResult());
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Tuple> cq = cb.createTupleQuery();
-        Root<T> from = cq.from((Class<T>)instance.getClass());
+        Root<T> from = cq.from((Class<T>) instance.getClass());
 
         List<ProjectionField<T>> projection = searchBuilder.getProjection();
         String mainTableName = instance.getName();
@@ -98,23 +96,49 @@ public class SearchExecutorImpl<T extends Record> implements SearchExecutor<T> {
                     }
                 }
             }
-
-
-
         }
         cq.multiselect(select);
         cq.multiselect(selectAggregator);
-        if (!selectAggregator.isEmpty()){
+        if (!selectAggregator.isEmpty()) {
             cq.groupBy(selectNonAgregator);
         }
+        PredicateTree<T> tree = searchBuilder.getPredicateTree();
+        PredicateTree<T> left = tree.getLeft();
+        PredicateNode<T> right = tree.getRight();
+        PredicateCombinator combinator = tree.getCondition();
+
+
         List<Tuple> tuples = entityManager.createQuery(cq).getResultList();
 
         return 0;
     }
 
+
+    private Predicate nodeToPredicate(CriteriaBuilder cb, PredicateNode<T> node, T instance, Map<String, From<?, ?>> tableJoin, From<?, ?> from) {
+        if (node == null) {
+            return null;
+        }
+        QueryPredicate<? extends PlatypusField<?>> predicateLeft = node.getLeft().apply(instance);
+        PlatypusField<?> field = predicateLeft.getRight();
+
+
+        Path<?> path1 = getJoin(field.getPath().reverse(), tableJoin, from).get(field.getPath().columnName);
+        PlatypusField<?> value = predicateLeft.getLeft();
+        Path<?> path2 = null;
+        if (value.isEmpty()) {
+            path2 = getJoin(value.getPath().reverse(), tableJoin, from).get(value.getPath().columnName);
+        }
+
+        switch (predicateLeft.getCondition()) {
+            case EQ:
+                return value.isEmpty() ? cb.equal(path1, path2) : cb.equal(path1, value.get());
+        }
+        return null;
+    }
+
     private From<?, ?> getJoin(QueryPath path, Map<String, From<?, ?>> tableJoin, From<?, ?> from) {
         From<?, ?> j = tableJoin.get(path.getTablePath());
-        if (j == null){
+        if (j == null) {
             j = from.join(path.columnName);
             tableJoin.putIfAbsent(path.getTablePath(), j);
         }

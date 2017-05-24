@@ -1,5 +1,6 @@
 package org.platypus.erp.module.base.models;
 
+import org.platypus.api.fields.StringField;
 import org.platypus.api.query.SearchBuilder;
 import org.platypus.api.query.SearchExecutor;
 import org.platypus.api.query.predicate.impl.PredicateBuilder;
@@ -41,6 +42,7 @@ public class PathTest {
                         r -> r.active().isFalse()
                 ).or().filter(
                         r -> r.new_password().isNotNull()
+                ).and().filter(
                 );
         baseUsersRecordSearchExecutor.count(loginActive);
     }

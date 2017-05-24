@@ -18,7 +18,7 @@ import java.util.function.Function;
 public class SearchBuilder<T extends Record> implements SearchDomainBuilder<T> {
     private final Class<T> classResult;
     List<ProjectionField<T>> projection = new ArrayList<>();
-    PredicateTree predicateTree = null;
+    PredicateTree<T> predicateTree = null;
     PredicateCombinator combinator;
     List<SortField<T>> sort = new ArrayList<>();
 
@@ -124,9 +124,9 @@ public class SearchBuilder<T extends Record> implements SearchDomainBuilder<T> {
 
 
     @Override
-    public SearchBuilder<T> filter(Function<T, QueryPredicate<?>> predicate) {
-        PredicateNode currentNode = new PredicateNode<>(predicate);
-        predicateTree = new PredicateTree(predicateTree, combinator, currentNode);
+    public SearchBuilder<T> filter(Function<T, QueryPredicate<? extends PlatypusField<?>>> predicate) {
+        PredicateNode<T> currentNode = new PredicateNode<>(predicate);
+        predicateTree = new PredicateTree<>(predicateTree, combinator, currentNode);
         return this;
     }
 
@@ -396,7 +396,7 @@ public class SearchBuilder<T extends Record> implements SearchDomainBuilder<T> {
         return projection;
     }
 
-    PredicateTree getPredicateTree() {
+    PredicateTree<T> getPredicateTree() {
         return predicateTree;
     }
 

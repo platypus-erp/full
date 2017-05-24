@@ -1,5 +1,6 @@
 package org.platypus.api.query.predicate.impl;
 
+import org.platypus.api.Record;
 import org.platypus.api.query.PredicateCombinator;
 import org.platypus.api.query.predicate.PlatypusPredicate;
 
@@ -8,20 +9,20 @@ import org.platypus.api.query.predicate.PlatypusPredicate;
  * @since 0.1
  * on 17/05/17.
  */
-public class PredicateTree implements PlatypusPredicate<PredicateTree, PredicateCombinator, PredicateNode> {
+public class PredicateTree<T extends Record> implements PlatypusPredicate<PredicateTree<T>, PredicateCombinator, PredicateNode<T>> {
 
-    PredicateTree previous;
+    PredicateTree<T> previous;
     PredicateCombinator predicateCombinator;
-    PredicateNode current;
+    PredicateNode<T> current;
 
-    public PredicateTree(PredicateTree previous, PredicateCombinator predicateCombinator, PredicateNode current) {
+    public PredicateTree(PredicateTree<T> previous, PredicateCombinator predicateCombinator, PredicateNode<T> current) {
         this.previous = previous;
         this.predicateCombinator = predicateCombinator;
         this.current = current;
     }
 
     @Override
-    public PredicateTree getLeft() {
+    public PredicateTree<T> getLeft() {
         return previous;
     }
 
@@ -31,7 +32,7 @@ public class PredicateTree implements PlatypusPredicate<PredicateTree, Predicate
     }
 
     @Override
-    public PredicateNode getRight() {
+    public PredicateNode<T> getRight() {
         return current;
     }
 }
