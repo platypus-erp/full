@@ -1,6 +1,6 @@
 package org.platypus.api.fields.impl;
 
-import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.tmp.QueryPathImpl;
 import org.platypus.api.fields.LongField;
 
 import java.util.function.Consumer;
@@ -16,12 +16,12 @@ import java.util.function.Supplier;
 public class LongFieldImpl extends AbstractFieldImpl<Long> implements LongField {
 
 
-    public LongFieldImpl(String table, String name, Supplier<QueryPath> getPath, Supplier<Long> getter, Consumer<Long> setter) {
+    public LongFieldImpl(String table, String name, Supplier<QueryPathImpl> getPath, Supplier<Long> getter, Consumer<Long> setter) {
         super(table, name, getPath, getter, setter);
     }
 
     public LongFieldImpl(String table, String name,
-                         Supplier<QueryPath> getPath,
+                         Supplier<QueryPathImpl> getPath,
                          Supplier<Long> getter,
                          Consumer<Long> setter,
                          Long defaultValue) {

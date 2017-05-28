@@ -38,7 +38,7 @@ public @interface LongFieldDefinition {
 
     /**
      * (Optional) If the this column will be unique,<br>
-     * if an another field use the same hint(case insensitive)<br>
+     * if an another aggregate use the same hint(case insensitive)<br>
      * the the SQL Unique constraint will be above the two column<br>
      * The Unique constraint name will be UK_<target>_<hint> (ex :  UK_PARTNER_EMAIL)<br>
      * <bold>Warning</bold> if the default value is the same for all same hint value a compile error will be throw<br>
@@ -47,17 +47,17 @@ public @interface LongFieldDefinition {
     String uniqueHint() default DEFAULT;
 
     /**
-     * (Optional) Only if you want to erase all the definition of this field defined in other ui
+     * (Optional) Only if you want to erase all the definition of this aggregate defined in other ui
      */
     boolean eraseWithYours() default false;
 
     /**
-     * (Optional) <br> Define if this field can be <code>null</code> when the model is inserted or updated
+     * (Optional) <br> Define if this aggregate can be <code>null</code> when the model is inserted or updated
      */
     Bool required() default Bool.DEFAULT;
 
     /**
-     * (Optional) <br> Define if the value of this field can be change
+     * (Optional) <br> Define if the value of this aggregate can be change
      */
     Bool readonly() default Bool.DEFAULT;
 

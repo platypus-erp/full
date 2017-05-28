@@ -1,6 +1,6 @@
 package org.platypus.api.fields.impl;
 
-import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.tmp.QueryPathImpl;
 import org.platypus.api.fields.StringField;
 
 import java.util.function.Consumer;
@@ -16,12 +16,12 @@ import java.util.function.Supplier;
 public class StringFieldImpl extends AbstractFieldImpl<String> implements StringField {
 
 
-    public StringFieldImpl(String table, String name, Supplier<QueryPath> getPath, Supplier<String> getter, Consumer<String> setter) {
+    public StringFieldImpl(String table, String name, Supplier<QueryPathImpl> getPath, Supplier<String> getter, Consumer<String> setter) {
         super(table, name, getPath, getter, setter);
     }
 
     public StringFieldImpl(String table, String name,
-                           Supplier<QueryPath> getPath,
+                           Supplier<QueryPathImpl> getPath,
                            Supplier<String> getter,
                            Consumer<String> setter,
                            String defaultValue) {

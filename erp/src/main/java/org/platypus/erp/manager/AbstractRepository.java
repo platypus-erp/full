@@ -103,9 +103,9 @@ public abstract class AbstractRepository<E extends AbstractEntity> implements To
 //
 //        DSL.select(cols.toArray(new SelectField[cols.size()]))
 //        .from(target)
-//        .innerJoin(table(target).join(table(target)).on(field(target).eq(field(target))));
+//        .innerJoin(table(target).join(table(target)).on(aggregate(target).eq(aggregate(target))));
 //        return selectFrom(table(target))
-//                .orderBy(field("id"))
+//                .orderBy(aggregate("id"))
 //                .limit(listFilter.getPageSize())
 //                .offset(listFilter.getPage() * listFilter.getPageSize());
 //    }

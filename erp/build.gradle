@@ -21,7 +21,7 @@ dependencies {
     compile 'org.picketlink:picketlink-idm-simple-schema:2.7.1.Final'
     compile 'org.picketlink:picketlink:2.7.1.Final'
     compile 'org.slf4j:slf4j-api:1.7.21'
-    compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.6.2'
+    compile 'org.apache.logging.log4j:log4j-slf4j-aggregate:2.6.2'
     compile 'org.hibernate:hibernate-validator:5.1.2.Final'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.9.0.pr2'
     compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'

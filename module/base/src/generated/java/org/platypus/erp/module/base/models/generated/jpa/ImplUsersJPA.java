@@ -25,7 +25,7 @@ import org.platypus.api.fields.impl.BinaryFieldImpl;
 import org.platypus.api.fields.impl.BooleanFieldImpl;
 import org.platypus.api.fields.impl.LongFieldImpl;
 import org.platypus.api.fields.impl.StringFieldImpl;
-import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.tmp.QueryPathImpl;
 import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecord;
 import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecordCollection;
 import org.platypus.erp.module.base.models.generated.records.BaseGroupRecordCollection;
@@ -44,7 +44,7 @@ public class ImplUsersJPA implements BaseUsersRecord {
   }
 
   @Transient
-  private QueryPath path = QueryPath.basic(MODEL_NAME, "id");
+  private QueryPathImpl path = QueryPathImpl.basic(MODEL_NAME, "id");
 
   @Lob
   @Basic(
@@ -154,15 +154,15 @@ public class ImplUsersJPA implements BaseUsersRecord {
   private List<ImplGroupJPA> groups;
 
   @Override
-  public QueryPath getPath() {
+  public QueryPathImpl getPath() {
     return this.path;}
 
   @Override
-  public void setPath(QueryPath path) {
+  public void setPath(QueryPathImpl path) {
     this.path = path;}
 
   @Override
-  public QueryPath resolve(QueryPath path) {
+  public QueryPathImpl resolve(QueryPathImpl path) {
     return this.path.resolve(path);
   }
 

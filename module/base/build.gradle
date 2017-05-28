@@ -23,6 +23,7 @@ configurations {
     modelsCompile.extendsFrom platypusCompile
     generatedCompile.extendsFrom platypusCompile
     mainCompile.extendsFrom platypusCompile
+    mainCompile.extendsFrom generatedCompile
 }
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'

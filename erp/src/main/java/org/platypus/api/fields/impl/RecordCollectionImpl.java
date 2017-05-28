@@ -1,7 +1,7 @@
 package org.platypus.api.fields.impl;
 
 import org.platypus.api.GenericField;
-import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.tmp.QueryPathImpl;
 import org.platypus.api.Record;
 import org.platypus.api.RecordCollection;
 import org.platypus.api.TypedRecordCollection;
@@ -26,7 +26,7 @@ public class RecordCollectionImpl<R extends Record, RI extends R, RC extends Rec
 
     public RecordCollectionImpl(String table,
                                 String name,
-                                Supplier<QueryPath> getPath,
+                                Supplier<QueryPathImpl> getPath,
                                 Supplier<List<RI>> getter,
                                 Consumer<List<RI>> setter) {
         super(table, name, getPath, getter, setter);
@@ -37,7 +37,7 @@ public class RecordCollectionImpl<R extends Record, RI extends R, RC extends Rec
         return new ArrayList<>();
     }
 
-    //<editor-fold desc="Methode to impl">
+    //<editor-fold desc="Methode to aggregate">
     @Override
     public <R1 extends R> Class<R1> getType() {
         return null;

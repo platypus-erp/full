@@ -2,9 +2,8 @@ package org.platypus.api.fields;
 
 
 import org.platypus.api.GenericField;
-import org.platypus.api.query.SqlPredicate;
-import org.platypus.api.query.predicate.impl.PredicateImpl;
-import org.platypus.api.query.predicate.QueryPredicate;
+import org.platypus.api.query.domain.field.StringFieldPredicate;
+import org.platypus.api.query.projection.PProjection;
 
 /**
  * TODO Add JavaDoc
@@ -13,31 +12,11 @@ import org.platypus.api.query.predicate.QueryPredicate;
  * @version 0.1
  * @since 0.1
  */
-public interface StringField extends GenericField<String> {
+public interface StringField extends GenericField<String>, PProjection, StringFieldPredicate {
 
-    default QueryPredicate<StringField> eq(String value){
-        return new PredicateImpl<>(this, SqlPredicate.EQ, StringField.of(value));
-    }
 
-    default QueryPredicate<StringField> isNull(){
-        return new PredicateImpl<>(this, SqlPredicate.IS_NULL, StringField.empty());
-    }
 
-    default QueryPredicate<StringField> isNotNull(){
-        return new PredicateImpl<>(this, SqlPredicate.IS_NOT_NULL, StringField.empty());
-    }
 
-    default QueryPredicate<StringField> contains(String value){
-        return new PredicateImpl<>(this, SqlPredicate.LIKE, StringField.of(value));
-    }
-
-    default QueryPredicate<StringField> startWith(String value){
-        return new PredicateImpl<>(this, SqlPredicate.LIKE, StringField.of(value));
-    }
-
-    default QueryPredicate<StringField> endWith(String value){
-        return new PredicateImpl<>(this, SqlPredicate.EQ, StringField.of(value));
-    }
 
     default boolean match(String regex){
         return match(regex, false);

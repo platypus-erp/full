@@ -1,6 +1,6 @@
 package org.platypus.api.fields.impl;
 
-import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.tmp.QueryPathImpl;
 import org.platypus.api.fields.BooleanField;
 
 import java.util.function.Consumer;
@@ -15,12 +15,12 @@ import java.util.function.Supplier;
  */
 public class BooleanFieldImpl extends AbstractFieldImpl<Boolean> implements BooleanField {
 
-    public BooleanFieldImpl(String table, String name, Supplier<QueryPath> getPath, Supplier<Boolean> getter, Consumer<Boolean> setter) {
+    public BooleanFieldImpl(String table, String name, Supplier<QueryPathImpl> getPath, Supplier<Boolean> getter, Consumer<Boolean> setter) {
         super(table, name, getPath, getter, setter);
     }
 
     public BooleanFieldImpl(String table, String name,
-                            Supplier<QueryPath> getPath,
+                            Supplier<QueryPathImpl> getPath,
                             Supplier<Boolean> getter,
                             Consumer<Boolean> setter,
                             Boolean def) {

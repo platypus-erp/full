@@ -1,6 +1,6 @@
 package org.platypus.api.fields.impl;
 
-import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.tmp.QueryPathImpl;
 import org.platypus.api.fields.DateTimeField;
 
 import java.time.LocalDateTime;
@@ -16,12 +16,12 @@ import java.util.function.Supplier;
  */
 public class DateTimeFieldImpl extends AbstractFieldImpl<LocalDateTime> implements DateTimeField {
 
-    public DateTimeFieldImpl(String table, String name, Supplier<QueryPath> getPath, Supplier<LocalDateTime> getter, Consumer<LocalDateTime> setter) {
+    public DateTimeFieldImpl(String table, String name, Supplier<QueryPathImpl> getPath, Supplier<LocalDateTime> getter, Consumer<LocalDateTime> setter) {
         super(table, name, getPath, getter, setter);
     }
 
     public DateTimeFieldImpl(String table, String name,
-                             Supplier<QueryPath> getPath,
+                             Supplier<QueryPathImpl> getPath,
                              Supplier<LocalDateTime> getter,
                              Consumer<LocalDateTime> setter,
                              LocalDateTime def) {

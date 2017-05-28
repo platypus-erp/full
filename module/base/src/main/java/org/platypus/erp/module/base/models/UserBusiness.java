@@ -2,17 +2,17 @@ package org.platypus.erp.module.base.models;
 
 import base.BaseRecordPool;
 import org.platypus.api.Record;
-import org.platypus.api.query.ProjectionField;
-import org.platypus.api.query.QueryPath;
-import org.platypus.api.query.SearchBuilder;
-import org.platypus.api.query.predicate.impl.PredicateBuilder;
+import org.platypus.api.query.projection.ProjectionField;
+import org.platypus.api.query.tmp.QueryPathImpl;
+import org.platypus.api.query.QueryBuilder;
+import org.platypus.api.query.projection.QueryAgregator;
 import org.platypus.erp.module.base.models.generated.jpa.ImplUsersJPA;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.platypus.api.query.PredicateCombinator.AND;
+import static org.platypus.api.query.domain.DomainCombinator.AND;
 
 
 /**
@@ -27,7 +27,7 @@ public class UserBusiness {
         }
 
 
-        QueryBuilder.Predicate query = QueryBuilder.eq(record.login(), "sdlfmsd");
+        org.platypus.erp.module.base.models.QueryBuilder.Predicate query = org.platypus.erp.module.base.models.QueryBuilder.eq(record.login(), "sdlfmsd");
         record.partner().id().getPath();
     }
 
@@ -51,13 +51,13 @@ public class UserBusiness {
 //        System.out.println(pre);
 
 
-        SearchBuilder<BaseUsersRecord> loginActive = SearchBuilder.from(BaseUsersRecord.class)
+        QueryBuilder<BaseUsersRecord> loginActive = QueryBuilder.from(BaseUsersRecord.class)
                 .get(
                         BaseUsersRecord::partner,
                         BaseUsersRecord::login,
                         r -> r.partner().id()
                 )
-                .get(new PredicateBuilder<BaseUsersRecord>().avg(BaseUsersRecord::login))
+                .get(new QueryAgregator<BaseUsersRecord>().avg(BaseUsersRecord::login))
                 .filter(
                         r -> r.login().contains("toto"),
                         AND,
@@ -70,7 +70,7 @@ public class UserBusiness {
 
     }
 
-    static <T extends Record> void test(SearchBuilder<T> searchBuilder, T instance){
+    static <T extends Record> void test(QueryBuilder<T> searchBuilder, T instance){
 
 
         List<ProjectionField<T>> projection = searchBuilder.getProjection();
@@ -78,7 +78,7 @@ public class UserBusiness {
 
         List<String> tableJoin = new ArrayList<>();
         for (ProjectionField<T> pro : projection){
-            QueryPath path = pro.getField().apply(instance).getPath();
+            QueryPathImpl path = pro.getField().apply(instance).getPath();
             System.out.println(path.getTablePath());
             System.out.println(path);
 

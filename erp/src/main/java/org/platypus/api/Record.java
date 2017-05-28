@@ -7,6 +7,8 @@ public interface Record extends PlatypusField,SetPathable{
 
     LongField id();
 
+
+
     default <T extends Record> T unWrap(Class<T> type){
         if (type != this.getClass()) {
             throw new IllegalArgumentException("the unwrap type is wrong expected [" + this.getClass().getName() + "] actual [" + type.getName() + "]");

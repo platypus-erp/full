@@ -11,6 +11,4 @@ import org.platypus.api.fields.FieldType;
  */
 public interface PlatypusField<T> extends Namable, Pathable, EmptyCheckable {
     T get();
-
-    FieldType getType();
 }

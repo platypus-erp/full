@@ -46,7 +46,7 @@ public @interface StringFieldDefinition {
 
     /**
      * (Optional) If the this column will be unique,<br>
-     * if an another field use the same hint(case insensitive)<br>
+     * if an another aggregate use the same hint(case insensitive)<br>
      * the the SQL Unique constraint will be above the two column<br>
      * The Unique constraint name will be UK_<target>_<hint> (ex :  UK_PARTNER_EMAIL)<br>
      * <bold>Warning</bold> if the default value is the same for all same hint value a compile error will be throw<br>
@@ -55,7 +55,7 @@ public @interface StringFieldDefinition {
     String uniqueHint() default DEFAULT;
 
     /**
-     * (Optional) Only if you want to erase all the definition of this field defined in other ui
+     * (Optional) Only if you want to erase all the definition of this aggregate defined in other ui
      */
     boolean eraseWithYours() default false;
 
@@ -64,7 +64,7 @@ public @interface StringFieldDefinition {
     int minSize() default Integer.MIN_VALUE;
 
     /**
-     * (Optional) <br> Define if this field can be <code>null</code> when the model is inserted or updated
+     * (Optional) <br> Define if this aggregate can be <code>null</code> when the model is inserted or updated
      */
     RequiredType required() default RequiredType.NONE;
 

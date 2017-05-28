@@ -1,7 +1,7 @@
 package org.platypus.api.fields.impl;
 
 import org.platypus.api.GenericField;
-import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.tmp.QueryPathImpl;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -18,19 +18,19 @@ abstract class AbstractFieldImpl<T> implements GenericField<T> {
     protected final Supplier<T> getter;
     protected final Consumer<T> setter;
     protected final String name;
-    protected Supplier<QueryPath> path;
+    protected Supplier<QueryPathImpl> path;
 
     public AbstractFieldImpl(String table,String name,
-                             Supplier<QueryPath> getPath,
+                             Supplier<QueryPathImpl> getPath,
                              Supplier<T> getter,
                              Consumer<T> setter) {
         this.getter = getter;
         this.setter = setter;
         this.name = name;
-        path = () -> getPath.get().resolve(QueryPath.basic(table, name));
+        path = () -> getPath.get().resolve(QueryPathImpl.basic(table, name));
     }
 
-    public AbstractFieldImpl(String table,String name,Supplier<QueryPath> getPath) {
+    public AbstractFieldImpl(String table,String name,Supplier<QueryPathImpl> getPath) {
         this.getter = () -> {
             throw new UnsupportedOperationException("can't be called");
         };
@@ -38,7 +38,7 @@ abstract class AbstractFieldImpl<T> implements GenericField<T> {
             throw new UnsupportedOperationException("can't be called");
         };
         this.name = name;
-        path = () -> getPath.get().resolve(QueryPath.basic(table, name));
+        path = () -> getPath.get().resolve(QueryPathImpl.basic(table, name));
     }
 
     @Override
@@ -63,12 +63,12 @@ abstract class AbstractFieldImpl<T> implements GenericField<T> {
     }
 
     @Override
-    public QueryPath getPath() {
-        return new QueryPath(path.get());
+    public QueryPathImpl getPath() {
+        return new QueryPathImpl(path.get());
     }
 
     @Override
-    public QueryPath resolve(QueryPath queryPath) {
+    public QueryPathImpl resolve(QueryPathImpl queryPath) {
         return getPath().resolve(queryPath);
     }
 }

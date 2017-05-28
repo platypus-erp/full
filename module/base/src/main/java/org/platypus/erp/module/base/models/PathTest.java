@@ -1,16 +1,16 @@
 package org.platypus.erp.module.base.models;
 
-import org.platypus.api.fields.StringField;
-import org.platypus.api.query.SearchBuilder;
-import org.platypus.api.query.SearchExecutor;
-import org.platypus.api.query.predicate.impl.PredicateBuilder;
+import org.platypus.api.query.SimpleQuery;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-import static org.platypus.api.query.PredicateCombinator.AND;
+import static org.platypus.api.query.domain.DomainBuilder.NewDomain;
+import static org.platypus.api.query.domain.DomainCombinator.AND;
+import static org.platypus.api.query.domain.DomainCombinator.OR;
 
 /**
  * @author chmuchme
@@ -18,31 +18,31 @@ import static org.platypus.api.query.PredicateCombinator.AND;
  * on 23/05/17.
  */
 @Path("test")
+@Stateless
 public class PathTest {
 
 
     @Inject
-    SearchExecutor<BaseUsersRecord> baseUsersRecordSearchExecutor;
+    SimpleQuery<BaseUsersRecord> queryUser;
 
 
     @Path("test")
     @GET
-    public void test(){
-        System.out.println("Test");
-        SearchBuilder<BaseUsersRecord> loginActive = SearchBuilder.from(BaseUsersRecord.class)
-                .get(
-                        BaseUsersRecord::partner,
-                        BaseUsersRecord::login,
-                        r -> r.partner().id()
+    public void test() {
+        queryUser.get(
+                BaseUsersRecord::login,
+                BaseUsersRecord::password
+        ).filter(
+                r -> r.active().isTrue(),
+                AND,
+                NewDomain(
+                        r -> r.login().contains("admin"),
+                        OR,
+                        r -> r.login().startWith("alexis")
                 )
-                .get(new PredicateBuilder<BaseUsersRecord>().avg(BaseUsersRecord::login))
-                .filter(
-                        r -> r.login().contains("toto"),
-                        AND,
-                        r -> r.active().isFalse()
-                ).or().filter(
-                        r -> r.new_password().isNotNull()
-                );
-        baseUsersRecordSearchExecutor.count(loginActive);
+        ).limit(2)
+                .page(2, 10).distinct(true);
     }
+
+
 }

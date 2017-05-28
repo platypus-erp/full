@@ -31,7 +31,7 @@ public interface LongField extends GenericField<Long> {
 //        }
 //
 //        @Override
-//        public QueryPath resolve(QueryPath queryPath) {
+//        public QueryPathImpl resolve(QueryPathImpl queryPath) {
 //            throw new UnsupportedOperationException("This method can't be called");
 //        }
 //
@@ -42,7 +42,7 @@ public interface LongField extends GenericField<Long> {
 //        }
 //
 //        @Override
-//        public QueryPath getPath() {
+//        public QueryPathImpl getPath() {
 //            throw new UnsupportedOperationException("This method can't be called");
 //        }
 //

@@ -10,8 +10,8 @@ import java.util.Optional;
 public class QueryPath {
     public final String columnName;
     public final String tableName;
-    QueryPath next;
-    QueryPath previous;
+    public QueryPath next;
+    public QueryPath previous;
     public final boolean isRelation;
 
     private QueryPath(String tableName, String columnName, boolean isRelation) {

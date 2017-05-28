@@ -107,14 +107,14 @@ public class ReflectiveModelParser {
             if (field.isAnnotationPresent(ComputedFieldDefinition.class)
                     && field.isAnnotationPresent(RelatedFieldDefinition.class)) {
                 throw new IllegalArgumentException(
-                        String.format("The field[%s] can't be computed and related in the same time", field.getName()));
+                        String.format("The aggregate[%s] can't be computed and related in the same time", field.getName()));
             }
             T t = constructor.apply(field.getName(), field.getAnnotation(annotation));
-//            if (field.isAnnotationPresent(ComputedFieldDefinition.class)) {
-//                t.fillComputed(field.getAnnotation(ComputedFieldDefinition.class));
+//            if (aggregate.isAnnotationPresent(ComputedFieldDefinition.class)) {
+//                t.fillComputed(aggregate.getAnnotation(ComputedFieldDefinition.class));
 //            }
-//            if (field.isAnnotationPresent(RelatedFieldDefinition.class)) {
-//                t.fillRelated(field.getAnnotation(RelatedFieldDefinition.class));
+//            if (aggregate.isAnnotationPresent(RelatedFieldDefinition.class)) {
+//                t.fillRelated(aggregate.getAnnotation(RelatedFieldDefinition.class));
 //            }
             t.setNewField(field.getType() == NewField.class);
             return Optional.of(t);

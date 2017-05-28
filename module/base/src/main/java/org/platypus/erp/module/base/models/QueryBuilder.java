@@ -1,7 +1,7 @@
 package org.platypus.erp.module.base.models;
 
 import org.platypus.api.Pathable;
-import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.tmp.QueryPathImpl;
 
 import java.util.Objects;
 
@@ -21,7 +21,7 @@ public class QueryBuilder {
     }
 
     static class Predicate{
-        QueryPath path;
+        QueryPathImpl path;
         SqlSymbole sqlSymbole;
         PredicateValue value;
 
@@ -33,9 +33,9 @@ public class QueryBuilder {
 
     static class PredicateValue{
         public final Object value;
-        public final QueryPath path;
+        public final QueryPathImpl path;
 
-        private PredicateValue(Object value, QueryPath path) {
+        private PredicateValue(Object value, QueryPathImpl path) {
             this.value = value;
             this.path = path;
         }

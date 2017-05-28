@@ -24,7 +24,7 @@ public @interface ManyToOneFieldDefinition {
      */
     Class<? extends BaseModel> target();
     /**
-     * (Optional) <br> Define if this field can be updated<br>
+     * (Optional) <br> Define if this aggregate can be updated<br>
      * The default value is equivalent to <code>true</code> if unset when the model will be generated<br>
      * when you inherit of a model the value will be define to the last value or <code>true</code>
      */
@@ -36,7 +36,7 @@ public @interface ManyToOneFieldDefinition {
      */
     String columnDoc() default DEFAULT;
     /**
-     * (Optional) <br> Only if you want to erase all the definition of this field defined in other ui
+     * (Optional) <br> Only if you want to erase all the definition of this aggregate defined in other ui
      */
     boolean eraseWithYours() default false;
     /**
@@ -48,7 +48,7 @@ public @interface ManyToOneFieldDefinition {
     PlatypusCascadeType[] cascade() default {};
 
     /**
-     * (Optional) a where predicate add to the query when the relation is fetched
+     * (Optional) a where domain add to the query when the relation is fetched
      */
     String where() default DEFAULT;
 
@@ -63,12 +63,12 @@ public @interface ManyToOneFieldDefinition {
     String sortDesc() default DEFAULT;
 
     /**
-     * (Optional) Define if the field can be <code>null</code>
+     * (Optional) Define if the aggregate can be <code>null</code>
      */
     Bool required() default Bool.DEFAULT;
 
     /**
-     * (Optional) <br> Define if the value of this field can be change
+     * (Optional) <br> Define if the value of this aggregate can be change
      */
     Bool readonly() default Bool.DEFAULT;
 }

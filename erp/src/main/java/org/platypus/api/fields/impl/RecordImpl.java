@@ -1,7 +1,7 @@
 package org.platypus.api.fields.impl;
 
 import org.platypus.api.GenericField;
-import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.tmp.QueryPathImpl;
 import org.platypus.api.Record;
 import org.platypus.api.fields.LongField;
 
@@ -20,18 +20,18 @@ public abstract class RecordImpl<R extends Record, RI extends R> implements Gene
     protected final Supplier<RI> getter;
     protected final Consumer<RI> setter;
     protected final String name;
-    protected Supplier<QueryPath> path;
+    protected Supplier<QueryPathImpl> path;
 
     protected RecordImpl(String tableName,
                          String name,
-                         Supplier<QueryPath> getPath,
+                         Supplier<QueryPathImpl> getPath,
                          Supplier<RI> getter,
                          Consumer<RI> setter,
                          Supplier<RI> defaultValue) {
         this.getter = getter;
         this.setter = setter;
         this.name = name;
-        path = () -> getPath.get().resolve(QueryPath.relation(tableName, name));
+        path = () -> getPath.get().resolve(QueryPathImpl.relation(tableName, name));
         this.defaultValue = defaultValue;
     }
 
@@ -59,12 +59,12 @@ public abstract class RecordImpl<R extends Record, RI extends R> implements Gene
     }
 
     @Override
-    public QueryPath getPath() {
+    public QueryPathImpl getPath() {
         return path.get();
     }
 
     @Override
-    public QueryPath resolve(QueryPath queryPath) {
+    public QueryPathImpl resolve(QueryPathImpl queryPath) {
         return getPath().resolve(queryPath);
     }
 
@@ -76,7 +76,7 @@ public abstract class RecordImpl<R extends Record, RI extends R> implements Gene
     }
 
     @Override
-    public void setPath(QueryPath queryPath) {
+    public void setPath(QueryPathImpl queryPath) {
         get().setPath(queryPath);
     }
 
