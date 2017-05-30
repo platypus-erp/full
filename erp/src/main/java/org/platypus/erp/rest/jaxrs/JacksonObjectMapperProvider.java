@@ -1,4 +1,4 @@
-package org.platypus.erp.rest;
+package org.platypus.erp.rest.jaxrs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.platypus.erp.rest.payload.PayloadModule;

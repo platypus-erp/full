@@ -1,6 +1,5 @@
 package org.platypus.api.query.domain.visitor;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.platypus.api.Record;
 import org.platypus.api.query.domain.visitor.domain.Domain;
 import org.platypus.api.query.domain.visitor.domain.GroupDomain;
@@ -17,13 +16,16 @@ import org.platypus.api.query.domain.visitor.field.RecordValuePredicate;
 import org.platypus.api.query.domain.visitor.field.StringValuePredicate;
 import org.platypus.api.query.domain.visitor.field.TimeValuePredicate;
 import org.platypus.api.query.domain.DomainCombinator;
+import org.platypus.api.query.VisitorInitializer;
 
 /**
  * @author chmuchme
  * @since 0.1
  * on 26/05/17.
  */
-public interface PredicateVisitor<T extends Record> {
+public interface PredicateVisitor<T extends Record, INIT extends VisitorInitializer> {
+
+    void initWith(INIT init);
 
     void visit(BinaryValuePredicate element);
     void visit(BigStringValuePredicate element);

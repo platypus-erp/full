@@ -27,6 +27,8 @@ import org.platypus.api.query.domain.visitor.field.LongValuePredicate;
 import org.platypus.api.query.domain.visitor.field.RecordValuePredicate;
 import org.platypus.api.query.domain.visitor.field.StringValuePredicate;
 import org.platypus.api.query.domain.visitor.field.TimeValuePredicate;
+import org.platypus.api.query.projection.visitor.JpaProjectionInitializer;
+import org.platypus.erp.manager.impl.PlatypusToJpa;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.From;
@@ -48,17 +50,24 @@ import java.util.stream.Collectors;
  * @since 0.1
  * on 26/05/17.
  */
-public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisitor<T> {
+public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisitor<T, JpaProjectionInitializer> {
 
     Predicate currentPredicate;
     List<Predicate> andGroups = new ArrayList<>();
     Predicate currentAndGroup;
-    CriteriaBuilder cb;
-    T instance;
     Map<String, From<?, ?>> tableJoin;
-    From<?, ?> from;
+    From<?, ?> root;
+    CriteriaBuilder cb;
     PredicateBuilder predicateBuilder;
 
+
+    @Override
+    public void initWith(JpaProjectionInitializer initializer) {
+        this.tableJoin = initializer.tableJoin;
+        this.root = initializer.root;
+        this.cb = initializer.cb;
+        predicateBuilder = new PredicateBuilder(cb);
+    }
 
     @Override
     public void visit(Domain<T> element) {
@@ -110,7 +119,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
 
 
         BinaryFieldPredicate field = element.getField();
-        Path<byte[]> path1 = p2j.getJoin(field.getPath().reverse(), tableJoin, from).get(field.getPath().columnName);
+        Path<byte[]> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateNullOrNotNull(path1, element.getCondition());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
     }
@@ -121,7 +130,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
 
 
         BigStringFieldPredicate field = element.getField();
-        Path<String> path1 = p2j.getJoin(field.getPath().reverse(), tableJoin, from).get(field.getPath().columnName);
+        Path<String> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateNullOrNotNull(path1, element.getCondition());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
     }
@@ -131,7 +140,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         element = Objects.requireNonNull(element);
 
         BooleanFieldPredicate field = element.getField();
-        Path<Boolean> path1 = p2j.getJoin(field.getPath().reverse(), tableJoin, from).get(field.getPath().columnName);
+        Path<Boolean> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateEq(path1, element.getCondition(), element.getValue());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
     }
@@ -141,7 +150,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         element = Objects.requireNonNull(element);
 
         DateTimeFieldPredicate field = element.getField();
-        Path<LocalDateTime> path1 = p2j.getJoin(field.getPath().reverse(), tableJoin, from).get(field.getPath().columnName);
+        Path<LocalDateTime> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateComparable(
                 path1, element.getCondition(), element.getValue(), element.getValue2());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
@@ -152,7 +161,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         element = Objects.requireNonNull(element);
 
         DateFieldPredicate field = element.getField();
-        Path<LocalDate> path1 = p2j.getJoin(field.getPath().reverse(), tableJoin, from).get(field.getPath().columnName);
+        Path<LocalDate> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateComparable(
                 path1, element.getCondition(), element.getValue(), element.getValue2());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
@@ -163,7 +172,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         element = Objects.requireNonNull(element);
 
         DecimalFieldPredicate field = element.getField();
-        Path<BigDecimal> path1 = p2j.getJoin(field.getPath().reverse(), tableJoin, from).get(field.getPath().columnName);
+        Path<BigDecimal> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateComparable(
                 path1, element.getCondition(), element.getValue(), element.getValue2());
         if (pre == null) {
@@ -177,7 +186,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         element = Objects.requireNonNull(element);
 
         FloatFieldPredicate field = element.getField();
-        Path<Float> path1 = p2j.getJoin(field.getPath().reverse(), tableJoin, from).get(field.getPath().columnName);
+        Path<Float> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateComparable(
                 path1, element.getCondition(), element.getValue(), element.getValue2());
         if (pre == null) {
@@ -191,7 +200,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         element = Objects.requireNonNull(element);
 
         IntFieldPredicate field = element.getField();
-        Path<Integer> path1 = p2j.getJoin(field.getPath().reverse(), tableJoin, from).get(field.getPath().columnName);
+        Path<Integer> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateComparable(
                 path1, element.getCondition(), element.getValue(), element.getValue2());
         if (pre == null) {
@@ -205,7 +214,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         element = Objects.requireNonNull(element);
 
         LongFieldPredicate field = element.getField();
-        Path<Long> path1 = p2j.getJoin(field.getPath().reverse(), tableJoin, from).get(field.getPath().columnName);
+        Path<Long> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateComparable(
                 path1, element.getCondition(), element.getValue(), element.getValue2());
         if (pre == null) {
@@ -224,7 +233,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         element = Objects.requireNonNull(element);
 
         StringFieldPredicate field = element.getField();
-        Path<String> path1 = p2j.getJoin(field.getPath().reverse(), tableJoin, from).get(field.getPath().columnName);
+        Path<String> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateIn(path1, element.getCondition(), element.getValuesIn());
         if (pre != null) {
             currentPredicate = pre;
@@ -268,7 +277,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         element = Objects.requireNonNull(element);
 
         TimeFieldPredicate field = element.getField();
-        Path<LocalTime> path1 = p2j.getJoin(field.getPath().reverse(), tableJoin, from).get(field.getPath().columnName);
+        Path<LocalTime> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateComparable(
                 path1, element.getCondition(), element.getValue(), element.getValue2());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);

@@ -3,7 +3,7 @@ package org.platypus.erp.core.business.service;
 import org.platypus.erp.core.business.entity.ResCountry;
 import org.platypus.erp.core.business.manager.ResCountryManager;
 import org.platypus.erp.core.util.CoreTableName;
-import org.platypus.erp.service.AbstractRestService;
+import org.platypus.api.service.PlatypusService;
 
 import javax.ejb.Stateless;
 import javax.ws.rs.Path;
@@ -16,6 +16,6 @@ import javax.ws.rs.Path;
  */
 @Path(CoreTableName.country)
 @Stateless
-public class ResCountryBS extends AbstractRestService<ResCountryManager, ResCountry> {
+public class ResCountryBS extends PlatypusService<ResCountryManager, ResCountry> {
 
 }

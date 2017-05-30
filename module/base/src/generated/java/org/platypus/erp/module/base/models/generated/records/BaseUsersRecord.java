@@ -11,9 +11,22 @@ import org.platypus.api.fields.StringField;
         modelClassName = "Users",
         modelName = "users"
 )
-public interface BaseUsersRecord extends Record {
+public interface BaseUsersRecord extends Record<BaseUsersRecord> {
 
+    @Override
+    default BaseUsersRecord get() {
+        return this;
+    }
 
+    @Override
+    default boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    default boolean isNotEmpty() {
+        return true;
+    }
 
     BinaryField signature();
 

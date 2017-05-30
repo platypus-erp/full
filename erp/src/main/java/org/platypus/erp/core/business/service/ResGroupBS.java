@@ -3,7 +3,7 @@ package org.platypus.erp.core.business.service;
 import org.platypus.erp.core.business.entity.ResGroup;
 import org.platypus.erp.core.business.manager.ResGroupManager;
 import org.platypus.erp.core.util.CoreTableName;
-import org.platypus.erp.service.AbstractRestService;
+import org.platypus.api.service.PlatypusService;
 
 import javax.ejb.Stateless;
 import javax.ws.rs.Path;
@@ -16,5 +16,5 @@ import javax.ws.rs.Path;
  */
 @Path(CoreTableName.group)
 @Stateless
-public class ResGroupBS extends AbstractRestService<ResGroupManager, ResGroup> {
+public class ResGroupBS extends PlatypusService<ResGroupManager, ResGroup> {
 }

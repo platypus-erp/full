@@ -1,7 +1,7 @@
 package org.platypus.api.fields.impl;
 
-import org.platypus.api.query.tmp.QueryPathImpl;
 import org.platypus.api.fields.DateField;
+import org.platypus.api.query.QueryPath;
 
 import java.time.LocalDate;
 import java.util.function.Consumer;
@@ -16,17 +16,12 @@ import java.util.function.Supplier;
  */
 public class DateFieldImpl extends AbstractFieldImpl<LocalDate> implements DateField {
 
-    public DateFieldImpl(String table, String name, Supplier<QueryPathImpl> getPath, Supplier<LocalDate> getter, Consumer<LocalDate> setter) {
+    public DateFieldImpl(String table, String name, Supplier<QueryPath> getPath, Supplier<LocalDate> getter, Consumer<LocalDate> setter) {
         super(table, name, getPath, getter, setter);
     }
 
-    public DateFieldImpl(String table, String name, Supplier<QueryPathImpl> getPath, Supplier<LocalDate> getter, Consumer<LocalDate> setter,
+    public DateFieldImpl(String table, String name, Supplier<QueryPath> getPath, Supplier<LocalDate> getter, Consumer<LocalDate> setter,
                          LocalDate def) {
         super(table, name, getPath, getter, setter);
-    }
-
-    @Override
-    public LocalDate getDefaultValue() {
-        return LocalDate.MIN;
     }
 }

@@ -1,4 +1,4 @@
-package org.platypus.api.query.impl;
+package org.platypus.erp.manager.impl;
 
 import org.platypus.api.Record;
 import org.platypus.api.annotations.doc.InternalUse;

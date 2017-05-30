@@ -1,6 +1,6 @@
 package org.platypus.api.query.projection.visitor;
 
-import org.platypus.api.query.impl.PlatypusToJpa;
+import org.platypus.api.query.QueryPath;
 import org.platypus.api.query.projection.ProjectionVisitor;
 import org.platypus.api.query.projection.visitor.field.BigStringProjection;
 import org.platypus.api.query.projection.visitor.field.BinaryProjection;
@@ -19,9 +19,9 @@ import org.platypus.api.query.projection.visitor.field.agg.CountAggProjection;
 import org.platypus.api.query.projection.visitor.field.agg.MaxAggProjection;
 import org.platypus.api.query.projection.visitor.field.agg.MinAggProjection;
 import org.platypus.api.query.projection.visitor.field.agg.SumAggProjection;
+import org.platypus.erp.manager.impl.PlatypusToJpa;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.From;
 import javax.persistence.criteria.Selection;
 
@@ -34,131 +34,97 @@ import java.util.Map;
  * @since 0.1
  * on 27/05/17.
  */
-public class JpaProjectionVisitorImpl implements ProjectionVisitor{
+public class JpaProjectionVisitorImpl implements ProjectionVisitor<JpaProjectionInitializer> {
     List<Selection<?>> select = new ArrayList<>();
-    List<Expression<?>> selectNonAgregator = new ArrayList<>();
-    List<Selection<?>> selectAggregator = new ArrayList<>();
-    PlatypusToJpa p2j;
     Map<String, From<?, ?>> tableJoin;
     From<?, ?> root;
     CriteriaBuilder cb;
 
     @Override
+    public void initWith(JpaProjectionInitializer initializer) {
+        this.tableJoin = initializer.tableJoin;
+        this.root = initializer.root;
+        this.cb = initializer.cb;
+    }
+
+    @Override
     public void visit(BinaryProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectNonAgregator.add(from.get(element.getField().getPath().columnName));
+        QueryPath path = element.getField().getPath();
+        From<?, ?> from = PlatypusToJpa.getJoin(path, tableJoin, root);
+        select.add(from.get(path.columnName).alias(path.getAliasColumn()));
     }
 
     @Override
     public void visit(BigStringProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectNonAgregator.add(from.get(element.getField().getPath().columnName));
+        QueryPath path = element.getField().getPath();
+        From<?, ?> from = PlatypusToJpa.getJoin(path, tableJoin, root);
+        select.add(from.get(path.columnName).alias(path.getAliasColumn()));
     }
 
     @Override
     public void visit(BooleanProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectNonAgregator.add(from.get(element.getField().getPath().columnName));
+        QueryPath path = element.getField().getPath();
+        From<?, ?> from = PlatypusToJpa.getJoin(path, tableJoin, root);
+        select.add(from.get(path.columnName).alias(path.getAliasColumn()));
     }
 
     @Override
     public void visit(DateTimeProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectNonAgregator.add(from.get(element.getField().getPath().columnName));
+        QueryPath path = element.getField().getPath();
+        From<?, ?> from = PlatypusToJpa.getJoin(path, tableJoin, root);
+        select.add(from.get(path.columnName).alias(path.getAliasColumn()));
     }
 
     @Override
     public void visit(DateProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectNonAgregator.add(from.get(element.getField().getPath().columnName));
+        QueryPath path = element.getField().getPath();
+        From<?, ?> from = PlatypusToJpa.getJoin(path, tableJoin, root);
+        select.add(from.get(path.columnName).alias(path.getAliasColumn()));
     }
 
     @Override
     public void visit(DecimalProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectNonAgregator.add(from.get(element.getField().getPath().columnName));
+        QueryPath path = element.getField().getPath();
+        From<?, ?> from = PlatypusToJpa.getJoin(path, tableJoin, root);
+        select.add(from.get(path.columnName).alias(path.getAliasColumn()));
     }
 
     @Override
     public void visit(FloatProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectNonAgregator.add(from.get(element.getField().getPath().columnName));
+        QueryPath path = element.getField().getPath();
+        From<?, ?> from = PlatypusToJpa.getJoin(path, tableJoin, root);
+        select.add(from.get(path.columnName).alias(path.getAliasColumn()));
     }
 
     @Override
     public void visit(IntProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectNonAgregator.add(from.get(element.getField().getPath().columnName));
+        QueryPath path = element.getField().getPath();
+        From<?, ?> from = PlatypusToJpa.getJoin(path, tableJoin, root);
+        select.add(from.get(path.columnName).alias(path.getAliasColumn()));
     }
 
     @Override
     public void visit(LongProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectNonAgregator.add(from.get(element.getField().getPath().columnName));
+        QueryPath path = element.getField().getPath();
+        From<?, ?> from = PlatypusToJpa.getJoin(path, tableJoin, root);
+        select.add(from.get(path.columnName).alias(path.getAliasColumn()));
     }
 
     @Override
     public void visit(StringProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectNonAgregator.add(from.get(element.getField().getPath().columnName));
+        QueryPath path = element.getField().getPath();
+        From<?, ?> from = PlatypusToJpa.getJoin(path, tableJoin, root);
+        select.add(from.get(path.columnName).alias(path.getAliasColumn()));
     }
 
     @Override
     public void visit(TimeProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectNonAgregator.add(from.get(element.getField().getPath().columnName));
+        QueryPath path = element.getField().getPath();
+        From<?, ?> from = PlatypusToJpa.getJoin(path, tableJoin, root);
+        select.add(from.get(path.columnName).alias(path.getAliasColumn()));
     }
 
-    @Override
-    public void visit(ConcatAggProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectAggregator.add(from.get(element.getField().getPath().columnName));
-    }
-
-    @Override
-    public void visit(MaxAggProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectAggregator.add(from.get(element.getField().getPath().columnName));
-    }
-
-    @Override
-    public void visit(SumAggProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectAggregator.add(from.get(element.getField().getPath().columnName));
-    }
-
-    @Override
-    public void visit(MinAggProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectAggregator.add(from.get(element.getField().getPath().columnName));
-    }
-
-    @Override
-    public void visit(CountAggProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectAggregator.add(from.get(element.getField().getPath().columnName));
-    }
-
-    @Override
-    public void visit(AvgAggProjection element) {
-        From<?, ?> from = PlatypusToJpa.getJoin(element.getField().getPath(), tableJoin, root);
-//        select.add(from.get(binaryProjection.getField().getPath().columnName));
-        selectAggregator.add(from.get(element.getField().getPath().columnName));
+    public List<Selection<?>> getSelect() {
+        return select;
     }
 }

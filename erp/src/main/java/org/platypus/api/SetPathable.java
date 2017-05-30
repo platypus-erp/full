@@ -1,6 +1,6 @@
 package org.platypus.api;
 
-import org.platypus.api.query.tmp.QueryPathImpl;
+import org.platypus.api.query.QueryPath;
 
 /**
  * @author chmuchme
@@ -9,6 +9,6 @@ import org.platypus.api.query.tmp.QueryPathImpl;
  */
 public interface SetPathable extends Pathable{
 
-    void setPath(QueryPathImpl queryPath);
+    void setPath(QueryPath queryPath);
 
 }

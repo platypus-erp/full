@@ -1,11 +1,12 @@
 package org.platypus.erp.rest.payload;
 
-import org.platypus.erp.entity.AbstractEntity;
+import org.platypus.api.Record;
 import org.platypus.erp.entity.EntityRegistry;
 import org.platypus.erp.entity.Identifiable;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,14 +48,14 @@ public class PayLoad implements RestPayLoad {
     }
 
     @Override
-    public <T extends AbstractEntity> T getEntity() {
+    public <T extends Record> T getEntity() {
         return (T) entity;
     }
 
     @Override
-    public <T extends AbstractEntity> void setEntity(T entity) {
+    public <T extends Record> void setEntity(T entity) {
         Objects.requireNonNull(entity, THE_ENTITY_SHOULD_NEVER_BE_NULL);
-        this.id = entity.getId();
+        this.id = entity.id().get();
         this.entity = entity;
     }
 
@@ -75,7 +76,7 @@ public class PayLoad implements RestPayLoad {
         entities.put(key, entity);
     }
 
-    public <E extends AbstractEntity> void addEntity(E entity) {
+    public <E extends Record> void addEntity(E entity) {
         Objects.requireNonNull(entity, THE_ENTITY_SHOULD_NEVER_BE_NULL);
         keys.add(entity.getTableName());
         entities.put(entity.getTableName(), entity);
@@ -83,7 +84,7 @@ public class PayLoad implements RestPayLoad {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends AbstractEntity> Optional<T> get(Class<T> aClass) {
+    public <T extends Record> Optional<T> get(Class<T> aClass) {
         Objects.requireNonNull(aClass, THE_ENTITY_SHOULD_NEVER_BE_NULL);
         return Optional.ofNullable(aClass.cast(entities.get(EntityRegistry.INSTANCE.getName(aClass).get())));
     }

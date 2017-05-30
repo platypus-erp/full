@@ -1,6 +1,8 @@
 package org.platypus.erp.manager;
 
-import org.platypus.erp.entity.AbstractEntity;
+import org.platypus.api.Record;
+import org.platypus.api.query.SimpleQuery;
+import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.erp.entity.Identifiable;
 import org.platypus.erp.rest.filter.Filter;
 import org.platypus.erp.rest.filter.ListFilter;
@@ -12,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotNull;
 
 import java.util.List;
+import java.util.function.Function;
 
 
 /**
@@ -20,15 +23,15 @@ import java.util.List;
  * @version 0.1
  * @since 0.1
  */
-public abstract class AbstractRepository<E extends AbstractEntity> implements TotoRepository<E> {
+public abstract class AbstractPlatypusRepository<E extends Record> implements PlatypusRepository<E> {
 
     private final Class<E> clazz;
-    private final Logger LOG = LoggerFactory.getLogger(AbstractRepository.class);
+    private final Logger LOG = LoggerFactory.getLogger(AbstractPlatypusRepository.class);
 
     @PersistenceContext
     protected EntityManager em;
 
-    public AbstractRepository(Class<E> clazz) {
+    public AbstractPlatypusRepository(Class<E> clazz) {
         this.clazz = clazz;
     }
 
@@ -111,7 +114,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> implements To
 //    }
 
     @Override
-    public int count(Filter filter) {
+    public int count(Filter<E> filter) {
 //        Optional<String> name = EntityRegistry.INSTANCE.getName(clazz);
 //        if (name.isPresent()) {
 //            try (org.jooq.Query step = selectCount().from(table(name.get()))) {
@@ -121,5 +124,10 @@ public abstract class AbstractRepository<E extends AbstractEntity> implements To
 //        } else {
         return 0;
 //        }
+    }
+
+    @Override
+    public List<E> executeAsList(SimpleQuery<E> filter) {
+        return null;
     }
 }

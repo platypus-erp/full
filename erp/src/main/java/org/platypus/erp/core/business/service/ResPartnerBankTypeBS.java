@@ -3,7 +3,7 @@ package org.platypus.erp.core.business.service;
 import org.platypus.erp.core.business.entity.ResPartnerBankType;
 import org.platypus.erp.core.business.manager.ResPartnerBankTypeManager;
 import org.platypus.erp.core.util.CoreTableName;
-import org.platypus.erp.service.AbstractRestService;
+import org.platypus.api.service.PlatypusService;
 
 import javax.ejb.Stateless;
 import javax.ws.rs.Path;
@@ -16,5 +16,5 @@ import javax.ws.rs.Path;
  */
 @Path(CoreTableName.partnerBankType)
 @Stateless
-public class ResPartnerBankTypeBS extends AbstractRestService<ResPartnerBankTypeManager, ResPartnerBankType> {
+public class ResPartnerBankTypeBS extends PlatypusService<ResPartnerBankTypeManager, ResPartnerBankType> {
 }

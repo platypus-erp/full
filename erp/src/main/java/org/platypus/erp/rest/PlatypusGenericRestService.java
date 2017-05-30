@@ -1,6 +1,8 @@
-package org.platypus.erp.service;
+package org.platypus.erp.rest;
 
-import org.platypus.erp.entity.AbstractEntity;
+import org.platypus.api.Record;
+import org.platypus.api.query.SimpleQuery;
+import org.platypus.api.service.PlatypusService;
 import org.platypus.erp.entity.event.create.AfterCreateLiteral;
 import org.platypus.erp.entity.event.create.BeforeCreateLiteral;
 import org.platypus.erp.entity.event.delete.AfterDeleteLiteral;
@@ -11,9 +13,7 @@ import org.platypus.erp.entity.event.select.list.AfterSelectListLiteral;
 import org.platypus.erp.entity.event.select.list.BeforeSelectListLiteral;
 import org.platypus.erp.entity.event.update.AfterUpdateLiteral;
 import org.platypus.erp.entity.event.update.BeforeUpdateLiteral;
-import org.platypus.erp.exceptions.CunstructorTotoErpException;
-import org.platypus.erp.manager.AbstractRepository;
-import org.platypus.erp.rest.ConstraintViolationEntity;
+import org.platypus.erp.exceptions.CunstructorPlatypuErpException;
 import org.platypus.erp.rest.filter.ListFilter;
 import org.platypus.erp.rest.payload.ListPayload;
 import org.platypus.erp.rest.payload.PayLoad;
@@ -36,6 +36,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,9 +50,9 @@ import static java.util.Collections.unmodifiableList;
  * @version 0.1
  * @since 0.1
  */
-public abstract class AbstractRestService<M extends AbstractRepository<E>, E extends AbstractEntity> extends AbstractRestEventService<M, E> {
+public abstract class PlatypusGenericRestService<E extends Record> extends PlatypusService<E> {
 
-    private final Logger LOG = LoggerFactory.getLogger(AbstractRestService.class);
+    private final Logger LOG = LoggerFactory.getLogger(PlatypusGenericRestService.class);
     @Inject
     Event<PayLoad> eventPayLoad;
 
@@ -61,17 +62,20 @@ public abstract class AbstractRestService<M extends AbstractRepository<E>, E ext
     @Inject
     Event<Long> eventDelete;
 
+    @Inject
+    protected SimpleQuery<E> query;
+
 
     /**
      * This cunstructor can't be called
      *
-     * @throws CunstructorTotoErpException
+     * @throws CunstructorPlatypuErpException
      */
-    protected AbstractRestService() {
-        throw new CunstructorTotoErpException();
+    protected PlatypusGenericRestService() {
+        throw new CunstructorPlatypuErpException();
     }
 
-    protected AbstractRestService(Class<E> clazz) {
+    protected PlatypusGenericRestService(Class<E> clazz) {
         super(clazz);
     }
 

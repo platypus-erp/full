@@ -1,5 +1,7 @@
 package org.platypus.erp.rest.filter;
 
+import org.platypus.api.Record;
+
 /**
  * TODO Add JavaDoc
  *
@@ -28,7 +30,7 @@ public class ListFilter {
         return pageSize;
     }
 
-    public Filter getFilterId() {
+    public <T extends Record> Filter<T> getFilterId() {
         return null;
     }
 }

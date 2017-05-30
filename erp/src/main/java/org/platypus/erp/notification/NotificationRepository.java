@@ -1,6 +1,6 @@
 package org.platypus.erp.notification;
 
-import org.platypus.erp.manager.AbstractRepository;
+import org.platypus.erp.manager.AbstractPlatypusRepository;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * @version 0.1
  * @since 0.1
  */
-public class NotificationRepository extends AbstractRepository<Notification> {
+public class NotificationRepository extends AbstractPlatypusRepository<Notification> {
 
     public NotificationRepository() {
         super(Notification.class);

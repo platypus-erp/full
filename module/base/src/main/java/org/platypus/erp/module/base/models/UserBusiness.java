@@ -4,7 +4,7 @@ import base.BaseRecordPool;
 import org.platypus.api.Record;
 import org.platypus.api.query.projection.ProjectionField;
 import org.platypus.api.query.tmp.QueryPathImpl;
-import org.platypus.api.query.QueryBuilder;
+import org.platypus.erp.manager.impl.SimpleQueryImpl;
 import org.platypus.api.query.projection.QueryAgregator;
 import org.platypus.erp.module.base.models.generated.jpa.ImplUsersJPA;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
@@ -47,11 +47,11 @@ public class UserBusiness {
 //        System.out.println(record.share().getPath());
 //
 //
-//        QueryBuilder.Predicate pre = QueryBuilder.eq(record.active(), true);
+//        SimpleQueryImpl.Predicate pre = SimpleQueryImpl.eq(record.active(), true);
 //        System.out.println(pre);
 
 
-        QueryBuilder<BaseUsersRecord> loginActive = QueryBuilder.from(BaseUsersRecord.class)
+        SimpleQueryImpl<BaseUsersRecord> loginActive = SimpleQueryImpl.from(BaseUsersRecord.class)
                 .get(
                         BaseUsersRecord::partner,
                         BaseUsersRecord::login,
@@ -70,7 +70,7 @@ public class UserBusiness {
 
     }
 
-    static <T extends Record> void test(QueryBuilder<T> searchBuilder, T instance){
+    static <T extends Record> void test(SimpleQueryImpl<T> searchBuilder, T instance){
 
 
         List<ProjectionField<T>> projection = searchBuilder.getProjection();

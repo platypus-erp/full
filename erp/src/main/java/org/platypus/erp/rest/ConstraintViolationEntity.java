@@ -22,6 +22,8 @@ public class ConstraintViolationEntity {
     private final List<String> messages;
 
     public ConstraintViolationEntity(Set<ConstraintViolation<?>> constraintViolations) {
-        messages = constraintViolations.stream().map(v -> v.getMessage()).collect(Collectors.toList());
+        messages = constraintViolations.stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.toList());
     }
 }

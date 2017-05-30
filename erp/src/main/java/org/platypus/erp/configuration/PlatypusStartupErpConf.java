@@ -16,7 +16,7 @@ import javax.inject.Inject;
  */
 @Singleton
 @Startup
-public class StartupErpConf {
+public class PlatypusStartupErpConf {
 
     @Inject
     private Event<TotoErpConfRegister> registerEvent;

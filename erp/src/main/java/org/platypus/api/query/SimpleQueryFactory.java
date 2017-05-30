@@ -1,9 +1,10 @@
 package org.platypus.api.query;
 
 import org.platypus.api.Record;
+import org.platypus.api.query.domain.DomainCombinator;
+import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.api.query.projection.PProjection;
 
-import java.util.List;
 import java.util.function.Function;
 
 /**
@@ -11,9 +12,7 @@ import java.util.function.Function;
  * @since 0.1
  * on 27/05/17.
  */
-public interface QueryProjection<R extends Record> {
+public interface SimpleQueryFactory<R extends Record>{
 
-    void addProjection(Function<R, PProjection> projection);
-
-    List<PProjection> apply(R instance);
+    SimpleQuery<R> of(Class<R> rClass);
 }

@@ -53,29 +53,33 @@ public class QueryPath {
     }
 
 
-    public QueryPath reverse(){
+    public QueryPath reverse() {
         return recursiveReverse(this);
     }
 
-    private QueryPath recursiveReverse(QueryPath queryPath){
-        if (queryPath.previous == null){
+    private QueryPath recursiveReverse(QueryPath queryPath) {
+        if (queryPath.previous == null) {
             return queryPath;
         } else {
             return recursiveReverse(queryPath.previous);
         }
     }
 
-    public String getTablePath(){
+    public String getTablePath() {
         String str = this.tableName;
         if (this.previous != null) {
             String previous = this.previous.getTablePath();
-            if (this.isRelation){
+            if (this.isRelation) {
                 str = previous + "." + this.columnName;
             } else {
                 str = previous;
             }
         }
         return str;
+    }
+
+    public String getAliasColumn() {
+        return getTablePath().replaceAll("\\.", "_") + "_" + this.columnName;
     }
 
 

@@ -3,7 +3,7 @@ package org.platypus.erp.core.business.service;
 import org.platypus.erp.core.business.entity.ResConfigInstaller;
 import org.platypus.erp.core.business.manager.ResConfigInstallerManager;
 import org.platypus.erp.core.util.CoreTableName;
-import org.platypus.erp.service.AbstractRestService;
+import org.platypus.api.service.PlatypusService;
 
 import javax.ejb.Stateless;
 import javax.ws.rs.Path;
@@ -16,6 +16,6 @@ import javax.ws.rs.Path;
  */
 @Path(CoreTableName.configInstaller)
 @Stateless
-public class ResConfigInstallerBS extends AbstractRestService<ResConfigInstallerManager, ResConfigInstaller> {
+public class ResConfigInstallerBS extends PlatypusService<ResConfigInstallerManager, ResConfigInstaller> {
 
 }

@@ -1,6 +1,6 @@
 package org.platypus.erp.rest.payload;
 
-import org.platypus.erp.entity.AbstractEntity;
+import org.platypus.api.Record;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * @version 0.1
  * @since 0.1
  */
-public class ListPayload<E extends AbstractEntity>{
+public class ListPayload<E extends Record>{
 
     private final int count;
     private List<E> datas;

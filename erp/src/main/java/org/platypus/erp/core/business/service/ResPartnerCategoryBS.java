@@ -3,7 +3,7 @@ package org.platypus.erp.core.business.service;
 import org.platypus.erp.core.business.entity.ResPartnerCategory;
 import org.platypus.erp.core.business.manager.ResPartnerCategoryManager;
 import org.platypus.erp.core.util.CoreTableName;
-import org.platypus.erp.service.AbstractRestService;
+import org.platypus.api.service.PlatypusService;
 
 import javax.ejb.Stateless;
 import javax.ws.rs.Path;
@@ -16,5 +16,5 @@ import javax.ws.rs.Path;
  */
 @Path(CoreTableName.partnerCategory)
 @Stateless
-public class ResPartnerCategoryBS extends AbstractRestService<ResPartnerCategoryManager, ResPartnerCategory> {
+public class ResPartnerCategoryBS extends PlatypusService<ResPartnerCategoryManager, ResPartnerCategory> {
 }

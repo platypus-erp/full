@@ -1,7 +1,10 @@
 package org.platypus.api.fields.impl;
 
-import org.platypus.api.query.tmp.QueryPathImpl;
 import org.platypus.api.fields.BinaryField;
+import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.domain.DomainPredicate;
+import org.platypus.api.query.domain.visitor.PPredicate;
+import org.platypus.api.query.domain.visitor.field.BinaryValuePredicate;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -15,12 +18,22 @@ import java.util.function.Supplier;
  */
 public class BinaryFieldImpl extends AbstractFieldImpl<byte[]> implements BinaryField {
 
-    public BinaryFieldImpl(String table, String name, Supplier<QueryPathImpl> getPath, Supplier<byte[]> getter, Consumer<byte[]> setter) {
+    public BinaryFieldImpl(String table, String name, Supplier<QueryPath> getPath, Supplier<byte[]> getter, Consumer<byte[]> setter) {
         super(table, name, getPath, getter, setter);
     }
 
     @Override
     public byte[] getDefaultValue() {
         return new byte[0];
+    }
+
+    @Override
+    public PPredicate<byte[]> isNotNull() {
+        return new BinaryValuePredicate(this, DomainPredicate.IS_NOT_NULL);
+    }
+
+    @Override
+    public PPredicate<byte[]> isNull() {
+        return new BinaryValuePredicate(this, DomainPredicate.IS_NULL);
     }
 }

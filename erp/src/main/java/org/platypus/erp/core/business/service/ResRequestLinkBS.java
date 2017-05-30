@@ -3,7 +3,7 @@ package org.platypus.erp.core.business.service;
 import org.platypus.erp.core.business.entity.ResRequestLink;
 import org.platypus.erp.core.business.manager.ResRequestLinkManager;
 import org.platypus.erp.core.util.CoreTableName;
-import org.platypus.erp.service.AbstractRestService;
+import org.platypus.api.service.PlatypusService;
 
 import javax.ejb.Stateless;
 import javax.ws.rs.Path;
@@ -16,5 +16,5 @@ import javax.ws.rs.Path;
  */
 @Path(CoreTableName.requestLink)
 @Stateless
-public class ResRequestLinkBS extends AbstractRestService<ResRequestLinkManager, ResRequestLink> {
+public class ResRequestLinkBS extends PlatypusService<ResRequestLinkManager, ResRequestLink> {
 }

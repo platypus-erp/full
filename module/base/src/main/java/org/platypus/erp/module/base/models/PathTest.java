@@ -1,12 +1,13 @@
 package org.platypus.erp.module.base.models;
 
-import org.platypus.api.query.SimpleQuery;
+import org.platypus.api.service.PlatypusService;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+
+import java.util.List;
 
 import static org.platypus.api.query.domain.DomainBuilder.NewDomain;
 import static org.platypus.api.query.domain.DomainCombinator.AND;
@@ -19,17 +20,16 @@ import static org.platypus.api.query.domain.DomainCombinator.OR;
  */
 @Path("test")
 @Stateless
-public class PathTest {
+public class PathTest extends PlatypusService<BaseUsersRecord> {
 
-
-    @Inject
-    SimpleQuery<BaseUsersRecord> queryUser;
-
+    public PathTest() {
+        super(BaseUsersRecord.class);
+    }
 
     @Path("test")
     @GET
     public void test() {
-        queryUser.get(
+        List<BaseUsersRecord> list = search(q -> q.get(
                 BaseUsersRecord::login,
                 BaseUsersRecord::password
         ).filter(
@@ -40,8 +40,7 @@ public class PathTest {
                         OR,
                         r -> r.login().startWith("alexis")
                 )
-        ).limit(2)
-                .page(2, 10).distinct(true);
+        ).sortAsc(BaseUsersRecord::login));
     }
 
 

@@ -7,7 +7,7 @@ import org.platypus.api.PlatypusField;
  * @since 0.1
  * on 27/05/17.
  */
-public interface PProjection {
+public interface PProjection extends PProjectionGroup{
 
-    void accept(ProjectionVisitor predicateVisitor);
+    void accept(ProjectionVisitor<?> predicateVisitor);
 }

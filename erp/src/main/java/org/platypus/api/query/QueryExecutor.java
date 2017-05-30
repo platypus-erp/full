@@ -1,8 +1,13 @@
 package org.platypus.api.query;
 
+import org.platypus.api.Pool;
 import org.platypus.api.Record;
+import org.platypus.erp.manager.impl.SimpleQueryImpl;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * @author chmuchme
@@ -12,8 +17,12 @@ import java.util.List;
 public interface QueryExecutor<T extends Record> {
 
 
-    long count(QueryBuilder<T> searchBuilder);
-    T getFirst(QueryBuilder<T> searchBuilder);
-    List<T> get(QueryBuilder<T> searchBuilder);
+    long count(SimpleQueryImpl<T> searchBuilder);
+    Optional<T> getFirst(SimpleQueryImpl<T> searchBuilder);
+    List<T> get(SimpleQueryImpl<T> searchBuilder);
 
+    QueryExecutor<T> distinct(boolean distinct);
+    QueryExecutor<T> limit(int limit);
+    QueryExecutor<T> page(int page);
+    QueryExecutor<T> page(int pageNumber, int pageSize);
 }

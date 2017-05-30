@@ -1,4 +1,4 @@
-package org.platypus.api.query.impl;
+package org.platypus.erp.manager.impl;
 
 import org.platypus.api.query.QueryPath;
 
@@ -12,7 +12,8 @@ import java.util.Map;
  * on 27/05/17.
  */
 public class PlatypusToJpa {
-
+    private PlatypusToJpa() {
+    }
 
     public static From<?, ?> getJoin(QueryPath path, Map<String, From<?, ?>> tableJoin, From<?, ?> from) {
         From<?, ?> j = tableJoin.get(path.getTablePath());

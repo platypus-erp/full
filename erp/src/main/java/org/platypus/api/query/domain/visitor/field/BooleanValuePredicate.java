@@ -10,7 +10,7 @@ import org.platypus.api.query.domain.DomainPredicate;
  * @since 0.1
  * on 26/05/17.
  */
-public class BooleanValuePredicate implements PPredicate {
+public class BooleanValuePredicate implements PPredicate<Boolean> {
     BooleanFieldPredicate field;
     boolean value;
 

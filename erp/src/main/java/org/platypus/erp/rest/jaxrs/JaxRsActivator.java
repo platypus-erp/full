@@ -1,4 +1,4 @@
-package org.platypus.erp.rest;
+package org.platypus.erp.rest.jaxrs;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -12,6 +12,6 @@ import javax.ws.rs.core.Application;
  * @since 0.1
  */
 @ApplicationPath("/")
-public class TotoJaxRsActivator extends Application {
+public class JaxRsActivator extends Application {
 
 }

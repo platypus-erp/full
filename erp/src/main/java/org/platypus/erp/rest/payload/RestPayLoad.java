@@ -3,6 +3,7 @@ package org.platypus.erp.rest.payload;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.platypus.api.Record;
 import org.platypus.erp.entity.AbstractEntity;
 import org.platypus.erp.entity.EntityRegistry;
 import org.platypus.erp.exceptions.TotoJsonMappingException;
@@ -31,7 +32,7 @@ public interface RestPayLoad {
         E payload = supplier.get();
         payload.setId(node.get("id").asLong(0));
         ObjectMapper mapper = new ObjectMapper();
-        Class<AbstractEntity> clazz = EntityRegistry.INSTANCE.getSafeClass(node.get("entity").get("tableName").asText());
+        Class<Record> clazz = EntityRegistry.INSTANCE.getSafeClass(node.get("entity").get("tableName").asText());
         try {
             payload.setEntity(mapper.readValue(mapper.writeValueAsString(node.get("entity")), clazz));
         } catch (IOException e) {
@@ -73,9 +74,9 @@ public interface RestPayLoad {
      * @param <T>
      * @return
      */
-    <T extends AbstractEntity> T getEntity();
+    <T extends Record> T getEntity();
 
-    <T extends AbstractEntity> void setEntity(T entity);
+    <T extends Record> void setEntity(T entity);
 
     long getId();
 
@@ -84,7 +85,7 @@ public interface RestPayLoad {
     void put(String key, Object entity);
 
     @SuppressWarnings("unchecked")
-    <T extends AbstractEntity> Optional<T> get(Class<T> aClass);
+    <T extends Record> Optional<T> get(Class<T> aClass);
 
     List<String> getEntities();
 }

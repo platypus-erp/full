@@ -2,7 +2,7 @@ package org.platypus.erp.core.partner;
 
 import org.platypus.erp.core.util.CoreTableName;
 import org.platypus.erp.interceptor.logger.Loggable;
-import org.platypus.erp.service.AbstractRestService;
+import org.platypus.api.service.PlatypusService;
 
 import javax.ejb.Stateless;
 import javax.ws.rs.Path;
@@ -16,7 +16,7 @@ import javax.ws.rs.Path;
 @Path(CoreTableName.partner)
 @Stateless
 @Loggable
-public class PartnerBS extends AbstractRestService<PartnerRepository, Partner> {
+public class PartnerBS extends PlatypusService<PartnerRepository, Partner> {
 
     public PartnerBS() {
         super(Partner.class);
