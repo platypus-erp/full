@@ -2,18 +2,16 @@ package org.platypus.erp.notification;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
-import org.platypus.erp.entity.AbstractEntity;
+import org.platypus.api.Record;
+import org.platypus.api.fields.LongField;
+import org.platypus.api.query.QueryPath;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.PrePersist;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import static javax.persistence.EnumType.STRING;
-import static org.platypus.erp.notification.Notification.TABLE;
 import static org.platypus.erp.notification.NotificationStatus.READ;
 import static org.platypus.erp.notification.NotificationStatus.UNREAD;
 
@@ -23,9 +21,7 @@ import static org.platypus.erp.notification.NotificationStatus.UNREAD;
  * @version 0.1
  * @since 0.1
  */
-@Entity
-@Table(name = TABLE)
-public class Notification extends AbstractEntity {
+public class Notification implements Record{
     public static final String TABLE = "notification";
     public static final int PRIORITY_MAXIMAL = 9999;
     public static final int PRIORITY_MINIMAL = 0;
@@ -48,7 +44,7 @@ public class Notification extends AbstractEntity {
     }
 
     private Notification(String title, String message) {
-        this.name = title;
+//        this.name = title;
         this.message = message;
     }
 
@@ -61,6 +57,31 @@ public class Notification extends AbstractEntity {
         this.priority = PRIORITY_NORMAL;
         this.hide = false;
         this.status = UNREAD;
+    }
+
+    @Override
+    public LongField id() {
+        return null;
+    }
+
+    @Override
+    public String getTableName() {
+        return null;
+    }
+
+    @Override
+    public QueryPath getPath() {
+        return null;
+    }
+
+    @Override
+    public void setPath(QueryPath queryPath) {
+
+    }
+
+    @Override
+    public QueryPath resolve(QueryPath queryPath) {
+        return null;
     }
 
     public String getMessage() {

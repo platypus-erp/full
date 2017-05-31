@@ -1,7 +1,5 @@
 package org.platypus.api.query.projection;
 
-import org.platypus.api.PlatypusField;
-
 /**
  * @author chmuchme
  * @since 0.1
@@ -10,4 +8,9 @@ import org.platypus.api.PlatypusField;
 public interface PProjection extends PProjectionGroup{
 
     void accept(ProjectionVisitor<?> predicateVisitor);
+
+    @Override
+    default void accept(ProjectionGroupVisitor<?> predicateVisitor) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
 }

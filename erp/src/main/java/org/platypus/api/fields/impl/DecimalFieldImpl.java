@@ -1,8 +1,7 @@
 package org.platypus.api.fields.impl;
 
-import org.platypus.api.query.QueryPath;
-import org.platypus.api.query.tmp.QueryPathImpl;
 import org.platypus.api.fields.DecimalField;
+import org.platypus.api.query.QueryPath;
 
 import java.math.BigDecimal;
 import java.util.function.Consumer;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.ext.ContextResolver;
+
 import java.util.HashSet;
 import java.util.Set;
 

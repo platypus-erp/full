@@ -2,8 +2,8 @@ package org.platypus.builder.core.views.list.structure.column.timecol;
 
 import j2html.TagCreator;
 import j2html.tags.ContainerTag;
-import org.platypus.builder.core.views.list.structure.column.ListViewColumn;
 import org.platypus.builder.core.views.list.structure.column.AbstractColumn;
+import org.platypus.builder.core.views.list.structure.column.ListViewColumn;
 
 /**
  * TODO Add JavaDoc

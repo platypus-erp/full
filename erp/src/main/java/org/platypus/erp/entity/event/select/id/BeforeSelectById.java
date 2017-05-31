@@ -1,6 +1,7 @@
 package org.platypus.erp.entity.event.select.id;
 
 import javax.inject.Qualifier;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

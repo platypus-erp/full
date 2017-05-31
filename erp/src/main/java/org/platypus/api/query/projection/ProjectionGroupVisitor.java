@@ -1,17 +1,6 @@
 package org.platypus.api.query.projection;
 
 import org.platypus.api.query.VisitorInitializer;
-import org.platypus.api.query.projection.visitor.field.BigStringProjection;
-import org.platypus.api.query.projection.visitor.field.BinaryProjection;
-import org.platypus.api.query.projection.visitor.field.BooleanProjection;
-import org.platypus.api.query.projection.visitor.field.DateProjection;
-import org.platypus.api.query.projection.visitor.field.DateTimeProjection;
-import org.platypus.api.query.projection.visitor.field.DecimalProjection;
-import org.platypus.api.query.projection.visitor.field.FloatProjection;
-import org.platypus.api.query.projection.visitor.field.IntProjection;
-import org.platypus.api.query.projection.visitor.field.LongProjection;
-import org.platypus.api.query.projection.visitor.field.StringProjection;
-import org.platypus.api.query.projection.visitor.field.TimeProjection;
 import org.platypus.api.query.projection.visitor.field.agg.AvgAggProjection;
 import org.platypus.api.query.projection.visitor.field.agg.ConcatAggProjection;
 import org.platypus.api.query.projection.visitor.field.agg.CountAggProjection;

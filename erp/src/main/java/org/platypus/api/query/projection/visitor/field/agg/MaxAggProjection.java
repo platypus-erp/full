@@ -14,8 +14,4 @@ public class MaxAggProjection extends AbstractFieldProjection<MaxAggProjection, 
         super(field);
     }
 
-    @Override
-    public void accept(ProjectionVisitor projectionVisitor) {
-        projectionVisitor.visit(this);
-    }
 }

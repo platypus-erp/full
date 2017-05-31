@@ -14,8 +14,4 @@ public class MinAggProjection extends AbstractFieldProjection<MinAggProjection, 
         super(field);
     }
 
-    @Override
-    public void accept(ProjectionVisitor projectionVisitor) {
-        projectionVisitor.visit(this);
-    }
 }

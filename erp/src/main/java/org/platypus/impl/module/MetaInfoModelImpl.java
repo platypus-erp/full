@@ -1,5 +1,6 @@
 package org.platypus.impl.module;
 
+import org.platypus.api.TypeModel;
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
 import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
@@ -16,7 +17,6 @@ import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
 import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
-import org.platypus.api.TypeModel;
 
 import java.util.HashSet;
 import java.util.Set;

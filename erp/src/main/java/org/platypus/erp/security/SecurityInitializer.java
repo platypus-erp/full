@@ -15,7 +15,6 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 
-import static org.picketlink.idm.model.basic.BasicModel.grantRole;
 import static org.platypus.erp.security.ApplicationRole.ADMINISTRATOR;
 import static org.platypus.erp.security.ApplicationRole.DEVELOPER;
 import static org.platypus.erp.security.ApplicationRole.PROJECT_MANAGER;

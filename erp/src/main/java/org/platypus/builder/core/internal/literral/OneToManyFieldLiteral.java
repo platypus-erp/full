@@ -1,11 +1,11 @@
 package org.platypus.builder.core.internal.literral;
 
 import org.platypus.api.BaseModel;
-import org.platypus.api.Bool;
 import org.platypus.api.annotations.field.ComputedFieldDefinition;
 import org.platypus.api.annotations.field.OneToManyFieldDefinition;
 import org.platypus.api.annotations.field.PlatypusCascadeType;
 import org.platypus.api.annotations.field.RelatedFieldDefinition;
+import org.platypus.api.fields.Bool;
 import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
 
 /**

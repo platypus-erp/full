@@ -2,7 +2,6 @@ package org.platypus.api.query.projection;
 
 import org.platypus.api.PlatypusField;
 import org.platypus.api.Record;
-import org.platypus.api.fields.IntField;
 import org.platypus.api.fields.StringField;
 import org.platypus.api.query.projection.visitor.field.agg.AvgAggProjection;
 import org.platypus.api.query.projection.visitor.field.agg.ConcatAggProjection;

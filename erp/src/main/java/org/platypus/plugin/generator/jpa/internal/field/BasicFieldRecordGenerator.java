@@ -1,6 +1,8 @@
 package org.platypus.plugin.generator.jpa.internal.field;
 
-import com.squareup.javapoet.*;
+import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.FieldSpec;
+import com.squareup.javapoet.TypeName;
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
 import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
@@ -19,8 +21,8 @@ import org.platypus.api.fields.metainfo.MetaInfoTimeField;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.Utils;
-import org.platypus.plugin.generator.jpa.internal.JpaUtils;
 import org.platypus.builder.utils.javapoet.utils.FieldSpecUtils;
+import org.platypus.plugin.generator.jpa.internal.JpaUtils;
 
 import java.util.function.Function;
 

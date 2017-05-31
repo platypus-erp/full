@@ -1,5 +1,6 @@
 package org.platypus.api.query.domain.visitor.field;
 
+import org.platypus.api.query.QueryPath;
 import org.platypus.api.query.domain.field.StringFieldPredicate;
 import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.api.query.domain.visitor.PredicateVisitor;
@@ -31,12 +32,11 @@ public class RecordValuePredicate implements PPredicate {
     StringFieldPredicate field;
     String value;
     StringDomainAttribute[] attribute;
-    @Override
+
     public QueryPath getPath() {
         return field.getPath();
     }
 
-    @Override
     public QueryPath resolve(QueryPath queryPath) {
         return field.resolve(queryPath);
     }

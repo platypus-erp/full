@@ -3,9 +3,11 @@ package org.platypus.api;
 
 import org.platypus.api.fields.LongField;
 
-public interface Record<SELF extends Record<SELF>> extends PlatypusField<SELF>,SetPathable{
+public interface Record extends SetPathable{
 
     LongField id();
+
+    String getTableName();
 
 
 

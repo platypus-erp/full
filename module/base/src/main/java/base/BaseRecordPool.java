@@ -1,9 +1,8 @@
 package base;
 
-import org.platypus.api.Pool;
-import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
+import org.platypus.api.ModuleMeta;
 
-public interface BaseRecordPool extends Pool{
+public interface BaseRecordPool extends ModuleMeta {
 
-   BaseUsersRecord getUsers();
+   UserModelInfo user();
 }

@@ -1,9 +1,9 @@
 package org.platypus.impl.module.literral;
 
 
-import org.platypus.api.Bool;
 import org.platypus.api.annotations.field.DateTimeFieldDefinition;
 import org.platypus.api.annotations.field.DateTimeRelative;
+import org.platypus.api.fields.Bool;
 import org.platypus.api.fields.metainfo.MetaInfoDateTimeField;
 
 /**

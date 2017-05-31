@@ -1,6 +1,5 @@
 package org.platypus.builder.core.views.list.generator;
 
-import j2html.TagCreator;
 import j2html.tags.EmptyTag;
 
 /**

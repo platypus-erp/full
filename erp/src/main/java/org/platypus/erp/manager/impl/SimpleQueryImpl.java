@@ -1,15 +1,15 @@
 package org.platypus.erp.manager.impl;
 
 import org.platypus.api.Record;
+import org.platypus.api.query.Domain;
 import org.platypus.api.query.SimpleQuery;
-import org.platypus.api.query.domain.DomainCombinator;
+import org.platypus.api.query.Domain.DomainCombinator;
 import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.api.query.projection.PProjection;
 
 import java.util.List;
 import java.util.function.Function;
 
-import static org.platypus.api.query.domain.DomainBuilder.NewDomain;
 
 /**
  * @author chmuchme
@@ -19,7 +19,7 @@ import static org.platypus.api.query.domain.DomainBuilder.NewDomain;
 public class SimpleQueryImpl<T extends Record> implements SimpleQuery<T> {
 
     private final Class<T> aClass;
-    private Function<T, PPredicate<?>> domain;
+    private Domain<T> domain;
     private final QueryProjectionImpl<T> projection;
     private final QueryFlagImpl queryFlag;
     private final QuerySortImpl<T> querySort;
@@ -99,67 +99,67 @@ public class SimpleQueryImpl<T extends Record> implements SimpleQuery<T> {
     }
 
     @Override
-    public SimpleQuery<T> filter(Function<T, PPredicate<?>> predicate) {
+    public SimpleQuery<T> filter(Domain<T> predicate) {
         domain = and(predicate);
         return this;
     }
 
     @Override
-    public SimpleQuery<T> filter(Function<T, PPredicate<?>> predicate1, DomainCombinator combinator, Function<T, PPredicate<?>> predicate2) {
-        domain = and(NewDomain(predicate1, combinator, predicate2));
+    public SimpleQuery<T> filter(Domain<T> predicate1, DomainCombinator combinator, Domain<T> predicate2) {
+        domain = and(Domain.NewDomain(predicate1, combinator, predicate2));
         return this;
     }
 
     @Override
-    public SimpleQuery<T> filter(Function<T, PPredicate<?>> predicate1, DomainCombinator combinator1, Function<T, PPredicate<?>> predicate2, DomainCombinator combinator2, Function<T, PPredicate<?>> predicate3) {
-        domain = and(NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3));
+    public SimpleQuery<T> filter(Domain<T> predicate1, DomainCombinator combinator1, Domain<T> predicate2, DomainCombinator combinator2, Domain<T> predicate3) {
+        domain = and(Domain.NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3));
         return this;
     }
 
     @Override
-    public SimpleQuery<T> filter(Function<T, PPredicate<?>> predicate1, DomainCombinator combinator1, Function<T, PPredicate<?>> predicate2, DomainCombinator combinator2, Function<T, PPredicate<?>> predicate3, DomainCombinator combinator3, Function<T, PPredicate<?>> predicate4) {
-        domain = and(NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4));
+    public SimpleQuery<T> filter(Domain<T> predicate1, DomainCombinator combinator1, Domain<T> predicate2, DomainCombinator combinator2, Domain<T> predicate3, DomainCombinator combinator3, Domain<T> predicate4) {
+        domain = and(Domain.NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4));
         return this;
     }
 
     @Override
-    public SimpleQuery<T> filter(Function<T, PPredicate<?>> predicate1, DomainCombinator combinator1, Function<T, PPredicate<?>> predicate2, DomainCombinator combinator2, Function<T, PPredicate<?>> predicate3, DomainCombinator combinator3, Function<T, PPredicate<?>> predicate4, DomainCombinator combinator4, Function<T, PPredicate<?>> predicate5) {
-        domain = and(NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4, combinator4, predicate5));
+    public SimpleQuery<T> filter(Domain<T> predicate1, DomainCombinator combinator1, Domain<T> predicate2, DomainCombinator combinator2, Domain<T> predicate3, DomainCombinator combinator3, Domain<T> predicate4, DomainCombinator combinator4, Domain<T> predicate5) {
+        domain = and(Domain.NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4, combinator4, predicate5));
         return this;
     }
 
     @Override
-    public SimpleQuery<T> filter(Function<T, PPredicate<?>> predicate1, DomainCombinator combinator1, Function<T, PPredicate<?>> predicate2, DomainCombinator combinator2, Function<T, PPredicate<?>> predicate3, DomainCombinator combinator3, Function<T, PPredicate<?>> predicate4, DomainCombinator combinator4, Function<T, PPredicate<?>> predicate5, DomainCombinator combinator5, Function<T, PPredicate<?>> predicate6) {
-        domain = and(NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4, combinator4, predicate5, combinator5, predicate6));
+    public SimpleQuery<T> filter(Domain<T> predicate1, DomainCombinator combinator1, Domain<T> predicate2, DomainCombinator combinator2, Domain<T> predicate3, DomainCombinator combinator3, Domain<T> predicate4, DomainCombinator combinator4, Domain<T> predicate5, DomainCombinator combinator5, Domain<T> predicate6) {
+        domain = and(Domain.NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4, combinator4, predicate5, combinator5, predicate6));
         return this;
     }
 
     @Override
-    public SimpleQuery<T> filter(Function<T, PPredicate<?>> predicate1, DomainCombinator combinator1, Function<T, PPredicate<?>> predicate2, DomainCombinator combinator2, Function<T, PPredicate<?>> predicate3, DomainCombinator combinator3, Function<T, PPredicate<?>> predicate4, DomainCombinator combinator4, Function<T, PPredicate<?>> predicate5, DomainCombinator combinator5, Function<T, PPredicate<?>> predicate6, DomainCombinator combinator6, Function<T, PPredicate<?>> predicate7) {
-        domain = and(NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4, combinator4, predicate5, combinator5, predicate6, combinator6, predicate7));
+    public SimpleQuery<T> filter(Domain<T> predicate1, DomainCombinator combinator1, Domain<T> predicate2, DomainCombinator combinator2, Domain<T> predicate3, DomainCombinator combinator3, Domain<T> predicate4, DomainCombinator combinator4, Domain<T> predicate5, DomainCombinator combinator5, Domain<T> predicate6, DomainCombinator combinator6, Domain<T> predicate7) {
+        domain = and(Domain.NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4, combinator4, predicate5, combinator5, predicate6, combinator6, predicate7));
         return this;
     }
 
     @Override
-    public SimpleQuery<T> filter(Function<T, PPredicate<?>> predicate1, DomainCombinator combinator1, Function<T, PPredicate<?>> predicate2, DomainCombinator combinator2, Function<T, PPredicate<?>> predicate3, DomainCombinator combinator3, Function<T, PPredicate<?>> predicate4, DomainCombinator combinator4, Function<T, PPredicate<?>> predicate5, DomainCombinator combinator5, Function<T, PPredicate<?>> predicate6, DomainCombinator combinator6, Function<T, PPredicate<?>> predicate7, DomainCombinator combinator7, Function<T, PPredicate<?>> predicate8) {
-        domain = and(NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4, combinator4, predicate5, combinator5, predicate6, combinator6, predicate7, combinator7, predicate8));
+    public SimpleQuery<T> filter(Domain<T> predicate1, DomainCombinator combinator1, Domain<T> predicate2, DomainCombinator combinator2, Domain<T> predicate3, DomainCombinator combinator3, Domain<T> predicate4, DomainCombinator combinator4, Domain<T> predicate5, DomainCombinator combinator5, Domain<T> predicate6, DomainCombinator combinator6, Domain<T> predicate7, DomainCombinator combinator7, Domain<T> predicate8) {
+        domain = and(Domain.NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4, combinator4, predicate5, combinator5, predicate6, combinator6, predicate7, combinator7, predicate8));
         return this;
     }
 
     @Override
-    public SimpleQuery<T> filter(Function<T, PPredicate<?>> predicate1, DomainCombinator combinator1, Function<T, PPredicate<?>> predicate2, DomainCombinator combinator2, Function<T, PPredicate<?>> predicate3, DomainCombinator combinator3, Function<T, PPredicate<?>> predicate4, DomainCombinator combinator4, Function<T, PPredicate<?>> predicate5, DomainCombinator combinator5, Function<T, PPredicate<?>> predicate6, DomainCombinator combinator6, Function<T, PPredicate<?>> predicate7, DomainCombinator combinator7, Function<T, PPredicate<?>> predicate8, DomainCombinator combinator8, Function<T, PPredicate<?>> predicate9) {
-        domain = and(NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4, combinator4, predicate5, combinator5, predicate6, combinator6, predicate7, combinator7, predicate8, combinator8, predicate9));
+    public SimpleQuery<T> filter(Domain<T> predicate1, DomainCombinator combinator1, Domain<T> predicate2, DomainCombinator combinator2, Domain<T> predicate3, DomainCombinator combinator3, Domain<T> predicate4, DomainCombinator combinator4, Domain<T> predicate5, DomainCombinator combinator5, Domain<T> predicate6, DomainCombinator combinator6, Domain<T> predicate7, DomainCombinator combinator7, Domain<T> predicate8, DomainCombinator combinator8, Domain<T> predicate9) {
+        domain = and(Domain.NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4, combinator4, predicate5, combinator5, predicate6, combinator6, predicate7, combinator7, predicate8, combinator8, predicate9));
         return this;
     }
 
     @Override
-    public SimpleQuery<T> filter(Function<T, PPredicate<?>> predicate1, DomainCombinator combinator1, Function<T, PPredicate<?>> predicate2, DomainCombinator combinator2, Function<T, PPredicate<?>> predicate3, DomainCombinator combinator3, Function<T, PPredicate<?>> predicate4, DomainCombinator combinator4, Function<T, PPredicate<?>> predicate5, DomainCombinator combinator5, Function<T, PPredicate<?>> predicate6, DomainCombinator combinator6, Function<T, PPredicate<?>> predicate7, DomainCombinator combinator7, Function<T, PPredicate<?>> predicate8, DomainCombinator combinator8, Function<T, PPredicate<?>> predicate9, DomainCombinator combinator9, Function<T, PPredicate<?>> predicate10) {
-        domain = and(NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4, combinator4, predicate5, combinator5, predicate6, combinator6, predicate7, combinator7, predicate8, combinator8, predicate9, combinator9, predicate10));
+    public SimpleQuery<T> filter(Domain<T> predicate1, DomainCombinator combinator1, Domain<T> predicate2, DomainCombinator combinator2, Domain<T> predicate3, DomainCombinator combinator3, Domain<T> predicate4, DomainCombinator combinator4, Domain<T> predicate5, DomainCombinator combinator5, Domain<T> predicate6, DomainCombinator combinator6, Domain<T> predicate7, DomainCombinator combinator7, Domain<T> predicate8, DomainCombinator combinator8, Domain<T> predicate9, DomainCombinator combinator9, Domain<T> predicate10) {
+        domain = and(Domain.NewDomain(predicate1, combinator1, predicate2, combinator2, predicate3, combinator3, predicate4, combinator4, predicate5, combinator5, predicate6, combinator6, predicate7, combinator7, predicate8, combinator8, predicate9, combinator9, predicate10));
         return this;
     }
 
-    private Function<T, PPredicate<?>> and(Function<T, PPredicate<?>> domain){
-        return this.domain == null ? domain : NewDomain(this.domain, DomainCombinator.AND, domain);
+    private Domain<T> and(Domain<T> domain){
+        return this.domain == null ? domain : Domain.NewDomain(this.domain, Domain.DomainCombinator.AND, domain);
     }
 
     public SimpleQuery<T> limit(int limit) {

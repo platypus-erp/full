@@ -14,8 +14,4 @@ public class SumAggProjection extends AbstractFieldProjection<SumAggProjection, 
         super(field);
     }
 
-    @Override
-    public void accept(ProjectionVisitor projectionVisitor) {
-        projectionVisitor.visit(this);
-    }
 }

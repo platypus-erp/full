@@ -3,7 +3,7 @@ package org.platypus.plugin.generator.jpa.internal.recordImpl;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
-import org.platypus.api.Bool;
+import org.platypus.api.fields.Bool;
 
 import javax.lang.model.element.Modifier;
 

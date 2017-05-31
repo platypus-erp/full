@@ -1,8 +1,9 @@
 package org.platypus.erp.cdi.spi.front.column;
 
-import org.platypus.erp.entity.AbstractEntity;
+import org.platypus.api.Record;
 
 import javax.inject.Qualifier;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -24,5 +25,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface GetColumn {
 
-    Class<? extends AbstractEntity> value();
+    Class<? extends Record> value();
 }

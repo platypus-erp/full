@@ -1,6 +1,6 @@
 package base;
 
-import org.platypus.api.Pool;
+import org.platypus.api.ModuleMeta;
 import org.platypus.api.Record;
 import org.platypus.erp.module.base.models.generated.jpa.ImplCompanyJPA;
 import org.platypus.erp.module.base.models.generated.jpa.ImplGroupJPA;
@@ -22,7 +22,7 @@ import java.util.function.Supplier;
  * @since 0.1
  * on 23/05/17.
  */
-public class BaseRecordPoolImpl implements BaseRecordPool, Pool{
+public class BaseRecordPoolImpl implements BaseRecordPool, ModuleMeta {
     Map<Class<?>, Supplier<?>> suppliers = new HashMap<>();
 
 
@@ -58,7 +58,7 @@ public class BaseRecordPoolImpl implements BaseRecordPool, Pool{
     }
 
     @Override
-    public <T extends Record> T get(Class<T> aRecordClass) {
+    public <T extends Record> T newRecord(Class<T> aRecordClass) {
         return (T) suppliers.get(aRecordClass).get();
     }
 }

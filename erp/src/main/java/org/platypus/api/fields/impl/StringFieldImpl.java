@@ -1,8 +1,7 @@
 package org.platypus.api.fields.impl;
 
-import org.platypus.api.query.QueryPath;
-import org.platypus.api.query.tmp.QueryPathImpl;
 import org.platypus.api.fields.StringField;
+import org.platypus.api.query.QueryPath;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -43,4 +42,6 @@ public class StringFieldImpl extends AbstractFieldImpl<String> implements String
     public boolean bool() {
         return isNotEmpty();
     }
+
+
 }

@@ -2,6 +2,7 @@ package org.platypus.erp.cdi.spi.front.menu;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;

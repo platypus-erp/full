@@ -7,9 +7,9 @@ package org.platypus.api;
  * @version 0.1
  * @since 0.1
  */
-public interface Pool {
+public interface ModuleMeta {
 
 
-    <T extends Record> T get(Class<T> aRecordClass);
+    <T extends Record> T newRecord(Class<T> aRecordClass);
 
 }

@@ -14,13 +14,11 @@ import org.platypus.api.query.projection.visitor.field.StringProjection;
 import org.platypus.api.query.projection.visitor.field.TimeProjection;
 
 import javax.persistence.Tuple;
-import javax.persistence.criteria.Selection;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 
 /**
  * @author chmuchme

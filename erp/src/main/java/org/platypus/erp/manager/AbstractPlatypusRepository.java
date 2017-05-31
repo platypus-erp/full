@@ -2,7 +2,6 @@ package org.platypus.erp.manager;
 
 import org.platypus.api.Record;
 import org.platypus.api.query.SimpleQuery;
-import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.erp.entity.Identifiable;
 import org.platypus.erp.rest.filter.Filter;
 import org.platypus.erp.rest.filter.ListFilter;
@@ -14,7 +13,6 @@ import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotNull;
 
 import java.util.List;
-import java.util.function.Function;
 
 
 /**
@@ -74,14 +72,14 @@ public abstract class AbstractPlatypusRepository<E extends Record> implements Pl
     public List<E> getList(ListFilter listFilter) {
 //        Optional<String> name = EntityRegistry.INSTANCE.getName(clazz);
 //        if (name.isPresent()) {
-//            String target = name.get();
+//            String target = name.newRecord();
 //            ListConf conf = columnsCache.getColumns(target);
 //            try (org.jooq.Query step = createQuery(conf, listFilter, target)) {
 //                javax.persistence.Query result = em.createNativeQuery(step.getSQL(), clazz);
 //                // Extract the bind values from the jOOQ query:
 //                List<Object> values = step.getBindValues();
 //                for (int i = 0; i < values.size(); i++) {
-//                    result.setParameter(i + 1, values.get(i));
+//                    result.setParameter(i + 1, values.newRecord(i));
 //                }
 //                return result.getResultList();
 //            }
@@ -117,7 +115,7 @@ public abstract class AbstractPlatypusRepository<E extends Record> implements Pl
     public int count(Filter<E> filter) {
 //        Optional<String> name = EntityRegistry.INSTANCE.getName(clazz);
 //        if (name.isPresent()) {
-//            try (org.jooq.Query step = selectCount().from(table(name.get()))) {
+//            try (org.jooq.Query step = selectCount().from(table(name.newRecord()))) {
 //                javax.persistence.Query query = em.createNativeQuery(step.getSQL());
 //                return Number.class.cast(query.getSingleResult()).intValue();
 //            }

@@ -21,8 +21,4 @@ public class ConcatAggProjection extends AbstractFieldProjection<ConcatAggProjec
         return separator;
     }
 
-    @Override
-    public void accept(ProjectionVisitor projectionVisitor) {
-        projectionVisitor.visit(this);
-    }
 }

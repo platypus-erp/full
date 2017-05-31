@@ -3,15 +3,6 @@ package org.platypus.builder.core.views.list.generator;
 import j2html.TagCreator;
 import org.platypus.builder.core.views.list.structure.ListView;
 
-import static j2html.TagCreator.body;
-import static j2html.TagCreator.h1;
-import static j2html.TagCreator.head;
-import static j2html.TagCreator.html;
-import static j2html.TagCreator.link;
-import static j2html.TagCreator.main;
-import static j2html.TagCreator.script;
-import static j2html.TagCreator.style;
-import static j2html.TagCreator.title;
 import static org.platypus.builder.core.views.list.generator.WebComponent.domModule;
 import static org.platypus.builder.core.views.list.generator.WebComponent.template;
 

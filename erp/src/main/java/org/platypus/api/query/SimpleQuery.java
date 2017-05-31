@@ -1,11 +1,11 @@
 package org.platypus.api.query;
 
-import org.platypus.api.Pool;
 import org.platypus.api.Record;
-import org.platypus.api.query.domain.DomainCombinator;
 import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.api.query.projection.PProjection;
 
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -15,9 +15,11 @@ import java.util.function.Function;
  */
 public interface SimpleQuery<R extends Record>{
 
+    Class<R> getTypeClass();
+
     SimpleQuery<R> get(Function<R, PProjection> field1);
 
-    //<editor-fold desc="Over load method get">
+    //<editor-fold desc="Over load method newRecord">
     SimpleQuery<R> get(Function<R, PProjection> field1,
                        Function<R, PProjection> field2);
 
@@ -82,117 +84,117 @@ public interface SimpleQuery<R extends Record>{
                        Function<R, PProjection> field10);
     //</editor-fold>
 
-    SimpleQuery<R> filter(Function<R, PPredicate<?>> predicate);
+    SimpleQuery<R> filter(Domain<R> predicate);
 
     //<editor-fold desc="Over load method filter">
-    SimpleQuery<R> filter(Function<R, PPredicate<?>> predicate1,
-                         DomainCombinator combinator,
-                         Function<R, PPredicate<?>> predicate2);
+    SimpleQuery<R> filter(Domain<R> predicate1,
+                         Domain.DomainCombinator combinator,
+                         Domain<R> predicate2);
 
 
-    SimpleQuery<R> filter(Function<R, PPredicate<?>> predicate1,
-                         DomainCombinator combinator1,
-                         Function<R, PPredicate<?>> predicate2,
-                         DomainCombinator combinator2,
-                         Function<R, PPredicate<?>> predicate3);
+    SimpleQuery<R> filter(Domain<R> predicate1,
+                         Domain.DomainCombinator combinator1,
+                         Domain<R> predicate2,
+                         Domain.DomainCombinator combinator2,
+                         Domain<R> predicate3);
 
-    SimpleQuery<R> filter(Function<R, PPredicate<?>> predicate1,
-                         DomainCombinator combinator1,
-                         Function<R, PPredicate<?>> predicate2,
-                         DomainCombinator combinator2,
-                         Function<R, PPredicate<?>> predicate3,
-                         DomainCombinator combinator3,
-                         Function<R, PPredicate<?>> predicate4) ;
+    SimpleQuery<R> filter(Domain<R> predicate1,
+                         Domain.DomainCombinator combinator1,
+                         Domain<R> predicate2,
+                         Domain.DomainCombinator combinator2,
+                         Domain<R> predicate3,
+                         Domain.DomainCombinator combinator3,
+                         Domain<R> predicate4) ;
 
-    SimpleQuery<R> filter(Function<R, PPredicate<?>> predicate1,
-                         DomainCombinator combinator1,
-                         Function<R, PPredicate<?>> predicate2,
-                         DomainCombinator combinator2,
-                         Function<R, PPredicate<?>> predicate3,
-                         DomainCombinator combinator3,
-                         Function<R, PPredicate<?>> predicate4,
-                         DomainCombinator combinator4,
-                         Function<R, PPredicate<?>> predicate5);
+    SimpleQuery<R> filter(Domain<R> predicate1,
+                         Domain.DomainCombinator combinator1,
+                         Domain<R> predicate2,
+                         Domain.DomainCombinator combinator2,
+                         Domain<R> predicate3,
+                         Domain.DomainCombinator combinator3,
+                         Domain<R> predicate4,
+                         Domain.DomainCombinator combinator4,
+                         Domain<R> predicate5);
 
-    SimpleQuery<R> filter(Function<R, PPredicate<?>> predicate1,
-                         DomainCombinator combinator1,
-                         Function<R, PPredicate<?>> predicate2,
-                         DomainCombinator combinator2,
-                         Function<R, PPredicate<?>> predicate3,
-                         DomainCombinator combinator3,
-                         Function<R, PPredicate<?>> predicate4,
-                         DomainCombinator combinator4,
-                         Function<R, PPredicate<?>> predicate5,
-                         DomainCombinator combinator5,
-                         Function<R, PPredicate<?>> predicate6);
+    SimpleQuery<R> filter(Domain<R> predicate1,
+                         Domain.DomainCombinator combinator1,
+                         Domain<R> predicate2,
+                         Domain.DomainCombinator combinator2,
+                         Domain<R> predicate3,
+                         Domain.DomainCombinator combinator3,
+                         Domain<R> predicate4,
+                         Domain.DomainCombinator combinator4,
+                         Domain<R> predicate5,
+                         Domain.DomainCombinator combinator5,
+                         Domain<R> predicate6);
 
-    SimpleQuery<R> filter(Function<R, PPredicate<?>> predicate1,
-                         DomainCombinator combinator1,
-                         Function<R, PPredicate<?>> predicate2,
-                         DomainCombinator combinator2,
-                         Function<R, PPredicate<?>> predicate3,
-                         DomainCombinator combinator3,
-                         Function<R, PPredicate<?>> predicate4,
-                         DomainCombinator combinator4,
-                         Function<R, PPredicate<?>> predicate5,
-                         DomainCombinator combinator5,
-                         Function<R, PPredicate<?>> predicate6,
-                         DomainCombinator combinator6,
-                         Function<R, PPredicate<?>> predicate7) ;
+    SimpleQuery<R> filter(Domain<R> predicate1,
+                         Domain.DomainCombinator combinator1,
+                         Domain<R> predicate2,
+                         Domain.DomainCombinator combinator2,
+                         Domain<R> predicate3,
+                         Domain.DomainCombinator combinator3,
+                         Domain<R> predicate4,
+                         Domain.DomainCombinator combinator4,
+                         Domain<R> predicate5,
+                         Domain.DomainCombinator combinator5,
+                         Domain<R> predicate6,
+                         Domain.DomainCombinator combinator6,
+                         Domain<R> predicate7) ;
 
-    SimpleQuery<R> filter(Function<R, PPredicate<?>> predicate1,
-                         DomainCombinator combinator1,
-                         Function<R, PPredicate<?>> predicate2,
-                         DomainCombinator combinator2,
-                         Function<R, PPredicate<?>> predicate3,
-                         DomainCombinator combinator3,
-                         Function<R, PPredicate<?>> predicate4,
-                         DomainCombinator combinator4,
-                         Function<R, PPredicate<?>> predicate5,
-                         DomainCombinator combinator5,
-                         Function<R, PPredicate<?>> predicate6,
-                         DomainCombinator combinator6,
-                         Function<R, PPredicate<?>> predicate7,
-                         DomainCombinator combinator7,
-                         Function<R, PPredicate<?>> predicate8);
+    SimpleQuery<R> filter(Domain<R> predicate1,
+                         Domain.DomainCombinator combinator1,
+                         Domain<R> predicate2,
+                         Domain.DomainCombinator combinator2,
+                         Domain<R> predicate3,
+                         Domain.DomainCombinator combinator3,
+                         Domain<R> predicate4,
+                         Domain.DomainCombinator combinator4,
+                         Domain<R> predicate5,
+                         Domain.DomainCombinator combinator5,
+                         Domain<R> predicate6,
+                         Domain.DomainCombinator combinator6,
+                         Domain<R> predicate7,
+                         Domain.DomainCombinator combinator7,
+                         Domain<R> predicate8);
 
-    SimpleQuery<R> filter(Function<R, PPredicate<?>> predicate1,
-                         DomainCombinator combinator1,
-                         Function<R, PPredicate<?>> predicate2,
-                         DomainCombinator combinator2,
-                         Function<R, PPredicate<?>> predicate3,
-                         DomainCombinator combinator3,
-                         Function<R, PPredicate<?>> predicate4,
-                         DomainCombinator combinator4,
-                         Function<R, PPredicate<?>> predicate5,
-                         DomainCombinator combinator5,
-                         Function<R, PPredicate<?>> predicate6,
-                         DomainCombinator combinator6,
-                         Function<R, PPredicate<?>> predicate7,
-                         DomainCombinator combinator7,
-                         Function<R, PPredicate<?>> predicate8,
-                         DomainCombinator combinator8,
-                         Function<R, PPredicate<?>> predicate9);
+    SimpleQuery<R> filter(Domain<R> predicate1,
+                         Domain.DomainCombinator combinator1,
+                         Domain<R> predicate2,
+                         Domain.DomainCombinator combinator2,
+                         Domain<R> predicate3,
+                         Domain.DomainCombinator combinator3,
+                         Domain<R> predicate4,
+                         Domain.DomainCombinator combinator4,
+                         Domain<R> predicate5,
+                         Domain.DomainCombinator combinator5,
+                         Domain<R> predicate6,
+                         Domain.DomainCombinator combinator6,
+                         Domain<R> predicate7,
+                         Domain.DomainCombinator combinator7,
+                         Domain<R> predicate8,
+                         Domain.DomainCombinator combinator8,
+                         Domain<R> predicate9);
 
-    SimpleQuery<R> filter(Function<R, PPredicate<?>> predicate1,
-                         DomainCombinator combinator1,
-                         Function<R, PPredicate<?>> predicate2,
-                         DomainCombinator combinator2,
-                         Function<R, PPredicate<?>> predicate3,
-                         DomainCombinator combinator3,
-                         Function<R, PPredicate<?>> predicate4,
-                         DomainCombinator combinator4,
-                         Function<R, PPredicate<?>> predicate5,
-                         DomainCombinator combinator5,
-                         Function<R, PPredicate<?>> predicate6,
-                         DomainCombinator combinator6,
-                         Function<R, PPredicate<?>> predicate7,
-                         DomainCombinator combinator7,
-                         Function<R, PPredicate<?>> predicate8,
-                         DomainCombinator combinator8,
-                         Function<R, PPredicate<?>> predicate9,
-                         DomainCombinator combinator9,
-                         Function<R, PPredicate<?>> predicate10);
+    SimpleQuery<R> filter(Domain<R> predicate1,
+                         Domain.DomainCombinator combinator1,
+                         Domain<R> predicate2,
+                         Domain.DomainCombinator combinator2,
+                         Domain<R> predicate3,
+                         Domain.DomainCombinator combinator3,
+                         Domain<R> predicate4,
+                         Domain.DomainCombinator combinator4,
+                         Domain<R> predicate5,
+                         Domain.DomainCombinator combinator5,
+                         Domain<R> predicate6,
+                         Domain.DomainCombinator combinator6,
+                         Domain<R> predicate7,
+                         Domain.DomainCombinator combinator7,
+                         Domain<R> predicate8,
+                         Domain.DomainCombinator combinator8,
+                         Domain<R> predicate9,
+                         Domain.DomainCombinator combinator9,
+                         Domain<R> predicate10);
     //</editor-fold>
 
 
@@ -215,4 +217,9 @@ public interface SimpleQuery<R extends Record>{
                             Function<R, PProjection> field3);
 
 
+    PPredicate<?> getPredicate(R instance);
+
+    boolean getAllField();
+
+    List<PProjection> getProjection(R instance);
 }

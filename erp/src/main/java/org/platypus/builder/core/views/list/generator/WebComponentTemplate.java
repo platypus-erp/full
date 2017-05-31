@@ -1,8 +1,6 @@
 package org.platypus.builder.core.views.list.generator;
 
 import j2html.tags.ContainerTag;
-import j2html.tags.DomContent;
-import j2html.tags.Tag;
 
 /**
  * @author chmuchme

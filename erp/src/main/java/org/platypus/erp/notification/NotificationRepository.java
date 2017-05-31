@@ -1,8 +1,11 @@
 package org.platypus.erp.notification;
 
+import org.platypus.api.query.SimpleQuery;
+import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.erp.manager.AbstractPlatypusRepository;
 
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * TODO Add JavaDoc
@@ -28,5 +31,15 @@ public class NotificationRepository extends AbstractPlatypusRepository<Notificat
 
     public void markAllAsRead() {
         super.getList(null).stream().forEach(n -> n.markAsRead());
+    }
+
+    @Override
+    public int count(SimpleQuery<Notification> query) {
+        return 0;
+    }
+
+    @Override
+    public int count(Function<Notification, PPredicate<?>> domain) {
+        return 0;
     }
 }

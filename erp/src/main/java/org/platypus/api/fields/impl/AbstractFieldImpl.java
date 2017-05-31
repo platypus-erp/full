@@ -1,6 +1,6 @@
 package org.platypus.api.fields.impl;
 
-import org.platypus.api.GenericField;
+import org.platypus.api.PlatypusField;
 import org.platypus.api.query.QueryPath;
 
 import java.util.function.Consumer;
@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  * @version 0.1
  * @since 0.1
  */
-abstract class AbstractFieldImpl<T> implements GenericField<T> {
+abstract class AbstractFieldImpl<T> implements PlatypusField<T> {
 
     protected final Supplier<T> getter;
     protected final Consumer<T> setter;

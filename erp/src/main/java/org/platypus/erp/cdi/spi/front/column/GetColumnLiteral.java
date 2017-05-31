@@ -1,6 +1,6 @@
 package org.platypus.erp.cdi.spi.front.column;
 
-import org.platypus.erp.entity.AbstractEntity;
+import org.platypus.api.Record;
 
 import javax.enterprise.util.AnnotationLiteral;
 
@@ -13,14 +13,14 @@ import javax.enterprise.util.AnnotationLiteral;
  * @since 0.1
  */
 public class GetColumnLiteral extends AnnotationLiteral<GetColumn> implements GetColumn{
-    private final Class<? extends AbstractEntity> clazz;
+    private final Class<? extends Record> clazz;
 
-    public GetColumnLiteral(Class<? extends AbstractEntity> clazz) {
+    public GetColumnLiteral(Class<? extends Record> clazz) {
         this.clazz = clazz;
     }
 
     @Override
-    public Class<? extends AbstractEntity> value() {
+    public Class<? extends Record> value() {
         return clazz;
     }
 }

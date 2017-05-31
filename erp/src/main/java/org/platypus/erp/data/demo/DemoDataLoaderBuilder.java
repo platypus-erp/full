@@ -2,7 +2,7 @@ package org.platypus.erp.data.demo;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import org.platypus.erp.entity.AbstractEntity;
+import org.platypus.api.Record;
 
 import java.io.InputStream;
 import java.util.List;
@@ -37,12 +37,12 @@ public class DemoDataLoaderBuilder {
         return builder;
     }
 
-    public DemoDataLoaderBuilder convertToEntity(Class<? extends AbstractEntity> entity) {
+    public DemoDataLoaderBuilder convertToEntity(Class<? extends Record> entity) {
         this.dataType = TypeFactory.defaultInstance().constructType(requireNonNull(entity, "the class entity can't be null"));
         return this;
     }
 
-    public DemoDataLoaderBuilder convertToCollectionOfEntity(Class<? extends AbstractEntity> entity) {
+    public DemoDataLoaderBuilder convertToCollectionOfEntity(Class<? extends Record> entity) {
         this.dataType = TypeFactory.defaultInstance().constructCollectionType(List.class, requireNonNull(entity, "the class entity can't be null"));
         return this;
     }

@@ -1,7 +1,7 @@
 package org.platypus.api.fields.metainfo;
 
-import org.platypus.api.Bool;
 import org.platypus.api.Namable;
+import org.platypus.api.fields.Bool;
 
 /**
  * @author chmuchme

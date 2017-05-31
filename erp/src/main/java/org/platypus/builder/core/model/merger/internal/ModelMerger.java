@@ -15,6 +15,8 @@ import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
 import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
+import org.platypus.builder.core.field.tree.FieldNode;
+import org.platypus.builder.core.field.tree.FieldTree;
 import org.platypus.builder.core.model.merger.ModelMerged;
 import org.platypus.builder.core.model.merger.internal.field.BigStringFieldLiteralMerger;
 import org.platypus.builder.core.model.merger.internal.field.BinaryFieldLiteralMerger;
@@ -32,8 +34,6 @@ import org.platypus.builder.core.model.merger.internal.field.OtmFieldLiteralMerg
 import org.platypus.builder.core.model.merger.internal.field.OtoFieldLiteralMerger;
 import org.platypus.builder.core.model.merger.internal.field.StringFieldLiteralMerger;
 import org.platypus.builder.core.model.merger.internal.field.TimeFieldLiteralMerger;
-import org.platypus.builder.core.field.tree.FieldNode;
-import org.platypus.builder.core.field.tree.FieldTree;
 
 import java.util.HashMap;
 import java.util.Map;

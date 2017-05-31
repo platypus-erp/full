@@ -5,8 +5,6 @@ import org.platypus.builder.core.views.list.DataTableView;
 import org.platypus.builder.core.views.list.structure.column.ListViewColumn;
 import org.platypus.builder.core.views.list.structure.headerfilter.HeaderFilter;
 
-import static org.apache.commons.lang3.StringUtils.defaultString;
-
 /**
  * TODO Add JavaDoc
  *

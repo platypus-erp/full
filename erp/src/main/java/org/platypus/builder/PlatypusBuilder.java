@@ -5,10 +5,10 @@ import com.squareup.javapoet.JavaFile;
 import org.platypus.builder.core.MainArgs;
 import org.platypus.builder.core.ModuleLoader;
 import org.platypus.builder.core.ModuleLoaderImpl;
-import org.platypus.builder.core.api.impl.Config;
 import org.platypus.builder.core.api.ModelProcessor;
 import org.platypus.builder.core.api.PlatypusPlugin;
 import org.platypus.builder.core.api.ProcessState;
+import org.platypus.builder.core.api.impl.Config;
 import org.platypus.builder.core.model.merger.ModelMerged;
 
 import java.io.IOException;

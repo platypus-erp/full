@@ -2,8 +2,8 @@ package org.platypus.builder.core.internal;
 
 import org.platypus.api.BaseModel;
 import org.platypus.api.TypeModel;
-import org.platypus.api.annotations.model.PlatypusModelInherit;
 import org.platypus.api.annotations.model.PlatypusModel;
+import org.platypus.api.annotations.model.PlatypusModelInherit;
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
 import org.platypus.api.fields.metainfo.MetaInfoBooleanField;

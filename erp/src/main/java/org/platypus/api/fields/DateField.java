@@ -1,7 +1,7 @@
 package org.platypus.api.fields;
 
 
-import org.platypus.api.GenericField;
+import org.platypus.api.PlatypusField;
 import org.platypus.api.query.domain.DomainPredicate;
 import org.platypus.api.query.domain.field.DateFieldPredicate;
 import org.platypus.api.query.domain.visitor.PPredicate;
@@ -18,7 +18,7 @@ import java.util.Collection;
  * @version 0.1
  * @since 0.1
  */
-public interface DateField extends GenericField<LocalDate>, DateFieldPredicate {
+public interface DateField extends PlatypusField<LocalDate>, DateFieldPredicate {
 
     static DateField empty() {
         return null;

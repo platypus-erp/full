@@ -10,14 +10,8 @@ import org.platypus.api.query.projection.visitor.field.DecimalProjection;
 import org.platypus.api.query.projection.visitor.field.FloatProjection;
 import org.platypus.api.query.projection.visitor.field.IntProjection;
 import org.platypus.api.query.projection.visitor.field.LongProjection;
-import org.platypus.api.query.projection.visitor.field.agg.AvgAggProjection;
-import org.platypus.api.query.projection.visitor.field.agg.CountAggProjection;
-import org.platypus.api.query.projection.visitor.field.agg.MaxAggProjection;
-import org.platypus.api.query.projection.visitor.field.agg.ConcatAggProjection;
 import org.platypus.api.query.projection.visitor.field.StringProjection;
 import org.platypus.api.query.projection.visitor.field.TimeProjection;
-import org.platypus.api.query.projection.visitor.field.agg.MinAggProjection;
-import org.platypus.api.query.projection.visitor.field.agg.SumAggProjection;
 
 /**
  * @author chmuchme

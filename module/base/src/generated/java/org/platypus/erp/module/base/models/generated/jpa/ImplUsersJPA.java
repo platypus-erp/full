@@ -1,8 +1,20 @@
 package org.platypus.erp.module.base.models.generated.jpa;
 
-import java.lang.Override;
-import java.lang.String;
-import java.util.List;
+import org.platypus.api.fields.BinaryField;
+import org.platypus.api.fields.BooleanField;
+import org.platypus.api.fields.LongField;
+import org.platypus.api.fields.StringField;
+import org.platypus.api.fields.impl.BinaryFieldImpl;
+import org.platypus.api.fields.impl.BooleanFieldImpl;
+import org.platypus.api.fields.impl.LongFieldImpl;
+import org.platypus.api.fields.impl.StringFieldImpl;
+import org.platypus.api.query.QueryPath;
+import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecord;
+import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecordCollection;
+import org.platypus.erp.module.base.models.generated.records.BaseGroupRecordCollection;
+import org.platypus.erp.module.base.models.generated.records.BasePartnerRecord;
+import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,21 +29,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
-import org.platypus.api.fields.BinaryField;
-import org.platypus.api.fields.BooleanField;
-import org.platypus.api.fields.LongField;
-import org.platypus.api.fields.StringField;
-import org.platypus.api.fields.impl.BinaryFieldImpl;
-import org.platypus.api.fields.impl.BooleanFieldImpl;
-import org.platypus.api.fields.impl.LongFieldImpl;
-import org.platypus.api.fields.impl.StringFieldImpl;
-import org.platypus.api.query.QueryPath;
-import org.platypus.api.query.tmp.QueryPathImpl;
-import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecord;
-import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecordCollection;
-import org.platypus.erp.module.base.models.generated.records.BaseGroupRecordCollection;
-import org.platypus.erp.module.base.models.generated.records.BasePartnerRecord;
-import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
+
+import java.util.List;
 
 @Table(
     name = ImplUsersJPA.MODEL_NAME
@@ -40,7 +39,7 @@ import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 public class ImplUsersJPA implements BaseUsersRecord {
   public static final String MODEL_NAME = "users";
   @Override
-  public String getName() {
+  public String getTableName() {
     return "users";
   }
 
@@ -334,7 +333,7 @@ public class ImplUsersJPA implements BaseUsersRecord {
 
   @Override
   public void companies(final BaseCompanyRecordCollection companiesField) {
-    this.setCompanies(companiesField.unWrapAsList(ImplCompanyJPA.class));
+    this.setCompanies(companiesField.asList(ImplCompanyJPA.class));
   }
 
   @Override
@@ -352,7 +351,7 @@ public class ImplUsersJPA implements BaseUsersRecord {
 
   @Override
   public void action(final BaseGroupRecordCollection actionField) {
-    this.setAction(actionField.unWrapAsList(ImplGroupJPA.class));
+    this.setAction(actionField.asList(ImplGroupJPA.class));
   }
 
   @Override
@@ -370,7 +369,7 @@ public class ImplUsersJPA implements BaseUsersRecord {
 
   @Override
   public void groups(final BaseGroupRecordCollection groupsField) {
-    this.setGroups(groupsField.unWrapAsList(ImplGroupJPA.class));
+    this.setGroups(groupsField.asList(ImplGroupJPA.class));
   }
 
   @Override

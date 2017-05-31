@@ -6,7 +6,7 @@ package org.platypus.api;
  * on 30/05/17.
  */
 @FunctionalInterface
-public interface SuperMethod<R extends Record<R>> {
+public interface SuperMethod<R extends Record> {
 
     R callSuper(R record);
 

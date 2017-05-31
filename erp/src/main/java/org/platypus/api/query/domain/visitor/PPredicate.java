@@ -1,6 +1,5 @@
 package org.platypus.api.query.domain.visitor;
 
-import java.time.LocalDateTime;
 import java.util.function.Predicate;
 
 /**

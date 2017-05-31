@@ -14,8 +14,4 @@ public class CountAggProjection extends AbstractFieldProjection<CountAggProjecti
         super(field);
     }
 
-    @Override
-    public void accept(ProjectionVisitor projectionVisitor) {
-        projectionVisitor.visit(this);
-    }
 }

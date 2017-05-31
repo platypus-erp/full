@@ -1,7 +1,7 @@
 package org.platypus.api.fields;
 
 
-import org.platypus.api.GenericField;
+import org.platypus.api.PlatypusField;
 import org.platypus.api.query.domain.field.BigStringFieldPredicate;
 
 /**
@@ -11,5 +11,5 @@ import org.platypus.api.query.domain.field.BigStringFieldPredicate;
  * @version 0.1
  * @since 0.1
  */
-public interface BigStringField extends GenericField<String>, BigStringFieldPredicate {
+public interface BigStringField extends PlatypusField<String>, BigStringFieldPredicate {
 }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.platypus.api.Record;
-import org.platypus.erp.entity.AbstractEntity;
 import org.platypus.erp.entity.EntityRegistry;
 import org.platypus.erp.exceptions.TotoJsonMappingException;
 

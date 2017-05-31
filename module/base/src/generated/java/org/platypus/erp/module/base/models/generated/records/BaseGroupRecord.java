@@ -11,7 +11,7 @@ import org.platypus.api.annotations.record.RecordOf;
 public interface BaseGroupRecord extends Record {
 
     @Override
-    default String getName() {
+    default String getTableName() {
         return "group";
     }
 }

@@ -1,6 +1,7 @@
 package org.platypus.erp.interceptor.logger;
 
 import javax.interceptor.InterceptorBinding;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

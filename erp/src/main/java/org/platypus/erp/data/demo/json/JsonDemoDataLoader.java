@@ -3,14 +3,13 @@ package org.platypus.erp.data.demo.json;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.platypus.erp.data.demo.DemoDataLoader;
 import org.platypus.erp.data.demo.DemoDataLoaderBuilder;
-import org.platypus.erp.entity.AbstractEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import java.io.IOException;
-import java.util.List;
 
 /**
  * TODO Add JavaDoc
@@ -29,8 +28,8 @@ public class JsonDemoDataLoader implements DemoDataLoader {
     public void load(DemoDataLoaderBuilder builder) {
         try {
             if (builder.getDataType().isCollectionLikeType()) {
-                List<AbstractEntity> datas = mapper.readValue(builder.getDatas(), builder.getDataType());
-                datas.forEach(data -> em.persist(data));
+//                List<AbstractEntity> datas = mapper.readValue(builder.getDatas(), builder.getDataType());
+//                datas.forEach(data -> em.persist(data));
             } else {
                 Object data = mapper.readValue(builder.getDatas(), builder.getDataType());
                 em.persist(data);

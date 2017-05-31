@@ -1,8 +1,7 @@
 package org.platypus.api.annotations.model;
 
-import org.platypus.api.BaseEntity;
-import org.platypus.api.Record;
 import org.platypus.api.BaseModel;
+import org.platypus.api.Record;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -21,17 +20,17 @@ import java.lang.annotation.Target;
  *
  * The platypus framework generate 2 inteface from your model.<br/>
  * The first one is a {@linkplain Record Record}.<br/>
- * The second is a {@linkplain BaseEntity Entity}.<br/>
+ * The second is a {@linkplain BaseModel Entity}.<br/>
  * 99% of the time when you use the platypus framework only the generated
  * {@linkplain Record Record} is useful
- * The generated {@linkplain BaseEntity Entity}
+ * The generated {@linkplain BaseModel Entity}
  * is used internally but maybe the platypus framework offer not enought feature and you need to use the lower API.
  * @author Alexis PASQUIER
  * @version 0.1
  * @since 0.1
  *
  * @see Record
- * @see BaseEntity
+ * @see BaseModel
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

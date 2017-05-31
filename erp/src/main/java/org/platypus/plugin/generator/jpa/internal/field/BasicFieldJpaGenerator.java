@@ -4,8 +4,8 @@ import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import org.apache.commons.lang3.StringUtils;
-import org.platypus.api.Bool;
 import org.platypus.api.annotations.field.PlatypusCascadeType;
+import org.platypus.api.fields.Bool;
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
 import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
@@ -215,7 +215,7 @@ public class BasicFieldJpaGenerator {
         }
         switch (field.required()) {
             case NOT_BLANK:
-//                f.addAnnotation(ClassName.get(NotBlank.class));
+//                f.addAnnotation(ClassName.newRecord(NotBlank.class));
                 break;
             case NOT_NULL:
                 f.addAnnotation(ClassName.get(NotNull.class));

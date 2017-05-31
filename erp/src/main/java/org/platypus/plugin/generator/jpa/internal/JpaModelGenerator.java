@@ -11,15 +11,15 @@ import org.platypus.api.fields.impl.RecordCollectionImpl;
 import org.platypus.api.fields.impl.RecordImpl;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
-import org.platypus.api.query.tmp.QueryPathImpl;
+import org.platypus.api.query.QueryPath;
 import org.platypus.builder.core.Utils;
 import org.platypus.builder.core.model.merger.ModelMerged;
-import org.platypus.plugin.generator.jpa.internal.recordImpl.RecordImplFieldGenerator;
 import org.platypus.builder.utils.javapoet.utils.ClassSpecUtils;
 import org.platypus.builder.utils.javapoet.utils.Constant;
 import org.platypus.builder.utils.javapoet.utils.FieldSpecUtils;
 import org.platypus.builder.utils.javapoet.utils.JavaPoetTypeUtils;
 import org.platypus.builder.utils.javapoet.utils.MethodSpecUtils;
+import org.platypus.plugin.generator.jpa.internal.recordImpl.RecordImplFieldGenerator;
 
 import javax.lang.model.element.Modifier;
 import javax.persistence.Entity;
@@ -85,9 +85,9 @@ public class JpaModelGenerator {
         jpaImplBuilder.addAnnotation(Entity.class);
         MetaInfoRecord rec = getRecord.apply(modelMerged.getName());
         jpaImplBuilder.addSuperinterface(Utils.toRecord(rec));
-        ClassName queryPathCls = ClassName.get(QueryPathImpl.class);
+        ClassName queryPathCls = ClassName.get(QueryPath.class);
         jpaImplBuilder.addField(
-                FieldSpecUtils.privateFieldBuilder(QueryPathImpl.class, "path")
+                FieldSpecUtils.privateFieldBuilder(QueryPath.class, "path")
                         .initializer("$T.basic(MODEL_NAME, $S)", queryPathCls, "id")
                         .build());
 
@@ -146,7 +146,7 @@ public class JpaModelGenerator {
 
         ParameterizedTypeName listOfRecord = ParameterizedTypeName.get(ClassName.get(List.class), recordTargetImpl);
         ParameterizedTypeName functionGetter = ParameterizedTypeName.get(ClassName.get(Supplier.class), listOfRecord);
-        ParameterizedTypeName getPath = ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(QueryPathImpl.class));
+        ParameterizedTypeName getPath = ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(QueryPath.class));
         ParameterizedTypeName functionSetter = ParameterizedTypeName.get(ClassName.get(Consumer.class), listOfRecord);
 
 
@@ -185,7 +185,7 @@ public class JpaModelGenerator {
 
         ParameterizedTypeName functionGetter = ParameterizedTypeName.get(ClassName.get(Supplier.class), recordTargetImpl);
         ParameterizedTypeName functionSetter = ParameterizedTypeName.get(ClassName.get(Consumer.class), recordTargetImpl);
-        ParameterizedTypeName getPath = ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(QueryPathImpl.class));
+        ParameterizedTypeName getPath = ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(QueryPath.class));
 
         MethodSpec.Builder constructor = MethodSpec.constructorBuilder();
         constructor.addModifiers(Modifier.PUBLIC);

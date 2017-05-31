@@ -1,8 +1,8 @@
 package org.platypus.impl.module.literral;
 
 
-import org.platypus.api.Bool;
 import org.platypus.api.annotations.field.BigStringFieldDefinition;
+import org.platypus.api.fields.Bool;
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 
 /**

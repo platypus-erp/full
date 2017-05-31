@@ -1,9 +1,9 @@
 package org.platypus.api.query.domain.visitor.field;
 
+import org.platypus.api.query.domain.DomainPredicate;
 import org.platypus.api.query.domain.field.DecimalFieldPredicate;
 import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.api.query.domain.visitor.PredicateVisitor;
-import org.platypus.api.query.domain.DomainPredicate;
 
 import java.math.BigDecimal;
 import java.util.Collection;

@@ -1,7 +1,7 @@
 package org.platypus.api.fields;
 
 
-import org.platypus.api.GenericField;
+import org.platypus.api.PlatypusField;
 
 /**
  * TODO Add JavaDoc
@@ -10,7 +10,7 @@ import org.platypus.api.GenericField;
  * @version 0.1
  * @since 0.1
  */
-public interface LongField extends GenericField<Long> {
+public interface LongField extends PlatypusField<Long> {
 
 //    static LongField of(long value){
 //        return new EmptyLongField(value);
@@ -52,7 +52,7 @@ public interface LongField extends GenericField<Long> {
 //        }
 //
 //        @Override
-//        public Long get() {
+//        public Long newRecord() {
 //            return value;
 //        }
 //

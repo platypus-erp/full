@@ -1,8 +1,7 @@
 package org.platypus.api.fields.impl;
 
-import org.platypus.api.query.QueryPath;
-import org.platypus.api.query.tmp.QueryPathImpl;
 import org.platypus.api.fields.DateTimeField;
+import org.platypus.api.query.QueryPath;
 
 import java.time.LocalDateTime;
 import java.util.function.Consumer;

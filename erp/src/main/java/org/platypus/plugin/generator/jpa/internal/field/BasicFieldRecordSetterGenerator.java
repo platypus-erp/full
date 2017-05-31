@@ -1,7 +1,11 @@
 package org.platypus.plugin.generator.jpa.internal.field;
 
-import com.squareup.javapoet.*;
-import org.platypus.api.Bool;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.TypeName;
+import org.apache.commons.lang3.StringUtils;
+import org.platypus.api.fields.Bool;
 import org.platypus.api.fields.metainfo.MetaInfoBigStringField;
 import org.platypus.api.fields.metainfo.MetaInfoBinaryField;
 import org.platypus.api.fields.metainfo.MetaInfoBooleanField;
@@ -17,12 +21,11 @@ import org.platypus.api.fields.metainfo.MetaInfoOneToManyField;
 import org.platypus.api.fields.metainfo.MetaInfoOneToOneField;
 import org.platypus.api.fields.metainfo.MetaInfoStringField;
 import org.platypus.api.fields.metainfo.MetaInfoTimeField;
-import org.apache.commons.lang3.StringUtils;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.builder.core.Utils;
-import org.platypus.plugin.generator.jpa.internal.JpaUtils;
 import org.platypus.plugin.generator.jpa.internal.JpaModelGenerator;
+import org.platypus.plugin.generator.jpa.internal.JpaUtils;
 
 import javax.lang.model.element.Modifier;
 
@@ -105,7 +108,7 @@ public class BasicFieldRecordSetterGenerator {
     private Optional<MethodSpec> getSetter(String name, TypeName field){
         return Optional.of(MethodSpec.methodBuilder(name)
                 .addParameter(ParameterSpec.builder(field, name+"Field", Modifier.FINAL).build())
-                .addCode("this.set$N($N.get());\n", StringUtils.capitalize(name), name+"Field")
+                .addCode("this.set$N($N.newRecord());\n", StringUtils.capitalize(name), name+"Field")
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .build());

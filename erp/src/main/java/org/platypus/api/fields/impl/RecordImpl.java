@@ -1,9 +1,9 @@
 package org.platypus.api.fields.impl;
 
-import org.platypus.api.GenericField;
-import org.platypus.api.query.tmp.QueryPathImpl;
+import org.platypus.api.PlatypusField;
 import org.platypus.api.Record;
 import org.platypus.api.fields.LongField;
+import org.platypus.api.query.QueryPath;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -15,27 +15,35 @@ import java.util.function.Supplier;
  * @version 0.1
  * @since 0.1
  */
-public abstract class RecordImpl<R extends Record, RI extends R> implements GenericField<RI>, Record {
+public abstract class RecordImpl<R extends Record, RI extends R> implements PlatypusField<RI>, Record {
     protected Supplier<RI> defaultValue;
     protected final Supplier<RI> getter;
     protected final Consumer<RI> setter;
     protected final String name;
-    protected Supplier<QueryPathImpl> path;
+    protected Supplier<QueryPath> path;
 
     protected RecordImpl(String tableName,
                          String name,
-                         Supplier<QueryPathImpl> getPath,
+                         Supplier<QueryPath> getPath,
                          Supplier<RI> getter,
                          Consumer<RI> setter,
                          Supplier<RI> defaultValue) {
         this.getter = getter;
         this.setter = setter;
         this.name = name;
-        path = () -> getPath.get().resolve(QueryPathImpl.relation(tableName, name));
+        path = () -> getPath.get().resolve(QueryPath.relation(tableName, name));
         this.defaultValue = defaultValue;
     }
 
+    @Override
+    public String getTableName() {
+        return null;
+    }
 
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 
     @Override
     public RI get() {
@@ -59,12 +67,12 @@ public abstract class RecordImpl<R extends Record, RI extends R> implements Gene
     }
 
     @Override
-    public QueryPathImpl getPath() {
+    public QueryPath getPath() {
         return path.get();
     }
 
     @Override
-    public QueryPathImpl resolve(QueryPathImpl queryPath) {
+    public QueryPath resolve(QueryPath queryPath) {
         return getPath().resolve(queryPath);
     }
 
@@ -76,7 +84,7 @@ public abstract class RecordImpl<R extends Record, RI extends R> implements Gene
     }
 
     @Override
-    public void setPath(QueryPathImpl queryPath) {
+    public void setPath(QueryPath queryPath) {
         get().setPath(queryPath);
     }
 

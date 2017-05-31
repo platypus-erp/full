@@ -11,9 +11,9 @@ import org.platypus.builder.core.views.list.structure.column.floatcol.FloatColum
 import org.platypus.builder.core.views.list.structure.column.imgcol.ImgColumnBuilder;
 import org.platypus.builder.core.views.list.structure.column.integercol.IntegerColumnBuilder;
 import org.platypus.builder.core.views.list.structure.column.linkcol.LinkColumnBuilder;
+import org.platypus.builder.core.views.list.structure.column.relation.RelationColumnBuilder;
 import org.platypus.builder.core.views.list.structure.column.stringcol.StringColumnBuilder;
 import org.platypus.builder.core.views.list.structure.column.timecol.TimeColumnBuilder;
-import org.platypus.builder.core.views.list.structure.column.relation.RelationColumnBuilder;
 
 import java.util.EnumMap;
 

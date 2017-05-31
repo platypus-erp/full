@@ -1,9 +1,9 @@
 package org.platypus.api.query.domain.visitor.field;
 
+import org.platypus.api.query.domain.DomainPredicate;
 import org.platypus.api.query.domain.field.BinaryFieldPredicate;
 import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.api.query.domain.visitor.PredicateVisitor;
-import org.platypus.api.query.domain.DomainPredicate;
 
 /**
  * @author chmuchme

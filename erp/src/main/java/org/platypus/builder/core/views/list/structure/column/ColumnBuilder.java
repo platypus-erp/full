@@ -7,8 +7,6 @@ import org.w3c.dom.Node;
 
 import java.util.Optional;
 
-import static org.apache.commons.lang3.StringUtils.defaultIfBlank;
-
 /**
  * TODO Add JavaDoc
  *

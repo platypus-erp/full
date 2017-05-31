@@ -1,8 +1,8 @@
 package org.platypus.api.query.domain.visitor.domain;
 
+import org.platypus.api.query.Domain;
 import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.api.query.domain.visitor.PredicateVisitor;
-import org.platypus.api.query.domain.DomainCombinator;
 
 /**
  * @author chmuchme
@@ -11,14 +11,14 @@ import org.platypus.api.query.domain.DomainCombinator;
  */
 public class GroupDomain implements PPredicate {
     PPredicate predicate;
-    DomainCombinator combinator;
+    Domain.DomainCombinator combinator;
     PPredicate next;
 
     public PPredicate getPredicate() {
         return predicate;
     }
 
-    public DomainCombinator getCombinator() {
+    public Domain.DomainCombinator getCombinator() {
         return combinator;
     }
 

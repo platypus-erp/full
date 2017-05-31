@@ -1,8 +1,8 @@
 package org.platypus.builder;
 
 import org.platypus.builder.core.MainArgs;
-import org.platypus.builder.core.records.manager.QuickRecordGenerator;
 import org.platypus.builder.core.records.manager.ModelsFinder;
+import org.platypus.builder.core.records.manager.QuickRecordGenerator;
 
 /**
  * @author chmuchme

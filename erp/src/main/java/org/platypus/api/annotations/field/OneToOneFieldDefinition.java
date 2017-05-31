@@ -2,7 +2,7 @@ package org.platypus.api.annotations.field;
 
 
 import org.platypus.api.BaseModel;
-import org.platypus.api.Bool;
+import org.platypus.api.fields.Bool;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

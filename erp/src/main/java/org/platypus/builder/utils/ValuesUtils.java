@@ -1,7 +1,7 @@
 package org.platypus.builder.utils;
 
 
-import org.platypus.api.Bool;
+import org.platypus.api.fields.Bool;
 
 /**
  * TODO Add JavaDoc

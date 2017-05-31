@@ -1,7 +1,6 @@
 package org.platypus.erp.module.base.models;
 
 import org.platypus.api.BaseModel;
-import org.platypus.api.Bool;
 import org.platypus.api.annotations.field.BinaryFieldDefinition;
 import org.platypus.api.annotations.field.BooleanFieldDefinition;
 import org.platypus.api.annotations.field.ManyToManyFieldDefinition;
@@ -13,6 +12,7 @@ import org.platypus.api.annotations.i18n.Help;
 import org.platypus.api.annotations.i18n.Label;
 import org.platypus.api.annotations.model.ModelOrderBy;
 import org.platypus.api.annotations.model.PlatypusModel;
+import org.platypus.api.fields.Bool;
 import org.platypus.api.fields.NewField;
 
 /**

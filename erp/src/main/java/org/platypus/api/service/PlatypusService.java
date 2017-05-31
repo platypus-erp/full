@@ -1,6 +1,7 @@
 package org.platypus.api.service;
 
 import org.platypus.api.Record;
+import org.platypus.api.query.Domain;
 import org.platypus.api.query.SimpleQuery;
 import org.platypus.api.query.SimpleQueryFactory;
 import org.platypus.api.query.domain.visitor.PPredicate;
@@ -110,7 +111,7 @@ public abstract class PlatypusService<E extends Record> {
         return manager.getList(listFilter);
     }
 
-    public List<E> getList(Function<E, PPredicate<?>> domain) {
+    public List<E> getList(Domain<E> domain) {
         return manager.executeAsList(queryFactory.of(clazz).filter(domain));
     }
 

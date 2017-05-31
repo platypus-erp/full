@@ -1,7 +1,7 @@
 package org.platypus.api.query.domain.visitor;
 
 import org.platypus.api.Record;
-import org.platypus.api.query.domain.DomainCombinator;
+import org.platypus.api.query.Domain;
 import org.platypus.api.query.domain.field.BigStringFieldPredicate;
 import org.platypus.api.query.domain.field.BinaryFieldPredicate;
 import org.platypus.api.query.domain.field.BooleanFieldPredicate;
@@ -13,7 +13,7 @@ import org.platypus.api.query.domain.field.IntFieldPredicate;
 import org.platypus.api.query.domain.field.LongFieldPredicate;
 import org.platypus.api.query.domain.field.StringFieldPredicate;
 import org.platypus.api.query.domain.field.TimeFieldPredicate;
-import org.platypus.api.query.domain.visitor.domain.Domain;
+import org.platypus.api.query.domain.visitor.domain.DomainContainer;
 import org.platypus.api.query.domain.visitor.domain.GroupDomain;
 import org.platypus.api.query.domain.visitor.field.BigStringValuePredicate;
 import org.platypus.api.query.domain.visitor.field.BinaryValuePredicate;
@@ -70,46 +70,45 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
     }
 
     @Override
-    public void visit(Domain<T> element) {
+    public void visit(DomainContainer<T> element) {
         element.getPredicate1().ifPresent(r -> r.accept(this));
-        element.getPredicate1().ifPresent(r -> r.accept(this));
-        element.getCombinator1().ifPresent(r -> r.accept(this));
+        element.getCombinator1().ifPresent(this::visit);
         element.getPredicate2().ifPresent(r -> r.accept(this));
-        element.getCombinator2().ifPresent(r -> r.accept(this));
+        element.getCombinator2().ifPresent(this::visit);
         element.getPredicate3().ifPresent(r -> r.accept(this));
-        element.getCombinator3().ifPresent(r -> r.accept(this));
+        element.getCombinator3().ifPresent(this::visit);
         element.getPredicate4().ifPresent(r -> r.accept(this));
-        element.getCombinator4().ifPresent(r -> r.accept(this));
+        element.getCombinator4().ifPresent(this::visit);
         element.getPredicate5().ifPresent(r -> r.accept(this));
-        element.getCombinator5().ifPresent(r -> r.accept(this));
+        element.getCombinator5().ifPresent(this::visit);
         element.getPredicate6().ifPresent(r -> r.accept(this));
-        element.getCombinator6().ifPresent(r -> r.accept(this));
+        element.getCombinator6().ifPresent(this::visit);
         element.getPredicate7().ifPresent(r -> r.accept(this));
-        element.getCombinator7().ifPresent(r -> r.accept(this));
+        element.getCombinator7().ifPresent(this::visit);
         element.getPredicate8().ifPresent(r -> r.accept(this));
-        element.getCombinator8().ifPresent(r -> r.accept(this));
+        element.getCombinator8().ifPresent(this::visit);
         element.getPredicate9().ifPresent(r -> r.accept(this));
-        element.getCombinator9().ifPresent(r -> r.accept(this));
+        element.getCombinator9().ifPresent(this::visit);
         element.getPredicate10().ifPresent(r -> r.accept(this));
-        element.getCombinator10().ifPresent(r -> r.accept(this));
+        element.getCombinator10().ifPresent(this::visit);
         element.getPredicate11().ifPresent(r -> r.accept(this));
-        element.getCombinator11().ifPresent(r -> r.accept(this));
+        element.getCombinator11().ifPresent(this::visit);
         element.getPredicate12().ifPresent(r -> r.accept(this));
-        element.getCombinator12().ifPresent(r -> r.accept(this));
+        element.getCombinator12().ifPresent(this::visit);
         element.getPredicate13().ifPresent(r -> r.accept(this));
-        element.getCombinator13().ifPresent(r -> r.accept(this));
+        element.getCombinator13().ifPresent(this::visit);
         element.getPredicate14().ifPresent(r -> r.accept(this));
-        element.getCombinator14().ifPresent(r -> r.accept(this));
+        element.getCombinator14().ifPresent(this::visit);
         element.getPredicate15().ifPresent(r -> r.accept(this));
-        element.getCombinator15().ifPresent(r -> r.accept(this));
+        element.getCombinator15().ifPresent(this::visit);
         element.getPredicate16().ifPresent(r -> r.accept(this));
-        element.getCombinator16().ifPresent(r -> r.accept(this));
+        element.getCombinator16().ifPresent(this::visit);
         element.getPredicate17().ifPresent(r -> r.accept(this));
-        element.getCombinator17().ifPresent(r -> r.accept(this));
+        element.getCombinator17().ifPresent(this::visit);
         element.getPredicate18().ifPresent(r -> r.accept(this));
-        element.getCombinator18().ifPresent(r -> r.accept(this));
+        element.getCombinator18().ifPresent(this::visit);
         element.getPredicate19().ifPresent(r -> r.accept(this));
-        element.getCombinator19().ifPresent(r -> r.accept(this));
+        element.getCombinator19().ifPresent(this::visit);
         element.getPredicate20().ifPresent(r -> r.accept(this));
     }
 
@@ -287,13 +286,13 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
     public void visit(GroupDomain element) {
         JpaPredicateVisitorImpl visitor = new JpaPredicateVisitorImpl();
         element.getPredicate().accept(visitor);
-        element.getCombinator().accept(visitor);
+        visitor.visit(element.getCombinator());
         element.getNext().accept(visitor);
         currentPredicate = visitor.buildPredicate();
     }
 
     @Override
-    public void visit(DomainCombinator predicateCombinator) {
+    public void visit(Domain.DomainCombinator predicateCombinator) {
         switch (predicateCombinator) {
             case OR:
                 if (currentAndGroup == null) {

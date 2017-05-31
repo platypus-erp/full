@@ -1,7 +1,9 @@
 package org.platypus.api.query.domain.visitor;
 
 import org.platypus.api.Record;
-import org.platypus.api.query.domain.visitor.domain.Domain;
+import org.platypus.api.query.Domain;
+import org.platypus.api.query.VisitorInitializer;
+import org.platypus.api.query.domain.visitor.domain.DomainContainer;
 import org.platypus.api.query.domain.visitor.domain.GroupDomain;
 import org.platypus.api.query.domain.visitor.field.BigStringValuePredicate;
 import org.platypus.api.query.domain.visitor.field.BinaryValuePredicate;
@@ -15,8 +17,6 @@ import org.platypus.api.query.domain.visitor.field.LongValuePredicate;
 import org.platypus.api.query.domain.visitor.field.RecordValuePredicate;
 import org.platypus.api.query.domain.visitor.field.StringValuePredicate;
 import org.platypus.api.query.domain.visitor.field.TimeValuePredicate;
-import org.platypus.api.query.domain.DomainCombinator;
-import org.platypus.api.query.VisitorInitializer;
 
 /**
  * @author chmuchme
@@ -40,7 +40,7 @@ public interface PredicateVisitor<T extends Record, INIT extends VisitorInitiali
     void visit(StringValuePredicate element);
     void visit(TimeValuePredicate element);
     void visit(GroupDomain element);
-    void visit(Domain<T> element);
+    void visit(DomainContainer<T> element);
 
-    void visit(DomainCombinator predicateCombinator);
+    void visit(Domain.DomainCombinator predicateCombinator);
 }

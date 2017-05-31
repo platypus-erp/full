@@ -2,7 +2,6 @@ package org.platypus.api.query.projection.visitor;
 
 import org.platypus.api.query.QueryPath;
 import org.platypus.api.query.projection.ProjectionGroupVisitor;
-import org.platypus.api.query.projection.ProjectionVisitor;
 import org.platypus.api.query.projection.visitor.field.BigStringProjection;
 import org.platypus.api.query.projection.visitor.field.BinaryProjection;
 import org.platypus.api.query.projection.visitor.field.BooleanProjection;

@@ -1,6 +1,7 @@
 package org.platypus.api.query.projection.visitor.field.agg;
 
 import org.platypus.api.PlatypusField;
+import org.platypus.api.query.projection.ProjectionGroupVisitor;
 import org.platypus.api.query.projection.ProjectionVisitor;
 import org.platypus.api.query.projection.visitor.field.AbstractFieldProjection;
 
@@ -12,10 +13,5 @@ import org.platypus.api.query.projection.visitor.field.AbstractFieldProjection;
 public class AvgAggProjection extends AbstractFieldProjection<AvgAggProjection, PlatypusField<?>> {
     public AvgAggProjection(PlatypusField<?> field) {
         super(field);
-    }
-
-    @Override
-    public void accept(ProjectionVisitor projectionVisitor) {
-        projectionVisitor.visit(this);
     }
 }

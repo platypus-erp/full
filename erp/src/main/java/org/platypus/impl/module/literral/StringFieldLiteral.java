@@ -1,10 +1,10 @@
 package org.platypus.impl.module.literral;
 
 
-import org.platypus.api.Bool;
 import org.platypus.api.annotations.field.RemoveSpaceType;
 import org.platypus.api.annotations.field.RequiredType;
 import org.platypus.api.annotations.field.StringFieldDefinition;
+import org.platypus.api.fields.Bool;
 
 import java.util.Arrays;
 

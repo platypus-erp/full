@@ -1,10 +1,10 @@
 package org.platypus.erp.manager.impl;
 
-import org.platypus.api.Pool;
+import org.platypus.api.ModuleMeta;
 import org.platypus.api.Record;
 import org.platypus.api.query.QueryExecutor;
+import org.platypus.api.query.SimpleQuery;
 import org.platypus.api.query.domain.visitor.JpaPredicateVisitorImpl;
-import org.platypus.api.query.projection.PProjection;
 import org.platypus.api.query.projection.visitor.JpaProjectionInitializer;
 import org.platypus.api.query.projection.visitor.JpaProjectionProjectionInitializer;
 import org.platypus.api.query.projection.visitor.JpaProjectionResolverVisitorImpl;
@@ -37,7 +37,7 @@ public class SearchExecutorImpl<T extends Record> implements QueryExecutor<T> {
     EntityManager entityManager;
 
     @Inject
-    Pool pool;
+    ModuleMeta pool;
 
     private CriteriaBuilder cb;
 
@@ -61,13 +61,13 @@ public class SearchExecutorImpl<T extends Record> implements QueryExecutor<T> {
 
 
     @Override
-    public long count(SimpleQueryImpl<T> searchBuilder) {
-        T instance = pool.get(searchBuilder.getTypeClass());
+    public long count(SimpleQuery<T> searchBuilder) {
+        T instance = pool.newRecord(searchBuilder.getTypeClass());
         Map<String, From<?, ?>> tableJoin = new HashMap<>();
 
         CriteriaQuery<Long> cq = cb.createQuery(Long.class);
         Root<T> from = cq.from(searchBuilder.getTypeClass());
-        tableJoin.put(instance.getName(), from);
+        tableJoin.put(instance.getTableName(), from);
 
         projectionVisitor.initWith(new JpaProjectionInitializer(tableJoin, from, cb));
         jpaPredicateVisitor.initWith(new JpaProjectionInitializer(tableJoin, from, cb));
@@ -86,24 +86,24 @@ public class SearchExecutorImpl<T extends Record> implements QueryExecutor<T> {
     }
 
     @Override
-    public Optional<T> getFirst(SimpleQueryImpl<T> searchBuilder) {
+    public Optional<T> getFirst(SimpleQuery<T> searchBuilder) {
         List<T> res = get(searchBuilder);
         return res.isEmpty() ? Optional.empty() : Optional.of(res.get(0));
     }
 
     @Override
-    public List<T> get(SimpleQueryImpl<T> searchBuilder) {
+    public List<T> get(SimpleQuery<T> searchBuilder) {
         return searchBuilder.getAllField() ? getAllField(searchBuilder) : getListTuple(searchBuilder);
     }
 
-    public List<T> getAllField(SimpleQueryImpl<T> searchBuilder) {
-        T instance = pool.get(searchBuilder.getTypeClass());
+    public List<T> getAllField(SimpleQuery<T> searchBuilder) {
+        T instance = pool.newRecord(searchBuilder.getTypeClass());
         Map<String, From<?, ?>> tableJoin = new HashMap<>();
 
         CriteriaQuery<T> cq = cb.createQuery(searchBuilder.getTypeClass());
         Root<T> from = cq.from(searchBuilder.getTypeClass());
 
-        tableJoin.put(instance.getName(), from);
+        tableJoin.put(instance.getTableName(), from);
 
         jpaPredicateVisitor.initWith(new JpaProjectionInitializer(tableJoin, from, cb));
 
@@ -118,13 +118,13 @@ public class SearchExecutorImpl<T extends Record> implements QueryExecutor<T> {
         return res;
     }
 
-    private List<T> getListTuple(SimpleQueryImpl<T> searchBuilder) {
-        T instance = pool.get(searchBuilder.getTypeClass());
+    private List<T> getListTuple(SimpleQuery<T> searchBuilder) {
+        T instance = pool.newRecord(searchBuilder.getTypeClass());
         Map<String, From<?, ?>> tableJoin = new HashMap<>();
 
         CriteriaQuery<Tuple> cq = cb.createTupleQuery();
         Root<T> from = cq.from(searchBuilder.getTypeClass());
-        tableJoin.put(instance.getName(), from);
+        tableJoin.put(instance.getTableName(), from);
 
         projectionVisitor.initWith(new JpaProjectionInitializer(tableJoin, from, cb));
         jpaPredicateVisitor.initWith(new JpaProjectionInitializer(tableJoin, from, cb));
@@ -145,7 +145,7 @@ public class SearchExecutorImpl<T extends Record> implements QueryExecutor<T> {
 
         List<T> result = new ArrayList<>(res.size());
         for(Tuple tuple: res){
-            T newInstance = pool.get(searchBuilder.getTypeClass());
+            T newInstance = pool.newRecord(searchBuilder.getTypeClass());
             jpaProjectionResolverVisitor.initWith(new JpaProjectionProjectionInitializer(tuple));
             searchBuilder.getProjection(newInstance)
                     .forEach(p -> p.accept(jpaProjectionResolverVisitor));
