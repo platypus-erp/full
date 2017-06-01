@@ -1,5 +1,9 @@
 package org.platypus.erp.module.base.models.generated.jpa;
 
+import java.lang.Override;
+import java.lang.String;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import org.platypus.api.fields.BinaryField;
 import org.platypus.api.fields.BooleanField;
 import org.platypus.api.fields.LongField;
@@ -12,16 +16,13 @@ import org.platypus.erp.module.base.models.generated.records.BaseGroupRecordColl
 import org.platypus.erp.module.base.models.generated.records.BasePartnerRecord;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-
 public class BaseUsersRecordImpl extends RecordImpl<BaseUsersRecord, ImplUsersJPA> implements BaseUsersRecord {
   public BaseUsersRecordImpl(String table, String name, Supplier<QueryPath> getPath,
       Supplier<ImplUsersJPA> getter, Consumer<ImplUsersJPA> setter) {
     super(table, name, getPath, getter, setter, ImplUsersJPA::new);
   }
 
-    @Override
+  @Override
   public BinaryField signature() {
     return getOrDefault().signature();
   }

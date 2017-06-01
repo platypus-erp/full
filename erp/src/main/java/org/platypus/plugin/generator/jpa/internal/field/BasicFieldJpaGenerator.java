@@ -31,6 +31,7 @@ import javax.lang.model.element.Modifier;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
@@ -186,6 +187,9 @@ public class BasicFieldJpaGenerator {
 
     public Optional<FieldSpec> generatedFieldImpl(MetaInfoLongField field) {
         FieldSpec.Builder f = FieldSpec.builder(JpaUtils.getJavaType(field), field.getName(), Modifier.PRIVATE);
+        if ("id".equals(field.getName())){
+            f.addAnnotation(Id.class);
+        }
         f.addAnnotation(AnnotationSpec.builder(Column.class)
                 .addMember(NAME, $_S, "\"" + Utils.TO_SQL.apply(field.getName()) + "\"")
                 .addMember(NULLABLE, LITTERAL, ValuesUtils.isFalseOrDefault(field.required()))

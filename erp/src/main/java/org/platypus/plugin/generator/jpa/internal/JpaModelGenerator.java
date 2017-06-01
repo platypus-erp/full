@@ -24,6 +24,7 @@ import org.platypus.plugin.generator.jpa.internal.recordImpl.RecordImplFieldGene
 import javax.lang.model.element.Modifier;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -89,6 +90,7 @@ public class JpaModelGenerator {
         jpaImplBuilder.addField(
                 FieldSpecUtils.privateFieldBuilder(QueryPath.class, "path")
                         .initializer("$T.basic(MODEL_NAME, $S)", queryPathCls, "id")
+                        .addAnnotation(Transient.class)
                         .build());
 
         jpaImplBuilder.addMethod(MethodSpecUtils.classicOverrideGetter("path", queryPathCls));

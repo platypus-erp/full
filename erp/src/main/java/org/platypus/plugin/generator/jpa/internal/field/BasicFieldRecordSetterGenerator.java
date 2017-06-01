@@ -108,7 +108,7 @@ public class BasicFieldRecordSetterGenerator {
     private Optional<MethodSpec> getSetter(String name, TypeName field){
         return Optional.of(MethodSpec.methodBuilder(name)
                 .addParameter(ParameterSpec.builder(field, name+"Field", Modifier.FINAL).build())
-                .addCode("this.set$N($N.newRecord());\n", StringUtils.capitalize(name), name+"Field")
+                .addCode("this.set$N($N.get());\n", StringUtils.capitalize(name), name+"Field")
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .build());
@@ -129,18 +129,18 @@ public class BasicFieldRecordSetterGenerator {
                                                Function<String, MetaInfoRecordCollection> getRecord) {
         MetaInfoRecordCollection record = getRecord.apply(field.targetName());
         ClassName JpaImplT = ClassName.get("", JpaModelGenerator.getImplHibernateName(field.target().getSimpleName()));
-        return getSetterUnwrapAsList(field.getName(), Utils.toRecordCollection(record), JpaImplT);
+        return getSetterAsList(field.getName(), Utils.toRecordCollection(record), JpaImplT);
     }
     public Optional<MethodSpec> generateSetter(MetaInfoManyToManyField field,
                                                Function<String, MetaInfoRecordCollection> getRecord) {
         MetaInfoRecordCollection record = getRecord.apply(field.targetName());
         ClassName JpaImplT = ClassName.get("", JpaModelGenerator.getImplHibernateName(field.target().getSimpleName()));
-        return getSetterUnwrapAsList(field.getName(), Utils.toRecordCollection(record), JpaImplT);
+        return getSetterAsList(field.getName(), Utils.toRecordCollection(record), JpaImplT);
     }
-    private Optional<MethodSpec> getSetterUnwrapAsList(String name, TypeName field, TypeName jpaImpl){
+    private Optional<MethodSpec> getSetterAsList(String name, TypeName field, TypeName jpaImpl){
         return Optional.of(MethodSpec.methodBuilder(name)
                 .addParameter(ParameterSpec.builder(field, name+"Field", Modifier.FINAL).build())
-                .addCode("this.set$N($N.unWrapAsList($T.class));\n", StringUtils.capitalize(name), name+"Field", jpaImpl)
+                .addCode("this.set$N($N.asList($T.class));\n", StringUtils.capitalize(name), name+"Field", jpaImpl)
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .build());

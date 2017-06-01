@@ -1,5 +1,22 @@
 package org.platypus.erp.module.base.models.generated.jpa;
 
+import java.lang.Override;
+import java.lang.String;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 import org.platypus.api.fields.BinaryField;
 import org.platypus.api.fields.BooleanField;
 import org.platypus.api.fields.LongField;
@@ -15,33 +32,12 @@ import org.platypus.erp.module.base.models.generated.records.BaseGroupRecordColl
 import org.platypus.erp.module.base.models.generated.records.BasePartnerRecord;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.Size;
-
-import java.util.List;
-
 @Table(
     name = ImplUsersJPA.MODEL_NAME
 )
 @Entity
 public class ImplUsersJPA implements BaseUsersRecord {
   public static final String MODEL_NAME = "users";
-  @Override
-  public String getTableName() {
-    return "users";
-  }
 
   @Transient
   private QueryPath path = QueryPath.basic(MODEL_NAME, "id");

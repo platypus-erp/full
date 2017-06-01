@@ -1,15 +1,16 @@
 package org.platypus.erp.module.base.models.generated.jpa;
 
-import org.platypus.api.fields.LongField;
-import org.platypus.api.fields.impl.LongFieldImpl;
-import org.platypus.api.query.QueryPath;
-import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecord;
-
+import java.lang.Override;
+import java.lang.String;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import org.platypus.api.fields.LongField;
+import org.platypus.api.fields.impl.LongFieldImpl;
+import org.platypus.api.query.QueryPath;
+import org.platypus.erp.module.base.models.generated.records.BaseCompanyRecord;
 
 @Table(
     name = ImplCompanyJPA.MODEL_NAME
@@ -17,6 +18,7 @@ import javax.persistence.Transient;
 @Entity
 public class ImplCompanyJPA implements BaseCompanyRecord {
   public static final String MODEL_NAME = "company";
+
   @Transient
   private QueryPath path = QueryPath.basic(MODEL_NAME, "id");
 
