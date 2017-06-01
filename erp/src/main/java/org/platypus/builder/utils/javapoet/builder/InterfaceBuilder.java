@@ -50,7 +50,7 @@ public class InterfaceBuilder {
     }
 
     public InterfaceBuilder addMethod(MethodSpec.Builder methodSpecBuilder) {
-        this.internalBuilder.addMethod(methodSpecBuilder.addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT).build());
+        this.internalBuilder.addMethod(methodSpecBuilder.build());
         return this;
     }
 

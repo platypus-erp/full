@@ -29,6 +29,7 @@ dependencies {
     compile project(':erp')
     modelsCompile project(':erp')
     generatedCompile project(':erp')
+    emptyCompile project(':erp')
 
     generatedCompile 'javax.validation:validation-api:1.1.0.Final'
     generatedCompile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'

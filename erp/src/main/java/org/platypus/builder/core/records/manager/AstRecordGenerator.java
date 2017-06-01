@@ -72,6 +72,7 @@ public class AstRecordGenerator {
 
         recordBuilder.addMethod(MethodSpec.methodBuilder("getTableName")
                 .addAnnotation(Override.class)
+                .returns(ClassName.get(String.class))
                 .addCode("return $S;\n", merged.getModelName())
                 .addModifiers(Modifier.PUBLIC, Modifier.DEFAULT)
         );
@@ -88,6 +89,12 @@ public class AstRecordGenerator {
                     ParameterizedTypeName.get(
                             ClassName.get(RecordCollection.class),
                             Utils.toRecord(currentRec))
+            );
+            recordCollectionBuilder.addMethod(MethodSpec.methodBuilder("getTableName")
+                    .addAnnotation(Override.class)
+                    .returns(ClassName.get(String.class))
+                    .addCode("return $S;\n", merged.getModelName())
+                    .addModifiers(Modifier.PUBLIC, Modifier.DEFAULT)
             );
             recordCollectionBuilder.addAnnotation(
                     AnnotationSpec.builder(RecordOf.class)
