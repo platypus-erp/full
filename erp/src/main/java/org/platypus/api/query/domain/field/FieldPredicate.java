@@ -10,6 +10,6 @@ import org.platypus.api.query.domain.visitor.PPredicate;
  */
 public interface FieldPredicate<T> extends Pathable {
 
-    PPredicate<T> isNull();
-    PPredicate<T> isNotNull();
+    PPredicate isNull();
+    PPredicate isNotNull();
 }

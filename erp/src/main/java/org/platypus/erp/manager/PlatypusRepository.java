@@ -43,5 +43,5 @@ public interface PlatypusRepository<E extends Record> {
 
     int count(SimpleQuery<E> query);
 
-    int count(Function<E, PPredicate<?>> domain);
+    int count(Function<E, PPredicate> domain);
 }

@@ -18,6 +18,8 @@ public class TimeValuePredicate implements PPredicate {
     DomainPredicate sqlPredicate;
     LocalTime value;
     LocalTime value2;
+    private boolean not;
+    private boolean orNull;
 
     public TimeValuePredicate(TimeFieldPredicate field, DomainPredicate sqlPredicate, LocalTime value, LocalTime value2) {
         this.field = field;
@@ -45,5 +47,21 @@ public class TimeValuePredicate implements PPredicate {
     @Override
     public void accept(PredicateVisitor predicateVisitor) {
         predicateVisitor.visit(this);
+    }
+
+    @Override
+    public PPredicate not() {
+        this.not = true;
+        return this;
+    }
+
+    @Override
+    public PPredicate orNull() {
+        this.orNull = true;
+        return this;
+    }
+
+    public boolean isNot() {
+        return not;
     }
 }

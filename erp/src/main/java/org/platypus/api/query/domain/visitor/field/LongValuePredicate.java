@@ -18,6 +18,8 @@ public class LongValuePredicate implements PPredicate {
     Long value;
     Long value2;
     Collection<Long> valuesIn;
+    private boolean not;
+    private boolean orNull;
 
     public LongValuePredicate(LongFieldPredicate field, DomainPredicate condition, Collection<Long> valuesIn) {
         this.field = field;
@@ -52,5 +54,21 @@ public class LongValuePredicate implements PPredicate {
     @Override
     public void accept(PredicateVisitor predicateVisitor) {
         predicateVisitor.visit(this);
+    }
+
+    @Override
+    public PPredicate not() {
+        this.not = true;
+        return this;
+    }
+
+    @Override
+    public PPredicate orNull() {
+        this.orNull = true;
+        return this;
+    }
+
+    public boolean isNot() {
+        return not;
     }
 }

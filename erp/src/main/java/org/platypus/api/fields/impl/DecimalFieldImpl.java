@@ -2,6 +2,8 @@ package org.platypus.api.fields.impl;
 
 import org.platypus.api.fields.DecimalField;
 import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.projection.PProjection;
+import org.platypus.api.query.projection.visitor.field.DecimalProjection;
 
 import java.math.BigDecimal;
 import java.util.function.Consumer;
@@ -29,6 +31,11 @@ public class DecimalFieldImpl extends AbstractFieldImpl<BigDecimal> implements D
                             Consumer<BigDecimal> setter,
                             BigDecimal def) {
         super(table, name, getPath, getter, setter);
+    }
+
+    @Override
+    public PProjection getProjection() {
+        return new DecimalProjection(this);
     }
 
     @Override

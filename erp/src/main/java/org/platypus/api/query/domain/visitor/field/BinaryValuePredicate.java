@@ -10,9 +10,11 @@ import org.platypus.api.query.domain.visitor.PredicateVisitor;
  * @since 0.1
  * on 26/05/17.
  */
-public class BinaryValuePredicate implements PPredicate<byte[]> {
+public class BinaryValuePredicate implements PPredicate {
     BinaryFieldPredicate field;
     DomainPredicate condition;
+    private boolean not;
+    private boolean orNull;
 
     public BinaryValuePredicate(BinaryFieldPredicate field, DomainPredicate condition) {
         this.field = field;
@@ -30,5 +32,17 @@ public class BinaryValuePredicate implements PPredicate<byte[]> {
 
     public DomainPredicate getCondition() {
         return condition;
+    }
+
+    @Override
+    public PPredicate not() {
+        this.not = true;
+        return this;
+    }
+
+    @Override
+    public PPredicate orNull() {
+        this.orNull = true;
+        return this;
     }
 }

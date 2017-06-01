@@ -135,7 +135,7 @@ public abstract class PlatypusService<E extends Record> {
         return manager.count(query);
     }
 
-    public int count(Function<E, PPredicate<?>> domain) {
+    public int count(Function<E, PPredicate> domain) {
         return manager.count(domain);
     }
 }

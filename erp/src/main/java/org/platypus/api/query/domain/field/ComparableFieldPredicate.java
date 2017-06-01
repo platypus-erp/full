@@ -12,15 +12,15 @@ import java.util.Collection;
  */
 public interface ComparableFieldPredicate<T extends Comparable<? super T>> extends FieldPredicate, PlatypusField<T>{
 
-    PPredicate<T> eq(T date);
-    PPredicate<T> lessThan(T date);
-    PPredicate<T> lessOrEq(T date);
-    PPredicate<T> moreThan(T date);
-    PPredicate<T> moreOrEq(T date);
-    PPredicate<T> between(T date1, T date2);
-    PPredicate<T> in(Collection<T> values);
-    PPredicate<T> notIn(Collection<T> values);
+    PPredicate eq(T value);
+    PPredicate lessThan(T value);
+    PPredicate lessOrEq(T value);
+    PPredicate moreThan(T value);
+    PPredicate moreOrEq(T value);
+    PPredicate between(T value1, T value2);
+    PPredicate in(Collection<T> values);
+//    PPredicate notIn(Collection<T> values);
 
-    PPredicate<T> in(T... values);
-    PPredicate<T> notIn(T... values);
+    PPredicate in(T... values);
+//    PPredicate notIn(T... values);
 }

@@ -4,6 +4,7 @@ import org.platypus.api.PlatypusField;
 import org.platypus.api.Record;
 import org.platypus.api.fields.LongField;
 import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.projection.PProjection;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -52,8 +53,9 @@ public abstract class RecordImpl<R extends Record, RI extends R> implements Plat
 
     @Override
     public RI getOrDefault(RI defaultValue) {
-        RI result = getter.get();
-        return result != null ? result : defaultValue;
+        RI result = get();
+        set(result != null ? result : defaultValue);
+        return get();
     }
 
     @Override
@@ -81,6 +83,11 @@ public abstract class RecordImpl<R extends Record, RI extends R> implements Plat
         RI def = defaultValue.get();
         def.setPath(getPath().resolve(def.getPath()));
         return def;
+    }
+
+    @Override
+    public PProjection getProjection() {
+        return null;
     }
 
     @Override

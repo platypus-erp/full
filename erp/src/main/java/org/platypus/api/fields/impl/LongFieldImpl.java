@@ -2,6 +2,8 @@ package org.platypus.api.fields.impl;
 
 import org.platypus.api.fields.LongField;
 import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.projection.PProjection;
+import org.platypus.api.query.projection.visitor.field.LongProjection;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -26,6 +28,11 @@ public class LongFieldImpl extends AbstractFieldImpl<Long> implements LongField 
                          Consumer<Long> setter,
                          Long defaultValue) {
         super(table, name, getPath, getter, setter);
+    }
+
+    @Override
+    public PProjection getProjection() {
+        return new LongProjection(this);
     }
 
     @Override

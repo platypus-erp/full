@@ -18,6 +18,8 @@ public class FloatValuePredicate implements PPredicate {
     Float value;
     Float value2;
     Collection<Float> valuesIn;
+    private boolean not;
+    private boolean orNull;
 
     public FloatValuePredicate(FloatFieldPredicate field, DomainPredicate condition, Collection<Float> valuesIn) {
         this.field = field;
@@ -53,5 +55,21 @@ public class FloatValuePredicate implements PPredicate {
     @Override
     public void accept(PredicateVisitor predicateVisitor) {
         predicateVisitor.visit(this);
+    }
+
+    @Override
+    public PPredicate not() {
+        this.not = true;
+        return this;
+    }
+
+    @Override
+    public PPredicate orNull() {
+        this.orNull = true;
+        return this;
+    }
+
+    public boolean isNot() {
+        return not;
     }
 }

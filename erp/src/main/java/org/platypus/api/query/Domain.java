@@ -12,7 +12,7 @@ import org.platypus.api.query.domain.visitor.domain.DomainContainer;
 @FunctionalInterface
 public interface Domain<R extends Record> {
 
-    PPredicate<?> apply(R record);
+    PPredicate apply(R record);
 
     enum DomainCombinator {
         AND,
@@ -31,6 +31,12 @@ public interface Domain<R extends Record> {
               Domain<R> predicate2) {
         return r -> new DomainContainer<>(predicate1.apply(r), combinator, predicate2.apply(r));
 
+    }
+
+    static <R extends Record>
+    Domain<R>
+    Not(Domain<R> predicate1){
+        return r -> predicate1.apply(r).not();
     }
 
 

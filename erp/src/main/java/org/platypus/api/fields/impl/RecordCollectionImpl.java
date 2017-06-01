@@ -4,6 +4,7 @@ import org.platypus.api.PlatypusField;
 import org.platypus.api.Record;
 import org.platypus.api.RecordCollection;
 import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.projection.PProjection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,11 @@ public class RecordCollectionImpl<R extends Record, RI extends R, RC extends Rec
     @Override
     public List<RI> getDefaultValue() {
         return new ArrayList<>();
+    }
+
+    @Override
+    public PProjection getProjection() {
+        return null;
     }
 
     //<editor-fold desc="Methode to aggregate">

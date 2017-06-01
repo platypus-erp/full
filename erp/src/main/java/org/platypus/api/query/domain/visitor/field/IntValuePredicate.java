@@ -18,6 +18,8 @@ public class IntValuePredicate implements PPredicate {
     Integer value;
     Integer value2;
     Collection<Integer> valuesIn;
+    private boolean not;
+    private boolean orNull;
 
     public IntValuePredicate(IntFieldPredicate field, DomainPredicate condition, Collection<Integer> valuesIn) {
         this.field = field;
@@ -53,5 +55,21 @@ public class IntValuePredicate implements PPredicate {
     @Override
     public void accept(PredicateVisitor predicateVisitor) {
         predicateVisitor.visit(this);
+    }
+
+    @Override
+    public PPredicate not() {
+        this.not = true;
+        return this;
+    }
+
+    @Override
+    public PPredicate orNull() {
+        this.orNull = true;
+        return this;
+    }
+
+    public boolean isNot() {
+        return not;
     }
 }

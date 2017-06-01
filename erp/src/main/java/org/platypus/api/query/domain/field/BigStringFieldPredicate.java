@@ -9,7 +9,7 @@ import org.platypus.api.query.domain.visitor.PPredicate;
  * on 26/05/17.
  */
 public interface BigStringFieldPredicate extends FieldPredicate, PlatypusField<String> {
-    PPredicate<String> isNotNull();
+    PPredicate isNotNull();
 
-    PPredicate<String> isNull();
+    PPredicate isNull();
 }

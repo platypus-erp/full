@@ -3,6 +3,7 @@ package org.platypus.builder.core.records.manager;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import org.apache.commons.lang3.StringUtils;
@@ -16,6 +17,8 @@ import org.platypus.builder.core.Utils;
 import org.platypus.builder.core.records.manager.astvisitor.AstModel;
 import org.platypus.builder.core.records.manager.astvisitor.FieldModel;
 import org.platypus.builder.utils.javapoet.builder.InterfaceBuilder;
+
+import javax.lang.model.element.Modifier;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -65,6 +68,12 @@ public class AstRecordGenerator {
                         .addMember("modelPkg", "$S", merged.getPkg())
                         .addMember("modelClassName", "$S", merged.getClassName())
                         .addMember("modelName", "$S", merged.getModelName())
+        );
+
+        recordBuilder.addMethod(MethodSpec.methodBuilder("getTableName")
+                .addAnnotation(Override.class)
+                .addCode("return $S;\n", merged.getModelName())
+                .addModifiers(Modifier.PUBLIC, Modifier.DEFAULT)
         );
 
         generateBasicFieldRecord(merged, recordBuilder);

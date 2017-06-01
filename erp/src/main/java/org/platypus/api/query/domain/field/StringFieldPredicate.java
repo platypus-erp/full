@@ -1,8 +1,11 @@
 package org.platypus.api.query.domain.field;
 
 import org.platypus.api.Pathable;
+import org.platypus.api.query.domain.DomainPredicate;
 import org.platypus.api.query.domain.visitor.PPredicate;
+import org.platypus.api.query.domain.visitor.field.StringValuePredicate;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -10,49 +13,63 @@ import java.util.Collection;
  * @since 0.1
  * on 26/05/17.
  */
-public interface StringFieldPredicate extends Pathable, FieldPredicate<String>{
-    
-    PPredicate<String> eq(String value);
+public interface StringFieldPredicate extends Pathable, FieldPredicate{
 
-    PPredicate<String> notEq(String value);
+    @Override
+    default PPredicate isNull() {
+        return new StringValuePredicate(this, DomainPredicate.IS_NULL);
+    }
 
-    PPredicate<String> notEqOrNull(String value);
+    @Override
+    default PPredicate isNotNull() {
+        return new StringValuePredicate(this, DomainPredicate.IS_NOT_NULL);
+    }
 
-    PPredicate<String> eqOrNull(String value);
+    default PPredicate eq(String value){
+        return new StringValuePredicate(this, DomainPredicate.EQ, value);
+    }
 
-    PPredicate<String> iEq(String value);
+    default PPredicate iEq(String value){
+        return new StringValuePredicate(this, DomainPredicate.I_EQ, value);
+    }
 
-    PPredicate<String> iNotEq(String value);
+    default PPredicate iIn(Collection<String> values) {
+        return new StringValuePredicate(this, DomainPredicate.I_IN, values);
+    }
 
-    PPredicate<String> iNotEqOrNull(String value);
+    default PPredicate iIn(String... values) {
+        return new StringValuePredicate(this, DomainPredicate.I_IN, Arrays.asList(values));
+    }
 
-    PPredicate<String> iEqOrNull(String value);
+    default PPredicate in(Collection<String> values){
+        return new StringValuePredicate(this, DomainPredicate.I_IN, values);
+    }
 
-    PPredicate<String> iIn(Collection<? extends CharSequence> values);
+    default PPredicate in(String... values){
+        return new StringValuePredicate(this, DomainPredicate.IN, Arrays.asList(values));
+    }
 
-    PPredicate<String> iIn(String... values);
+    default PPredicate startWith(String value){
+        return new StringValuePredicate(this, DomainPredicate.START_WITH, value);
+    }
 
-    PPredicate<String> in(Collection<? extends CharSequence> values);
+    default PPredicate endWith(String value){
+        return new StringValuePredicate(this, DomainPredicate.END_WITH, value);
+    }
 
-    PPredicate<String> in(String... values);
+    default PPredicate contains(String value){
+        return new StringValuePredicate(this, DomainPredicate.CONTAINS, value);
+    }
 
-    PPredicate<String> iNotIn(Collection<? extends CharSequence> values);
+    default PPredicate iStartWith(String value){
+        return new StringValuePredicate(this, DomainPredicate.I_START_WITH, value);
+    }
 
-    PPredicate<String> iNotIn(String... values);
+    default PPredicate iEndWith(String value){
+        return new StringValuePredicate(this, DomainPredicate.I_END_WITH, value);
+    }
 
-    PPredicate<String> notIn(Collection<? extends CharSequence> values);
-
-    PPredicate<String> notIn(String... values);
-
-    PPredicate<String> startWith(String value);
-
-    PPredicate<String> endWith(String value);
-
-    PPredicate<String> contains(String value);
-
-    PPredicate<String> iStartWith(String value);
-
-    PPredicate<String> iEndWith(String value);
-
-    PPredicate<String> iContains(String value);
+    default PPredicate iContains(String value){
+        return new StringValuePredicate(this, DomainPredicate.I_CONTAINS, value);
+    }
 }

@@ -39,7 +39,7 @@ public class NotificationRepository extends AbstractPlatypusRepository<Notificat
     }
 
     @Override
-    public int count(Function<Notification, PPredicate<?>> domain) {
+    public int count(Function<Notification, PPredicate> domain) {
         return 0;
     }
 }

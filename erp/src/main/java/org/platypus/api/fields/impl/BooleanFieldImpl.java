@@ -4,6 +4,8 @@ import org.platypus.api.fields.BooleanField;
 import org.platypus.api.query.QueryPath;
 import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.api.query.domain.visitor.field.BooleanValuePredicate;
+import org.platypus.api.query.projection.PProjection;
+import org.platypus.api.query.projection.visitor.field.BooleanProjection;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -30,17 +32,22 @@ public class BooleanFieldImpl extends AbstractFieldImpl<Boolean> implements Bool
     }
 
     @Override
-    public PPredicate<Boolean> eq(Boolean value) {
+    public PProjection getProjection() {
+        return new BooleanProjection(this);
+    }
+
+    @Override
+    public PPredicate eq(Boolean value) {
         return value ? isTrue() : isFalse();
     }
 
     @Override
-    public PPredicate<Boolean> isTrue() {
+    public PPredicate isTrue() {
         return BooleanValuePredicate.isTrue(this);
     }
 
     @Override
-    public PPredicate<Boolean> isFalse() {
+    public PPredicate isFalse() {
         return BooleanValuePredicate.isFalse(this);
     }
 

@@ -5,8 +5,6 @@ import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.api.query.projection.PProjection;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
 /**
  * @author chmuchme
@@ -17,71 +15,71 @@ public interface SimpleQuery<R extends Record>{
 
     Class<R> getTypeClass();
 
-    SimpleQuery<R> get(Function<R, PProjection> field1);
+    SimpleQuery<R> get(ProjectionGetter<R> field1);
 
     //<editor-fold desc="Over load method newRecord">
-    SimpleQuery<R> get(Function<R, PProjection> field1,
-                       Function<R, PProjection> field2);
+    SimpleQuery<R> get(ProjectionGetter<R> field1,
+                       ProjectionGetter<R> field2);
 
-    SimpleQuery<R> get(Function<R, PProjection> field1,
-                       Function<R, PProjection> field2,
-                       Function<R, PProjection> field3);
+    SimpleQuery<R> get(ProjectionGetter<R> field1,
+                       ProjectionGetter<R> field2,
+                       ProjectionGetter<R> field3);
 
-    SimpleQuery<R> get(Function<R, PProjection> field1,
-                       Function<R, PProjection> field2,
-                       Function<R, PProjection> field3,
-                       Function<R, PProjection> field4);
+    SimpleQuery<R> get(ProjectionGetter<R> field1,
+                       ProjectionGetter<R> field2,
+                       ProjectionGetter<R> field3,
+                       ProjectionGetter<R> field4);
 
-    SimpleQuery<R> get(Function<R, PProjection> field1,
-                       Function<R, PProjection> field2,
-                       Function<R, PProjection> field3,
-                       Function<R, PProjection> field4,
-                       Function<R, PProjection> field5);
+    SimpleQuery<R> get(ProjectionGetter<R> field1,
+                       ProjectionGetter<R> field2,
+                       ProjectionGetter<R> field3,
+                       ProjectionGetter<R> field4,
+                       ProjectionGetter<R> field5);
 
-    SimpleQuery<R> get(Function<R, PProjection> field1,
-                       Function<R, PProjection> field2,
-                       Function<R, PProjection> field3,
-                       Function<R, PProjection> field4,
-                       Function<R, PProjection> field5,
-                       Function<R, PProjection> field6);
+    SimpleQuery<R> get(ProjectionGetter<R> field1,
+                       ProjectionGetter<R> field2,
+                       ProjectionGetter<R> field3,
+                       ProjectionGetter<R> field4,
+                       ProjectionGetter<R> field5,
+                       ProjectionGetter<R> field6);
 
-    SimpleQuery<R> get(Function<R, PProjection> field1,
-                       Function<R, PProjection> field2,
-                       Function<R, PProjection> field3,
-                       Function<R, PProjection> field4,
-                       Function<R, PProjection> field5,
-                       Function<R, PProjection> field6,
-                       Function<R, PProjection> field7);
+    SimpleQuery<R> get(ProjectionGetter<R> field1,
+                       ProjectionGetter<R> field2,
+                       ProjectionGetter<R> field3,
+                       ProjectionGetter<R> field4,
+                       ProjectionGetter<R> field5,
+                       ProjectionGetter<R> field6,
+                       ProjectionGetter<R> field7);
 
-    SimpleQuery<R> get(Function<R, PProjection> field1,
-                       Function<R, PProjection> field2,
-                       Function<R, PProjection> field3,
-                       Function<R, PProjection> field4,
-                       Function<R, PProjection> field5,
-                       Function<R, PProjection> field6,
-                       Function<R, PProjection> field7,
-                       Function<R, PProjection> field8);
+    SimpleQuery<R> get(ProjectionGetter<R> field1,
+                       ProjectionGetter<R> field2,
+                       ProjectionGetter<R> field3,
+                       ProjectionGetter<R> field4,
+                       ProjectionGetter<R> field5,
+                       ProjectionGetter<R> field6,
+                       ProjectionGetter<R> field7,
+                       ProjectionGetter<R> field8);
 
-    SimpleQuery<R> get(Function<R, PProjection> field1,
-                       Function<R, PProjection> field2,
-                       Function<R, PProjection> field3,
-                       Function<R, PProjection> field4,
-                       Function<R, PProjection> field5,
-                       Function<R, PProjection> field6,
-                       Function<R, PProjection> field7,
-                       Function<R, PProjection> field8,
-                       Function<R, PProjection> field9);
+    SimpleQuery<R> get(ProjectionGetter<R> field1,
+                       ProjectionGetter<R> field2,
+                       ProjectionGetter<R> field3,
+                       ProjectionGetter<R> field4,
+                       ProjectionGetter<R> field5,
+                       ProjectionGetter<R> field6,
+                       ProjectionGetter<R> field7,
+                       ProjectionGetter<R> field8,
+                       ProjectionGetter<R> field9);
 
-    SimpleQuery<R> get(Function<R, PProjection> field1,
-                       Function<R, PProjection> field2,
-                       Function<R, PProjection> field3,
-                       Function<R, PProjection> field4,
-                       Function<R, PProjection> field5,
-                       Function<R, PProjection> field6,
-                       Function<R, PProjection> field7,
-                       Function<R, PProjection> field8,
-                       Function<R, PProjection> field9,
-                       Function<R, PProjection> field10);
+    SimpleQuery<R> get(ProjectionGetter<R> field1,
+                       ProjectionGetter<R> field2,
+                       ProjectionGetter<R> field3,
+                       ProjectionGetter<R> field4,
+                       ProjectionGetter<R> field5,
+                       ProjectionGetter<R> field6,
+                       ProjectionGetter<R> field7,
+                       ProjectionGetter<R> field8,
+                       ProjectionGetter<R> field9,
+                       ProjectionGetter<R> field10);
     //</editor-fold>
 
     SimpleQuery<R> filter(Domain<R> predicate);
@@ -198,26 +196,26 @@ public interface SimpleQuery<R extends Record>{
     //</editor-fold>
 
 
-    SimpleQuery<R> sortAsc(Function<R, PProjection> field1);
+    SimpleQuery<R> sortAsc(ProjectionGetter<R> field1);
 
-    SimpleQuery<R> sortAsc(Function<R, PProjection> field1,
-                           Function<R, PProjection> field2);
+    SimpleQuery<R> sortAsc(ProjectionGetter<R> field1,
+                           ProjectionGetter<R> field2);
 
-    SimpleQuery<R> sortAsc(Function<R, PProjection> field1,
-                           Function<R, PProjection> field2,
-                           Function<R, PProjection> field3);
+    SimpleQuery<R> sortAsc(ProjectionGetter<R> field1,
+                           ProjectionGetter<R> field2,
+                           ProjectionGetter<R> field3);
 
-    SimpleQuery<R> sortDesc(Function<R, PProjection> field1);
+    SimpleQuery<R> sortDesc(ProjectionGetter<R> field1);
 
-    SimpleQuery<R> sortDesc(Function<R, PProjection> field1,
-                            Function<R, PProjection> field2);
+    SimpleQuery<R> sortDesc(ProjectionGetter<R> field1,
+                            ProjectionGetter<R> field2);
 
-    SimpleQuery<R> sortDesc(Function<R, PProjection> field1,
-                            Function<R, PProjection> field2,
-                            Function<R, PProjection> field3);
+    SimpleQuery<R> sortDesc(ProjectionGetter<R> field1,
+                            ProjectionGetter<R> field2,
+                            ProjectionGetter<R> field3);
 
 
-    PPredicate<?> getPredicate(R instance);
+    PPredicate getPredicate(R instance);
 
     boolean getAllField();
 

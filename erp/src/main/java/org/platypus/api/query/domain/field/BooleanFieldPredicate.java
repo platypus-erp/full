@@ -11,7 +11,7 @@ import org.platypus.api.query.domain.visitor.PPredicate;
  */
 public interface BooleanFieldPredicate extends Pathable, PlatypusField<Boolean> {
 
-    PPredicate<Boolean> eq(Boolean value);
-    PPredicate<Boolean> isTrue();
-    PPredicate<Boolean> isFalse();
+    PPredicate eq(Boolean value);
+    PPredicate isTrue();
+    PPredicate isFalse();
 }

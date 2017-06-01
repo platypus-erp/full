@@ -13,26 +13,6 @@ import org.gradle.plugins.ide.idea.IdeaPlugin
  * @author chmuchme
  * @since 0.1
  * on 21/04/17.
- * task platypus_records(type: JavaExec) {
- classpath = sourceSets.models.runtimeClasspath
- main = 'org.platypus.builder.QuickRecordBuilder'
- arguments to pass to the application
- args(project.platypus.getArgs())
- }task platypus_module_info(type: JavaExec) {
- dependsOn platypus_records
- classpath = sourceSets.models.runtimeClasspath
- main = 'org.platypus.builder.ModuleInfoBuilder'
- args(project.platypus.getArgs())
- }task platypus_views(type: JavaExec) {
- classpath = sourceSets.main.runtimeClasspath
- main = 'org.platypus.builder.core.views.ViewsFinder'
- // arguments to pass to the application
- args = ["${sourceSets.main.resources.srcDirs}", "${project.group}", "${project.name}", "${project.projectDir}"]
- }task platypus_build(type: JavaExec) {
- classpath = sourceSets.main.runtimeClasspath
- main = 'org.platypus.builder.PlatypusBuilder'
- args(project.platypus.getArgs())
- }
  */
 class PlatypusGradlePlugin implements Plugin<Project> {
     void apply(Project project) {

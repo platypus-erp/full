@@ -5,6 +5,8 @@ import org.platypus.api.query.QueryPath;
 import org.platypus.api.query.domain.DomainPredicate;
 import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.api.query.domain.visitor.field.BinaryValuePredicate;
+import org.platypus.api.query.projection.PProjection;
+import org.platypus.api.query.projection.visitor.field.BinaryProjection;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -28,12 +30,17 @@ public class BinaryFieldImpl extends AbstractFieldImpl<byte[]> implements Binary
     }
 
     @Override
-    public PPredicate<byte[]> isNotNull() {
+    public PPredicate isNotNull() {
         return new BinaryValuePredicate(this, DomainPredicate.IS_NOT_NULL);
     }
 
     @Override
-    public PPredicate<byte[]> isNull() {
+    public PProjection getProjection() {
+        return new BinaryProjection(this);
+    }
+
+    @Override
+    public PPredicate isNull() {
         return new BinaryValuePredicate(this, DomainPredicate.IS_NULL);
     }
 }

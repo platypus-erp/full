@@ -2,6 +2,8 @@ package org.platypus.api.fields.impl;
 
 import org.platypus.api.fields.IntField;
 import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.projection.PProjection;
+import org.platypus.api.query.projection.visitor.field.IntProjection;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -26,6 +28,11 @@ public class IntFieldImpl extends AbstractFieldImpl<Integer> implements IntField
                         Consumer<Integer> setter,
                         Integer defaultValue) {
         super(table, name, getPath, getter, setter);
+    }
+
+    @Override
+    public PProjection getProjection() {
+        return new IntProjection(this);
     }
 
     @Override

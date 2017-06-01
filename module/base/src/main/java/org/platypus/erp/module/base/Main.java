@@ -1,4 +1,4 @@
-package org.platypus.erp.module.base.models;
+package org.platypus.erp.module.base;
 
 import org.platypus.builder.PlatypusBuilder;
 

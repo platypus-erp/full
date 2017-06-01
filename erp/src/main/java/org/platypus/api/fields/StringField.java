@@ -2,14 +2,7 @@ package org.platypus.api.fields;
 
 
 import org.platypus.api.PlatypusField;
-import org.platypus.api.query.QueryPath;
 import org.platypus.api.query.domain.field.StringFieldPredicate;
-import org.platypus.api.query.domain.visitor.PPredicate;
-import org.platypus.api.query.projection.PProjection;
-import org.platypus.api.query.projection.ProjectionGroupVisitor;
-import org.platypus.api.query.projection.ProjectionVisitor;
-
-import java.util.Collection;
 
 /**
  * TODO Add JavaDoc
@@ -18,7 +11,7 @@ import java.util.Collection;
  * @version 0.1
  * @since 0.1
  */
-public interface StringField extends PlatypusField<String> {
+public interface StringField extends PlatypusField<String>, StringFieldPredicate {
 
 
 

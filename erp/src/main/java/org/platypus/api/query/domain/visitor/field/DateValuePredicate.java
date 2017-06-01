@@ -13,13 +13,15 @@ import java.util.Collection;
  * @since 0.1
  * on 26/05/17.
  */
-public class DateValuePredicate implements PPredicate<LocalDate> {
+public class DateValuePredicate implements PPredicate {
 
     DateFieldPredicate field;
     DomainPredicate sqlPredicate;
     LocalDate value;
     LocalDate value2;
     Collection<LocalDate> values;
+    private boolean not;
+    private boolean orNull;
 
     public DateValuePredicate(DateFieldPredicate field, DomainPredicate sqlPredicate, LocalDate value, LocalDate value2) {
         this.field = field;
@@ -68,5 +70,21 @@ public class DateValuePredicate implements PPredicate<LocalDate> {
     @Override
     public void accept(PredicateVisitor predicateVisitor) {
         predicateVisitor.visit(this);
+    }
+
+    @Override
+    public PPredicate not() {
+        this.not = true;
+        return this;
+    }
+
+    @Override
+    public PPredicate orNull() {
+        this.orNull = true;
+        return this;
+    }
+
+    public boolean isNot() {
+        return not;
     }
 }

@@ -2,6 +2,8 @@ package org.platypus.api.fields.impl;
 
 import org.platypus.api.fields.DateTimeField;
 import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.projection.PProjection;
+import org.platypus.api.query.projection.visitor.field.DateTimeProjection;
 
 import java.time.LocalDateTime;
 import java.util.function.Consumer;
@@ -26,6 +28,11 @@ public class DateTimeFieldImpl extends AbstractFieldImpl<LocalDateTime> implemen
                              Consumer<LocalDateTime> setter,
                              LocalDateTime def) {
         super(table, name, getPath, getter, setter);
+    }
+
+    @Override
+    public PProjection getProjection() {
+        return new DateTimeProjection(this);
     }
 
     @Override

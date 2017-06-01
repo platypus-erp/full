@@ -2,13 +2,13 @@ package org.platypus.erp.manager.impl;
 
 import org.platypus.api.Record;
 import org.platypus.api.query.Domain;
-import org.platypus.api.query.SimpleQuery;
 import org.platypus.api.query.Domain.DomainCombinator;
+import org.platypus.api.query.ProjectionGetter;
+import org.platypus.api.query.SimpleQuery;
 import org.platypus.api.query.domain.visitor.PPredicate;
 import org.platypus.api.query.projection.PProjection;
 
 import java.util.List;
-import java.util.function.Function;
 
 
 /**
@@ -43,58 +43,58 @@ public class SimpleQueryImpl<T extends Record> implements SimpleQuery<T> {
         return projection.isEmpty();
     }
 
-    public PPredicate<?> getPredicate(T instance){
+    public PPredicate getPredicate(T instance){
         return domain.apply(instance);
     }
 
     @Override
-    public SimpleQuery<T> get(Function<T, PProjection> field1) {
+    public SimpleQuery<T> get(ProjectionGetter<T> field1) {
         projection.addProjection(field1);
         return this;
     }
 
     @Override
-    public SimpleQuery<T> get(Function<T, PProjection> field1, Function<T, PProjection> field2) {
+    public SimpleQuery<T> get(ProjectionGetter<T> field1, ProjectionGetter<T> field2) {
         return get(field1).get(field2);
     }
 
     @Override
-    public SimpleQuery<T> get(Function<T, PProjection> field1, Function<T, PProjection> field2, Function<T, PProjection> field3) {
+    public SimpleQuery<T> get(ProjectionGetter<T> field1, ProjectionGetter<T> field2, ProjectionGetter<T> field3) {
         return get(field1, field2).get(field3);
     }
 
     @Override
-    public SimpleQuery<T> get(Function<T, PProjection> field1, Function<T, PProjection> field2, Function<T, PProjection> field3, Function<T, PProjection> field4) {
+    public SimpleQuery<T> get(ProjectionGetter<T> field1, ProjectionGetter<T> field2, ProjectionGetter<T> field3, ProjectionGetter<T> field4) {
         return get(field1, field2, field3).get(field4);
     }
 
     @Override
-    public SimpleQuery<T> get(Function<T, PProjection> field1, Function<T, PProjection> field2, Function<T, PProjection> field3, Function<T, PProjection> field4, Function<T, PProjection> field5) {
+    public SimpleQuery<T> get(ProjectionGetter<T> field1, ProjectionGetter<T> field2, ProjectionGetter<T> field3, ProjectionGetter<T> field4, ProjectionGetter<T> field5) {
         return get(field1, field2, field3, field4).get(field5);
     }
 
     @Override
-    public SimpleQuery<T> get(Function<T, PProjection> field1, Function<T, PProjection> field2, Function<T, PProjection> field3, Function<T, PProjection> field4, Function<T, PProjection> field5, Function<T, PProjection> field6) {
+    public SimpleQuery<T> get(ProjectionGetter<T> field1, ProjectionGetter<T> field2, ProjectionGetter<T> field3, ProjectionGetter<T> field4, ProjectionGetter<T> field5, ProjectionGetter<T> field6) {
         return get(field1, field2, field3, field4, field5).get(field6);
     }
 
     @Override
-    public SimpleQuery<T> get(Function<T, PProjection> field1, Function<T, PProjection> field2, Function<T, PProjection> field3, Function<T, PProjection> field4, Function<T, PProjection> field5, Function<T, PProjection> field6, Function<T, PProjection> field7) {
+    public SimpleQuery<T> get(ProjectionGetter<T> field1, ProjectionGetter<T> field2, ProjectionGetter<T> field3, ProjectionGetter<T> field4, ProjectionGetter<T> field5, ProjectionGetter<T> field6, ProjectionGetter<T> field7) {
         return get(field1, field2, field3, field4, field5, field6).get(field7);
     }
 
     @Override
-    public SimpleQuery<T> get(Function<T, PProjection> field1, Function<T, PProjection> field2, Function<T, PProjection> field3, Function<T, PProjection> field4, Function<T, PProjection> field5, Function<T, PProjection> field6, Function<T, PProjection> field7, Function<T, PProjection> field8) {
+    public SimpleQuery<T> get(ProjectionGetter<T> field1, ProjectionGetter<T> field2, ProjectionGetter<T> field3, ProjectionGetter<T> field4, ProjectionGetter<T> field5, ProjectionGetter<T> field6, ProjectionGetter<T> field7, ProjectionGetter<T> field8) {
         return get(field1, field2, field3, field4, field5, field6, field7).get(field8);
     }
 
     @Override
-    public SimpleQuery<T> get(Function<T, PProjection> field1, Function<T, PProjection> field2, Function<T, PProjection> field3, Function<T, PProjection> field4, Function<T, PProjection> field5, Function<T, PProjection> field6, Function<T, PProjection> field7, Function<T, PProjection> field8, Function<T, PProjection> field9) {
+    public SimpleQuery<T> get(ProjectionGetter<T> field1, ProjectionGetter<T> field2, ProjectionGetter<T> field3, ProjectionGetter<T> field4, ProjectionGetter<T> field5, ProjectionGetter<T> field6, ProjectionGetter<T> field7, ProjectionGetter<T> field8, ProjectionGetter<T> field9) {
         return get(field1, field2, field3, field4, field5, field6, field7, field8).get(field9);
     }
 
     @Override
-    public SimpleQuery<T> get(Function<T, PProjection> field1, Function<T, PProjection> field2, Function<T, PProjection> field3, Function<T, PProjection> field4, Function<T, PProjection> field5, Function<T, PProjection> field6, Function<T, PProjection> field7, Function<T, PProjection> field8, Function<T, PProjection> field9, Function<T, PProjection> field10) {
+    public SimpleQuery<T> get(ProjectionGetter<T> field1, ProjectionGetter<T> field2, ProjectionGetter<T> field3, ProjectionGetter<T> field4, ProjectionGetter<T> field5, ProjectionGetter<T> field6, ProjectionGetter<T> field7, ProjectionGetter<T> field8, ProjectionGetter<T> field9, ProjectionGetter<T> field10) {
         return get(field1, field2, field3, field4, field5, field6, field7, field8, field9).get(field10);
     }
 
@@ -174,20 +174,20 @@ public class SimpleQueryImpl<T extends Record> implements SimpleQuery<T> {
     }
 
     @Override
-    public SimpleQuery<T> sortAsc(Function<T, PProjection> field1) {
+    public SimpleQuery<T> sortAsc(ProjectionGetter<T> field1) {
         querySort.addAsc(field1);
         return this;
     }
 
     @Override
-    public SimpleQuery<T> sortAsc(Function<T, PProjection> field1, Function<T, PProjection> field2) {
+    public SimpleQuery<T> sortAsc(ProjectionGetter<T> field1, ProjectionGetter<T> field2) {
         querySort.addAsc(field1);
         querySort.addAsc(field2);
         return this;
     }
 
     @Override
-    public SimpleQuery<T> sortAsc(Function<T, PProjection> field1, Function<T, PProjection> field2, Function<T, PProjection> field3) {
+    public SimpleQuery<T> sortAsc(ProjectionGetter<T> field1, ProjectionGetter<T> field2, ProjectionGetter<T> field3) {
         querySort.addAsc(field1);
         querySort.addAsc(field2);
         querySort.addAsc(field3);
@@ -195,20 +195,20 @@ public class SimpleQueryImpl<T extends Record> implements SimpleQuery<T> {
     }
 
     @Override
-    public SimpleQuery<T> sortDesc(Function<T, PProjection> field1) {
+    public SimpleQuery<T> sortDesc(ProjectionGetter<T> field1) {
         querySort.addDesc(field1);
         return this;
     }
 
     @Override
-    public SimpleQuery<T> sortDesc(Function<T, PProjection> field1, Function<T, PProjection> field2) {
+    public SimpleQuery<T> sortDesc(ProjectionGetter<T> field1, ProjectionGetter<T> field2) {
         querySort.addDesc(field1);
         querySort.addDesc(field2);
         return this;
     }
 
     @Override
-    public SimpleQuery<T> sortDesc(Function<T, PProjection> field1, Function<T, PProjection> field2, Function<T, PProjection> field3) {
+    public SimpleQuery<T> sortDesc(ProjectionGetter<T> field1, ProjectionGetter<T> field2, ProjectionGetter<T> field3) {
         querySort.addDesc(field1);
         querySort.addDesc(field2);
         querySort.addDesc(field3);

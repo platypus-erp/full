@@ -1,8 +1,6 @@
 package org.platypus.api.query.projection.visitor.field.agg;
 
 import org.platypus.api.PlatypusField;
-import org.platypus.api.query.projection.ProjectionGroupVisitor;
-import org.platypus.api.query.projection.ProjectionVisitor;
 import org.platypus.api.query.projection.visitor.field.AbstractFieldProjection;
 
 /**

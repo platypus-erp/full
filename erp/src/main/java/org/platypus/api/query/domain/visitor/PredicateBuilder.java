@@ -44,12 +44,14 @@ public class PredicateBuilder {
         switch (condition) {
             case EQ:
                 return cb.equal(path1, value);
-            case NOT_EQ:
-                return cb.notEqual(path1, value);
             default:
                 return null;
         }
 
+    }
+
+    public Predicate not(Predicate pPredicate, boolean not) {
+        return pPredicate != null && not ? pPredicate.not() : pPredicate;
     }
 
     public <Y extends Comparable<? super Y>> Predicate getPredicateComparable(Path<Y> path1,
@@ -84,11 +86,9 @@ public class PredicateBuilder {
         if (pre != null) {
             return pre;
         }
-        switch (condition){
+        switch (condition) {
             case IN:
                 return path1.in(condition);
-            case NOT_IN:
-                return path1.in(condition).not();
             default:
                 return null;
         }

@@ -18,6 +18,8 @@ public class StringValuePredicate implements PPredicate {
     String value;
     DomainPredicate predicate;
     Collection<String> valuesIn;
+    private boolean not;
+    private boolean orNull;
 
     public StringValuePredicate(StringFieldPredicate field, DomainPredicate predicate, String value) {
         this.field = field;
@@ -27,7 +29,25 @@ public class StringValuePredicate implements PPredicate {
 
     public StringValuePredicate(StringFieldPredicate field, DomainPredicate predicate, Collection<String> valuesIn) {
         this.field = field;
+        this.predicate = predicate;
         this.valuesIn = valuesIn;
+    }
+
+    public StringValuePredicate(StringFieldPredicate field, DomainPredicate predicate) {
+        this.field = field;
+        this.predicate = predicate;
+    }
+
+    @Override
+    public PPredicate not() {
+        this.not = true;
+        return this;
+    }
+
+    @Override
+    public PPredicate orNull() {
+        this.orNull = true;
+        return this;
     }
 
     public StringFieldPredicate getField() {
@@ -49,5 +69,9 @@ public class StringValuePredicate implements PPredicate {
     @Override
     public void accept(PredicateVisitor predicateVisitor) {
         predicateVisitor.visit(this);
+    }
+
+    public boolean isNot() {
+        return not;
     }
 }

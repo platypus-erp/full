@@ -2,6 +2,8 @@ package org.platypus.api.fields.impl;
 
 import org.platypus.api.fields.TimeField;
 import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.projection.PProjection;
+import org.platypus.api.query.projection.visitor.field.TimeProjection;
 
 import java.time.LocalTime;
 import java.util.function.Consumer;
@@ -27,6 +29,11 @@ public class TimeFieldImpl extends AbstractFieldImpl<LocalTime> implements TimeF
                          Consumer<LocalTime> setter,
                          LocalTime defaultNow) {
         super(table, name, getPath, getter, setter);
+    }
+
+    @Override
+    public PProjection getProjection() {
+        return new TimeProjection(this);
     }
 
     @Override

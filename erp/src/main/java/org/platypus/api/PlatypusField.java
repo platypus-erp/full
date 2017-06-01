@@ -1,5 +1,7 @@
 package org.platypus.api;
 
+import org.platypus.api.query.projection.PProjection;
+
 /**
  * TODO Add JavaDoc
  *
@@ -9,6 +11,8 @@ package org.platypus.api;
  */
 public interface PlatypusField<T> extends Namable, Pathable, EmptyCheckable, Booleanable {
     T get();
+
+    PProjection getProjection();
 
     void set(T value);
 

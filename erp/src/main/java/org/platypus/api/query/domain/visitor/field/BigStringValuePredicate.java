@@ -10,9 +10,11 @@ import org.platypus.api.query.domain.visitor.PredicateVisitor;
  * @since 0.1
  * on 26/05/17.
  */
-public class BigStringValuePredicate implements PPredicate<String> {
+public class BigStringValuePredicate implements PPredicate {
     BigStringFieldPredicate field;
     DomainPredicate condition;
+    private boolean not;
+    private boolean orNull;
 
     public BigStringValuePredicate(BigStringFieldPredicate field, DomainPredicate condition) {
         this.field = field;
@@ -30,5 +32,17 @@ public class BigStringValuePredicate implements PPredicate<String> {
     @Override
     public void accept(PredicateVisitor predicateVisitor) {
         predicateVisitor.visit(this);
+    }
+
+    @Override
+    public PPredicate not() {
+        this.not = true;
+        return this;
+    }
+
+    @Override
+    public PPredicate orNull() {
+        this.orNull = true;
+        return this;
     }
 }

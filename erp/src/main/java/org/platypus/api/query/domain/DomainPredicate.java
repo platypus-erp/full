@@ -11,22 +11,20 @@ import org.platypus.api.annotations.doc.InternalUse;
 public enum DomainPredicate {
     EQ,
     I_EQ,
-    NOT_EQ,
-    I_NOT_EQ,
     IN,
     I_IN,
-    NOT_IN,
-    I_NOT_IN,
     BETWEEN,
     LESS,
     LESS_EQ,
     MORE,
     MORE_EQ,
-    LIKE,
-    I_LIKE,
+    START_WITH,
+    END_WITH,
+    CONTAINS,
+    I_START_WITH,
+    I_END_WITH,
+    I_CONTAINS,
     IS_NOT_NULL,
     IS_NULL,
-    NOT_LIKE,
-    NOT_I_LIKE
 
 }

@@ -141,6 +141,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         BooleanFieldPredicate field = element.getField();
         Path<Boolean> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateEq(path1, element.getCondition(), element.getValue());
+        pre = predicateBuilder.not(pre, element.isNot());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
     }
 
@@ -152,6 +153,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         Path<LocalDateTime> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateComparable(
                 path1, element.getCondition(), element.getValue(), element.getValue2());
+        pre = predicateBuilder.not(pre, element.isNot());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
     }
 
@@ -163,6 +165,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         Path<LocalDate> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateComparable(
                 path1, element.getCondition(), element.getValue(), element.getValue2());
+        pre = predicateBuilder.not(pre, element.isNot());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
     }
 
@@ -177,6 +180,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         if (pre == null) {
             pre = predicateBuilder.getPredicateIn(path1, element.getCondition(), element.getValuesIn());
         }
+        pre = predicateBuilder.not(pre, element.isNot());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
     }
 
@@ -191,6 +195,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         if (pre == null) {
             pre = predicateBuilder.getPredicateIn(path1, element.getCondition(), element.getValuesIn());
         }
+        pre = predicateBuilder.not(pre, element.isNot());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
     }
 
@@ -205,6 +210,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         if (pre == null) {
             pre = predicateBuilder.getPredicateIn(path1, element.getCondition(), element.getValuesIn());
         }
+        pre = predicateBuilder.not(pre, element.isNot());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
     }
 
@@ -219,6 +225,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         if (pre == null) {
             pre = predicateBuilder.getPredicateIn(path1, element.getCondition(), element.getValuesIn());
         }
+        pre = predicateBuilder.not(pre, element.isNot());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
     }
 
@@ -242,31 +249,32 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
             case I_EQ:
                 pre = cb.equal(cb.upper(path1), element.getValue().toUpperCase());
                 break;
-            case I_NOT_EQ:
-                pre = cb.notEqual(cb.upper(path1), element.getValue().toUpperCase());
+            case START_WITH:
+                pre = cb.like(path1, "%"+element.getValue());
                 break;
-            case LIKE:
-                pre = cb.like(path1, element.getValue());
+            case END_WITH:
+                pre = cb.like(cb.upper(path1), element.getValue().toUpperCase()+"%");
                 break;
-            case I_LIKE:
-                pre = cb.like(cb.upper(path1), element.getValue().toUpperCase());
+            case CONTAINS:
+                pre = cb.notLike(cb.upper(path1), "%"+element.getValue().toUpperCase()+"%");
                 break;
-            case NOT_LIKE:
-                pre = cb.notLike(cb.upper(path1), element.getValue().toUpperCase());
+            case I_START_WITH:
+                pre = cb.notLike(cb.upper(path1), "%"+element.getValue().toUpperCase());
                 break;
-            case NOT_I_LIKE:
-                pre = cb.notLike(cb.upper(path1), element.getValue().toUpperCase());
+            case I_END_WITH:
+                pre = cb.notLike(cb.upper(path1), element.getValue().toUpperCase()+"%");
+                break;
+            case I_CONTAINS:
+                pre = cb.notLike(cb.upper(path1), "%"+element.getValue().toUpperCase()+"%");
                 break;
             case I_IN:
                 pre = cb.upper(path1).in(element.getValuesIn().stream()
                         .map(String::toUpperCase).collect(Collectors.toSet()));
                 break;
-            case I_NOT_IN:
-                pre = cb.upper(path1).in(element.getValuesIn().stream()
-                        .map(String::toUpperCase).collect(Collectors.toSet())).not();
             default:
                 pre = null;
         }
+        pre = predicateBuilder.not(pre, element.isNot());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
     }
 
@@ -279,6 +287,7 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         Path<LocalTime> path1 = PlatypusToJpa.getJoin(field.getPath().reverse(), tableJoin, root).get(field.getPath().columnName);
         Predicate pre = predicateBuilder.getPredicateComparable(
                 path1, element.getCondition(), element.getValue(), element.getValue2());
+        pre = predicateBuilder.not(pre, element.isNot());
         currentPredicate = predicateBuilder.requiredNonNull(element.getCondition(), field.getPath().toString(), pre);
     }
 
@@ -288,7 +297,8 @@ public class JpaPredicateVisitorImpl<T extends Record> implements PredicateVisit
         element.getPredicate().accept(visitor);
         visitor.visit(element.getCombinator());
         element.getNext().accept(visitor);
-        currentPredicate = visitor.buildPredicate();
+
+        currentPredicate = predicateBuilder.not(visitor.buildPredicate(), element.isNot());
     }
 
     @Override

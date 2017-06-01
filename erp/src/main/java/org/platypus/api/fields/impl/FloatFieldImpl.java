@@ -2,6 +2,8 @@ package org.platypus.api.fields.impl;
 
 import org.platypus.api.fields.FloatField;
 import org.platypus.api.query.QueryPath;
+import org.platypus.api.query.projection.PProjection;
+import org.platypus.api.query.projection.visitor.field.FloatProjection;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -28,6 +30,11 @@ public class FloatFieldImpl extends AbstractFieldImpl<Float> implements FloatFie
                           Consumer<Float> setter,
                           Float def) {
         super(table, name, getPath, getter, setter);
+    }
+
+    @Override
+    public PProjection getProjection() {
+        return new FloatProjection(this);
     }
 
     @Override

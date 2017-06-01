@@ -9,7 +9,7 @@ import org.platypus.api.query.domain.visitor.PPredicate;
  * on 26/05/17.
  */
 public interface BinaryFieldPredicate extends FieldPredicate , PlatypusField<byte[]> {
-    PPredicate<byte[]> isNotNull();
+    PPredicate isNotNull();
 
-    PPredicate<byte[]> isNull();
+    PPredicate isNull();
 }

@@ -2,6 +2,10 @@ package org.platypus.api.fields;
 
 
 import org.platypus.api.PlatypusField;
+import org.platypus.api.query.domain.field.ComparableFieldPredicate;
+import org.platypus.api.query.domain.visitor.PPredicate;
+
+import java.util.Collection;
 
 /**
  * TODO Add JavaDoc
@@ -10,7 +14,57 @@ import org.platypus.api.PlatypusField;
  * @version 0.1
  * @since 0.1
  */
-public interface LongField extends PlatypusField<Long> {
+public interface LongField extends PlatypusField<Long> , ComparableFieldPredicate<Long>{
+
+    @Override
+    default PPredicate isNull() {
+        return null;
+    }
+
+    @Override
+    default PPredicate isNotNull() {
+        return null;
+    }
+
+    @Override
+    default PPredicate eq(Long value) {
+        return null;
+    }
+
+    @Override
+    default PPredicate lessThan(Long value) {
+        return null;
+    }
+
+    @Override
+    default PPredicate lessOrEq(Long value) {
+        return null;
+    }
+
+    @Override
+    default PPredicate moreThan(Long value) {
+        return null;
+    }
+
+    @Override
+    default PPredicate moreOrEq(Long value) {
+        return null;
+    }
+
+    @Override
+    default PPredicate between(Long value1, Long value2) {
+        return null;
+    }
+
+    @Override
+    default PPredicate in(Collection<Long> values) {
+        return null;
+    }
+
+    @Override
+    default PPredicate in(Long... values) {
+        return null;
+    }
 
 //    static LongField of(long value){
 //        return new EmptyLongField(value);

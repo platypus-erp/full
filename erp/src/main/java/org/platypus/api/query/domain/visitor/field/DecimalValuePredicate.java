@@ -19,6 +19,8 @@ public class DecimalValuePredicate implements PPredicate {
     BigDecimal value;
     BigDecimal value2;
     Collection<BigDecimal> valuesIn;
+    private boolean not;
+    private boolean orNull;
 
     public DecimalValuePredicate(DecimalFieldPredicate field, DomainPredicate condition, Collection<BigDecimal> valuesIn) {
         this.field = field;
@@ -55,5 +57,21 @@ public class DecimalValuePredicate implements PPredicate {
     @Override
     public void accept(PredicateVisitor predicateVisitor) {
         predicateVisitor.visit(this);
+    }
+
+    @Override
+    public PPredicate not() {
+        this.not = true;
+        return this;
+    }
+
+    @Override
+    public PPredicate orNull() {
+        this.orNull = true;
+        return this;
+    }
+
+    public boolean isNot() {
+        return not;
     }
 }

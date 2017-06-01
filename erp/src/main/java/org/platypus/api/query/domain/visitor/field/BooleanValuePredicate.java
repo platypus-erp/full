@@ -10,9 +10,11 @@ import org.platypus.api.query.domain.visitor.PredicateVisitor;
  * @since 0.1
  * on 26/05/17.
  */
-public class BooleanValuePredicate implements PPredicate<Boolean> {
+public class BooleanValuePredicate implements PPredicate {
     BooleanFieldPredicate field;
     boolean value;
+    private boolean not;
+    private boolean orNull;
 
     public static BooleanValuePredicate isTrue(BooleanFieldPredicate field){
         return new BooleanValuePredicate(field, true);
@@ -32,7 +34,7 @@ public class BooleanValuePredicate implements PPredicate<Boolean> {
     }
 
     public DomainPredicate getCondition() {
-        return value ? DomainPredicate.EQ : DomainPredicate.NOT_EQ;
+        return DomainPredicate.EQ;
     }
 
     public boolean getValue() {
@@ -42,5 +44,21 @@ public class BooleanValuePredicate implements PPredicate<Boolean> {
     @Override
     public void accept(PredicateVisitor predicateVisitor) {
         predicateVisitor.visit(this);
+    }
+
+    @Override
+    public PPredicate not() {
+        this.not = true;
+        return this;
+    }
+
+    @Override
+    public PPredicate orNull() {
+        this.orNull = true;
+        return this;
+    }
+
+    public boolean isNot() {
+        return not;
     }
 }

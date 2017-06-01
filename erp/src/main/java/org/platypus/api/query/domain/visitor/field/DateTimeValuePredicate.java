@@ -12,12 +12,14 @@ import java.time.LocalDateTime;
  * @since 0.1
  * on 26/05/17.
  */
-public class DateTimeValuePredicate implements PPredicate<LocalDateTime> {
+public class DateTimeValuePredicate implements PPredicate {
 
     DateTimeFieldPredicate field;
     DomainPredicate sqlPredicate;
     LocalDateTime value;
     LocalDateTime value2;
+    private boolean not;
+    private boolean orNull;
 
     public DateTimeValuePredicate(DateTimeFieldPredicate field, DomainPredicate sqlPredicate, LocalDateTime value, LocalDateTime value2) {
         this.field = field;
@@ -47,5 +49,21 @@ public class DateTimeValuePredicate implements PPredicate<LocalDateTime> {
     @Override
     public void accept(PredicateVisitor predicateVisitor) {
         predicateVisitor.visit(this);
+    }
+
+    @Override
+    public PPredicate not() {
+        this.not = true;
+        return this;
+    }
+
+    @Override
+    public PPredicate orNull() {
+        this.orNull = true;
+        return this;
+    }
+
+    public boolean isNot() {
+        return not;
     }
 }
