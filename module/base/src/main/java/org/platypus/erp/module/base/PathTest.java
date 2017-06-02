@@ -49,7 +49,22 @@ public class PathTest extends PlatypusService<BaseUsersRecord> {
 
     @Api.One
     @Api.Extend
-    public BaseUsersRecord myBusinessMethod(BaseUsersRecord record, SuperMethod<BaseUsersRecord> Super){
+    public BaseUsersRecord myBusinessMethod(BaseUsersRecord record, String tt){
+        return record;
+    }
+
+    interface BaseUser{
+        interface MyBusinessMethod{
+            BaseUsersRecord myBusinessMethod(BaseUsersRecord record, String tt, BaseUser.MyBusinessMethod Super);
+            BaseUsersRecord myBusinessMethod(BaseUsersRecord record, String tt);
+        }
+    }
+
+
+    @Api.One
+    @Api.Extend
+    public BaseUsersRecord myBusinessMethod(BaseUsersRecord record, String tt, BaseUser.MyBusinessMethod Super){
+        BaseUsersRecord rr = Super.myBusinessMethod(record, tt, Super);
         return record;
     }
 
