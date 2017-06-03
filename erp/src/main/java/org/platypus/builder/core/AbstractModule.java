@@ -8,6 +8,7 @@ import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.api.module.MetaInfoRecord;
 import org.platypus.api.module.MetaInfoRecordCollection;
 import org.platypus.api.module.PlatypusCompleteModuleInfo;
+import org.platypus.api.service.PlatypusService;
 import org.platypus.impl.module.MetaInfoRecordCollectionImpl;
 import org.platypus.impl.module.MetaInfoRecordImpl;
 
@@ -84,6 +85,10 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
                 recordOf.modelClassName(),
                 recordOf.modelPkg());
         metaInfoRecordCollectionMap.put(recordOf.modelClassName(), metaInfoRecord);
+    }
+
+    protected void addServiceMethodeRoot(Class<? extends PlatypusService> classSevice) {
+
     }
 
     protected void setLongDesc(String filename) {

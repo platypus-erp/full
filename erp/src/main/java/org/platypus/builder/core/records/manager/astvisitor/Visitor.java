@@ -149,7 +149,7 @@ public class Visitor extends VoidVisitorAdapter<Void> implements AstModel{
 
     @Override
     public String toString() {
-        System.out.println("Visitor{" +
+        System.out.println("ServiceVisitor{" +
                 "\nclassName='" + className + '\'' +
                 ",\npkg='" + pkg + '\'' +
                 ",\nisRootModel=" + isRootModel +

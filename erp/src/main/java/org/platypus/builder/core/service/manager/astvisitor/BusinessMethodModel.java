@@ -1,4 +1,4 @@
-package org.platypus.builder.core.records.manager.astvisitor;
+package org.platypus.builder.core.service.manager.astvisitor;
 
 import com.squareup.javapoet.ClassName;
 import org.platypus.api.fields.Bool;
@@ -8,7 +8,7 @@ import org.platypus.api.fields.Bool;
  * @since 0.1
  * on 22/04/17.
  */
-public class FieldModel {
+public class BusinessMethodModel {
 
     ClassName annotatedWith;
     String annotatedWithName;

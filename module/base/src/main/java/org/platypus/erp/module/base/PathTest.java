@@ -1,7 +1,5 @@
 package org.platypus.erp.module.base;
 
-import org.platypus.api.SuperMethod;
-import org.platypus.api.SuperMultiMethod;
 import org.platypus.api.service.PlatypusService;
 import org.platypus.erp.module.base.models.generated.records.BaseUsersRecord;
 
@@ -46,43 +44,4 @@ public class PathTest extends PlatypusService<BaseUsersRecord> {
                 ).sortAsc(BaseUsersRecord::login)
         );
     }
-
-    @Api.One
-    @Api.Extend
-    public BaseUsersRecord myBusinessMethod(BaseUsersRecord record, String tt){
-        return record;
-    }
-
-    interface BaseUser{
-        interface MyBusinessMethod{
-            BaseUsersRecord myBusinessMethod(BaseUsersRecord record, String tt, BaseUser.MyBusinessMethod Super);
-            BaseUsersRecord myBusinessMethod(BaseUsersRecord record, String tt);
-        }
-    }
-
-
-    @Api.One
-    @Api.Extend
-    public BaseUsersRecord myBusinessMethod(BaseUsersRecord record, String tt, BaseUser.MyBusinessMethod Super){
-        BaseUsersRecord rr = Super.myBusinessMethod(record, tt, Super);
-        return record;
-    }
-
-    @Api.Multi
-    @Api.New
-    public List<BaseUsersRecord> myBusinessMethodMulti(List<BaseUsersRecord> record, SuperMultiMethod<BaseUsersRecord> Super){
-        return record;
-    }
-
-    @Api.Empty
-    public BaseUsersRecord myBusinessMethodEmpty(BaseUsersRecord record, SuperMethod<BaseUsersRecord> Super){
-        return record;
-    }
-
-    @Api.Empty
-    public List<BaseUsersRecord> myBusinessMethodEmpty(List<BaseUsersRecord> record, SuperMultiMethod<BaseUsersRecord> Super){
-        return record;
-    }
-
-
 }

@@ -89,7 +89,7 @@ public class ModuleInfoBuilder {
                 .build();
         try {
             file.writeTo(MainArgs.toPathToMainJava(mainArgs.projectDirStr).toFile());
-            Path pathservices = MainArgs.toPathToMainServices(mainArgs.projectDirStr);
+            Path pathservices = MainArgs.toPathToGenerate(mainArgs.projectDirStr);
             if (!Files.exists(pathservices)) {
                 Files.createDirectories(pathservices);
             }
