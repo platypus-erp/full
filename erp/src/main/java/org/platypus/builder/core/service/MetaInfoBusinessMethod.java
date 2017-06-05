@@ -1,7 +1,6 @@
 package org.platypus.builder.core.service;
 
-import java.lang.annotation.Annotation;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,23 +9,31 @@ import java.util.List;
  * on 02/06/17.
  */
 public class MetaInfoBusinessMethod {
-
-    public final String pkgName;
-    public final String methodName;
     public final String className;
-    public final Class<? extends Annotation> anno;
+    public final String pkgClassName;
+    public final String methodName;
+    public final String pkgReturnType;
+    public final String returnType;
     public final List<MetaInfoBusinessMethodParam> params;
 
-    public MetaInfoBusinessMethod(String pkgName, String className, String methodName, Class<? extends Annotation> anno, List<MetaInfoBusinessMethodParam> params) {
-        this.pkgName = pkgName;
+    public MetaInfoBusinessMethod(String pkgClassName,String className,String methodName,
+                                  String pkgReturnType,
+                                  String returnType) {
+        this.pkgClassName = pkgClassName;
         this.className = className;
         this.methodName = methodName;
-        this.anno = anno;
-        this.params = Collections.unmodifiableList(params);
+        this.pkgReturnType = pkgReturnType;
+        this.returnType = returnType;
+        this.params = new ArrayList<>();
     }
 
     @Override
     public String toString() {
-        return pkgName + '.' + className + '.' + methodName;
+        return "MetaInfoBusinessMethod{" +
+                "methodName='" + methodName + '\'' +
+                ", pkgReturnType='" + pkgReturnType + '\'' +
+                ", returnType='" + returnType + '\'' +
+                ", params=" + params +
+                '}';
     }
 }

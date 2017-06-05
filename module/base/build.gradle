@@ -9,6 +9,9 @@ apply plugin: 'war'
 repositories {
     mavenCentral()
 }
+compileJava {
+    options.compilerArgs << '-parameters'
+}
 buildscript {
     repositories {
         maven {
@@ -37,6 +40,7 @@ dependencies {
     compile 'javax.validation:validation-api:1.1.0.Final'
     compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
     compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+    compile 'com.github.javaparser:java-symbol-solver-core:0.5.5'
 }
 
 jar {
@@ -69,6 +73,11 @@ task platypus_views(type: JavaExec) {
     main = 'org.platypus.builder.core.views.ViewsFinder'
     // arguments to pass to the application
     args = ["${sourceSets.main.resources.srcDirs}", "${project.group}", "${project.name}", "${project.projectDir}"]
+}
+
+task main(type: JavaExec){
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'org.platypus.erp.module.base.Main'
 }
 
 clean {

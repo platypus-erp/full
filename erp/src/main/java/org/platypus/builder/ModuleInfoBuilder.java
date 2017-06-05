@@ -59,7 +59,7 @@ public class ModuleInfoBuilder {
         moduleInfo.superclass(abstractModule);
 
         AnnotationSpec.Builder moduleInfoAnnotation = AnnotationSpec.builder(ModuleInfo.class);
-        moduleInfoAnnotation.addMember("name", "$S", mainArgs.modulename);
+        moduleInfoAnnotation.addMember("methodName", "$S", mainArgs.modulename);
         moduleInfoAnnotation.addMember("moduleVersion", "$S", mainArgs.moduleVersion);
         if (mainArgs.depends.length > 0) {
             String format = StringUtils.repeat("$S", ", ", mainArgs.depends.length);

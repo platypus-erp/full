@@ -27,6 +27,7 @@ dependencies {
     compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
     compile 'org.apache.commons:commons-lang3:3.5'
     compile 'com.github.javaparser:javaparser-core:3.0.1'
+    compile 'com.github.javaparser:java-symbol-solver-model:0.5.5'
     compile 'com.j2html:j2html:0.99'
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'org.freemarker:freemarker:2.3.25-incubating'

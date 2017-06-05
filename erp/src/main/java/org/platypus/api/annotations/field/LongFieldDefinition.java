@@ -40,7 +40,7 @@ public @interface LongFieldDefinition {
      * (Optional) If the this column will be unique,<br>
      * if an another aggregate use the same hint(case insensitive)<br>
      * the the SQL Unique constraint will be above the two column<br>
-     * The Unique constraint name will be UK_<target>_<hint> (ex :  UK_PARTNER_EMAIL)<br>
+     * The Unique constraint methodName will be UK_<target>_<hint> (ex :  UK_PARTNER_EMAIL)<br>
      * <bold>Warning</bold> if the default value is the same for all same hint value a compile error will be throw<br>
      * To erase the unique constraint set the hint to the default value witch is ""<br>
      */

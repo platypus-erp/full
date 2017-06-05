@@ -89,7 +89,7 @@ public class BasicFieldRecordGetterGenerator {
     private Optional<MethodSpec.Builder> getGetter(String name, TypeName field){
         return Optional.of(MethodSpec.methodBuilder(name)
                 .returns(field)
-//                .addCode("return $N;\n", name+"Field")
+//                .addCode("return $N;\n", methodName+"Field")
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC));
     }

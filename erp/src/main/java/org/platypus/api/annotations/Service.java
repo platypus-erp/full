@@ -1,5 +1,7 @@
 package org.platypus.api.annotations;
 
+import org.platypus.api.BaseModel;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -13,8 +15,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Service {
-    Class<?> service();
-    String name();
+    Class<? extends BaseModel> value();
 
 
     @Retention(RetentionPolicy.RUNTIME)

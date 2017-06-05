@@ -27,7 +27,7 @@ public class ListViewRelationColumnImpl extends AbstractColumn implements ListVi
     }
 
     public ListViewRelationColumnImpl setSubProperty(String subProperty) {
-        this.subProperty = StringUtils.defaultIfBlank(subProperty, "name");
+        this.subProperty = StringUtils.defaultIfBlank(subProperty, "methodName");
         return this;
     }
 

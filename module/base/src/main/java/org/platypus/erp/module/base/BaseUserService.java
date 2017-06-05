@@ -1,6 +1,8 @@
 package org.platypus.erp.module.base;
 
+import org.platypus.api.ServiceApi;
 import org.platypus.api.annotations.Service;
+import org.platypus.erp.module.base.models.Users;
 
 import java.util.List;
 
@@ -9,9 +11,9 @@ import java.util.List;
  * @since 0.1
  * on 02/06/17.
  */
-public interface BaseUserService {
+public interface BaseUserService extends ServiceApi {
 
-    @Service(service = Inherit0.class, name = "myBusinessMethod")
+    @Service(Users.class)
     @FunctionalInterface
     interface MyBusinessMethod {
         @FunctionalInterface

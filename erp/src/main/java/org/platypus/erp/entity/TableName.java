@@ -12,7 +12,7 @@ public interface TableName {
 
     /**
      *
-     * @return The table name of the entity
+     * @return The table methodName of the entity
      */
     String getTableName();
 }

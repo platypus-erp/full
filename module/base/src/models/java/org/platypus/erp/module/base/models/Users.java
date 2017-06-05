@@ -21,7 +21,7 @@ import org.platypus.api.fields.NewField;
  * on 11/04/17.
  */
 @PlatypusModel("users")
-@ModelOrderBy(asc = {"name", "login"})
+@ModelOrderBy(asc = {"methodName", "login"})
 public class Users implements BaseModel {
 
     @Label("Related Partner")

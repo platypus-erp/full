@@ -100,7 +100,7 @@
     <define name="header-filters-element">
         <element name="header-filters">
             <zeroOrMore>
-                <!--<ref name="filter-element"/>-->
+                <!--<methodNamename="filter-element"/>-->
                 <ref name="group-filter-element"/>
             </zeroOrMore>
         </element>

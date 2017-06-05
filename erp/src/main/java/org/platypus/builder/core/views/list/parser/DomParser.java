@@ -82,7 +82,7 @@ public class DomParser {
         for (int count = 0; count < nodeList.getLength(); count++) {
             Node currentNode = nodeList.item(count);
             if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
-                // get node name and value
+                // get node methodName and value
                 System.out.println("\nNode Name =" + currentNode.getNodeName() + " [OPEN]");
                 if (Structure.GROUP_FILTER.equals(currentNode.getNodeName())) {
                     Element e = Element.class.cast(currentNode);
@@ -127,7 +127,7 @@ public class DomParser {
         for (int count = 0; count < nodeList.getLength(); count++) {
             Node currentNode = nodeList.item(count);
             if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
-                // get node name and value
+                // get node methodName and value
                 System.out.println("\nNode Name =" + currentNode.getNodeName() + " [OPEN]");
                 System.out.println("Node Value =" + currentNode.getTextContent());
                 dataTableView.addColumn(

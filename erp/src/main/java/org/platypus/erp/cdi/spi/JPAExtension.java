@@ -32,7 +32,7 @@ public class JPAExtension implements Extension {
 //        for (AnnotatedField a : annotatedFileds) {
 //            JoinColumn jc = a.getAnnotation(JoinColumn.class);
 //            String tableTargetName = null;
-//            String columnName = jc.name();
+//            String columnName = jc.methodName();
 //            String relType = "OTO";
 //            boolean opt = a.isAnnotationPresent(NotNull.class);
 //            if (a.isAnnotationPresent(ManyToOne.class)) {

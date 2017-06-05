@@ -70,9 +70,9 @@ public abstract class AbstractPlatypusRepository<E extends Record> implements Pl
 
     @Override
     public List<E> getList(ListFilter listFilter) {
-//        Optional<String> name = EntityRegistry.INSTANCE.getName(clazz);
-//        if (name.isPresent()) {
-//            String target = name.newRecord();
+//        Optional<String> methodName = EntityRegistry.INSTANCE.getName(clazz);
+//        if (methodName.isPresent()) {
+//            String target = methodName.newRecord();
 //            ListConf conf = columnsCache.getColumns(target);
 //            try (org.jooq.Query step = createQuery(conf, listFilter, target)) {
 //                javax.persistence.Query result = em.createNativeQuery(step.getSQL(), clazz);
@@ -113,9 +113,9 @@ public abstract class AbstractPlatypusRepository<E extends Record> implements Pl
 
     @Override
     public int count(Filter<E> filter) {
-//        Optional<String> name = EntityRegistry.INSTANCE.getName(clazz);
-//        if (name.isPresent()) {
-//            try (org.jooq.Query step = selectCount().from(table(name.newRecord()))) {
+//        Optional<String> methodName = EntityRegistry.INSTANCE.getName(clazz);
+//        if (methodName.isPresent()) {
+//            try (org.jooq.Query step = selectCount().from(table(methodName.newRecord()))) {
 //                javax.persistence.Query query = em.createNativeQuery(step.getSQL());
 //                return Number.class.cast(query.getSingleResult()).intValue();
 //            }

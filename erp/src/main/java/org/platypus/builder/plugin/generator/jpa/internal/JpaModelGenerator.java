@@ -80,7 +80,7 @@ public class JpaModelGenerator {
 
         jpaImplBuilder.addAnnotation(AnnotationSpec
                 .builder(Table.class)
-                .addMember("name", "$N.$N", className, "MODEL_NAME")
+                .addMember("methodName", "$N.$N", className, "MODEL_NAME")
                 .build());
 
         jpaImplBuilder.addAnnotation(Entity.class);
@@ -155,13 +155,13 @@ public class JpaModelGenerator {
         MethodSpec.Builder constructor = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
         constructor.addModifiers(Modifier.PUBLIC);
         constructor.addParameter(JavaPoetTypeUtils.STRING_TYPE, "table");
-        constructor.addParameter(JavaPoetTypeUtils.STRING_TYPE, "name");
+        constructor.addParameter(JavaPoetTypeUtils.STRING_TYPE, "methodName");
         constructor.addParameter(getPath, "getPath");
         constructor.addParameter(functionGetter, "getter");
         constructor.addParameter(functionSetter, "setter");
 
         constructor.addCode("super($N, $N, $N, $N, $N);\n",
-                "table", "name", "getPath", "getter", "setter");
+                "table", "methodName", "getPath", "getter", "setter");
 
         recordCollectionImpl.addMethod(constructor.build());
         return recordCollectionImpl;
@@ -192,12 +192,12 @@ public class JpaModelGenerator {
         MethodSpec.Builder constructor = MethodSpec.constructorBuilder();
         constructor.addModifiers(Modifier.PUBLIC);
         constructor.addParameter(JavaPoetTypeUtils.STRING_TYPE, "table");
-        constructor.addParameter(JavaPoetTypeUtils.STRING_TYPE, "name");
+        constructor.addParameter(JavaPoetTypeUtils.STRING_TYPE, "methodName");
         constructor.addParameter(getPath, "getPath");
         constructor.addParameter(functionGetter, "getter");
         constructor.addParameter(functionSetter, "setter");
 
-        constructor.addCode("super($N, $N, $N, $N, $N, $T::new);\n", "table", "name", "getPath", "getter", "setter", recordTargetImpl);
+        constructor.addCode("super($N, $N, $N, $N, $N, $T::new);\n", "table", "methodName", "getPath", "getter", "setter", recordTargetImpl);
 
         recordImpl.addMethod(constructor.build());
 

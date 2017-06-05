@@ -44,7 +44,7 @@ public class Notification implements Record{
     }
 
     private Notification(String title, String message) {
-//        this.name = title;
+//        this.methodName = title;
         this.message = message;
     }
 

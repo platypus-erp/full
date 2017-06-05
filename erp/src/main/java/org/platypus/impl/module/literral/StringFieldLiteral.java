@@ -216,7 +216,7 @@ public class StringFieldLiteral implements StringFieldSetter {
     @Override
     public String toString() {
         return "StringFieldLiteral{" +
-                "name='" + name + '\'' +
+                "methodName='" + name + '\'' +
                 ", match='" + match + '\'' +
                 ", removeSpace=" + removeSpace +
                 ", maxSize=" + maxSize +

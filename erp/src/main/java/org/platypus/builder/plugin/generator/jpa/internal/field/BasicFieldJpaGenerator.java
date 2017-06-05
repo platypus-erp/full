@@ -60,7 +60,7 @@ public class BasicFieldJpaGenerator {
     public static final String NULLABLE = "nullable";
     public static final String INSERTABLE = "insertable";
     public static final String UPDATABLE = "updatable";
-    public static final String NAME = "name";
+    public static final String NAME = "methodName";
     public static final String $_T_$_L = "$T.$L";
     public static final String $_S = "$S";
     public static final String LITTERAL = "$L";
@@ -267,7 +267,7 @@ public class BasicFieldJpaGenerator {
         addCascadeExpression(field.cascade(), manyToOne);
         f.addAnnotation(manyToOne.build());
         f.addAnnotation(AnnotationSpec.builder(JoinColumn.class)
-                .addMember("name", $_S, "\"" + Utils.TO_SQL.apply(field.getName()) + "\"")
+                .addMember("methodName", $_S, "\"" + Utils.TO_SQL.apply(field.getName()) + "\"")
                 .addMember("updatable", LITTERAL, ValuesUtils.isTrueOrDefault(field.updatable()))
                 .build());
         return Optional.of(f.build());
@@ -286,7 +286,7 @@ public class BasicFieldJpaGenerator {
         addCascadeExpression(field.cascade(), oneToOne);
         f.addAnnotation(oneToOne.build());
         f.addAnnotation(AnnotationSpec.builder(JoinColumn.class)
-                .addMember("name", "$S", "\"" + Utils.TO_SQL.apply(field.getName()) + "\"")
+                .addMember("methodName", "$S", "\"" + Utils.TO_SQL.apply(field.getName()) + "\"")
                 .addMember("updatable", "$L", ValuesUtils.isTrueOrDefault(field.updatable()))
                 .build());
         return Optional.of(f.build());
@@ -305,7 +305,7 @@ public class BasicFieldJpaGenerator {
         addCascadeExpression(field.cascade(), oneToMany);
         f.addAnnotation(oneToMany.build());
         f.addAnnotation(AnnotationSpec.builder(JoinColumn.class)
-                .addMember("name", "$S", "\"" + Utils.TO_SQL.apply(field.getName()) + "\"")
+                .addMember("methodName", "$S", "\"" + Utils.TO_SQL.apply(field.getName()) + "\"")
                 .addMember("updatable", "$L", ValuesUtils.isTrueOrDefault(field.updatable()))
                 .build());
         return Optional.of(f.build());
@@ -325,7 +325,7 @@ public class BasicFieldJpaGenerator {
 
 
         f.addAnnotation(AnnotationSpec.builder(JoinColumn.class)
-                .addMember("name", "$S", "\"" + Utils.TO_SQL.apply(field.getName()) + "\"")
+                .addMember("methodName", "$S", "\"" + Utils.TO_SQL.apply(field.getName()) + "\"")
                 .addMember("updatable", "$L", ValuesUtils.isTrueOrDefault(field.updatable()))
                 .build());
         return Optional.of(f.build());

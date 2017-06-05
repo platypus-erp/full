@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation to define a new model
  * <br/>
- * The value will be the table name following the SQL format
+ * The value will be the table methodName following the SQL format
  * <br/>
  * <b>This annotation can only be apply above a java public class</b>
  * <br/>
@@ -36,7 +36,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface PlatypusMixin {
     /**
-     * Define the table name of the generated entity
+     * Define the table methodName of the generated entity
      * <br/>
      * The value can only accept <bold>letter</bold> or dot <bold>.</bold><br>
      * The value is not case sensitive, all the dot will be replace by "_"

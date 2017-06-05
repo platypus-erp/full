@@ -1,4 +1,4 @@
-package org.platypus.erp.module.base;
+package test.base;
 
 import org.platypus.api.BaseModel;
 import org.platypus.api.annotations.Service;

@@ -29,7 +29,7 @@ public interface GenericEntity {
 
     @NotBlank
     @Size(max = 100)
-    @Column(name = "name")
+    @Column(name = "methodName")
     String name = null;
 
     @Size(max = 100)

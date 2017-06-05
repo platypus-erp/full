@@ -46,7 +46,7 @@ public class ColumnBuilderFactory {
 
     static ColumnBuilder getBuilder(String nodeName){
         ListViewColumn.ColumnType col = ListViewColumn.ColumnType.fromXmlName(nodeName);
-        System.out.println("request for node name : "+ nodeName+ "col find : "+ col);
+        System.out.println("request for node methodName : "+ nodeName+ "col find : "+ col);
         return map.get(col);
     }
 

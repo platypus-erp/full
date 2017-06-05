@@ -61,6 +61,6 @@ public class SecurityInitializer {
 
         BasicModel.grantRole(relationshipManager, user, role);
 
-        LOG.info("User[{}] created with password[{}] and role name [{}]", loginName, password.getValue(), roleName);
+        LOG.info("User[{}] created with password[{}] and role methodName [{}]", loginName, password.getValue(), roleName);
     }
 }

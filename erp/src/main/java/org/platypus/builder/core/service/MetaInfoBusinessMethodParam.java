@@ -1,5 +1,7 @@
 package org.platypus.builder.core.service;
 
+import java.util.List;
+
 /**
  * @author chmuchme
  * @since 0.1
@@ -7,13 +9,22 @@ package org.platypus.builder.core.service;
  */
 public class MetaInfoBusinessMethodParam {
 
-    public final String pkgName;
+    public final String pkg;
+    public final List<String> type;
     public final String name;
-    public final boolean nullable;
 
-    public MetaInfoBusinessMethodParam(String pkgName, String name, boolean nullable) {
-        this.pkgName = pkgName;
+    public MetaInfoBusinessMethodParam(String pkg, List<String> type, String name) {
+        this.pkg = pkg;
+        this.type = type;
         this.name = name;
-        this.nullable = nullable;
+    }
+
+    @Override
+    public String toString() {
+        return "MetaInfoBusinessMethodParam{" +
+                "pkg='" + pkg + '\'' +
+                ", type='" + type + '\'' +
+                ", methodName='" + name + '\'' +
+                '}';
     }
 }

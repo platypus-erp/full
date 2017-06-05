@@ -43,6 +43,7 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
     private final Map<String, MetaInfoRecordCollection> metaInfoRecordCollectionMap;
     private final Set<Locale> supportedLocal;
     final ReflectiveModelParser parser = new ReflectiveModelParser();
+    final ReflectiveServiceParser serviceParser = new ReflectiveServiceParser();
 
     public AbstractModule(String name) {
         ModuleInfo info = this.getClass().getAnnotation(ModuleInfo.class);
@@ -87,8 +88,8 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
         metaInfoRecordCollectionMap.put(recordOf.modelClassName(), metaInfoRecord);
     }
 
-    protected void addServiceMethodeRoot(Class<? extends PlatypusService> classSevice) {
-
+    protected void addClassService(Class<? extends PlatypusService> classSevice) {
+        serviceParser.parse(classSevice);
     }
 
     protected void setLongDesc(String filename) {

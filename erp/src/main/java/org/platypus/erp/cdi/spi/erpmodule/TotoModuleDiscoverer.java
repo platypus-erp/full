@@ -21,7 +21,7 @@ public class TotoModuleDiscoverer implements Extension {
     private final Logger LOG = LoggerFactory.getLogger(TotoModuleDiscoverer.class);
 
     <T extends TotoModuleDec> void processAnnotatedType(@Observes @WithAnnotations(TotoModule.class) ProcessAnnotatedType<T> pat) {
-        LOG.info("Toto Module detected[{}] with name [{}]",
+        LOG.info("Toto Module detected[{}] with methodName [{}]",
                 pat.getAnnotatedType().getJavaClass().getName(),
                 pat.getAnnotatedType().getAnnotation(TotoModule.class).name());
     }

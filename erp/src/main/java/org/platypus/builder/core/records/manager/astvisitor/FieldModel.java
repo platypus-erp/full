@@ -42,7 +42,7 @@ public class FieldModel {
         return "BusinessMethodModel{" +
                 "\nannotatedWith=" + annotatedWith +
                 "\nannotatedWithName=" + annotatedWithName +
-                "\nname='" + name + "'" +
+                "\nmethodName='" + name + "'" +
                 "\nnewField=" + newField +
                 "\nreadonly=" + readonly +
                 "\nclassNameTarget=" + classNameTarget +
