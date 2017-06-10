@@ -1,8 +1,10 @@
 package org.platypus.builder;
 
+import org.platypus.api.annotations.Service;
 import org.platypus.builder.core.MainArgs;
 import org.platypus.builder.core.records.manager.ModelsFinder;
 import org.platypus.builder.core.records.manager.QuickRecordGenerator;
+import org.platypus.builder.core.service.ServiceFinder;
 
 /**
  * @author chmuchme
@@ -17,7 +19,7 @@ public class QuickServiceBuilder {
 
     public static void run(MainArgs mainArgs) throws Exception {
         new QuickRecordGenerator(mainArgs.projectDirGenerated, mainArgs.defaultPkg, mainArgs.modulename,
-                ModelsFinder.run(mainArgs.modelsDir))
+                )
                 .generateRecord();
     }
 }

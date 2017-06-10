@@ -1,7 +1,7 @@
 package org.platypus.erp.module.base;
 
-import org.platypus.api.BaseModel;
 import org.platypus.api.annotations.Service;
+import org.platypus.erp.module.BaseUserService;
 import org.platypus.erp.module.base.models.Users;
 
 import java.util.List;

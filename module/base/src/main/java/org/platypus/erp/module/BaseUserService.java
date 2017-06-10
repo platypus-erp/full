@@ -1,7 +1,10 @@
-package org.platypus.erp.module.base;
+package org.platypus.erp.module;
 
 import org.platypus.api.ServiceApi;
 import org.platypus.api.annotations.Service;
+import org.platypus.api.annotations.ServiceInfo;
+import org.platypus.api.annotations.ServiceInfoType;
+import org.platypus.erp.module.base.Inherit0;
 import org.platypus.erp.module.base.models.Users;
 
 import java.util.List;
@@ -13,16 +16,15 @@ import java.util.List;
  */
 public interface BaseUserService extends ServiceApi {
 
-    @Service(Users.class)
+    @ServiceInfo(model = Users.class, classHolder = Inherit0.class)
     @FunctionalInterface
-    interface MyBusinessMethod {
+    interface MyBusinessMethod extends ServiceInfoType{
         @FunctionalInterface
         @Service.Super
         interface Super {
             List<String> myBusinessMethod(List<String> record, String tt);
         }
         @Service.Multi
-        List<String> myBusinessMethod(List<String> record, String tt, BaseUserService.MyBusinessMethod.Super sup);
-
+        List<String> myBusinessMethod(List<String> record, String tt, Super sup);
     }
 }

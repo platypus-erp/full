@@ -1,6 +1,7 @@
 package org.platypus.api.annotations;
 
 import org.platypus.api.BaseModel;
+import org.platypus.api.service.PlatypusService;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,37 +13,35 @@ import java.lang.annotation.Target;
  * @since 0.1
  * on 01/06/17.
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.SOURCE)
+@Target(ElementType.PACKAGE)
 public @interface Service {
-    Class<? extends BaseModel> value();
 
-
-    @Retention(RetentionPolicy.RUNTIME)
+    @Retention(RetentionPolicy.SOURCE)
     @Target(ElementType.TYPE)
     @interface Super{}
 
-    @Retention(RetentionPolicy.RUNTIME)
+    @Retention(RetentionPolicy.SOURCE)
     @Target(ElementType.METHOD)
     @interface One {
     }
 
-    @Retention(RetentionPolicy.RUNTIME)
+    @Retention(RetentionPolicy.SOURCE)
     @Target(ElementType.METHOD)
     @interface Multi {
     }
 
-    @Retention(RetentionPolicy.RUNTIME)
+    @Retention(RetentionPolicy.SOURCE)
     @Target(ElementType.METHOD)
     @interface Empty {
     }
 
-    @Retention(RetentionPolicy.RUNTIME)
+    @Retention(RetentionPolicy.SOURCE)
     @Target(ElementType.METHOD)
     @interface NoLogged {
     }
 
-    @Retention(RetentionPolicy.RUNTIME)
+    @Retention(RetentionPolicy.SOURCE)
     @Target(ElementType.METHOD)
     @interface InternalService {
     }

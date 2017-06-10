@@ -1,5 +1,6 @@
 package org.platypus.builder.core;
 
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.TypeSpec;
 import org.platypus.api.Namable;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
@@ -18,8 +19,10 @@ import org.platypus.builder.core.records.manager.ModelsFinder;
 import org.platypus.builder.core.records.manager.astvisitor.AstModel;
 import org.platypus.builder.core.records.tree.RecordTree;
 import org.platypus.builder.core.records.tree.RecordTreeBuilder;
+import org.platypus.builder.core.service.ServiceFinder;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ServiceLoader;
@@ -41,6 +44,7 @@ public class ModuleLoaderImpl implements ModuleLoader {
     private AstRecordRegistry recordRegistry;
     private TypeSpec.Builder moduleInfoBuilder;
     private Map<String, String> rootRecordSimpleName;
+    private Map<ClassName, List<TypeSpec>> newService;
     private final MainArgs mainArgs;
     private Set<AstModel> astModels;
     private Set<PlatypusCompleteModuleInfo> depends;
@@ -57,6 +61,7 @@ public class ModuleLoaderImpl implements ModuleLoader {
     public void parseCurrentProject() {
         parseProjectModels();
         parseProjectViews();
+        parseProjectService();
         loadDependecies();
         addCurrentRecordToRegistry();
     }
@@ -66,6 +71,10 @@ public class ModuleLoaderImpl implements ModuleLoader {
     }
 
     private void parseProjectViews() {
+    }
+
+    private void parseProjectService() {
+        newService = ServiceFinder.run(mainArgs.modelsDir);
     }
 
     private void addCurrentRecordToRegistry() {

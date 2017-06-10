@@ -1,14 +1,17 @@
-package base.test;
+package org.platypus.builder.core.service.manager.visitor;
+
+import javax.annotation.processing.ProcessingEnvironment;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author chmuchme
  * @since 0.1
  * on 05/06/17.
  */
-public class MapJavaLang {
+class MapJavaLang {
 
     public static final Map<String, String> javalangAnnotation = new HashMap<>();
     public static final Map<String, String> javalangType = new HashMap<>();
@@ -37,6 +40,11 @@ public class MapJavaLang {
         javalangException.put(IndexOutOfBoundsException.class.getSimpleName(), "java.lang");
         javalangException.put(InstantiationError.class.getSimpleName(), "java.lang");
         javalangException.put(InstantiationException.class.getSimpleName(), "java.lang");
+        javalangException.put(InternalError.class.getSimpleName(), "java.lang");
+        javalangException.put(InterruptedException.class.getSimpleName(), "java.lang");
+        javalangException.put(LinkageError.class.getSimpleName(), "java.lang");
+        javalangException.put(NegativeArraySizeException.class.getSimpleName(), "java.lang");
+        javalangException.put(NoClassDefFoundError.class.getSimpleName(), "java.lang");
 
         javalangType.put(Appendable.class.getSimpleName(), "java.lang");
         javalangType.put(AutoCloseable.class.getSimpleName(), "java.lang");
@@ -55,10 +63,35 @@ public class MapJavaLang {
         javalangType.put(Float.class.getSimpleName(), "java.lang");
         javalangType.put(InheritableThreadLocal.class.getSimpleName(), "java.lang");
         javalangType.put(Integer.class.getSimpleName(), "java.lang");
+        javalangType.put(Iterable.class.getSimpleName(), "java.lang");
+        javalangType.put(Long.class.getSimpleName(), "java.lang");
+        javalangType.put(Math.class.getSimpleName(), "java.lang");
+        javalangType.put(Number.class.getSimpleName(), "java.lang");
+        javalangType.put(Object.class.getSimpleName(), "java.lang");
+        javalangType.put(Package.class.getSimpleName(), "java.lang");
+        javalangType.put(Process.class.getSimpleName(), "java.lang");
+        javalangType.put(ProcessBuilder.class.getSimpleName(), "java.lang");
+        javalangType.put(Readable.class.getSimpleName(), "java.lang");
+        javalangType.put(Runnable.class.getSimpleName(), "java.lang");
+        javalangType.put(Runtime.class.getSimpleName(), "java.lang");
+        javalangType.put(RuntimePermission.class.getSimpleName(), "java.lang");
+        javalangType.put(SecurityManager.class.getSimpleName(), "java.lang");
+        javalangType.put(Short.class.getSimpleName(), "java.lang");
+        javalangType.put(StackTraceElement.class.getSimpleName(), "java.lang");
+        javalangType.put(StrictMath.class.getSimpleName(), "java.lang");
+        javalangType.put(String.class.getSimpleName(), "java.lang");
+        javalangType.put(StringBuffer.class.getSimpleName(), "java.lang");
+        javalangType.put(StringBuilder.class.getSimpleName(), "java.lang");
+        javalangType.put(System.class.getSimpleName(), "java.lang");
+        javalangType.put(Thread.class.getSimpleName(), "java.lang");
+        javalangType.put(ThreadGroup.class.getSimpleName(), "java.lang");
+        javalangType.put(ThreadLocal.class.getSimpleName(), "java.lang");
+        javalangType.put(Void.class.getSimpleName(), "java.lang");
 
         javalangAnnotation.put(Deprecated.class.getSimpleName(), "java.lang");
-        javalangAnnotation.put(Override.class.getSimpleName(), "java.lang");
         javalangAnnotation.put(FunctionalInterface.class.getSimpleName(), "java.lang");
+        javalangAnnotation.put(Override.class.getSimpleName(), "java.lang");
+        javalangAnnotation.put(SafeVarargs.class.getSimpleName(), "java.lang");
         javalangAnnotation.put(SuppressWarnings.class.getSimpleName(), "java.lang");
     }
 }

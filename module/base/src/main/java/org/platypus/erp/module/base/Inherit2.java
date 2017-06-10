@@ -1,5 +1,7 @@
 package org.platypus.erp.module.base;
 
+import org.platypus.erp.module.BaseUserService;
+
 import java.util.List;
 
 /**

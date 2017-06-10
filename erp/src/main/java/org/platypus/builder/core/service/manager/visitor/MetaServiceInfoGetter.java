@@ -1,11 +1,10 @@
-package base.test;
+package org.platypus.builder.core.service.manager.visitor;
 
+import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.ImportDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.TypeName;
 import org.platypus.api.annotations.Service;
 
 import java.util.HashMap;
@@ -16,10 +15,18 @@ import java.util.Map;
  * @since 0.1
  * on 22/04/17.
  */
-public class MyVisitor extends VoidVisitorAdapter<Void> {
+class MetaServiceInfoGetter extends VoidVisitorAdapter<Void> {
 
     Map<String, String> imports = new HashMap<>();
     ClassName model;
+
+    private MetaServiceInfoGetter() {}
+
+    public static MetaSeviceInfo get(CompilationUnit cu){
+        MetaServiceInfoGetter myVisitor = new MetaServiceInfoGetter();
+        cu.accept(myVisitor, null);
+        return new MetaSeviceInfo(myVisitor.imports, myVisitor.model);
+    }
 
     @Override
     public void visit(ImportDeclaration n, Void arg) {
@@ -36,11 +43,5 @@ public class MyVisitor extends VoidVisitorAdapter<Void> {
         ServiceAnnotationVisitor visitor = new ServiceAnnotationVisitor(imports);
         n.getAnnotationByClass(Service.class).ifPresent(a -> a.accept(visitor, null));
         model = visitor.getTypeService();
-    }
-
-    @Override
-    public void visit(MethodDeclaration n, Void arg) {
-        MethodServiceVisitor v = new MethodServiceVisitor();
-        n.accept(v, imports);
     }
 }

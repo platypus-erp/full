@@ -3,6 +3,8 @@ package org.platypus.builder.core;
 import org.apache.commons.io.IOUtils;
 import org.platypus.api.annotations.ModuleInfo;
 import org.platypus.api.annotations.PlatypusVersion;
+import org.platypus.api.annotations.Service;
+import org.platypus.api.annotations.ServiceInfo;
 import org.platypus.api.annotations.record.RecordOf;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
 import org.platypus.api.module.MetaInfoRecord;
@@ -88,8 +90,10 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
         metaInfoRecordCollectionMap.put(recordOf.modelClassName(), metaInfoRecord);
     }
 
-    protected void addClassService(Class<? extends PlatypusService> classSevice) {
-        serviceParser.parse(classSevice);
+    protected void addClassServiceMethod(Class<? extends ServiceInfo> serviceApiGenerated) {
+    }
+
+    protected void addClassService(Class<?> serviceApiGenerated) {
     }
 
     protected void setLongDesc(String filename) {

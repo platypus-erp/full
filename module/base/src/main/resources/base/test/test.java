@@ -1,5 +1,6 @@
 package test.base;
 
+import org.platypus.erp.module.BaseUserService;
 import org.platypus.api.BaseModel;
 import org.platypus.api.annotations.Service;
 import org.platypus.erp.module.base.models.Users;
@@ -25,7 +26,7 @@ public class Inherit1 implements BaseUserService.MyBusinessMethod {
     }
 
     @Service.Multi
-    public List<String> myBusinessMethod2(List<String> record, String tt, BaseUserService.MyBusinessMethod.Super Super) {
+    public List<String> myBusinessMethod2(List<String> record, String tt) {
         System.out.println(this.getClass().getName());
         record = Super.myBusinessMethod(record, tt);
         record.add(tt + "1");

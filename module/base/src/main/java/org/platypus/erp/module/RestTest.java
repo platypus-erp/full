@@ -1,6 +1,5 @@
 package org.platypus.erp.module;
 
-import org.platypus.erp.module.base.BaseUserService;
 import org.platypus.erp.module.base.Inherit0;
 import org.platypus.erp.module.base.Inherit1;
 import org.platypus.erp.module.base.Inherit2;

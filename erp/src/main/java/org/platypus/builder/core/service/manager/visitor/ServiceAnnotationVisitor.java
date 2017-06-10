@@ -1,4 +1,4 @@
-package base.test;
+package org.platypus.builder.core.service.manager.visitor;
 
 import com.github.javaparser.ast.expr.ClassExpr;
 import com.github.javaparser.ast.expr.SingleMemberAnnotationExpr;
@@ -13,7 +13,7 @@ import java.util.Map;
  * @since 0.1
  * on 05/06/17.
  */
-public class ServiceAnnotationVisitor extends VoidVisitorAdapter<Void> {
+class ServiceAnnotationVisitor extends VoidVisitorAdapter<Void> {
 
     private Map<String, String> imports;
     private ClassName typeService;
