@@ -1,7 +1,12 @@
 package org.platypus.api.module;
 
 
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.TypeSpec;
+import org.platypus.api.BaseModel;
+
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -28,4 +33,5 @@ public interface PlatypusCompleteModuleInfo extends ModuleInfo, ModelOfModuleInf
     Set<String> getMenus();
 
 
+    Map<Class<? extends BaseModel>, Class<?>> getServices();
 }

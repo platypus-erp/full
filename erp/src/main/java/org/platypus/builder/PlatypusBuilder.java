@@ -10,6 +10,7 @@ import org.platypus.builder.core.api.PlatypusPlugin;
 import org.platypus.builder.core.api.ProcessState;
 import org.platypus.builder.core.api.impl.Config;
 import org.platypus.builder.core.model.merger.ModelMerged;
+import org.platypus.builder.core.service.manager.ServiceGenerator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,8 +68,13 @@ public final class PlatypusBuilder {
 
     public void run() {
         System.out.println();
+        runDefaultGenerator();
         runModelProcessor();
         runPlugins(pluginsDiscovered.keySet().toArray(new String[0]));
+    }
+
+    private void runDefaultGenerator(){
+        ServiceGenerator.generateRecord(mainArgs, moduleLoader.getServiceRegistry().getServices());
     }
 
     public void runModelProcessor() {

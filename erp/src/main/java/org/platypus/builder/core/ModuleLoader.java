@@ -5,6 +5,7 @@ import org.platypus.builder.core.model.merger.ModelsMerged;
 import org.platypus.builder.core.model.tree.ModelTree;
 import org.platypus.builder.core.moduletree.ModuleTree;
 import org.platypus.builder.core.records.manager.AstRecordRegistry;
+import org.platypus.builder.core.service.manager.ServiceRegistry;
 
 /**
  * @author chmuchme
@@ -22,4 +23,6 @@ public interface ModuleLoader {
     ModelsMerged getModelsMerged();
 
     AstRecordRegistry getRecordRegistry();
+
+    ServiceRegistry getServiceRegistry();
 }

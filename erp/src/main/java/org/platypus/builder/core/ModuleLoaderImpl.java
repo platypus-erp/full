@@ -20,6 +20,7 @@ import org.platypus.builder.core.records.manager.astvisitor.AstModel;
 import org.platypus.builder.core.records.tree.RecordTree;
 import org.platypus.builder.core.records.tree.RecordTreeBuilder;
 import org.platypus.builder.core.service.ServiceFinder;
+import org.platypus.builder.core.service.manager.ServiceRegistry;
 
 import java.util.HashSet;
 import java.util.List;
@@ -42,6 +43,7 @@ public class ModuleLoaderImpl implements ModuleLoader {
     private RecordTree recordTree;
     private ModelsMerged modelsMerged;
     private AstRecordRegistry recordRegistry;
+    private ServiceRegistry serviceRegistry;
     private TypeSpec.Builder moduleInfoBuilder;
     private Map<String, String> rootRecordSimpleName;
     private Map<ClassName, List<TypeSpec>> newService;
@@ -63,7 +65,8 @@ public class ModuleLoaderImpl implements ModuleLoader {
         parseProjectViews();
         parseProjectService();
         loadDependecies();
-        addCurrentRecordToRegistry();
+        addServiceToRegistry();
+        addRecordToRegistry();
     }
 
     private void parseProjectModels() {
@@ -75,9 +78,19 @@ public class ModuleLoaderImpl implements ModuleLoader {
 
     private void parseProjectService() {
         newService = ServiceFinder.run(mainArgs.modelsDir);
+
+
     }
 
-    private void addCurrentRecordToRegistry() {
+    private void addServiceToRegistry() {
+        for(Map.Entry<ClassName, List<TypeSpec>> e : newService.entrySet()){
+            for (TypeSpec ts : e.getValue()){
+                serviceRegistry.addServiceRoot(mainArgs.modulename, e.getKey(), ts);
+            }
+        }
+    }
+
+    private void addRecordToRegistry() {
         rootRecordSimpleName = depends.stream()
                 .flatMap(p -> p.getModel().values().stream())
                 .collect(Collectors.toMap(MetaInfoModel::getClassName, Namable::getName));
@@ -118,6 +131,9 @@ public class ModuleLoaderImpl implements ModuleLoader {
         depends.forEach(m -> recordRegistry.addModuleFromServiceLoader(m.techincalName(), m));
 
         modelsMerged = new ModelMergerBuilder().build(treeField);
+
+
+        serviceRegistry = ServiceRegistry.init(mainArgs.modulename, depends);
         return depends;
     }
 
@@ -145,5 +161,10 @@ public class ModuleLoaderImpl implements ModuleLoader {
     @Override
     public AstRecordRegistry getRecordRegistry() {
         return recordRegistry;
+    }
+
+    @Override
+    public ServiceRegistry getServiceRegistry() {
+        return serviceRegistry;
     }
 }

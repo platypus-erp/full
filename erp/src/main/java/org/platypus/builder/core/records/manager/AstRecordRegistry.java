@@ -20,12 +20,10 @@ public class AstRecordRegistry {
     private final Map<String, MetaInfoRecordCollection> recordCollections;
     private final Map<String, MetaInfoRecord> recordsByName;
     private final Map<String, MetaInfoRecordCollection> recordCollectionsByName;
-    private final Map<String, Visitor> currentModuleModelMerged;
 
     public AstRecordRegistry() {
         records = new HashMap<>();
         recordCollections = new HashMap<>();
-        currentModuleModelMerged = new HashMap<>();
         recordsByName = new HashMap<>();
         recordCollectionsByName = new HashMap<>();
     }
@@ -73,7 +71,6 @@ public class AstRecordRegistry {
                 ",\n recordCollections=" + recordCollections +
                 ",\n recordsByName=" + recordsByName +
                 ",\n recordCollectionsByName=" + recordCollectionsByName +
-                ",\n currentModuleModelMerged=" + currentModuleModelMerged +
                 '}';
     }
 }
