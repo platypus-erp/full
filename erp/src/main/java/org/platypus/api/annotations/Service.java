@@ -14,8 +14,9 @@ import java.lang.annotation.Target;
  * on 01/06/17.
  */
 @Retention(RetentionPolicy.SOURCE)
-@Target(ElementType.PACKAGE)
+@Target(ElementType.TYPE)
 public @interface Service {
+    Class<? extends BaseModel> value();
 
     @Retention(RetentionPolicy.SOURCE)
     @Target(ElementType.TYPE)

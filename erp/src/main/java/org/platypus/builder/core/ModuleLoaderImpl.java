@@ -1,6 +1,7 @@
 package org.platypus.builder.core;
 
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import org.platypus.api.Namable;
 import org.platypus.api.fields.metainfo.MetaInfoModel;
@@ -22,6 +23,8 @@ import org.platypus.builder.core.records.tree.RecordTreeBuilder;
 import org.platypus.builder.core.service.ServiceFinder;
 import org.platypus.builder.core.service.manager.ServiceRegistry;
 
+import javax.lang.model.element.Modifier;
+import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +80,7 @@ public class ModuleLoaderImpl implements ModuleLoader {
     }
 
     private void parseProjectService() {
-        newService = ServiceFinder.run(mainArgs.modelsDir);
+        newService = ServiceFinder.run(mainArgs.serviceDir);
 
 
     }
@@ -85,7 +88,8 @@ public class ModuleLoaderImpl implements ModuleLoader {
     private void addServiceToRegistry() {
         for(Map.Entry<ClassName, List<TypeSpec>> e : newService.entrySet()){
             for (TypeSpec ts : e.getValue()){
-                serviceRegistry.addServiceRoot(mainArgs.modulename, e.getKey(), ts);
+                TypeSpec type = ts.toBuilder().addModifiers(Modifier.PUBLIC, Modifier.STATIC).build();
+                serviceRegistry.addServiceRoot(mainArgs.modulename, e.getKey(), type);
             }
         }
     }

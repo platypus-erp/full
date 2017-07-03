@@ -36,7 +36,9 @@ public class ServiceFinder {
                 .filter(p -> !Files.isDirectory(p))
                 .filter(javaMatcher::matches)
                 .map(ServiceFinder::parseJava)
-                .flatMap(cu -> ServiceCreator.getServices(cu).entrySet().stream())
+                .map(ServiceCreator::get)
+                .filter(ServiceCreator::isValid)
+                .flatMap(sc -> sc.getServices().entrySet().stream())
                 .collect(toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,

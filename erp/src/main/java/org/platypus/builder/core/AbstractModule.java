@@ -1,6 +1,7 @@
 package org.platypus.builder.core;
 
 import org.apache.commons.io.IOUtils;
+import org.platypus.api.BaseModel;
 import org.platypus.api.annotations.ModuleInfo;
 import org.platypus.api.annotations.PlatypusVersion;
 import org.platypus.api.annotations.Service;
@@ -45,7 +46,6 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
     private final Map<String, MetaInfoRecordCollection> metaInfoRecordCollectionMap;
     private final Set<Locale> supportedLocal;
     final ReflectiveModelParser parser = new ReflectiveModelParser();
-    final ReflectiveServiceParser serviceParser = new ReflectiveServiceParser();
 
     public AbstractModule(String name) {
         ModuleInfo info = this.getClass().getAnnotation(ModuleInfo.class);
@@ -110,6 +110,11 @@ public abstract class AbstractModule implements PlatypusCompleteModuleInfo {
             throw new IllegalArgumentException(
                     "Unable to find "+ this.getClass().getPackage().getName() +"::"+ filename);
         }
+    }
+
+    @Override
+    public Map<Class<? extends BaseModel>, Class<?>> getServices() {
+        return null;
     }
 
     protected void addLocal(Locale locale) {

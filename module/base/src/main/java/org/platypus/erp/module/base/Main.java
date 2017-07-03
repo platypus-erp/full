@@ -1,7 +1,8 @@
 package org.platypus.erp.module.base;
 
-import com.github.javaparser.JavaParser;
-import org.platypus.builder.core.ReflectiveServiceParser;
+import org.platypus.builder.PlatypusBuilder;
+
+import java.util.Arrays;
 
 /**
  * @author chmuchme
@@ -10,7 +11,26 @@ import org.platypus.builder.core.ReflectiveServiceParser;
  */
 public class Main {
     public static void main(String[] args) {
-
-        JavaParser.parse(Main.class.getResourceAsStream("test.java"));
+        String dir = args[0];
+        System.out.println(Arrays.toString(args));
+        PlatypusBuilder.main(
+                "--directory=" + dir,
+                "--modulename=base",
+                "--plugins=[display_tree_module(enable::false - opt::[output:TXT])]",
+                "--mainDir=" + dir + "/src/main/java",
+                "--modelsDir=" + dir + "/src/models/java",
+                "--generatedDir=" + dir + "/src/generated/java",
+                "--srcDirs=[" +
+                        dir + "/src/main/java," +
+                        dir + "/src/models/java," +
+                        dir + "/src/generated/java" +
+                        "]",
+                "--defaultpkg=org.platypus.erp.module.base",
+                "--moduleVersion=1",
+                "--depends=[]",
+                "--moduleQuickDesc=Sample Module with all platypus and community depends",
+                "--shortDesc=" + dir + "/src/main/resources/org.platypus.erp.module.base/short-desc.adoc",
+                "--longDesc=" + dir + "/src/main/resources/org.platypus.erp.module.base/long-desc.adoc"
+        );
     }
 }

@@ -19,13 +19,24 @@ import java.util.Map;
 public class ServiceCreator extends VoidVisitorAdapter<MetaSeviceInfo> {
 
     private Map<ClassName, List<TypeSpec>> services = new HashMap<>();
-
+    MetaSeviceInfo metaSeviceInfo;
     private ServiceCreator() {}
 
-    public static Map<ClassName, List<TypeSpec>> getServices(CompilationUnit cu) {
+    public static ServiceCreator get(CompilationUnit cu) {
         ServiceCreator v = new ServiceCreator();
-        cu.accept(v, MetaServiceInfoGetter.get(cu));
-        return v.services;
+        v.metaSeviceInfo = MetaServiceInfoGetter.get(cu);
+        if (v.isValid()){
+            cu.accept(v, MetaServiceInfoGetter.get(cu));
+        }
+        return v;
+    }
+
+    public boolean isValid(){
+       return metaSeviceInfo.model != null;
+    }
+
+    public Map<ClassName, List<TypeSpec>> getServices() {
+        return services;
     }
 
     @Override

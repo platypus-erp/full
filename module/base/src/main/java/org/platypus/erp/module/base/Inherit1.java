@@ -11,12 +11,11 @@ import java.util.List;
  * @since 0.1
  * on 02/06/17.
  */
-@Service(Users.class)
 public class Inherit1 implements BaseUserService.MyBusinessMethod {
 
 
     @Override
-    @Service.Multi
+//    @Service.Multi
     public List<String> myBusinessMethod(List<String> record, String tt, BaseUserService.MyBusinessMethod.Super Super) {
         System.out.println(this.getClass().getName());
         record = Super.myBusinessMethod(record, tt);
@@ -24,7 +23,7 @@ public class Inherit1 implements BaseUserService.MyBusinessMethod {
         return record;
     }
 
-    @Service.Multi
+//    @Service.Multi
     public List<String> myBusinessMethod2(List<String> record, String tt, BaseUserService.MyBusinessMethod.Super Super) {
         System.out.println(this.getClass().getName());
         record = Super.myBusinessMethod(record, tt);

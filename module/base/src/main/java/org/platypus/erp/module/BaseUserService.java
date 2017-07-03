@@ -16,6 +16,9 @@ import java.util.List;
  */
 public interface BaseUserService extends ServiceApi {
 
+    @Service.Multi
+    List<String> myBusinessMethod(List<String> record, String tt);
+
     @ServiceInfo(model = Users.class, classHolder = Inherit0.class)
     @FunctionalInterface
     interface MyBusinessMethod extends ServiceInfoType{

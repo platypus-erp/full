@@ -35,7 +35,7 @@ public class ServiceGenerator {
 
     private static void createFile(MainArgs args, JavaFile.Builder files) {
         try {
-            files.indent("   ").build().writeTo(args.projectDir.toFile());
+            files.indent("   ").build().writeTo(MainArgs.toPathToGenerate(args.projectDirStr).toFile());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -16,6 +16,7 @@ public class MainArgs {
     public final Path projectDir;
     public final Path mainDir;
     public final Path modelsDir;
+    public final Path serviceDir;
     public final String projectDirStr;
     public final Path projectDirGenerated;
     public final String moduleVersion;
@@ -54,6 +55,9 @@ public class MainArgs {
                 .map(String::trim)
                 .map(PluginConf::new)
                 .collect(Collectors.toMap(PluginConf::getName, c -> c));
+
+
+        serviceDir = mainDir;
     }
 
     public static Path toPathToGenerate(String projectDir) {

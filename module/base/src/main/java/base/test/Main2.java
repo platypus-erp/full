@@ -1,8 +1,5 @@
 package base.test;
 
-import com.github.javaparser.JavaParser;
-import com.github.javaparser.ast.CompilationUnit;
-import org.platypus.builder.core.service.manager.visitor.MyVisitor;
 
 /**
  * @author chmuchme
@@ -12,7 +9,7 @@ import org.platypus.builder.core.service.manager.visitor.MyVisitor;
 public class Main2 {
 
     public static void main(String[] args) {
-        CompilationUnit cu = JavaParser.parse(Main2.class.getResourceAsStream("test.java"));
-        System.out.println(MyVisitor.getServices(cu));
+//        CompilationUnit cu = JavaParser.parse(Main2.class.getResourceAsStream("test.java"));
+//        System.out.println(MyVisitor.getServices(cu));
     }
 }
